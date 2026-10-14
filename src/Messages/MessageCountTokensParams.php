@@ -9,6 +9,7 @@ use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Messages\MessageCountTokensParams\Speed;
 use Anthropic\Messages\MessageCountTokensParams\System;
 
 /**
@@ -37,6 +38,7 @@ use Anthropic\Messages\MessageCountTokensParams\System;
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
+ *   speed?: null|Speed|value-of<Speed>,
  *   system?: SystemShape|null,
  *   thinking?: ThinkingConfigParamShape|null,
  *   toolChoice?: ToolChoiceShape|null,
@@ -127,6 +129,14 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Optional('output_config')]
     public ?OutputConfig $outputConfig;
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @var value-of<Speed>|null $speed
+     */
+    #[Optional(enum: Speed::class, nullable: true)]
+    public ?string $speed;
 
     /**
      * System prompt.
@@ -268,6 +278,7 @@ final class MessageCountTokensParams implements BaseModel
      * @param string|Model|value-of<Model> $model
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param OutputConfig|OutputConfigShape|null $outputConfig
+     * @param Speed|value-of<Speed>|null $speed
      * @param SystemShape|null $system
      * @param ThinkingConfigParamShape|null $thinking
      * @param ToolChoiceShape|null $toolChoice
@@ -278,6 +289,7 @@ final class MessageCountTokensParams implements BaseModel
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
+        Speed|string|null $speed = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
@@ -292,6 +304,7 @@ final class MessageCountTokensParams implements BaseModel
 
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
+        null !== $speed && $self['speed'] = $speed;
         null !== $system && $self['system'] = $system;
         null !== $thinking && $self['thinking'] = $thinking;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
@@ -400,6 +413,19 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['outputConfig'] = $outputConfig;
+
+        return $self;
+    }
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @param Speed|value-of<Speed>|null $speed
+     */
+    public function withSpeed(Speed|string|null $speed): self
+    {
+        $self = clone $this;
+        $self['speed'] = $speed;
 
         return $self;
     }

@@ -10,6 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Messages\MessageCreateParams\Speed;
 use Anthropic\Messages\MessageCreateParams\System;
 
 /**
@@ -48,6 +49,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   metadata?: null|Metadata|MetadataShape,
  *   outputConfig?: null|OutputConfig|OutputConfigShape,
  *   serviceTier?: null|ServiceTier|value-of<ServiceTier>,
+ *   speed?: null|Speed|value-of<Speed>,
  *   stopSequences?: list<string>|null,
  *   system?: SystemShape|null,
  *   temperature?: float|null,
@@ -190,6 +192,14 @@ final class MessageCreateParams implements BaseModel
      */
     #[Optional('service_tier', enum: ServiceTier::class)]
     public ?string $serviceTier;
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @var value-of<Speed>|null $speed
+     */
+    #[Optional(enum: Speed::class, nullable: true)]
+    public ?string $speed;
 
     /**
      * Custom text sequences that will cause the model to stop generating.
@@ -386,6 +396,7 @@ final class MessageCreateParams implements BaseModel
      * @param Metadata|MetadataShape|null $metadata
      * @param OutputConfig|OutputConfigShape|null $outputConfig
      * @param ServiceTier|value-of<ServiceTier>|null $serviceTier
+     * @param Speed|value-of<Speed>|null $speed
      * @param list<string>|null $stopSequences
      * @param SystemShape|null $system
      * @param ThinkingConfigParamShape|null $thinking
@@ -403,6 +414,7 @@ final class MessageCreateParams implements BaseModel
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -427,6 +439,7 @@ final class MessageCreateParams implements BaseModel
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $outputConfig && $self['outputConfig'] = $outputConfig;
         null !== $serviceTier && $self['serviceTier'] = $serviceTier;
+        null !== $speed && $self['speed'] = $speed;
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $system && $self['system'] = $system;
         null !== $temperature && $self['temperature'] = $temperature;
@@ -623,6 +636,19 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['serviceTier'] = $serviceTier;
+
+        return $self;
+    }
+
+    /**
+     * The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
+     *
+     * @param Speed|value-of<Speed>|null $speed
+     */
+    public function withSpeed(Speed|string|null $speed): self
+    {
+        $self = clone $this;
+        $self['speed'] = $speed;
 
         return $self;
     }

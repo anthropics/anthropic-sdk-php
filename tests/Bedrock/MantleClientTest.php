@@ -403,6 +403,20 @@ class MantleClientTest extends TestCase
         $this->assertSame('/anthropic/v1/messages', $request->getUri()->getPath());
     }
 
+    // ── Request body ────────────────────────────────────────────────
+
+    public function testSpeedIsSentInRequestBody(): void
+    {
+        $client = $this->makeClient();
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5', speed: 'fast');
+        $request = $this->getLastRequest();
+
+        $body = json_decode((string) $request->getBody(), associative: true);
+        $this->assertIsArray($body);
+        $this->assertSame('fast', $body['speed']);
+    }
+
     // ── Helpers ─────────────────────────────────────────────────────
 
     private function makeClient(?string $apiKey = null): MantleClient

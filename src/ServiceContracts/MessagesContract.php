@@ -11,6 +11,7 @@ use Anthropic\Messages\ContainerParams;
 use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Messages\MessageCreateParams\Speed;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
@@ -119,6 +120,7 @@ interface MessagesContract
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://platform.claude.com/docs/en/api/service-tiers) for details.
+     * @param Speed|value-of<Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
@@ -228,6 +230,7 @@ interface MessagesContract
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -311,6 +314,7 @@ interface MessagesContract
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://platform.claude.com/docs/en/api/service-tiers) for details.
+     * @param Speed|value-of<Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param list<string> $stopSequences Body param: Custom text sequences that will cause the model to stop generating.
      *
      * Our models will normally stop when they have naturally completed their turn, which will result in a response `stop_reason` of `"end_turn"`.
@@ -422,6 +426,7 @@ interface MessagesContract
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -491,6 +496,7 @@ interface MessagesContract
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
      * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param \Anthropic\Messages\MessageCountTokensParams\Speed|value-of<\Anthropic\Messages\MessageCountTokensParams\Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      * @param SystemShape1 $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
@@ -574,6 +580,7 @@ interface MessagesContract
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
+        \Anthropic\Messages\MessageCountTokensParams\Speed|string|null $speed = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,

@@ -18,6 +18,7 @@ use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Messages\MessageCreateParams\Speed;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
@@ -77,6 +78,7 @@ final class MessagesRawService implements MessagesRawContract
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+     *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
      *   temperature?: float,
@@ -147,6 +149,7 @@ final class MessagesRawService implements MessagesRawContract
      *   metadata?: Metadata|MetadataShape,
      *   outputConfig?: OutputConfig|OutputConfigShape,
      *   serviceTier?: ServiceTier|value-of<ServiceTier>,
+     *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
      *   temperature?: float,
@@ -222,6 +225,7 @@ final class MessagesRawService implements MessagesRawContract
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   outputConfig?: OutputConfig|OutputConfigShape,
+     *   speed?: MessageCountTokensParams\Speed|value-of<MessageCountTokensParams\Speed>|null,
      *   system?: SystemShape1,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,

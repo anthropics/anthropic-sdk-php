@@ -13,6 +13,7 @@ use Anthropic\Messages\ContainerParams;
 use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
+use Anthropic\Messages\MessageCreateParams\Speed;
 use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
@@ -92,6 +93,7 @@ final class MantleMessagesService implements MessagesContract
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -115,6 +117,7 @@ final class MantleMessagesService implements MessagesContract
                 'metadata' => $metadata,
                 'outputConfig' => $outputConfig,
                 'serviceTier' => $serviceTier,
+                'speed' => $speed,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
                 'temperature' => $temperature,
@@ -163,6 +166,7 @@ final class MantleMessagesService implements MessagesContract
         Metadata|array|null $metadata = null,
         OutputConfig|array|null $outputConfig = null,
         ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
         ?float $temperature = null,
@@ -186,6 +190,7 @@ final class MantleMessagesService implements MessagesContract
                 'metadata' => $metadata,
                 'outputConfig' => $outputConfig,
                 'serviceTier' => $serviceTier,
+                'speed' => $speed,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
                 'temperature' => $temperature,
@@ -222,6 +227,7 @@ final class MantleMessagesService implements MessagesContract
         Model|string $model,
         CacheControlEphemeral|array|null $cacheControl = null,
         OutputConfig|array|null $outputConfig = null,
+        \Anthropic\Messages\MessageCountTokensParams\Speed|string|null $speed = null,
         string|array|null $system = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
@@ -236,6 +242,7 @@ final class MantleMessagesService implements MessagesContract
                 'model' => $model,
                 'cacheControl' => $cacheControl,
                 'outputConfig' => $outputConfig,
+                'speed' => $speed,
                 'system' => $system,
                 'thinking' => $thinking,
                 'toolChoice' => $toolChoice,
