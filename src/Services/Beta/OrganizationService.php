@@ -22,6 +22,7 @@ use Anthropic\Services\Beta\Organization\RBACGroupsService;
 use Anthropic\Services\Beta\Organization\RBACRolesService;
 use Anthropic\Services\Beta\Organization\ServiceAccountsService;
 use Anthropic\Services\Beta\Organization\SpendLimitsService;
+use Anthropic\Services\Beta\Organization\TelemetryDestinationsService;
 use Anthropic\Services\Beta\Organization\UsersService;
 use Anthropic\Services\Beta\Organization\WorkspacesService;
 
@@ -111,6 +112,11 @@ final class OrganizationService implements OrganizationContract
     public PluginMarketplacesService $pluginMarketplaces;
 
     /**
+     * @api
+     */
+    public TelemetryDestinationsService $telemetryDestinations;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -131,6 +137,7 @@ final class OrganizationService implements OrganizationContract
         $this->rbacRoles = new RBACRolesService($client);
         $this->plugins = new PluginsService($client);
         $this->pluginMarketplaces = new PluginMarketplacesService($client);
+        $this->telemetryDestinations = new TelemetryDestinationsService($client);
     }
 
     /**

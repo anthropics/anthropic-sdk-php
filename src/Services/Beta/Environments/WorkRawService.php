@@ -19,6 +19,7 @@ use Anthropic\Beta\Environments\Work\WorkUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -81,7 +82,14 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.retrieve',
+                route: '/v1/environments/{environment_id}/work/{work_id}',
+                attributes: [
+                    'anthropic.environment.id' => $environmentID,
+                    'anthropic.environment.work.id' => $workID,
+                ],
+            )),
             convert: SelfHostedWork::class,
         );
     }
@@ -138,7 +146,14 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.update',
+                route: '/v1/environments/{environment_id}/work/{work_id}',
+                attributes: [
+                    'anthropic.environment.id' => $environmentID,
+                    'anthropic.environment.work.id' => $workID,
+                ],
+            )),
             convert: SelfHostedWork::class,
         );
     }
@@ -188,7 +203,12 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.list',
+                route: '/v1/environments/{environment_id}/work',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.environment.id' => $environmentID],
+            )),
             convert: SelfHostedWork::class,
             page: PageCursor::class,
         );
@@ -237,7 +257,14 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.ack',
+                route: '/v1/environments/{environment_id}/work/{work_id}/ack',
+                attributes: [
+                    'anthropic.environment.id' => $environmentID,
+                    'anthropic.environment.work.id' => $workID,
+                ],
+            )),
             convert: SelfHostedWork::class,
         );
     }
@@ -300,7 +327,15 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.heartbeat',
+                route: '/v1/environments/{environment_id}/work/{work_id}/heartbeat',
+                query: ['desired_ttl_seconds', 'expected_last_heartbeat'],
+                attributes: [
+                    'anthropic.environment.id' => $environmentID,
+                    'anthropic.environment.work.id' => $workID,
+                ],
+            )),
             convert: SelfHostedWorkHeartbeatResponse::class,
         );
     }
@@ -360,7 +395,12 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.poll',
+                route: '/v1/environments/{environment_id}/work/poll',
+                query: ['block_ms', 'reclaim_older_than_ms'],
+                attributes: ['anthropic.environment.id' => $environmentID],
+            )),
             convert: SelfHostedWork::class,
         );
     }
@@ -403,7 +443,11 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.stats',
+                route: '/v1/environments/{environment_id}/work/stats',
+                attributes: ['anthropic.environment.id' => $environmentID],
+            )),
             convert: SelfHostedWorkQueueStats::class,
         );
     }
@@ -460,7 +504,14 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.environments.work.stop',
+                route: '/v1/environments/{environment_id}/work/{work_id}/stop',
+                attributes: [
+                    'anthropic.environment.id' => $environmentID,
+                    'anthropic.environment.work.id' => $workID,
+                ],
+            )),
             convert: SelfHostedWork::class,
         );
     }

@@ -16,6 +16,7 @@ use Anthropic\Beta\Tunnels\TunnelRotateTokenParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -77,7 +78,11 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.create',
+                route: '/v1/tunnels',
+                createdId: 'anthropic.tunnel.id',
+            )),
             convert: BetaTunnel::class,
         );
     }
@@ -123,7 +128,11 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.retrieve',
+                route: '/v1/tunnels/{tunnel_id}',
+                attributes: ['anthropic.tunnel.id' => $tunnelID],
+            )),
             convert: BetaTunnel::class,
         );
     }
@@ -178,7 +187,11 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.list',
+                route: '/v1/tunnels',
+                query: ['include_archived', 'limit', 'page'],
+            )),
             convert: BetaTunnel::class,
             page: PageCursor::class,
         );
@@ -225,7 +238,11 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.archive',
+                route: '/v1/tunnels/{tunnel_id}/archive',
+                attributes: ['anthropic.tunnel.id' => $tunnelID],
+            )),
             convert: BetaTunnel::class,
         );
     }
@@ -271,7 +288,11 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.reveal_token',
+                route: '/v1/tunnels/{tunnel_id}/reveal_token',
+                attributes: ['anthropic.tunnel.id' => $tunnelID],
+            )),
             convert: BetaTunnelToken::class,
         );
     }
@@ -323,7 +344,11 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.tunnels.rotate_token',
+                route: '/v1/tunnels/{tunnel_id}/rotate_token',
+                attributes: ['anthropic.tunnel.id' => $tunnelID],
+            )),
             convert: BetaTunnelToken::class,
         );
     }

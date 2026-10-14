@@ -12,6 +12,7 @@ use Anthropic\Beta\Organization\RBACGroups\RBACGroupUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\RBACGroupsRawContract;
@@ -55,7 +56,11 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
             method: 'post',
             path: 'v1/organizations/rbac_groups?beta=true',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.create',
+                route: '/v1/organizations/rbac_groups',
+                createdId: 'anthropic.organization.rbac_group.id',
+            )),
             convert: RBACGroup::class,
         );
     }
@@ -82,7 +87,11 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/rbac_groups/%1$s?beta=true', $rbacGroupID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.retrieve',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}',
+                attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
+            )),
             convert: RBACGroup::class,
         );
     }
@@ -117,7 +126,11 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
             method: 'post',
             path: ['v1/organizations/rbac_groups/%1$s?beta=true', $rbacGroupID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.update',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}',
+                attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
+            )),
             convert: RBACGroup::class,
         );
     }
@@ -150,7 +163,11 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
             method: 'get',
             path: 'v1/organizations/rbac_groups?beta=true',
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.list',
+                route: '/v1/organizations/rbac_groups',
+                query: ['limit', 'page'],
+            )),
             convert: RBACGroup::class,
             page: PageCursor::class,
         );
@@ -178,7 +195,11 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/rbac_groups/%1$s?beta=true', $rbacGroupID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.delete',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}',
+                attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
+            )),
             convert: RBACGroupDeleteResponse::class,
         );
     }

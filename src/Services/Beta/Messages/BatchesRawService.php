@@ -19,6 +19,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\JsonLStream;
 use Anthropic\Page;
@@ -71,6 +72,7 @@ final class BatchesRawService implements BatchesRawContract
             'userProfileID' => 'anthropic-user-profile-id',
             'workspaceID' => 'anthropic-workspace-id',
         ];
+        $requests = $parsed['requests'] ?? null;
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -87,7 +89,12 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.batches.create',
+                route: '/v1/messages/batches',
+                attributes: ['anthropic.message.batch.request_count' => is_array($requests) ? count($requests) : null],
+                createdId: 'anthropic.message.batch.id',
+            )),
             convert: MessageBatch::class,
         );
     }
@@ -133,7 +140,11 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.batches.retrieve',
+                route: '/v1/messages/batches/{message_batch_id}',
+                attributes: ['anthropic.message.batch.id' => $messageBatchID],
+            )),
             convert: MessageBatch::class,
         );
     }
@@ -188,7 +199,11 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.batches.list',
+                route: '/v1/messages/batches',
+                query: ['after_id', 'before_id', 'limit'],
+            )),
             convert: MessageBatch::class,
             page: Page::class,
         );
@@ -237,7 +252,11 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.batches.delete',
+                route: '/v1/messages/batches/{message_batch_id}',
+                attributes: ['anthropic.message.batch.id' => $messageBatchID],
+            )),
             convert: DeletedMessageBatch::class,
         );
     }
@@ -285,7 +304,11 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.batches.cancel',
+                route: '/v1/messages/batches/{message_batch_id}/cancel',
+                attributes: ['anthropic.message.batch.id' => $messageBatchID],
+            )),
             convert: MessageBatch::class,
         );
     }
@@ -327,7 +350,11 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.messages.batches.results',
+                route: '/v1/messages/batches/{message_batch_id}/results',
+                attributes: ['anthropic.message.batch.id' => $messageBatchID],
+            )),
             convert: MessageBatchIndividualResponse::class,
             stream: JsonLStream::class,
         );

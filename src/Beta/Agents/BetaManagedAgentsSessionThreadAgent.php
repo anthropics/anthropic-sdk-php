@@ -14,16 +14,19 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * Resolved `agent` definition for a single `session_thread`. Snapshot of the agent at thread creation time. The multiagent roster is not repeated here; read it from `Session.agent`.
  *
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityShape from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentity
  * @phpstan-import-type BetaManagedAgentsMCPServerURLDefinitionShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPServerURLDefinition
  * @phpstan-import-type BetaManagedAgentsModelConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfig
  * @phpstan-import-type SkillShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityVariants from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentity
  * @phpstan-import-type SkillVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool
  *
  * @phpstan-type BetaManagedAgentsSessionThreadAgentShape = array{
  *   id: string,
  *   description: string|null,
+ *   executionIdentity: BetaManagedAgentsExecutionIdentityShape,
  *   mcpServers: list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape>,
  *   model: BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape,
  *   name: string,
@@ -44,6 +47,17 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
 
     #[Required]
     public ?string $description;
+
+    /**
+     * Execution principal snapshotted from the agent at session creation. Always present; `{"type": "service_account"}` when runs carry no customer-named principal.
+     *
+     * @var BetaManagedAgentsExecutionIdentityVariants $executionIdentity
+     */
+    #[Required(
+        'execution_identity',
+        union: BetaManagedAgentsExecutionIdentity::class
+    )]
+    public BetaManagedAgentsAWSRoleExecutionIdentity|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity;
 
     /** @var list<BetaManagedAgentsMCPServerURLDefinition> $mcpServers */
     #[Required(
@@ -87,6 +101,7 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
      * BetaManagedAgentsSessionThreadAgent::with(
      *   id: ...,
      *   description: ...,
+     *   executionIdentity: ...,
      *   mcpServers: ...,
      *   model: ...,
      *   name: ...,
@@ -104,6 +119,7 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
      * (new BetaManagedAgentsSessionThreadAgent())
      *   ->withID(...)
      *   ->withDescription(...)
+     *   ->withExecutionIdentity(...)
      *   ->withMCPServers(...)
      *   ->withModel(...)
      *   ->withName(...)
@@ -124,6 +140,7 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaManagedAgentsExecutionIdentityShape $executionIdentity
      * @param list<BetaManagedAgentsMCPServerURLDefinition|BetaManagedAgentsMCPServerURLDefinitionShape> $mcpServers
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
      * @param list<SkillShape> $skills
@@ -133,6 +150,7 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
     public static function with(
         string $id,
         ?string $description,
+        BetaManagedAgentsAWSRoleExecutionIdentity|array|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity,
         array $mcpServers,
         BetaManagedAgentsModelConfig|array $model,
         string $name,
@@ -146,6 +164,7 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
 
         $self['id'] = $id;
         $self['description'] = $description;
+        $self['executionIdentity'] = $executionIdentity;
         $self['mcpServers'] = $mcpServers;
         $self['model'] = $model;
         $self['name'] = $name;
@@ -170,6 +189,20 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Execution principal snapshotted from the agent at session creation. Always present; `{"type": "service_account"}` when runs carry no customer-named principal.
+     *
+     * @param BetaManagedAgentsExecutionIdentityShape $executionIdentity
+     */
+    public function withExecutionIdentity(
+        BetaManagedAgentsAWSRoleExecutionIdentity|array|BetaManagedAgentsServiceAccountExecutionIdentity $executionIdentity,
+    ): self {
+        $self = clone $this;
+        $self['executionIdentity'] = $executionIdentity;
 
         return $self;
     }

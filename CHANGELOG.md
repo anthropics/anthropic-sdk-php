@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-14)
+
+### Features
+
+* **api:** add execution_identity to Managed Agents agents
+* **api:** add organization_type_not_supported error to spend limit lists
+* **api:** add telemetry destination test endpoint
+* **api:** add telemetry destinations to the Admin API
+* **client:** OpenTelemetry tracing for API calls, on by default: each call emits a span once the application has registered a tracer provider, and its requests carry the trace context in the headers that the registered propagator writes, such as `traceparent`. Adds a dependency on `open-telemetry/api` (`^1.0`). `openTelemetry: false` or `ANTHROPIC_OPEN_TELEMETRY=false` turns both off; `openTelemetry: ['propagation' => false]` or `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION=false` turns off the headers alone, and the variables apply only to a client that is given no `openTelemetry` option
+
+
+### Bug Fixes
+
+* **api:** rename telemetry destination test response model
+* **client:** accept backed enums as union discriminators in array params
+* **client:** treat proxy-authorization as a sensitive header
+
+
+### Bug Fixes
+
+* **streaming:** ignore events before message_start in MessageAccumulator
+
+
+### Chores
+
+* **docs:** correct prefill, thinking, fallback and model descriptions
+* **docs:** document the scope required to assign the managed role
+* **docs:** update model examples
+* **internal:** add a script that formats only the given files
+* **internal:** narrow the tripwire test rule in the contributor guides
+
+
+### Documentation
+
+* **api:** clarify when custom tool results can be sent
+* **api:** say is_enabled is always true for user spend limits
+
 ## [0.57.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.56.0...v0.57.0) (2026-10-09)
 
 ### Features

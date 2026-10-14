@@ -18,6 +18,7 @@ use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -83,7 +84,12 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.vaults.credentials.create',
+                route: '/v1/vaults/{vault_id}/credentials',
+                attributes: ['anthropic.vault.id' => $vaultID],
+                createdId: 'anthropic.vault.credential.id',
+            )),
             convert: ManagedAgentsCredential::class,
         );
     }
@@ -132,7 +138,14 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.vaults.credentials.retrieve',
+                route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
+                attributes: [
+                    'anthropic.vault.id' => $vaultID,
+                    'anthropic.vault.credential.id' => $credentialID,
+                ],
+            )),
             convert: ManagedAgentsCredential::class,
         );
     }
@@ -189,7 +202,14 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.vaults.credentials.update',
+                route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
+                attributes: [
+                    'anthropic.vault.id' => $vaultID,
+                    'anthropic.vault.credential.id' => $credentialID,
+                ],
+            )),
             convert: ManagedAgentsCredential::class,
         );
     }
@@ -244,7 +264,12 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.vaults.credentials.list',
+                route: '/v1/vaults/{vault_id}/credentials',
+                query: ['include_archived', 'limit', 'page'],
+                attributes: ['anthropic.vault.id' => $vaultID],
+            )),
             convert: ManagedAgentsCredential::class,
             page: PageCursor::class,
         );
@@ -294,7 +319,14 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.vaults.credentials.delete',
+                route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
+                attributes: [
+                    'anthropic.vault.id' => $vaultID,
+                    'anthropic.vault.credential.id' => $credentialID,
+                ],
+            )),
             convert: ManagedAgentsDeletedCredential::class,
         );
     }
@@ -345,7 +377,14 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.vaults.credentials.archive',
+                route: '/v1/vaults/{vault_id}/credentials/{credential_id}/archive',
+                attributes: [
+                    'anthropic.vault.id' => $vaultID,
+                    'anthropic.vault.credential.id' => $credentialID,
+                ],
+            )),
             convert: ManagedAgentsCredential::class,
         );
     }
@@ -396,7 +435,14 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.vaults.credentials.mcp_oauth_validate',
+                route: '/v1/vaults/{vault_id}/credentials/{credential_id}/mcp_oauth_validate',
+                attributes: [
+                    'anthropic.vault.id' => $vaultID,
+                    'anthropic.vault.credential.id' => $credentialID,
+                ],
+            )),
             convert: ManagedAgentsCredentialValidation::class,
         );
     }

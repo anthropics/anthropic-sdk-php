@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Bedrock;
 
 use Anthropic\Core\Util;
+use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\RequestOptions;
 use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\CredentialProvider;
@@ -25,6 +26,7 @@ use Psr\Http\Message\RequestInterface;
  * sent — use `new \Anthropic\Client()` for those.
  *
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type OpenTelemetryOptions from \Anthropic\Core\BaseClient
  */
 final class Client extends \Anthropic\Client
 {
@@ -41,6 +43,7 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string $region
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     private function __construct(
         private ?\Closure $signatureProvider,
@@ -49,6 +52,7 @@ final class Client extends \Anthropic\Client
         ?string $apiKey = null,
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ) {
         $hasApiKey = null !== $apiKey && '' !== $apiKey;
         $hasSignatureProvider = null !== $signatureProvider;
@@ -76,6 +80,7 @@ final class Client extends \Anthropic\Client
             authToken: '',
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
 
         // Restore the Bedrock bearer token so backendMiddleware() can use it.
@@ -86,8 +91,9 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string|null $region
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
-    public static function fromEnvironment(?string $region = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null): self
+    public static function fromEnvironment(?string $region = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, array|false|null $openTelemetry = null): self
     {
         $region = self::resolveRegion($region);
         $apiKey = Util::getenv('AWS_BEARER_TOKEN_BEDROCK');
@@ -100,6 +106,7 @@ final class Client extends \Anthropic\Client
                 apiKey: $apiKey,
                 baseUrl: $baseUrl,
                 requestOptions: $requestOptions,
+                openTelemetry: $openTelemetry,
             );
         }
 
@@ -109,7 +116,7 @@ final class Client extends \Anthropic\Client
         $signatureProvider = SignatureProvider::defaultProvider()(...);
 
         // @phpstan-ignore-next-line argument.type
-        return new self($signatureProvider, $credentialProvider, $region, baseUrl: $baseUrl, requestOptions: $requestOptions);
+        return new self($signatureProvider, $credentialProvider, $region, baseUrl: $baseUrl, requestOptions: $requestOptions, openTelemetry: $openTelemetry);
     }
 
     /**
@@ -119,6 +126,7 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string|null $securityToken
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     public static function withCredentials(
         string $accessKeyId,
@@ -127,8 +135,8 @@ final class Client extends \Anthropic\Client
         ?string $securityToken = null,
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
-    ): self
-    {
+        array|false|null $openTelemetry = null,
+    ): self {
         self::ensureAwsSdkIsInstalled();
 
         $region = self::resolveRegion($region);
@@ -137,7 +145,7 @@ final class Client extends \Anthropic\Client
         $signatureProvider = SignatureProvider::defaultProvider()(...);
 
         // @phpstan-ignore-next-line argument.type
-        return new self($signatureProvider, $credentialProvider, $region, baseUrl: $baseUrl, requestOptions: $requestOptions);
+        return new self($signatureProvider, $credentialProvider, $region, baseUrl: $baseUrl, requestOptions: $requestOptions, openTelemetry: $openTelemetry);
     }
 
     /**
@@ -145,8 +153,9 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string|null $region
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
-    public static function withApiKey(string $apiKey, ?string $region = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null): self
+    public static function withApiKey(string $apiKey, ?string $region = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, array|false|null $openTelemetry = null): self
     {
         $region = self::resolveRegion($region);
 
@@ -157,6 +166,7 @@ final class Client extends \Anthropic\Client
             apiKey: $apiKey,
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 
@@ -204,7 +214,10 @@ final class Client extends \Anthropic\Client
             $this->signer = $resolvedSigner;
         }
 
-        return $this->signer->signRequest($request, $this->credentials);
+        $signer = $this->signer;
+        $credentials = $this->credentials;
+
+        return Tracing::signWithoutTraceContext($request, static fn (RequestInterface $request): RequestInterface => $signer->signRequest($request, $credentials));
     }
 
     /**

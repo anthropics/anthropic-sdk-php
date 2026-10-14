@@ -35,9 +35,12 @@ use Anthropic\Messages\Message;
  *   carries them — those keys are omitted when they do not apply, so what
  *   `message_start` reported is preserved.
  *
- * Event-order violations throw: an event before `message_start`, a second
- * `message_start`, a `content_block_start` that skips an index, or a delta
- * addressing a block that does not exist.
+ * Events before `message_start`, and event types this version does not know,
+ * are ignored.
+ *
+ * Event-order violations throw: a second `message_start`, a
+ * `content_block_start` that skips an index, or a delta addressing a block
+ * that does not exist.
  */
 final class MessageAccumulator
 {
@@ -89,12 +92,8 @@ final class MessageAccumulator
             return $this;
         }
 
-        if ('ping' === $type) {
-            return $this;
-        }
-
         if (is_null($this->snapshot)) {
-            throw new \LogicException("unexpected event order: got \"{$type}\" before \"message_start\"");
+            return $this;
         }
 
         match ($type) {

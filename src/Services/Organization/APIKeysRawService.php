@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\APIKeys\APIKey;
 use Anthropic\Organization\APIKeys\APIKeyListParams;
@@ -47,7 +48,11 @@ final class APIKeysRawService implements APIKeysRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/api_keys/%1$s', $apiKeyID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.api_keys.retrieve',
+                route: '/v1/organizations/api_keys/{api_key_id}',
+                attributes: ['anthropic.organization.api_key.id' => $apiKeyID],
+            )),
             convert: APIKey::class,
         );
     }
@@ -82,7 +87,11 @@ final class APIKeysRawService implements APIKeysRawContract
             method: 'post',
             path: ['v1/organizations/api_keys/%1$s', $apiKeyID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.api_keys.update',
+                route: '/v1/organizations/api_keys/{api_key_id}',
+                attributes: ['anthropic.organization.api_key.id' => $apiKeyID],
+            )),
             convert: APIKey::class,
         );
     }
@@ -128,7 +137,18 @@ final class APIKeysRawService implements APIKeysRawContract
                     'workspaceID' => 'workspace_id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.api_keys.list',
+                route: '/v1/organizations/api_keys',
+                query: [
+                    'after_id',
+                    'before_id',
+                    'created_by_user_id',
+                    'limit',
+                    'status',
+                    'workspace_id',
+                ],
+            )),
             convert: APIKey::class,
             page: Page::class,
         );

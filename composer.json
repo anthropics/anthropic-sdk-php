@@ -30,6 +30,7 @@
   "name": "anthropic-ai/sdk",
   "require": {
     "php": "^8.1",
+    "open-telemetry/api": "^1.0",
     "php-http/discovery": "^1",
     "psr/http-client": "^1",
     "psr/http-client-implementation": "^1",
@@ -44,6 +45,7 @@
     "guzzlehttp/guzzle": "^7",
     "mcp/sdk": "^0.7.1",
     "nyholm/psr7": "^1",
+    "open-telemetry/sdk": "^1.0",
     "pestphp/pest": "^3",
     "php-http/mock-client": "^1",
     "phpstan/extension-installer": "^1",

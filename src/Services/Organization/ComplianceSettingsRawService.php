@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Organization\ComplianceSettings\ComplianceSettingUpdateParams;
 use Anthropic\Organization\ComplianceSettings\OrganizationComplianceSettings;
 use Anthropic\RequestOptions;
@@ -47,7 +48,10 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
         return $this->client->request(
             method: 'get',
             path: 'v1/organizations/compliance_settings',
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.compliance_settings.retrieve',
+                route: '/v1/organizations/compliance_settings',
+            )),
             convert: OrganizationComplianceSettings::class,
         );
     }
@@ -93,7 +97,10 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
             method: 'post',
             path: 'v1/organizations/compliance_settings',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.compliance_settings.update',
+                route: '/v1/organizations/compliance_settings',
+            )),
             convert: OrganizationComplianceSettings::class,
         );
     }

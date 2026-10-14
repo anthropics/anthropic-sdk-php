@@ -17,6 +17,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -111,7 +112,11 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.create',
+                route: '/v1/organizations/plugins',
+                createdId: 'anthropic.organization.plugin.id',
+            )),
             convert: Plugin::class,
         );
     }
@@ -165,7 +170,12 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.retrieve',
+                route: '/v1/organizations/plugins/{plugin_id}',
+                query: ['organization_id'],
+                attributes: ['anthropic.organization.plugin.id' => $pluginID],
+            )),
             convert: Plugin::class,
         );
     }
@@ -236,7 +246,11 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.update',
+                route: '/v1/organizations/plugins/{plugin_id}',
+                attributes: ['anthropic.organization.plugin.id' => $pluginID],
+            )),
             convert: Plugin::class,
         );
     }
@@ -325,7 +339,22 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.list',
+                route: '/v1/organizations/plugins',
+                query: [
+                    'created_at[gt]',
+                    'created_at[gte]',
+                    'created_at[lt]',
+                    'created_at[lte]',
+                    'limit',
+                    'marketplace_id',
+                    'organization_id',
+                    'owner_type',
+                    'owner_user_id',
+                    'page',
+                ],
+            )),
             convert: Plugin::class,
             page: PageCursor::class,
         );
@@ -382,7 +411,11 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.delete',
+                route: '/v1/organizations/plugins/{plugin_id}',
+                attributes: ['anthropic.organization.plugin.id' => $pluginID],
+            )),
             convert: DeletedPlugin::class,
         );
     }

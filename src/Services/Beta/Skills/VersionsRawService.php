@@ -16,6 +16,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -82,7 +83,12 @@ final class VersionsRawService implements VersionsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.versions.create',
+                route: '/v1/skills/{skill_id}/versions',
+                attributes: ['anthropic.skill.id' => $skillID],
+                createdId: 'anthropic.skill.version.id',
+            )),
             convert: SkillVersion::class,
         );
     }
@@ -128,7 +134,14 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.versions.retrieve',
+                route: '/v1/skills/{skill_id}/versions/{version}',
+                attributes: [
+                    'anthropic.skill.id' => $skillID,
+                    'anthropic.skill.version.id' => $version,
+                ],
+            )),
             convert: SkillVersion::class,
         );
     }
@@ -178,7 +191,12 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.versions.list',
+                route: '/v1/skills/{skill_id}/versions',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.skill.id' => $skillID],
+            )),
             convert: SkillVersion::class,
             page: PageCursor::class,
         );
@@ -225,7 +243,14 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.versions.delete',
+                route: '/v1/skills/{skill_id}/versions/{version}',
+                attributes: [
+                    'anthropic.skill.id' => $skillID,
+                    'anthropic.skill.version.id' => $version,
+                ],
+            )),
             convert: DeletedSkillVersion::class,
         );
     }
@@ -273,7 +298,14 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.versions.download',
+                route: '/v1/skills/{skill_id}/versions/{version}/content',
+                attributes: [
+                    'anthropic.skill.id' => $skillID,
+                    'anthropic.skill.version.id' => $version,
+                ],
+            )),
             convert: 'string',
         );
     }

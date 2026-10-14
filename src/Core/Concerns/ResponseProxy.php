@@ -18,10 +18,7 @@ trait ResponseProxy
 
     public function withProtocolVersion(string $version): static
     {
-        $self = clone $this;
-        $self->response = $this->response->withProtocolVersion($version);
-
-        return $self;
+        return $this->withResponse($this->response->withProtocolVersion($version));
     }
 
     public function getHeaders(): array
@@ -46,26 +43,17 @@ trait ResponseProxy
 
     public function withHeader(string $name, $value): static
     {
-        $self = clone $this;
-        $self->response = $this->response->withHeader($name, value: $value);
-
-        return $self;
+        return $this->withResponse($this->response->withHeader($name, value: $value));
     }
 
     public function withAddedHeader(string $name, $value): static
     {
-        $self = clone $this;
-        $self->response = $this->response->withAddedHeader($name, value: $value);
-
-        return $self;
+        return $this->withResponse($this->response->withAddedHeader($name, value: $value));
     }
 
     public function withoutHeader(string $name): static
     {
-        $self = clone $this;
-        $self->response = $this->response->withoutHeader($name);
-
-        return $self;
+        return $this->withResponse($this->response->withoutHeader($name));
     }
 
     public function getBody(): StreamInterface
@@ -75,10 +63,7 @@ trait ResponseProxy
 
     public function withBody(StreamInterface $body): static
     {
-        $self = clone $this;
-        $self->response = $this->response->withBody($body);
-
-        return $self;
+        return $this->withResponse($this->response->withBody($body));
     }
 
     public function getStatusCode(): int
@@ -88,14 +73,22 @@ trait ResponseProxy
 
     public function withStatus(int $code, string $reasonPhrase = ''): static
     {
-        $self = clone $this;
-        $self->response = $this->response->withstatus($code, reasonPhrase: $reasonPhrase);
-
-        return $self;
+        return $this->withResponse($this->response->withstatus($code, reasonPhrase: $reasonPhrase));
     }
 
     public function getReasonPhrase(): string
     {
         return $this->response->getReasonPhrase();
+    }
+
+    /**
+     * A copy of this response that reads from `$response` instead.
+     */
+    private function withResponse(ResponseInterface $response): static
+    {
+        $self = clone $this;
+        $self->response = $response;
+
+        return $self;
     }
 }

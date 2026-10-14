@@ -16,6 +16,7 @@ use Anthropic\Beta\Organization\Federation\Rules\RuleUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -96,7 +97,11 @@ final class RulesRawService implements RulesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.create',
+                route: '/v1/organizations/federation_rules',
+                createdId: 'anthropic.organization.federation_rule.id',
+            )),
             convert: BetaFederationRule::class,
         );
     }
@@ -138,7 +143,13 @@ final class RulesRawService implements RulesRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.retrieve',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+            )),
             convert: BetaFederationRule::class,
         );
     }
@@ -210,7 +221,13 @@ final class RulesRawService implements RulesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.update',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+            )),
             convert: BetaFederationRule::class,
         );
     }
@@ -265,7 +282,11 @@ final class RulesRawService implements RulesRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.list',
+                route: '/v1/organizations/federation_rules',
+                query: ['include_archived', 'issuer_id', 'limit', 'page'],
+            )),
             convert: BetaFederationRule::class,
             page: PageCursor::class,
         );
@@ -317,7 +338,13 @@ final class RulesRawService implements RulesRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.archive',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}/archive',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+            )),
             convert: BetaFederationRule::class,
         );
     }

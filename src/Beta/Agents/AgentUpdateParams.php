@@ -19,11 +19,13 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @see Anthropic\Services\Beta\AgentsService::update()
  *
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentityParams
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentUpdateParams\Model
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Agents\AgentUpdateParams\Tool
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentityParams
  * @phpstan-import-type ModelVariants from \Anthropic\Beta\Agents\AgentUpdateParams\Model
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsVariants from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsVariants from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
@@ -31,6 +33,7 @@ use Anthropic\Core\Conversion\MapOf;
  *
  * @phpstan-type AgentUpdateParamsShape = array{
  *   description?: string|null,
+ *   executionIdentity?: BetaManagedAgentsExecutionIdentityParamsShape|null,
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
  *   metadata?: array<string,string|null>|null,
  *   model?: ModelShape|null,
@@ -57,6 +60,18 @@ final class AgentUpdateParams implements BaseModel
     public ?string $description;
 
     /**
+     * Execution principal for runs of this agent. Full replacement. Omit to preserve; send null or `{"type": "service_account"}` to restore the default.
+     *
+     * @var BetaManagedAgentsExecutionIdentityParamsVariants|null $executionIdentity
+     */
+    #[Optional(
+        'execution_identity',
+        union: BetaManagedAgentsExecutionIdentityParams::class,
+        nullable: true,
+    )]
+    public BetaManagedAgentsAWSRoleExecutionIdentityParams|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity;
+
+    /**
      * MCP servers. Full replacement. Omit to preserve; send empty array or `null` to clear. Names must be unique. Maximum 20. Every server must be referenced by an `mcp_toolset` in the agent's resulting `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      *
      * @var list<BetaManagedAgentsURLMCPServerParams>|null $mcpServers
@@ -77,7 +92,7 @@ final class AgentUpdateParams implements BaseModel
     public ?array $metadata;
 
     /**
-     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
+     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
      *
      * @var ModelVariants|null $model
      */
@@ -152,6 +167,7 @@ final class AgentUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BetaManagedAgentsExecutionIdentityParamsShape|null $executionIdentity
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers
      * @param array<string,string|null>|null $metadata
      * @param ModelShape|null $model
@@ -162,6 +178,7 @@ final class AgentUpdateParams implements BaseModel
      */
     public static function with(
         ?string $description = null,
+        BetaManagedAgentsAWSRoleExecutionIdentityParams|array|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string|null $model = null,
@@ -177,6 +194,7 @@ final class AgentUpdateParams implements BaseModel
         $self = new self;
 
         null !== $description && $self['description'] = $description;
+        null !== $executionIdentity && $self['executionIdentity'] = $executionIdentity;
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $model && $self['model'] = $model;
@@ -199,6 +217,20 @@ final class AgentUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    /**
+     * Execution principal for runs of this agent. Full replacement. Omit to preserve; send null or `{"type": "service_account"}` to restore the default.
+     *
+     * @param BetaManagedAgentsExecutionIdentityParamsShape|null $executionIdentity
+     */
+    public function withExecutionIdentity(
+        BetaManagedAgentsAWSRoleExecutionIdentityParams|array|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity,
+    ): self {
+        $self = clone $this;
+        $self['executionIdentity'] = $executionIdentity;
 
         return $self;
     }
@@ -230,7 +262,7 @@ final class AgentUpdateParams implements BaseModel
     }
 
     /**
-     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
+     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
      *
      * @param ModelShape $model
      */

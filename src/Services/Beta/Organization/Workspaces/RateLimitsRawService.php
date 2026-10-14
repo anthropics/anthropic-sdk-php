@@ -10,6 +10,7 @@ use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitListParams\GroupT
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -76,7 +77,12 @@ final class RateLimitsRawService implements RateLimitsRawContract
                     'groupType' => 'group_type', 'includeInherited' => 'include_inherited',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.rate_limits.list',
+                route: '/v1/organizations/workspaces/{workspace_id}/rate_limits',
+                query: ['group_type', 'include_inherited', 'limit', 'page'],
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+            )),
             convert: BetaWorkspaceRateLimit::class,
             page: PageCursor::class,
         );

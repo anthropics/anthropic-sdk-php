@@ -8,7 +8,10 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Core\Implementation\RawResponse;
 use Anthropic\Core\Util;
+use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
@@ -104,8 +107,10 @@ final class MessagesRawService implements MessagesRawContract
             'workspaceID' => 'anthropic-workspace-id',
         ];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        $callSpan = Tracing::startCallSpan($this->client, 'anthropic.messages.create', '/v1/messages', $parsed, $options, $header_params);
+        Tracing::recordMessagesCreateRequest($this->client, $callSpan, $parsed);
+
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages',
             headers: Util::array_transform_keys(
@@ -116,9 +121,16 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: $callSpan?->name,
+                span: $callSpan?->span,
+            )),
             convert: Message::class,
         );
+
+        // Only the response that the SDK's own `request()` returns records on the span: any other is returned as it is.
+        // @phpstan-ignore-next-line return.type
+        return $response instanceof RawResponse ? $response->thenUnwrap(fn (mixed $message, mixed $decoded): mixed => Tracing::recordMessagesCreateResponse($this->client, $callSpan, $parsed, $message, $decoded)) : $response;
     }
 
     /**
@@ -166,6 +178,9 @@ final class MessagesRawService implements MessagesRawContract
             'workspaceID' => 'anthropic-workspace-id',
         ];
 
+        $callSpan = Tracing::startCallSpan($this->client, 'anthropic.messages.create', '/v1/messages', $parsed, $options, $header_params);
+        Tracing::recordMessagesCreateRequest($this->client, $callSpan, $parsed);
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
@@ -184,7 +199,10 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: $callSpan?->name,
+                span: $callSpan?->span,
+            )),
             convert: RawMessageStreamEvent::class,
             stream: SSEStream::class,
         );
@@ -230,8 +248,9 @@ final class MessagesRawService implements MessagesRawContract
             'workspaceID' => 'anthropic-workspace-id',
         ];
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        $callSpan = Tracing::startCallSpan($this->client, 'anthropic.messages.count_tokens', '/v1/messages/count_tokens', $parsed, $options, $header_params);
+
+        $response = $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens',
             headers: Util::array_transform_keys(
@@ -242,8 +261,15 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: $callSpan?->name,
+                span: $callSpan?->span,
+            )),
             convert: MessageTokensCount::class,
         );
+
+        // Only the response that the SDK's own `request()` returns records on the span: any other is returned as it is.
+        // @phpstan-ignore-next-line return.type
+        return $response instanceof RawResponse ? $response->thenUnwrap(static fn (mixed $count): mixed => Tracing::recordMessagesCountTokensResponse($callSpan, $count)) : $response;
     }
 }

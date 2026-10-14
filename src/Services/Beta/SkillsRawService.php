@@ -15,6 +15,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -78,7 +79,11 @@ final class SkillsRawService implements SkillsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.create',
+                route: '/v1/skills',
+                createdId: 'anthropic.skill.id',
+            )),
             convert: BetaSkill::class,
         );
     }
@@ -121,7 +126,11 @@ final class SkillsRawService implements SkillsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.retrieve',
+                route: '/v1/skills/{skill_id}',
+                attributes: ['anthropic.skill.id' => $skillID],
+            )),
             convert: BetaSkill::class,
         );
     }
@@ -168,7 +177,11 @@ final class SkillsRawService implements SkillsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.list',
+                route: '/v1/skills',
+                query: ['limit', 'page', 'source'],
+            )),
             convert: BetaSkill::class,
             page: PageCursor::class,
         );
@@ -212,7 +225,11 @@ final class SkillsRawService implements SkillsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.skills.delete',
+                route: '/v1/skills/{skill_id}',
+                attributes: ['anthropic.skill.id' => $skillID],
+            )),
             convert: BetaDeletedSkill::class,
         );
     }

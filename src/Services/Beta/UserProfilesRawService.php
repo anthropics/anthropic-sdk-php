@@ -19,6 +19,7 @@ use Anthropic\Beta\UserProfiles\UserProfileUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -84,7 +85,11 @@ final class UserProfilesRawService implements UserProfilesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.user_profiles.create',
+                route: '/v1/user_profiles',
+                createdId: 'anthropic.user_profile.id',
+            )),
             convert: BetaUserProfile::class,
         );
     }
@@ -128,7 +133,11 @@ final class UserProfilesRawService implements UserProfilesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.user_profiles.retrieve',
+                route: '/v1/user_profiles/{user_profile_id}',
+                attributes: ['anthropic.user_profile.id' => $userProfileID],
+            )),
             convert: BetaUserProfile::class,
         );
     }
@@ -183,7 +192,11 @@ final class UserProfilesRawService implements UserProfilesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.user_profiles.update',
+                route: '/v1/user_profiles/{user_profile_id}',
+                attributes: ['anthropic.user_profile.id' => $userProfileID],
+            )),
             convert: BetaUserProfile::class,
         );
     }
@@ -237,7 +250,11 @@ final class UserProfilesRawService implements UserProfilesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.user_profiles.list',
+                route: '/v1/user_profiles',
+                query: ['limit', 'order', 'order_by', 'page'],
+            )),
             convert: BetaUserProfile::class,
             page: PageCursor::class,
         );
@@ -282,7 +299,11 @@ final class UserProfilesRawService implements UserProfilesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.user_profiles.create_enrollment_url',
+                route: '/v1/user_profiles/{user_profile_id}/enrollment_url',
+                attributes: ['anthropic.user_profile.id' => $userProfileID],
+            )),
             convert: BetaUserProfileEnrollmentURL::class,
         );
     }

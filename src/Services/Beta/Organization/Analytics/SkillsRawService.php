@@ -11,6 +11,7 @@ use Anthropic\Beta\Organization\Analytics\Skills\SkillListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -78,7 +79,22 @@ final class SkillsRawService implements SkillsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.analytics.skills.list',
+                route: '/v1/organizations/analytics/skills',
+                query: [
+                    'date',
+                    'ending_date',
+                    'filter',
+                    'group_by',
+                    'limit',
+                    'order',
+                    'order_by',
+                    'page',
+                    'starting_date',
+                ],
+                contentQuery: ['filter'],
+            )),
             convert: AnalyticsSkillActivity::class,
             page: PageCursor::class,
         );

@@ -14,12 +14,10 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List the organization's spend limits.
  *
- * A Claude Console organization's limits come in an order that is stable across
- * pages. A Claude Enterprise organization's are grouped by scope type,
- * in the order `organization`, `seat_tier`, `rbac_group`,
- * `organization_service`, `user`; within a type they come in a fixed order that
- * is not creation order. Listing Claude Console limits is in an early access
- * preview. To request access, contact your Anthropic account team.
+ * Limits are grouped by scope type, in the order `organization`, `seat_tier`,
+ * `rbac_group`, `organization_service`, `user`; within a type they come in a
+ * fixed order that is not creation order. Supported for Claude Enterprise
+ * organizations only, not for Claude Console organizations.
  *
  * @see Anthropic\Services\Beta\Organization\SpendLimitsService::list()
  *
@@ -49,7 +47,7 @@ final class SpendLimitListParams implements BaseModel
     public ?string $page;
 
     /**
-     * Return only limits with these scope types. A Claude Console organization has `organization` and `workspace` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
+     * Return only limits with these scope types. Omit for all.
      *
      * @var list<value-of<ScopeType>>|null $scopeType
      */
@@ -116,7 +114,7 @@ final class SpendLimitListParams implements BaseModel
     }
 
     /**
-     * Return only limits with these scope types. A Claude Console organization has `organization` and `workspace` limits; a Claude Enterprise organization has `organization`, `seat_tier`, `rbac_group`, `organization_service` and `user` limits. Omit for all.
+     * Return only limits with these scope types. Omit for all.
      *
      * @param list<ScopeType|value-of<ScopeType>>|null $scopeType
      */

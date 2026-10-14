@@ -23,6 +23,7 @@ use Psr\Http\Message\RequestInterface;
  *  5. Default AWS credential chain (SigV4)
  *
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type OpenTelemetryOptions from \Anthropic\Core\BaseClient
  */
 class Client extends \Anthropic\Client
 {
@@ -32,6 +33,7 @@ class Client extends \Anthropic\Client
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     public function __construct(
         ?string $apiKey = null,
@@ -44,6 +46,7 @@ class Client extends \Anthropic\Client
         ?string $baseUrl = null,
         bool $skipAuth = false,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ) {
         // WorkspaceID: arg > env, required (unless skipAuth)
         $this->resolvedWorkspaceId = $workspaceId ?? Util::getenv('ANTHROPIC_AWS_WORKSPACE_ID');
@@ -77,6 +80,7 @@ class Client extends \Anthropic\Client
             authToken: '',
             baseUrl: $this->auth->getBaseUrl(),
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
 
         // Restore the resolved API key so the public field matches what

@@ -105,4 +105,6 @@ enum AnthropicBeta: string
     case CE_PLUGINS_2026_09_01 = 'ce-plugins-2026-09-01';
 
     case SPEND_LIMIT_READS_2026_09_26 = 'spend-limit-reads-2026-09-26';
+
+    case TELEMETRY_DESTINATIONS_2026_08_11 = 'telemetry-destinations-2026-08-11';
 }

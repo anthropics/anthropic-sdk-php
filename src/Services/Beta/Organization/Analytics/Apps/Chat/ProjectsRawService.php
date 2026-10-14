@@ -11,6 +11,7 @@ use Anthropic\Beta\Organization\Analytics\Apps\Chat\Projects\ProjectListParams\O
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -77,7 +78,21 @@ final class ProjectsRawService implements ProjectsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.analytics.apps.chat.projects.list',
+                route: '/v1/organizations/analytics/apps/chat/projects',
+                query: [
+                    'date',
+                    'ending_date',
+                    'filter',
+                    'group_by',
+                    'limit',
+                    'order',
+                    'order_by',
+                    'page',
+                    'starting_date',
+                ],
+            )),
             convert: AnalyticsProjectActivity::class,
             page: PageCursor::class,
         );

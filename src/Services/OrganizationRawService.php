@@ -7,6 +7,7 @@ namespace Anthropic\Services;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Organization\OrganizationInfo;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\OrganizationRawContract;
@@ -40,7 +41,10 @@ final class OrganizationRawService implements OrganizationRawContract
         return $this->client->request(
             method: 'get',
             path: 'v1/organizations/me',
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.retrieve',
+                route: '/v1/organizations/me',
+            )),
             convert: OrganizationInfo::class,
         );
     }

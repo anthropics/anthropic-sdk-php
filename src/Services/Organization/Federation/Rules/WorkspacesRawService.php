@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization\Federation\Rules;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Organization\Federation\Rules\FederationRuleWorkspace;
 use Anthropic\Organization\Federation\Rules\Workspaces\WorkspaceAddParams;
 use Anthropic\Organization\Federation\Rules\Workspaces\WorkspaceListParams;
@@ -65,7 +66,14 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 'v1/organizations/federation_rules/%1$s/workspaces', $federationRuleID,
             ],
             query: $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.workspaces.list',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}/workspaces',
+                query: ['limit', 'page'],
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+            )),
             convert: FederationRuleWorkspace::class,
             page: PageCursor::class,
         );
@@ -112,7 +120,16 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 'v1/organizations/federation_rules/%1$s/workspaces', $federationRuleID,
             ],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.workspaces.add',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}/workspaces',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+                createdId: [
+                    'anthropic.organization.federation_rule.workspace.id' => 'workspace_id',
+                ],
+            )),
             convert: FederationRuleWorkspace::class,
         );
     }
@@ -157,7 +174,14 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 $federationRuleID,
                 $workspaceID,
             ],
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.workspaces.remove',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}/workspaces/{workspace_id}',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                    'anthropic.organization.federation_rule.workspace.id' => $workspaceID,
+                ],
+            )),
             convert: WorkspaceRemoveResponse::class,
         );
     }

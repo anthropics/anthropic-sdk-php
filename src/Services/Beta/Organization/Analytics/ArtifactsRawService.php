@@ -10,6 +10,7 @@ use Anthropic\Beta\Organization\Analytics\Artifacts\ArtifactListParams\GroupBy;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -64,7 +65,11 @@ final class ArtifactsRawService implements ArtifactsRawContract
             method: 'get',
             path: 'v1/organizations/analytics/artifacts?beta=true',
             query: Util::array_transform_keys($parsed, ['groupBy' => 'group_by']),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.analytics.artifacts.list',
+                route: '/v1/organizations/analytics/artifacts',
+                query: ['date', 'filter', 'group_by', 'limit', 'page'],
+            )),
             convert: AnalyticsArtifactActivity::class,
             page: PageCursor::class,
         );

@@ -17,6 +17,7 @@ use const Anthropic\VERSION;
 /**
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type OpenTelemetryOptions from \Anthropic\Core\BaseClient
  */
 final class Client extends BaseClient
 {
@@ -31,12 +32,14 @@ final class Client extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     private function __construct(
         string $baseUrl,
         string $apiKey,
         ?string $authToken,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ) {
         $this->apiKey = $apiKey;
         $this->authToken = $authToken;
@@ -69,7 +72,8 @@ final class Client extends BaseClient
                 'X-Stainless-Runtime-Version' => phpversion(),
             ],
             baseUrl: $baseUrl,
-            options: $options
+            options: $options,
+            openTelemetry: $openTelemetry,
         );
 
         $this->messages = new MessagesService($this);
@@ -84,11 +88,13 @@ final class Client extends BaseClient
      * - ANTHROPIC_FOUNDRY_RESOURCE
      *
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     public static function fromEnvironment(
         ?string $baseUrl = null,
         ?string $resource = null,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ): self {
         $baseUrl ??= Util::getenv('ANTHROPIC_FOUNDRY_BASE_URL');
         $resource ??= Util::getenv('ANTHROPIC_FOUNDRY_RESOURCE');
@@ -100,6 +106,7 @@ final class Client extends BaseClient
             baseUrl: $baseUrl,
             resource: $resource,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 
@@ -107,6 +114,7 @@ final class Client extends BaseClient
      * Create a Foundry client using explicit credentials.
      *
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     public static function withCredentials(
         ?string $apiKey = null,
@@ -114,6 +122,7 @@ final class Client extends BaseClient
         ?string $baseUrl = null,
         ?string $resource = null,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ): self {
         $baseUrl ??= Util::getenv('ANTHROPIC_FOUNDRY_BASE_URL');
         $resource ??= Util::getenv('ANTHROPIC_FOUNDRY_RESOURCE');
@@ -124,6 +133,7 @@ final class Client extends BaseClient
             baseUrl: $baseUrl,
             resource: $resource,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 
@@ -177,6 +187,7 @@ final class Client extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     private static function build(
         ?string $apiKey,
@@ -184,6 +195,7 @@ final class Client extends BaseClient
         ?string $baseUrl,
         ?string $resource,
         RequestOptions|array|null $requestOptions,
+        array|false|null $openTelemetry,
     ): self {
         $apiKey = (string) ($apiKey ?? '');
         if ('' === $authToken) {
@@ -209,6 +221,7 @@ final class Client extends BaseClient
             apiKey: $apiKey,
             authToken: $authToken,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 

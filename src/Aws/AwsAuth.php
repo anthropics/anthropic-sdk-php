@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Aws;
 
 use Anthropic\Core\Util;
+use Anthropic\Lib\Tracing\Tracing;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
@@ -177,7 +178,7 @@ final class AwsAuth
         assert(null !== $this->resolvedRegion);
         $signer = new SignatureV4($this->serviceName, $this->resolvedRegion);
 
-        return $signer->signRequest($request, $credentials);
+        return Tracing::signWithoutTraceContext($request, static fn (RequestInterface $request): RequestInterface => $signer->signRequest($request, $credentials));
     }
 
     private function resolveCredentials(): CredentialsInterface

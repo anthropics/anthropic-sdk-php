@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\RateLimits\OrganizationRateLimit;
 use Anthropic\Organization\RateLimits\RateLimitListParams;
@@ -65,7 +66,11 @@ final class RateLimitsRawService implements RateLimitsRawContract
             method: 'get',
             path: 'v1/organizations/rate_limits',
             query: Util::array_transform_keys($parsed, ['groupType' => 'group_type']),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rate_limits.list',
+                route: '/v1/organizations/rate_limits',
+                query: ['group_type', 'limit', 'model', 'page'],
+            )),
             convert: OrganizationRateLimit::class,
             page: PageCursor::class,
         );

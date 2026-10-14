@@ -20,6 +20,7 @@ use Psr\Http\Message\RequestInterface;
  *
  * @phpstan-type GoogleAuthTokenShape = array{access_token: non-empty-string, expires_at: positive-int|null}
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type OpenTelemetryOptions from \Anthropic\Core\BaseClient
  */
 final class Client extends \Anthropic\Client
 {
@@ -43,6 +44,7 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string|null $projectId
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     private function __construct(
         private \Closure $credentialsProvider,
@@ -50,6 +52,7 @@ final class Client extends \Anthropic\Client
         private ?string $projectId,
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ) {
         $baseUrl ??= Util::getenv('ANTHROPIC_VERTEX_BASE_URL') ?: match ($location) {
             'global' => 'https://aiplatform.googleapis.com/v1',
@@ -66,6 +69,7 @@ final class Client extends \Anthropic\Client
             authToken: '',
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 
@@ -75,8 +79,9 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
      * @param non-empty-string|null $location deprecated alias for `$region`; use `$region` instead
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
-    public static function fromEnvironment(?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null): self
+    public static function fromEnvironment(?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null, array|false|null $openTelemetry = null): self
     {
         self::ensureGoogleAuthLibraryIsInstalled();
 
@@ -88,6 +93,7 @@ final class Client extends \Anthropic\Client
             projectId: $projectId,
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 
@@ -97,8 +103,9 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
      * @param non-empty-string|null $location deprecated alias for `$region`; use `$region` instead
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
-    public static function withCredentials(FetchAuthTokenInterface $credentials, ?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null): self
+    public static function withCredentials(FetchAuthTokenInterface $credentials, ?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null, array|false|null $openTelemetry = null): self
     {
         return new self(
             credentialsProvider: static fn (): FetchAuthTokenInterface => $credentials,
@@ -106,6 +113,7 @@ final class Client extends \Anthropic\Client
             projectId: $projectId,
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 
@@ -116,8 +124,9 @@ final class Client extends \Anthropic\Client
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions
      * @param non-empty-string|null $location deprecated alias for `$region`; use `$region` instead
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
-    public static function withAccessToken(string $accessToken, ?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null): self
+    public static function withAccessToken(string $accessToken, ?string $region = null, ?string $projectId = null, ?string $baseUrl = null, RequestOptions|array|null $requestOptions = null, ?string $location = null, array|false|null $openTelemetry = null): self
     {
         return self::withCredentials(
             new StaticAccessToken($accessToken),
@@ -126,6 +135,7 @@ final class Client extends \Anthropic\Client
             projectId: $projectId,
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 

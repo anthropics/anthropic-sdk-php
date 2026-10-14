@@ -14,6 +14,7 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -102,7 +103,12 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.versions.create',
+                route: '/v1/organizations/plugins/{plugin_id}/versions',
+                attributes: ['anthropic.organization.plugin.id' => $pluginID],
+                createdId: 'anthropic.organization.plugin.version.id',
+            )),
             convert: BetaPluginVersion::class,
         );
     }
@@ -163,7 +169,15 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.versions.retrieve',
+                route: '/v1/organizations/plugins/{plugin_id}/versions/{version}',
+                query: ['organization_id'],
+                attributes: [
+                    'anthropic.organization.plugin.id' => $pluginID,
+                    'anthropic.organization.plugin.version.id' => $version,
+                ],
+            )),
             convert: BetaPluginVersion::class,
         );
     }
@@ -222,7 +236,12 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.versions.list',
+                route: '/v1/organizations/plugins/{plugin_id}/versions',
+                query: ['limit', 'organization_id', 'page'],
+                attributes: ['anthropic.organization.plugin.id' => $pluginID],
+            )),
             convert: BetaPluginVersion::class,
             page: PageCursor::class,
         );
@@ -300,7 +319,15 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.plugins.versions.download',
+                route: '/v1/organizations/plugins/{plugin_id}/versions/{version}/content',
+                query: ['organization_id'],
+                attributes: [
+                    'anthropic.organization.plugin.id' => $pluginID,
+                    'anthropic.organization.plugin.version.id' => $version,
+                ],
+            )),
             convert: 'string',
         );
     }

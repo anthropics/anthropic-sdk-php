@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent;
+use Anthropic\Beta\Agents\BetaManagedAgentsAWSRoleExecutionIdentityParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsModel;
 use Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsMultiagent20261001Params;
 use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinatorParams;
+use Anthropic\Beta\Agents\BetaManagedAgentsServiceAccountExecutionIdentityParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
@@ -21,6 +23,7 @@ use Anthropic\Services\Beta\Agents\VersionsService;
 
 /**
  * @phpstan-import-type ModelShape from \Anthropic\Beta\Agents\AgentCreateParams\Model
+ * @phpstan-import-type BetaManagedAgentsExecutionIdentityParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsExecutionIdentityParams
  * @phpstan-import-type BetaManagedAgentsURLMCPServerParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams
  * @phpstan-import-type BetaManagedAgentsMultiagentParamsShape from \Anthropic\Beta\Sessions\BetaManagedAgentsMultiagentParams
  * @phpstan-import-type BetaManagedAgentsSkillParamsShape from \Anthropic\Beta\Agents\BetaManagedAgentsSkillParams
@@ -55,9 +58,10 @@ final class AgentsService implements AgentsContract
      *
      * Create Agent
      *
-     * @param ModelShape $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5`, or a `model_config` object for additional configuration control
+     * @param ModelShape $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control
      * @param string $name body param: Human-readable name for the agent
      * @param string|null $description body param: Description of what the agent does
+     * @param BetaManagedAgentsExecutionIdentityParamsShape|null $executionIdentity Body param: Execution principal for runs of this agent. Omitting it, sending null, or sending `{"type": "service_account"}` stores the default.
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape> $mcpServers Body param: MCP servers this agent connects to. Maximum 20. Names must be unique within the array. Every server must be referenced by an `mcp_toolset` in `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
      * @param BetaManagedAgentsMultiagentParamsShape|null $multiagent body param: Multiagent orchestration configuration
@@ -76,6 +80,7 @@ final class AgentsService implements AgentsContract
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string $model,
         string $name,
         ?string $description = null,
+        BetaManagedAgentsAWSRoleExecutionIdentityParams|array|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsMultiagentCoordinatorParams|array|BetaManagedAgentsMultiagent20261001Params|null $multiagent = null,
@@ -91,6 +96,7 @@ final class AgentsService implements AgentsContract
                 'model' => $model,
                 'name' => $name,
                 'description' => $description,
+                'executionIdentity' => $executionIdentity,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
                 'multiagent' => $multiagent,
@@ -147,9 +153,10 @@ final class AgentsService implements AgentsContract
      *
      * @param string $agentID path param: Unique identifier of the agent to update
      * @param string|null $description Body param: Description. Omit to preserve; send empty string or null to clear.
+     * @param BetaManagedAgentsExecutionIdentityParamsShape|null $executionIdentity Body param: Execution principal for runs of this agent. Full replacement. Omit to preserve; send null or `{"type": "service_account"}` to restore the default.
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers Body param: MCP servers. Full replacement. Omit to preserve; send empty array or `null` to clear. Names must be unique. Maximum 20. Every server must be referenced by an `mcp_toolset` in the agent's resulting `tools`; unreferenced servers are rejected. See the [MCP connector guide](https://platform.claude.com/docs/en/managed-agents/mcp-connector).
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve. The stored bag is limited to 16 keys (up to 64 chars each) with values up to 512 chars.
-     * @param ModelShape1 $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
+     * @param ModelShape1 $model Body param: Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control. Omit to preserve. Cannot be cleared.
      * @param BetaManagedAgentsMultiagentParamsShape|null $multiagent Body param: Multiagent orchestration configuration. Full replacement. Omit to preserve; send null to clear.
      * @param string $name Body param: Human-readable name. Must be non-empty. Omit to preserve. Cannot be cleared.
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills Body param: Skills. Full replacement. Omit to preserve; send empty array or null to clear.
@@ -167,6 +174,7 @@ final class AgentsService implements AgentsContract
     public function update(
         string $agentID,
         ?string $description = null,
+        BetaManagedAgentsAWSRoleExecutionIdentityParams|array|BetaManagedAgentsServiceAccountExecutionIdentityParams|null $executionIdentity = null,
         ?array $mcpServers = null,
         ?array $metadata = null,
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string|null $model = null,
@@ -183,6 +191,7 @@ final class AgentsService implements AgentsContract
         $params = Util::removeNulls(
             [
                 'description' => $description,
+                'executionIdentity' => $executionIdentity,
                 'mcpServers' => $mcpServers,
                 'metadata' => $metadata,
                 'model' => $model,

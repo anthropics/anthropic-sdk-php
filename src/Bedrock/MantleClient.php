@@ -36,6 +36,7 @@ use const Anthropic\VERSION;
  *
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type OpenTelemetryOptions from \Anthropic\Core\BaseClient
  */
 final class MantleClient extends BaseClient
 {
@@ -47,6 +48,7 @@ final class MantleClient extends BaseClient
 
     /**
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     public function __construct(
         ?string $apiKey = null,
@@ -58,6 +60,7 @@ final class MantleClient extends BaseClient
         ?string $baseUrl = null,
         bool $skipAuth = false,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ) {
         $this->auth = new AwsAuth(
             serviceName: 'bedrock-mantle',
@@ -105,6 +108,7 @@ final class MantleClient extends BaseClient
             ],
             baseUrl: $this->auth->getBaseUrl(),
             options: $options,
+            openTelemetry: $openTelemetry,
         );
 
         $this->messages = new MantleMessagesService($this);

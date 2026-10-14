@@ -37,7 +37,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: Model::CLAUDE_OPUS_5,
+            model: Model::CLAUDE_OPUS_5_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -57,7 +57,7 @@ final class MessagesTest extends TestCase
                     'outputConfig' => ['effort' => 'low'],
                 ],
             ],
-            model: Model::CLAUDE_OPUS_5,
+            model: Model::CLAUDE_OPUS_5_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             compaction: ['type' => 'summarize', 'instructions' => 'instructions'],
             container: [
@@ -163,7 +163,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
-            model: Model::CLAUDE_OPUS_5,
+            model: Model::CLAUDE_OPUS_5_5,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -182,7 +182,7 @@ final class MessagesTest extends TestCase
                     'outputConfig' => ['effort' => 'low'],
                 ],
             ],
-            model: Model::CLAUDE_OPUS_5,
+            model: Model::CLAUDE_OPUS_5_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             compaction: ['type' => 'summarize', 'instructions' => 'instructions'],
             contextManagement: [

@@ -11,6 +11,7 @@ use Anthropic\Beta\Organization\Analytics\Plugins\PluginListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -83,7 +84,22 @@ final class PluginsRawService implements PluginsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.analytics.plugins.list',
+                route: '/v1/organizations/analytics/plugins',
+                query: [
+                    'date',
+                    'ending_date',
+                    'filter',
+                    'group_by',
+                    'limit',
+                    'order',
+                    'order_by',
+                    'page',
+                    'starting_date',
+                ],
+                contentQuery: ['filter'],
+            )),
             convert: AnalyticsPluginActivity::class,
             page: PageCursor::class,
         );

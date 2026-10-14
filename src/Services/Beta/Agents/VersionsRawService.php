@@ -10,6 +10,7 @@ use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -72,7 +73,12 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.agents.versions.list',
+                route: '/v1/agents/{agent_id}/versions',
+                query: ['limit', 'page'],
+                attributes: ['gen_ai.agent.id' => $agentID],
+            )),
             convert: BetaManagedAgentsAgent::class,
             page: PageCursor::class,
         );

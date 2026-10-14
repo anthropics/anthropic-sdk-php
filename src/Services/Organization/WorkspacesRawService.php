@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\Workspaces\DataResidencyCreateConfig;
 use Anthropic\Organization\Workspaces\DataResidencyUpdateConfig;
@@ -63,7 +64,11 @@ final class WorkspacesRawService implements WorkspacesRawContract
             method: 'post',
             path: 'v1/organizations/workspaces',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.create',
+                route: '/v1/organizations/workspaces',
+                createdId: 'anthropic.organization.workspace.id',
+            )),
             convert: Workspace::class,
         );
     }
@@ -88,7 +93,11 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/workspaces/%1$s', $workspaceID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.retrieve',
+                route: '/v1/organizations/workspaces/{workspace_id}',
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+            )),
             convert: Workspace::class,
         );
     }
@@ -126,7 +135,11 @@ final class WorkspacesRawService implements WorkspacesRawContract
             method: 'post',
             path: ['v1/organizations/workspaces/%1$s', $workspaceID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.update',
+                route: '/v1/organizations/workspaces/{workspace_id}',
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+            )),
             convert: Workspace::class,
         );
     }
@@ -171,7 +184,17 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     'includeDefault' => 'include_default',
                 ],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.list',
+                route: '/v1/organizations/workspaces',
+                query: [
+                    'after_id',
+                    'before_id',
+                    'include_archived',
+                    'include_default',
+                    'limit',
+                ],
+            )),
             convert: Workspace::class,
             page: Page::class,
         );
@@ -196,7 +219,11 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'post',
             path: ['v1/organizations/workspaces/%1$s/archive', $workspaceID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.archive',
+                route: '/v1/organizations/workspaces/{workspace_id}/archive',
+                attributes: ['anthropic.organization.workspace.id' => $workspaceID],
+            )),
             convert: Workspace::class,
         );
     }

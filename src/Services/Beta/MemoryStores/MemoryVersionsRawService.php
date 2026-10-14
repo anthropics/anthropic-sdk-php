@@ -14,6 +14,7 @@ use Anthropic\Beta\MemoryStores\MemoryVersions\MemoryVersionRetrieveParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -82,7 +83,15 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memory_versions.retrieve',
+                route: '/v1/memory_stores/{memory_store_id}/memory_versions/{memory_version_id}',
+                query: ['view'],
+                attributes: [
+                    'gen_ai.memory.store.id' => $memoryStoreID,
+                    'anthropic.memory_store.memory_version.id' => $memoryVersionID,
+                ],
+            )),
             convert: ManagedAgentsMemoryVersion::class,
         );
     }
@@ -164,7 +173,23 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memory_versions.list',
+                route: '/v1/memory_stores/{memory_store_id}/memory_versions',
+                query: [
+                    'api_key_id',
+                    'created_at[gte]',
+                    'created_at[lte]',
+                    'limit',
+                    'memory_id',
+                    'operation',
+                    'page',
+                    'service_account_id',
+                    'session_id',
+                    'view',
+                ],
+                attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
+            )),
             convert: ManagedAgentsMemoryVersion::class,
             page: PageCursor::class,
         );
@@ -216,7 +241,14 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            ),
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.memory_stores.memory_versions.redact',
+                route: '/v1/memory_stores/{memory_store_id}/memory_versions/{memory_version_id}/redact',
+                attributes: [
+                    'gen_ai.memory.store.id' => $memoryStoreID,
+                    'anthropic.memory_store.memory_version.id' => $memoryVersionID,
+                ],
+            )),
             convert: ManagedAgentsMemoryVersion::class,
         );
     }

@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization\Federation;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\Federation\Rules\FederationRule;
 use Anthropic\Organization\Federation\Rules\FederationRuleMatch;
@@ -83,7 +84,11 @@ final class RulesRawService implements RulesRawContract
             method: 'post',
             path: 'v1/organizations/federation_rules',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.create',
+                route: '/v1/organizations/federation_rules',
+                createdId: 'anthropic.organization.federation_rule.id',
+            )),
             convert: FederationRule::class,
         );
     }
@@ -110,7 +115,13 @@ final class RulesRawService implements RulesRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/federation_rules/%1$s', $federationRuleID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.retrieve',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+            )),
             convert: FederationRule::class,
         );
     }
@@ -170,7 +181,13 @@ final class RulesRawService implements RulesRawContract
             method: 'post',
             path: ['v1/organizations/federation_rules/%1$s', $federationRuleID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.update',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+            )),
             convert: FederationRule::class,
         );
     }
@@ -214,7 +231,11 @@ final class RulesRawService implements RulesRawContract
                 $parsed,
                 ['includeArchived' => 'include_archived', 'issuerID' => 'issuer_id'],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.list',
+                route: '/v1/organizations/federation_rules',
+                query: ['include_archived', 'issuer_id', 'limit', 'page'],
+            )),
             convert: FederationRule::class,
             page: PageCursor::class,
         );
@@ -252,7 +273,13 @@ final class RulesRawService implements RulesRawContract
             path: [
                 'v1/organizations/federation_rules/%1$s/archive', $federationRuleID,
             ],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.rules.archive',
+                route: '/v1/organizations/federation_rules/{federation_rule_id}/archive',
+                attributes: [
+                    'anthropic.organization.federation_rule.id' => $federationRuleID,
+                ],
+            )),
             convert: FederationRule::class,
         );
     }

@@ -7,6 +7,7 @@ namespace Anthropic\Services\Organization\Federation;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\Federation\Issuers\FederationIssuer;
 use Anthropic\Organization\Federation\Issuers\IssuerCreateParams;
@@ -73,7 +74,11 @@ final class IssuersRawService implements IssuersRawContract
             method: 'post',
             path: 'v1/organizations/federation_issuers',
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.create',
+                route: '/v1/organizations/federation_issuers',
+                createdId: 'anthropic.organization.federation_issuer.id',
+            )),
             convert: FederationIssuer::class,
         );
     }
@@ -100,7 +105,13 @@ final class IssuersRawService implements IssuersRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/federation_issuers/%1$s', $federationIssuerID],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.retrieve',
+                route: '/v1/organizations/federation_issuers/{federation_issuer_id}',
+                attributes: [
+                    'anthropic.organization.federation_issuer.id' => $federationIssuerID,
+                ],
+            )),
             convert: FederationIssuer::class,
         );
     }
@@ -149,7 +160,13 @@ final class IssuersRawService implements IssuersRawContract
             method: 'post',
             path: ['v1/organizations/federation_issuers/%1$s', $federationIssuerID],
             body: (object) $parsed,
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.update',
+                route: '/v1/organizations/federation_issuers/{federation_issuer_id}',
+                attributes: [
+                    'anthropic.organization.federation_issuer.id' => $federationIssuerID,
+                ],
+            )),
             convert: FederationIssuer::class,
         );
     }
@@ -189,7 +206,11 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 ['includeArchived' => 'include_archived']
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.list',
+                route: '/v1/organizations/federation_issuers',
+                query: ['include_archived', 'limit', 'page'],
+            )),
             convert: FederationIssuer::class,
             page: PageCursor::class,
         );
@@ -224,7 +245,13 @@ final class IssuersRawService implements IssuersRawContract
             path: [
                 'v1/organizations/federation_issuers/%1$s/archive', $federationIssuerID,
             ],
-            options: $requestOptions,
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.federation.issuers.archive',
+                route: '/v1/organizations/federation_issuers/{federation_issuer_id}/archive',
+                attributes: [
+                    'anthropic.organization.federation_issuer.id' => $federationIssuerID,
+                ],
+            )),
             convert: FederationIssuer::class,
         );
     }

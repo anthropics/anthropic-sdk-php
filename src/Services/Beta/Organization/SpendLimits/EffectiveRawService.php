@@ -10,6 +10,7 @@ use Anthropic\Beta\Organization\SpendLimits\SpendSummary;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -33,9 +34,9 @@ final class EffectiveRawService implements EffectiveRawContract
      *
      * Returns one row per (member, period) the member resolves a spend limit
      * for, with the `source` scope the spend limit was inherited from.
-     * Paginates by member, so a member's periods never split across pages. Listing
-     * Claude Console limits is in an early access preview. To request access,
-     * contact your Anthropic account team.
+     * Paginates by member, so a member's periods never split across pages.
+     * Supported for Claude Enterprise organizations only, not for Claude Console
+     * organizations.
      *
      * @param array{
      *   limit?: int,
@@ -63,7 +64,11 @@ final class EffectiveRawService implements EffectiveRawContract
             method: 'get',
             path: 'v1/organizations/spend_limits/effective?beta=true',
             query: Util::array_transform_keys($parsed, ['userIDs' => 'user_ids']),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.effective.list',
+                route: '/v1/organizations/spend_limits/effective',
+                query: ['limit', 'page', 'period', 'user_ids'],
+            )),
             convert: SpendSummary::class,
             page: PageCursor::class,
         );

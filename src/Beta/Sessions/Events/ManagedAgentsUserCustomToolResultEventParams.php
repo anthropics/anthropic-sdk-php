@@ -30,7 +30,7 @@ final class ManagedAgentsUserCustomToolResultEventParams implements BaseModel
     use SdkModel;
 
     /**
-     * The id of the `agent.custom_tool_use` event this result corresponds to, which can be found in the last `session.status_idle` [event's](https://platform.claude.com/docs/en/api/beta/sessions/events/list#beta_managed_agents_session_requires_action.event_ids) `stop_reason.event_ids` field.
+     * The id of the `agent.custom_tool_use` event this result corresponds to. It is also listed in the last `session.status_idle` [event's](https://platform.claude.com/docs/en/api/beta/sessions/events/list#beta_managed_agents_session_requires_action.event_ids) `stop_reason.event_ids` field.
      */
     #[Required('custom_tool_use_id')]
     public string $customToolUseID;
@@ -102,7 +102,7 @@ final class ManagedAgentsUserCustomToolResultEventParams implements BaseModel
     }
 
     /**
-     * The id of the `agent.custom_tool_use` event this result corresponds to, which can be found in the last `session.status_idle` [event's](https://platform.claude.com/docs/en/api/beta/sessions/events/list#beta_managed_agents_session_requires_action.event_ids) `stop_reason.event_ids` field.
+     * The id of the `agent.custom_tool_use` event this result corresponds to. It is also listed in the last `session.status_idle` [event's](https://platform.claude.com/docs/en/api/beta/sessions/events/list#beta_managed_agents_session_requires_action.event_ids) `stop_reason.event_ids` field.
      */
     public function withCustomToolUseID(string $customToolUseID): self
     {

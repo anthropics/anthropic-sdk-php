@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\Analytics\Summaries\SummaryListParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -71,7 +72,11 @@ final class SummariesRawService implements SummariesRawContract
                 $parsed,
                 ['startingDate' => 'starting_date', 'endingDate' => 'ending_date'],
             ),
-            options: $options,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.analytics.summaries.list',
+                route: '/v1/organizations/analytics/summaries',
+                query: ['ending_date', 'filter', 'limit', 'page', 'starting_date'],
+            )),
             convert: AnalyticsSingleDayActivitySummary::class,
             page: PageCursor::class,
         );

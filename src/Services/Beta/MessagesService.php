@@ -111,7 +111,7 @@ final class MessagesService implements MessagesContract
      *
      * Each input message must be an object with a `role` and `content`. You can specify a single `user`-role message, or you can include multiple `user` and `assistant` messages.
      *
-     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response.
+     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response. This is called prefill. On models that don't support prefill, creating a message that ends with a partial `assistant` response returns a 400 error. See [Prefill not supported](https://platform.claude.com/docs/en/api/errors#prefill-not-supported).
      *
      * Example with a single `user` message:
      *
@@ -129,7 +129,7 @@ final class MessagesService implements MessagesContract
      * ]
      * ```
      *
-     * Example with a partially-filled response from Claude:
+     * Example with a partially-filled response from Claude, for models that support prefill:
      *
      * ```json
      * [
@@ -185,7 +185,7 @@ final class MessagesService implements MessagesContract
      *
      * When the appended-assistant form is used on a model that otherwise disallows
      * assistant-turn prefill, this token also authorizes that one prefill.
-     * @param BetaFallbacksParamShape|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. The string "default" requests the requested model's server-defined default fallback configuration.
+     * @param BetaFallbacksParamShape|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. Some models don't support fallbacks; on those models, a list of fallback models returns a 400 error. See [Server-side fallback](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback#server-side-fallback). The string "default" requests the requested model's server-defined default fallback configuration. On a model that doesn't support fallbacks, the request runs on the requested model alone, so a declined request stays declined.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
@@ -210,11 +210,11 @@ final class MessagesService implements MessagesContract
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param BetaThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
+     * @param BetaThinkingConfigParamShape $thinking Body param: Configuration for Claude's thinking.
      *
-     * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
+     * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
-     * See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.
+     * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
      * @param BetaToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<BetaToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
@@ -412,7 +412,7 @@ final class MessagesService implements MessagesContract
      *
      * Each input message must be an object with a `role` and `content`. You can specify a single `user`-role message, or you can include multiple `user` and `assistant` messages.
      *
-     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response.
+     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response. This is called prefill. On models that don't support prefill, creating a message that ends with a partial `assistant` response returns a 400 error. See [Prefill not supported](https://platform.claude.com/docs/en/api/errors#prefill-not-supported).
      *
      * Example with a single `user` message:
      *
@@ -430,7 +430,7 @@ final class MessagesService implements MessagesContract
      * ]
      * ```
      *
-     * Example with a partially-filled response from Claude:
+     * Example with a partially-filled response from Claude, for models that support prefill:
      *
      * ```json
      * [
@@ -486,7 +486,7 @@ final class MessagesService implements MessagesContract
      *
      * When the appended-assistant form is used on a model that otherwise disallows
      * assistant-turn prefill, this token also authorizes that one prefill.
-     * @param BetaFallbacksParamShape|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. The string "default" requests the requested model's server-defined default fallback configuration.
+     * @param BetaFallbacksParamShape|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. Some models don't support fallbacks; on those models, a list of fallback models returns a 400 error. See [Server-side fallback](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback#server-side-fallback). The string "default" requests the requested model's server-defined default fallback configuration. On a model that doesn't support fallbacks, the request runs on the requested model alone, so a declined request stays declined.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
@@ -511,11 +511,11 @@ final class MessagesService implements MessagesContract
      * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
      *
      * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     * @param BetaThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
+     * @param BetaThinkingConfigParamShape $thinking Body param: Configuration for Claude's thinking.
      *
-     * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
+     * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
-     * See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.
+     * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
      * @param BetaToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<BetaToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
@@ -690,7 +690,7 @@ final class MessagesService implements MessagesContract
      *
      * Each input message must be an object with a `role` and `content`. You can specify a single `user`-role message, or you can include multiple `user` and `assistant` messages.
      *
-     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response.
+     * If the final message uses the `assistant` role, the response content will continue immediately from the content in that message. This can be used to constrain part of the model's response. This is called prefill. On models that don't support prefill, creating a message that ends with a partial `assistant` response returns a 400 error. See [Prefill not supported](https://platform.claude.com/docs/en/api/errors#prefill-not-supported).
      *
      * Example with a single `user` message:
      *
@@ -708,7 +708,7 @@ final class MessagesService implements MessagesContract
      * ]
      * ```
      *
-     * Example with a partially-filled response from Claude:
+     * Example with a partially-filled response from Claude, for models that support prefill:
      *
      * ```json
      * [
@@ -751,11 +751,11 @@ final class MessagesService implements MessagesContract
      * @param SystemShape1 $system Body param: System prompt.
      *
      * A system prompt is a way of providing context and instructions to Claude, such as specifying a particular goal or role. See our [guide to system prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role).
-     * @param BetaThinkingConfigParamShape $thinking Body param: Configuration for enabling Claude's extended thinking.
+     * @param BetaThinkingConfigParamShape $thinking Body param: Configuration for Claude's thinking.
      *
-     * When enabled, responses include `thinking` content blocks showing Claude's thinking process before the final answer. Requires a minimum budget of 1,024 tokens and counts towards your `max_tokens` limit.
+     * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
-     * See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.
+     * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
      * @param BetaToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<ToolShape> $tools Body param: Definitions of tools that the model may use.
      *
