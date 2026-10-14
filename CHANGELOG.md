@@ -25,6 +25,7 @@
 * **docs:** correct prefill, thinking, fallback and model descriptions
 * **docs:** document the scope required to assign the managed role
 * **docs:** update model examples
+* **internal:** add a script that formats only the given files
 * **internal:** narrow the tripwire test rule in the contributor guides
 
 
