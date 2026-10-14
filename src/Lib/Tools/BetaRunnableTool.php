@@ -68,4 +68,12 @@ final class BetaRunnableTool
 
         return $name;
     }
+
+    /**
+     * @internal Whether {@see BetaMcp::tool()} made this tool, which then runs against an MCP server
+     */
+    public function isMcpTool(): bool
+    {
+        return (new \ReflectionFunction($this->run))->getClosureThis() instanceof BetaMcpToolInvoker;
+    }
 }

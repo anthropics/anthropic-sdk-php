@@ -9,6 +9,12 @@ use Anthropic\Lib\Middleware\BetaFallbackState;
 use Anthropic\Lib\Middleware\RefusalFallbackMiddleware;
 use Http\Client\Exception\NetworkException;
 use Http\Discovery\Psr17FactoryDiscovery;
+use OpenTelemetry\API\Trace\Span;
+use OpenTelemetry\API\Trace\SpanContextValidator;
+use OpenTelemetry\SDK\Trace\ImmutableSpan;
+use OpenTelemetry\SDK\Trace\SpanExporter\InMemoryExporter;
+use OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor;
+use OpenTelemetry\SDK\Trace\TracerProvider;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -133,6 +139,41 @@ class RefusalFallbackStreamingTest extends TestCase
         $this->assertSame('thinking_dropped', self::at($delta, 'input_transformations', 0, 'type'));
         $this->assertSame('messages.1.content.0', self::at($delta, 'input_transformations', 0, 'path'));
         $this->assertSame('model_binding_mismatch', self::at($delta, 'input_transformations', 0, 'reason'));
+    }
+
+    public function testTheFallbackRequestIsSentUnderTheCallSpanOfTheStream(): void
+    {
+        $this->serve(self::sseResponse(self::streamA()), self::sseResponse(self::streamB()));
+        $exporter = new InMemoryExporter;
+        // An instrumented HTTP client, as the application may have one: it notes the span that is current when it sends a request.
+        $http = new class($this->transporter) implements ClientInterface {
+            /** @var list<string> */
+            public array $currentSpanIds = [];
+
+            public function __construct(private ClientInterface $inner) {}
+
+            public function sendRequest(RequestInterface $request): ResponseInterface
+            {
+                $this->currentSpanIds[] = Span::getCurrent()->getContext()->getSpanId();
+
+                return $this->inner->sendRequest($request);
+            }
+        };
+        $client = new Client(
+            apiKey: self::API_KEY,
+            requestOptions: ['transporter' => $http, 'maxRetries' => 0, 'middleware' => [new RefusalFallbackMiddleware(self::FALLBACKS)]],
+            openTelemetry: ['tracerProvider' => new TracerProvider(new SimpleSpanProcessor($exporter))],
+        );
+
+        // The middleware sends the fallback request while the application reads the stream, after the method has returned.
+        self::collect($this->createStream($client));
+
+        $spans = $exporter->getSpans();
+        $this->assertCount(1, $spans);
+        $this->assertInstanceOf(ImmutableSpan::class, $spans[0]);
+        $this->assertSame([$spans[0]->getSpanId(), $spans[0]->getSpanId()], $http->currentSpanIds);
+        $this->assertSame(1, $spans[0]->getAttributes()->get('http.request.resend_count'));
+        $this->assertSame(SpanContextValidator::INVALID_SPAN, Span::getCurrent()->getContext()->getSpanId());
     }
 
     public function testKeepsInputTransformationsAlreadyOnTheSplicedTerminalDelta(): void

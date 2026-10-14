@@ -13,7 +13,11 @@ use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Lib\Helpers\StainlessHelperHeader;
+use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\Messages\Model;
+use Anthropic\RequestOptions;
+use OpenTelemetry\API\Trace\StatusCode;
+use OpenTelemetry\Context\Context;
 
 /**
  * Handles the automatic conversation loop between the assistant and tools.
@@ -106,7 +110,7 @@ final class BetaToolRunner implements \IteratorAggregate
      */
     public function getIterator(): \Generator
     {
-        return $this->doIterate();
+        return $this->iterateUnderToolRunnerSpan($this->doIterate());
     }
 
     /**
@@ -452,11 +456,7 @@ final class BetaToolRunner implements \IteratorAggregate
             fn ($v) => null !== $v,
         );
 
-        $params['requestOptions'] = [
-            'extraHeaders' => [
-                StainlessHelperHeader::HEADER => StainlessHelperHeader::BETA_TOOL_RUNNER,
-            ],
-        ];
+        $params['requestOptions'] = $this->requestOptionsWithHelperHeader();
 
         return $params;
     }
@@ -634,6 +634,130 @@ final class BetaToolRunner implements \IteratorAggregate
         // Not pushMessages(): that marks the history as caller-edited, so the runner would not append this turn.
         $this->messages[] = ['role' => 'system', 'content' => $this->pendingToolChanges];
         $this->pendingToolChanges = [];
+    }
+
+    /**
+     * Runs `$steps`, the loop of {@see self::doIterate()}, as one `anthropic.messages.tool_runner` span. A step is
+     * what the loop does between two messages it hands to the application: it sends a request, or runs the tools and
+     * sends the next one.
+     *
+     * @param \Generator<int, BetaMessage> $steps
+     *
+     * @return \Generator<int, BetaMessage>
+     */
+    private function iterateUnderToolRunnerSpan(\Generator $steps): \Generator
+    {
+        // A consumed runner throws before its loop starts, so it has no tool runner span.
+        $toolRunnerSpan = $this->consumed ? null : Tracing::startToolRunnerSpan(
+            $this->client,
+            $this->model,
+            $this->conversationId(),
+            Tracing::setsJsonOutputFormat(['output_config' => $this->extraParams['outputConfig'] ?? null, 'output_format' => $this->extraParams['outputFormat'] ?? null]),
+        );
+        // The application may resume the loop from another trace. Every step runs in the context the loop started
+        // in, with the tool runner span current.
+        $toolRunnerOtelContext = self::ignoringErrors(static fn () => $toolRunnerSpan?->storeInContext(Context::getCurrent()));
+        $started = false;
+
+        try {
+            while (true) {
+                $scope = self::ignoringErrors(static fn () => $toolRunnerOtelContext?->activate());
+
+                try {
+                    if ($started) {
+                        $steps->next();
+                    } else {
+                        $steps->rewind();
+                        $started = true;
+                    }
+                    if (!$steps->valid()) {
+                        break;
+                    }
+                    $message = $steps->current();
+                } catch (\Throwable $e) {
+                    if (null !== $toolRunnerSpan) {
+                        self::ignoringErrors(static fn () => Tracing::setErrorStatus($toolRunnerSpan, $e));
+                    }
+
+                    throw $e;
+                } finally {
+                    // The application's code between two steps does not run under the tool runner span.
+                    self::ignoringErrors(static fn () => $scope?->detach());
+                }
+
+                yield $message;
+            }
+            self::ignoringErrors(static fn () => $toolRunnerSpan?->setStatus(StatusCode::STATUS_OK));
+        } finally {
+            // The status stays unset when the application stops the loop early.
+            self::ignoringErrors(static fn () => $toolRunnerSpan?->end());
+        }
+    }
+
+    /**
+     * Runs `$telemetry`, a call on a span or on its context, and returns what it returns, or null when it throws: a
+     * span processor or a context storage that throws must not change what the loop does, returns or throws.
+     *
+     * @template T
+     *
+     * @param \Closure(): T $telemetry
+     *
+     * @return T|null
+     */
+    private static function ignoringErrors(\Closure $telemetry): mixed
+    {
+        try {
+            return $telemetry();
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    /**
+     * The `requestOptions` the application passed among the extra params, if any.
+     *
+     * @return RequestOptions|array<mixed>|null
+     */
+    private function requestOptions(): RequestOptions|array|null
+    {
+        $options = $this->extraParams['requestOptions'] ?? null;
+
+        return $options instanceof RequestOptions || is_array($options) ? $options : null;
+    }
+
+    /**
+     * The conversation ID of the runner's own spans: the one of the application's `requestOptions`, or else of the
+     * client's own request options, as it is on the spans of the runner's requests.
+     */
+    private function conversationId(): ?string
+    {
+        // @phpstan-ignore argument.type
+        return Tracing::conversationId($this->client->mergedOptions($this->requestOptions()));
+    }
+
+    /**
+     * The application's `requestOptions` with the tool runner's helper tag appended to their `x-stainless-helper`
+     * extra header.
+     */
+    private function requestOptionsWithHelperHeader(): RequestOptions
+    {
+        $options = $this->requestOptions();
+        $given = $options instanceof RequestOptions ? ($options->extraHeaders ?? null) : ($options['extraHeaders'] ?? null);
+
+        /** @var array<string, string|int|list<string|int>|null> $extraHeaders */
+        $extraHeaders = is_array($given) ? $given : [];
+        // Appended to a helper tag the application set, under one canonical key: a second, differently-cased
+        // key would send the header twice.
+        $helper = StainlessHelperHeader::mergedValue($extraHeaders, StainlessHelperHeader::BETA_TOOL_RUNNER);
+        foreach (array_keys($extraHeaders) as $name) {
+            if (0 === strcasecmp((string) $name, StainlessHelperHeader::HEADER)) {
+                unset($extraHeaders[$name]);
+            }
+        }
+        $extraHeaders[StainlessHelperHeader::HEADER] = $helper;
+
+        // @phpstan-ignore argument.type
+        return RequestOptions::parse($options, ['extraHeaders' => $extraHeaders]);
     }
 
     /**
@@ -861,20 +985,31 @@ final class BetaToolRunner implements \IteratorAggregate
             ];
         }
 
+        $spanName = $tool->isMcpTool() ? 'anthropic.mcp_tool_use' : 'anthropic.custom_tool_use';
+        $toolUseSpan = Tracing::startToolUseSpan($this->client, $spanName, $toolUse->id, $toolUse->name, $tool->definition['description'] ?? null, $this->conversationId(), $toolUse['toolsetName'] ?? null);
+        $scope = self::ignoringErrors(static fn () => $toolUseSpan?->activate());
+
         try {
-            return [
+            $result = [
                 'type' => 'tool_result',
                 'tool_use_id' => $toolUse->id,
                 'content' => $tool->run($toolUse->input),
             ];
         } catch (\Throwable $e) {
-            return [
+            $result = [
                 'type' => 'tool_result',
                 'tool_use_id' => $toolUse->id,
                 'content' => 'Error: '.$e->getMessage(),
                 'is_error' => true,
             ];
+        } finally {
+            self::ignoringErrors(static fn () => $scope?->detach());
         }
+        if (null !== $toolUseSpan) {
+            Tracing::endToolUseSpan($this->client, $toolUseSpan, $toolUse->input, $result);
+        }
+
+        return $result;
     }
 
     /**

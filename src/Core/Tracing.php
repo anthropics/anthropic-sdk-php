@@ -8,6 +8,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIConnectionException;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Core\Exceptions\APITimeoutException;
 use Anthropic\Core\Implementation\IteratorExit;
 use Anthropic\Core\Implementation\SentRequests;
@@ -111,7 +112,7 @@ class Tracing
     /**
      * Whether a client's spans are enabled, from its `openTelemetry` option.
      *
-     * `['traces' => ['enabled' => false]]` disables them, and so does `['traces' => false]`, which is short for it, or `false` for the whole option. When `traces.enabled` is unset, the environment variable `ANTHROPIC_OPEN_TELEMETRY` set to `false` disables them. A client asks once, when it is built, so the variable is read then and a later change to it does not reach the client. Throws when the option has a key it does not take, such as a misspelt one, or a value it does not accept, whether or not the spans are enabled.
+     * `['traces' => ['enabled' => false]]` disables them, and so does `['traces' => false]`, which is short for it, or `false` for the whole option. The environment variable `ANTHROPIC_OPEN_TELEMETRY` set to `false` disables those of a client that is given no option, and a client that is given the option does not read it. A client asks once, when it is built, so the variable is read then and a later change to it does not reach the client. Throws when the option has a key it does not take, such as a misspelt one, or a value it does not accept, whether or not the spans are enabled.
      *
      * @param OpenTelemetryOptions|array<string,mixed>|null $option
      */
@@ -147,8 +148,8 @@ class Tracing
             throw new \InvalidArgumentException("['traces']['maxContentBytes'] of the `openTelemetry` client option must be an integer of at least 1, got ".self::describe($bytes));
         }
 
-        // The variable applies only to a client that leaves `traces.enabled` unset.
-        return $enabled ?? 'false' !== strtolower(Util::getenv('ANTHROPIC_OPEN_TELEMETRY') ?? '');
+        // The variable applies only to a client that is given no option.
+        return $enabled ?? (!is_null($option) || 'false' !== strtolower(Util::getenv('ANTHROPIC_OPEN_TELEMETRY') ?? ''));
     }
 
     /**
@@ -202,15 +203,18 @@ class Tracing
     }
 
     /**
-     * Whether the requests of a client's API calls carry the trace context of their call span, from the `propagation` of its `openTelemetry` option. When `propagation` is unset, the environment variable `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION` set to `false` says they do not. Like {@see self::enabled()}, a client asks once, when it is built.
+     * Whether the requests of a client's API calls carry the trace context of their call span, from the `propagation` of its `openTelemetry` option. The environment variable `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION` set to `false` says that those of a client that is given no option do not, and a client that is given the option does not read it. Like {@see self::enabled()}, a client asks once, when it is built.
      *
      * @param OpenTelemetryOptions|array<string,mixed>|null $option
      */
     public static function propagates(array|false|null $option): bool
     {
-        $propagation = is_array($option) ? ($option['propagation'] ?? null) : null;
+        // The variable applies only to a client that is given no option.
+        if (is_null($option)) {
+            return 'false' !== strtolower(Util::getenv('ANTHROPIC_OPEN_TELEMETRY_PROPAGATION') ?? '');
+        }
 
-        return is_bool($propagation) ? $propagation : 'false' !== strtolower(Util::getenv('ANTHROPIC_OPEN_TELEMETRY_PROPAGATION') ?? '');
+        return !is_array($option) || false !== ($option['propagation'] ?? null);
     }
 
     /**
@@ -376,7 +380,7 @@ class Tracing
     /**
      * Ends `$span`, the call span of an API call that `$client` made as `$result['request']` with `$result['options']`, now that the call has a result: it failed with `$result['error']`, or `$result['response']` arrived and its body, if it was read, parsed to `$result['data']`. `$result['cancelled']` says that the application dropped the response of a streaming call without reading its stream: a cancellation, which has no status. `$client` made the call; an SDK's own `endApiCallSpan` reads its settings.
      *
-     * A stream in `$result['data']` is yet to be read, so what comes back in its place is a stream that reads through to its events, or to `$result['events']` when an SDK has put a generator of its own in front of them. Reading that stream ends the span later: with status OK once the application has read the stream to the end, with an error when reading fails, and with no status when the application closes or drops it early. `$result['isComplete']`, for a stream that has an end event, says whether the events read so far include that event: then a stream the server ends before it is an `api_error`, and one that the application closes before the server ends it was cancelled, even after its last event. Without it, an event stream (a `text/event-stream` body) has no end of its own, so one the server ends keeps no status either: such a span is never OK.
+     * A stream in `$result['data']` is yet to be read, so what comes back in its place is a stream that reads through to its events, or to `$result['events']` when an SDK has put a generator of its own in front of them. Reading that stream ends the span later: with status OK once the application has read the stream to the end, with an error when reading fails, and with no status when the application closes or drops it early. `$result['isComplete']`, for a stream that has an end event, says whether the events read so far include that event: then a stream the server ends before it is an `api_error`, and one that the application closes before the server ends it was cancelled, even after its last event. Without it, an event stream (a `text/event-stream` body) has no end of its own, so one the server ends keeps no status either: such a span is never OK. `$result['beforeEnd']` runs just before the span of a stream ends, however it ends: an SDK sets there what it records of a stream once reading is over. It must not throw.
      *
      * A method that creates one object names the attribute of that object's ID (the `createdId` of the API call that `$result['options']` name), which the span gets from the `id` of `$result['data']`, or from the field the method names with it. A call that failed has no `$result['data']`, and so no such attribute.
      *
@@ -583,10 +587,19 @@ class Tracing
     }
 
     /**
-     * The `error.type` of an operation that failed with `$error`. An error response has its status code, because the error envelope's shape is the API's.
+     * The `error.type` of an operation that failed with `$error`. An error response has the type of its error envelope when the API sent one, and its status code otherwise.
      */
     private static function errorType(?\Throwable $error): string
     {
+        if ($error instanceof APIStatusException) {
+            // The envelope is the response body, or the `error` event that failed a stream.
+            $type = Util::dig(Util::dig($error->body, 'error'), 'type');
+            $type = is_string($type) && '' !== $type ? $type : $error->type?->value;
+            if (!is_null($type)) {
+                return $type;
+            }
+        }
+
         return match (true) {
             $error instanceof APITimeoutException => 'client_timeout_error',
             $error instanceof APIConnectionException => 'connection_error',

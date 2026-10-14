@@ -25,13 +25,16 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Core\Util;
+use Anthropic\Lib\Helpers\StainlessHelperHeader;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
+use Anthropic\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -2158,6 +2161,57 @@ final class BetaToolRunnerTest extends TestCase
             $body = json_decode((string) $request->getBody(), associative: true);
             $this->assertSame(0.5, $body['temperature'], "Request #{$i} missing temperature");
             $this->assertSame('You are a weather bot.', $body['system'], "Request #{$i} missing system");
+        }
+    }
+
+    #[Test]
+    public function testRequestOptionsKeepTheirExtraHeadersNextToTheHelperHeader(): void
+    {
+        $forms = [
+            ['extraHeaders' => ['x-custom-header' => 'from-array'], 'timeout' => 30],
+            RequestOptions::with(extraHeaders: ['x-custom-header' => 'from-object'], timeout: 30),
+        ];
+        foreach ($forms as $i => $requestOptions) {
+            $this->transporter->addResponse($this->textResponse('Done.'));
+
+            foreach ($this->client->beta->messages->toolRunner(
+                maxTokens: 1024,
+                messages: [['role' => 'user', 'content' => 'Hi']],
+                model: 'claude-opus-4-6',
+                tools: [$this->makeWeatherTool()],
+                extraParams: ['requestOptions' => $requestOptions],
+            ) as $_);
+
+            $request = $this->transporter->getLastRequest();
+            $this->assertInstanceOf(RequestInterface::class, $request);
+            $this->assertSame(0 === $i ? 'from-array' : 'from-object', $request->getHeaderLine('x-custom-header'));
+            $this->assertSame(StainlessHelperHeader::BETA_TOOL_RUNNER, $request->getHeaderLine(StainlessHelperHeader::HEADER));
+            $this->assertArrayNotHasKey('requestOptions', $this->requestBody($i));
+        }
+    }
+
+    #[Test]
+    public function testHelperHeaderTheApplicationSetIsKeptAheadOfTheToolRunnerTag(): void
+    {
+        $forms = [
+            ['extraHeaders' => ['X-Stainless-Helper' => 'my-wrapper', 'x-custom-header' => 'kept']],
+            RequestOptions::with(extraHeaders: ['X-Stainless-Helper' => 'my-wrapper', 'x-custom-header' => 'kept']),
+        ];
+        foreach ($forms as $requestOptions) {
+            $this->transporter->addResponse($this->textResponse('Done.'));
+
+            foreach ($this->client->beta->messages->toolRunner(
+                maxTokens: 1024,
+                messages: [['role' => 'user', 'content' => 'Hi']],
+                model: 'claude-opus-4-6',
+                tools: [$this->makeWeatherTool()],
+                extraParams: ['requestOptions' => $requestOptions],
+            ) as $_);
+
+            $request = $this->transporter->getLastRequest();
+            $this->assertInstanceOf(RequestInterface::class, $request);
+            $this->assertSame(['my-wrapper, '.StainlessHelperHeader::BETA_TOOL_RUNNER], $request->getHeader(StainlessHelperHeader::HEADER));
+            $this->assertSame('kept', $request->getHeaderLine('x-custom-header'));
         }
     }
 

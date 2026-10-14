@@ -72,6 +72,7 @@ final class BatchesRawService implements BatchesRawContract
             'userProfileID' => 'anthropic-user-profile-id',
             'workspaceID' => 'anthropic-workspace-id',
         ];
+        $requests = $parsed['requests'] ?? null;
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -91,6 +92,7 @@ final class BatchesRawService implements BatchesRawContract
             )->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.create',
                 route: '/v1/messages/batches',
+                attributes: ['anthropic.message.batch.request_count' => is_array($requests) ? count($requests) : null],
                 createdId: 'anthropic.message.batch.id',
             )),
             convert: MessageBatch::class,

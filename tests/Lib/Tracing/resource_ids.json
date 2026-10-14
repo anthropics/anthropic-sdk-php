@@ -1,0 +1,2963 @@
+{
+  "operations": [
+    {
+      "span": "anthropic.agents.versions.list",
+      "http_method": "get",
+      "url": "v1/agents/{agentID}/versions?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Agents\\VersionsRawService",
+      "method": "list",
+      "positional": [
+        "agentID"
+      ],
+      "keywords": [],
+      "path": {
+        "agentID": "gen_ai.agent.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.agents.create",
+      "http_method": "post",
+      "url": "v1/agents?beta=true",
+      "service": "Anthropic\\Services\\Beta\\AgentsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "gen_ai.agent.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.agents.retrieve",
+      "http_method": "get",
+      "url": "v1/agents/{agentID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\AgentsRawService",
+      "method": "retrieve",
+      "positional": [
+        "agentID"
+      ],
+      "keywords": [],
+      "path": {
+        "agentID": "gen_ai.agent.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.agents.update",
+      "http_method": "post",
+      "url": "v1/agents/{agentID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\AgentsRawService",
+      "method": "update",
+      "positional": [
+        "agentID"
+      ],
+      "keywords": [],
+      "path": {
+        "agentID": "gen_ai.agent.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.agents.archive",
+      "http_method": "post",
+      "url": "v1/agents/{agentID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\AgentsRawService",
+      "method": "archive",
+      "positional": [
+        "agentID"
+      ],
+      "keywords": [],
+      "path": {
+        "agentID": "gen_ai.agent.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployment_runs.retrieve",
+      "http_method": "get",
+      "url": "v1/deployment_runs/{deploymentRunID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentRunsRawService",
+      "method": "retrieve",
+      "positional": [
+        "deploymentRunID"
+      ],
+      "keywords": [],
+      "path": {
+        "deploymentRunID": "anthropic.deployment_run.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployments.create",
+      "http_method": "post",
+      "url": "v1/deployments?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.deployment.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployments.retrieve",
+      "http_method": "get",
+      "url": "v1/deployments/{deploymentID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentsRawService",
+      "method": "retrieve",
+      "positional": [
+        "deploymentID"
+      ],
+      "keywords": [],
+      "path": {
+        "deploymentID": "anthropic.deployment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployments.update",
+      "http_method": "post",
+      "url": "v1/deployments/{deploymentID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentsRawService",
+      "method": "update",
+      "positional": [
+        "deploymentID"
+      ],
+      "keywords": [],
+      "path": {
+        "deploymentID": "anthropic.deployment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployments.archive",
+      "http_method": "post",
+      "url": "v1/deployments/{deploymentID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentsRawService",
+      "method": "archive",
+      "positional": [
+        "deploymentID"
+      ],
+      "keywords": [],
+      "path": {
+        "deploymentID": "anthropic.deployment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployments.pause",
+      "http_method": "post",
+      "url": "v1/deployments/{deploymentID}/pause?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentsRawService",
+      "method": "pause",
+      "positional": [
+        "deploymentID"
+      ],
+      "keywords": [],
+      "path": {
+        "deploymentID": "anthropic.deployment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployments.run",
+      "http_method": "post",
+      "url": "v1/deployments/{deploymentID}/run?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentsRawService",
+      "method": "run",
+      "positional": [
+        "deploymentID"
+      ],
+      "keywords": [],
+      "path": {
+        "deploymentID": "anthropic.deployment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.deployments.unpause",
+      "http_method": "post",
+      "url": "v1/deployments/{deploymentID}/unpause?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DeploymentsRawService",
+      "method": "unpause",
+      "positional": [
+        "deploymentID"
+      ],
+      "keywords": [],
+      "path": {
+        "deploymentID": "anthropic.deployment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.dreams.create",
+      "http_method": "post",
+      "url": "v1/dreams?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DreamsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.dream.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.dreams.retrieve",
+      "http_method": "get",
+      "url": "v1/dreams/{dreamID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DreamsRawService",
+      "method": "retrieve",
+      "positional": [
+        "dreamID"
+      ],
+      "keywords": [],
+      "path": {
+        "dreamID": "anthropic.dream.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.dreams.archive",
+      "http_method": "post",
+      "url": "v1/dreams/{dreamID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DreamsRawService",
+      "method": "archive",
+      "positional": [
+        "dreamID"
+      ],
+      "keywords": [],
+      "path": {
+        "dreamID": "anthropic.dream.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.dreams.cancel",
+      "http_method": "post",
+      "url": "v1/dreams/{dreamID}/cancel?beta=true",
+      "service": "Anthropic\\Services\\Beta\\DreamsRawService",
+      "method": "cancel",
+      "positional": [
+        "dreamID"
+      ],
+      "keywords": [],
+      "path": {
+        "dreamID": "anthropic.dream.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.retrieve",
+      "http_method": "get",
+      "url": "v1/environments/{environmentID}/work/{workID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "retrieve",
+      "positional": [
+        "workID"
+      ],
+      "keywords": [
+        "environmentID"
+      ],
+      "path": {
+        "environmentID": "anthropic.environment.id",
+        "workID": "anthropic.environment.work.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.update",
+      "http_method": "post",
+      "url": "v1/environments/{environmentID}/work/{workID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "update",
+      "positional": [
+        "workID"
+      ],
+      "keywords": [
+        "environmentID"
+      ],
+      "path": {
+        "environmentID": "anthropic.environment.id",
+        "workID": "anthropic.environment.work.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.list",
+      "http_method": "get",
+      "url": "v1/environments/{environmentID}/work?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "list",
+      "positional": [
+        "environmentID"
+      ],
+      "keywords": [],
+      "path": {
+        "environmentID": "anthropic.environment.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.ack",
+      "http_method": "post",
+      "url": "v1/environments/{environmentID}/work/{workID}/ack?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "ack",
+      "positional": [
+        "workID"
+      ],
+      "keywords": [
+        "environmentID"
+      ],
+      "path": {
+        "environmentID": "anthropic.environment.id",
+        "workID": "anthropic.environment.work.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.heartbeat",
+      "http_method": "post",
+      "url": "v1/environments/{environmentID}/work/{workID}/heartbeat?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "heartbeat",
+      "positional": [
+        "workID"
+      ],
+      "keywords": [
+        "environmentID"
+      ],
+      "path": {
+        "environmentID": "anthropic.environment.id",
+        "workID": "anthropic.environment.work.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.poll",
+      "http_method": "get",
+      "url": "v1/environments/{environmentID}/work/poll?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "poll",
+      "positional": [
+        "environmentID"
+      ],
+      "keywords": [],
+      "path": {
+        "environmentID": "anthropic.environment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.stats",
+      "http_method": "get",
+      "url": "v1/environments/{environmentID}/work/stats?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "stats",
+      "positional": [
+        "environmentID"
+      ],
+      "keywords": [],
+      "path": {
+        "environmentID": "anthropic.environment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.work.stop",
+      "http_method": "post",
+      "url": "v1/environments/{environmentID}/work/{workID}/stop?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Environments\\WorkRawService",
+      "method": "stop",
+      "positional": [
+        "workID"
+      ],
+      "keywords": [
+        "environmentID"
+      ],
+      "path": {
+        "environmentID": "anthropic.environment.id",
+        "workID": "anthropic.environment.work.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.create",
+      "http_method": "post",
+      "url": "v1/environments?beta=true",
+      "service": "Anthropic\\Services\\Beta\\EnvironmentsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.environment.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.retrieve",
+      "http_method": "get",
+      "url": "v1/environments/{environmentID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\EnvironmentsRawService",
+      "method": "retrieve",
+      "positional": [
+        "environmentID"
+      ],
+      "keywords": [],
+      "path": {
+        "environmentID": "anthropic.environment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.update",
+      "http_method": "post",
+      "url": "v1/environments/{environmentID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\EnvironmentsRawService",
+      "method": "update",
+      "positional": [
+        "environmentID"
+      ],
+      "keywords": [],
+      "path": {
+        "environmentID": "anthropic.environment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.delete",
+      "http_method": "delete",
+      "url": "v1/environments/{environmentID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\EnvironmentsRawService",
+      "method": "delete",
+      "positional": [
+        "environmentID"
+      ],
+      "keywords": [],
+      "path": {
+        "environmentID": "anthropic.environment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.environments.archive",
+      "http_method": "post",
+      "url": "v1/environments/{environmentID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\EnvironmentsRawService",
+      "method": "archive",
+      "positional": [
+        "environmentID"
+      ],
+      "keywords": [],
+      "path": {
+        "environmentID": "anthropic.environment.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.delete",
+      "http_method": "delete",
+      "url": "v1/files/{fileID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\FilesRawService",
+      "method": "delete",
+      "positional": [
+        "fileID"
+      ],
+      "keywords": [],
+      "path": {
+        "fileID": "anthropic.file.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.download",
+      "http_method": "get",
+      "url": "v1/files/{fileID}/content?beta=true",
+      "service": "Anthropic\\Services\\Beta\\FilesRawService",
+      "method": "download",
+      "positional": [
+        "fileID"
+      ],
+      "keywords": [],
+      "path": {
+        "fileID": "anthropic.file.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.retrieve_metadata",
+      "http_method": "get",
+      "url": "v1/files/{fileID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\FilesRawService",
+      "method": "retrieveMetadata",
+      "positional": [
+        "fileID"
+      ],
+      "keywords": [],
+      "path": {
+        "fileID": "anthropic.file.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.upload",
+      "http_method": "post",
+      "url": "v1/files?beta=true",
+      "service": "Anthropic\\Services\\Beta\\FilesRawService",
+      "method": "upload",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.file.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memories.create",
+      "http_method": "post",
+      "url": "v1/memory_stores/{memoryStoreID}/memories?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoriesRawService",
+      "method": "create",
+      "positional": [
+        "memoryStoreID"
+      ],
+      "keywords": [],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id"
+      },
+      "created": {
+        "attribute": "gen_ai.memory.record.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memories.retrieve",
+      "http_method": "get",
+      "url": "v1/memory_stores/{memoryStoreID}/memories/{memoryID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoriesRawService",
+      "method": "retrieve",
+      "positional": [
+        "memoryID"
+      ],
+      "keywords": [
+        "memoryStoreID"
+      ],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id",
+        "memoryID": "gen_ai.memory.record.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memories.update",
+      "http_method": "post",
+      "url": "v1/memory_stores/{memoryStoreID}/memories/{memoryID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoriesRawService",
+      "method": "update",
+      "positional": [
+        "memoryID"
+      ],
+      "keywords": [
+        "memoryStoreID"
+      ],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id",
+        "memoryID": "gen_ai.memory.record.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memories.list",
+      "http_method": "get",
+      "url": "v1/memory_stores/{memoryStoreID}/memories?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoriesRawService",
+      "method": "list",
+      "positional": [
+        "memoryStoreID"
+      ],
+      "keywords": [],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memories.delete",
+      "http_method": "delete",
+      "url": "v1/memory_stores/{memoryStoreID}/memories/{memoryID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoriesRawService",
+      "method": "delete",
+      "positional": [
+        "memoryID"
+      ],
+      "keywords": [
+        "memoryStoreID"
+      ],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id",
+        "memoryID": "gen_ai.memory.record.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memory_versions.retrieve",
+      "http_method": "get",
+      "url": "v1/memory_stores/{memoryStoreID}/memory_versions/{memoryVersionID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoryVersionsRawService",
+      "method": "retrieve",
+      "positional": [
+        "memoryVersionID"
+      ],
+      "keywords": [
+        "memoryStoreID"
+      ],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id",
+        "memoryVersionID": "anthropic.memory_store.memory_version.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memory_versions.list",
+      "http_method": "get",
+      "url": "v1/memory_stores/{memoryStoreID}/memory_versions?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoryVersionsRawService",
+      "method": "list",
+      "positional": [
+        "memoryStoreID"
+      ],
+      "keywords": [],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.memory_versions.redact",
+      "http_method": "post",
+      "url": "v1/memory_stores/{memoryStoreID}/memory_versions/{memoryVersionID}/redact?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStores\\MemoryVersionsRawService",
+      "method": "redact",
+      "positional": [
+        "memoryVersionID"
+      ],
+      "keywords": [
+        "memoryStoreID"
+      ],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id",
+        "memoryVersionID": "anthropic.memory_store.memory_version.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.create",
+      "http_method": "post",
+      "url": "v1/memory_stores?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStoresRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "gen_ai.memory.store.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.retrieve",
+      "http_method": "get",
+      "url": "v1/memory_stores/{memoryStoreID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStoresRawService",
+      "method": "retrieve",
+      "positional": [
+        "memoryStoreID"
+      ],
+      "keywords": [],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.update",
+      "http_method": "post",
+      "url": "v1/memory_stores/{memoryStoreID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStoresRawService",
+      "method": "update",
+      "positional": [
+        "memoryStoreID"
+      ],
+      "keywords": [],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.delete",
+      "http_method": "delete",
+      "url": "v1/memory_stores/{memoryStoreID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStoresRawService",
+      "method": "delete",
+      "positional": [
+        "memoryStoreID"
+      ],
+      "keywords": [],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.memory_stores.archive",
+      "http_method": "post",
+      "url": "v1/memory_stores/{memoryStoreID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\MemoryStoresRawService",
+      "method": "archive",
+      "positional": [
+        "memoryStoreID"
+      ],
+      "keywords": [],
+      "path": {
+        "memoryStoreID": "gen_ai.memory.store.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.create",
+      "http_method": "post",
+      "url": "v1/messages/batches?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Messages\\BatchesRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.message.batch.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.retrieve",
+      "http_method": "get",
+      "url": "v1/messages/batches/{messageBatchID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Messages\\BatchesRawService",
+      "method": "retrieve",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.delete",
+      "http_method": "delete",
+      "url": "v1/messages/batches/{messageBatchID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Messages\\BatchesRawService",
+      "method": "delete",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.cancel",
+      "http_method": "post",
+      "url": "v1/messages/batches/{messageBatchID}/cancel?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Messages\\BatchesRawService",
+      "method": "cancel",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.results",
+      "http_method": "get",
+      "url": "v1/messages/batches/{messageBatchID}/results?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Messages\\BatchesRawService",
+      "method": "resultsStream",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": true
+    },
+    {
+      "span": "anthropic.models.retrieve",
+      "http_method": "get",
+      "url": "v1/models/{modelID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\ModelsRawService",
+      "method": "retrieve",
+      "positional": [
+        "modelID"
+      ],
+      "keywords": [],
+      "path": {
+        "modelID": "anthropic.model.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.api_keys.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/api_keys/{apiKeyID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\APIKeysRawService",
+      "method": "retrieve",
+      "positional": [
+        "apiKeyID"
+      ],
+      "keywords": [],
+      "path": {
+        "apiKeyID": "anthropic.organization.api_key.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.api_keys.update",
+      "http_method": "post",
+      "url": "v1/organizations/api_keys/{apiKeyID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\APIKeysRawService",
+      "method": "update",
+      "positional": [
+        "apiKeyID"
+      ],
+      "keywords": [],
+      "path": {
+        "apiKeyID": "anthropic.organization.api_key.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.external_keys.create",
+      "http_method": "post",
+      "url": "v1/organizations/external_keys?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ExternalKeysRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.organization.external_key.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.external_keys.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/external_keys/{externalKeyID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ExternalKeysRawService",
+      "method": "retrieve",
+      "positional": [
+        "externalKeyID"
+      ],
+      "keywords": [],
+      "path": {
+        "externalKeyID": "anthropic.organization.external_key.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.external_keys.update",
+      "http_method": "post",
+      "url": "v1/organizations/external_keys/{externalKeyID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ExternalKeysRawService",
+      "method": "update",
+      "positional": [
+        "externalKeyID"
+      ],
+      "keywords": [],
+      "path": {
+        "externalKeyID": "anthropic.organization.external_key.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.external_keys.delete",
+      "http_method": "delete",
+      "url": "v1/organizations/external_keys/{externalKeyID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ExternalKeysRawService",
+      "method": "delete",
+      "positional": [
+        "externalKeyID"
+      ],
+      "keywords": [],
+      "path": {
+        "externalKeyID": "anthropic.organization.external_key.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.external_keys.validate",
+      "http_method": "post",
+      "url": "v1/organizations/external_keys/{externalKeyID}/validate?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ExternalKeysRawService",
+      "method": "validate",
+      "positional": [
+        "externalKeyID"
+      ],
+      "keywords": [],
+      "path": {
+        "externalKeyID": "anthropic.organization.external_key.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.issuers.create",
+      "http_method": "post",
+      "url": "v1/organizations/federation_issuers?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\IssuersRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.organization.federation_issuer.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.issuers.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/federation_issuers/{federationIssuerID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\IssuersRawService",
+      "method": "retrieve",
+      "positional": [
+        "federationIssuerID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationIssuerID": "anthropic.organization.federation_issuer.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.issuers.update",
+      "http_method": "post",
+      "url": "v1/organizations/federation_issuers/{federationIssuerID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\IssuersRawService",
+      "method": "update",
+      "positional": [
+        "federationIssuerID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationIssuerID": "anthropic.organization.federation_issuer.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.issuers.archive",
+      "http_method": "post",
+      "url": "v1/organizations/federation_issuers/{federationIssuerID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\IssuersRawService",
+      "method": "archive",
+      "positional": [
+        "federationIssuerID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationIssuerID": "anthropic.organization.federation_issuer.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.rules.workspaces.list",
+      "http_method": "get",
+      "url": "v1/organizations/federation_rules/{federationRuleID}/workspaces?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\Rules\\WorkspacesRawService",
+      "method": "list",
+      "positional": [
+        "federationRuleID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationRuleID": "anthropic.organization.federation_rule.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.rules.workspaces.add",
+      "http_method": "post",
+      "url": "v1/organizations/federation_rules/{federationRuleID}/workspaces?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\Rules\\WorkspacesRawService",
+      "method": "add",
+      "positional": [
+        "federationRuleID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationRuleID": "anthropic.organization.federation_rule.id"
+      },
+      "created": {
+        "attribute": "anthropic.organization.federation_rule.workspace.id",
+        "field": "workspace_id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.rules.workspaces.remove",
+      "http_method": "delete",
+      "url": "v1/organizations/federation_rules/{federationRuleID}/workspaces/{workspaceID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\Rules\\WorkspacesRawService",
+      "method": "remove",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [
+        "federationRuleID"
+      ],
+      "path": {
+        "federationRuleID": "anthropic.organization.federation_rule.id",
+        "workspaceID": "anthropic.organization.federation_rule.workspace.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.rules.create",
+      "http_method": "post",
+      "url": "v1/organizations/federation_rules?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\RulesRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.organization.federation_rule.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.rules.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/federation_rules/{federationRuleID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\RulesRawService",
+      "method": "retrieve",
+      "positional": [
+        "federationRuleID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationRuleID": "anthropic.organization.federation_rule.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.rules.update",
+      "http_method": "post",
+      "url": "v1/organizations/federation_rules/{federationRuleID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\RulesRawService",
+      "method": "update",
+      "positional": [
+        "federationRuleID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationRuleID": "anthropic.organization.federation_rule.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.federation.rules.archive",
+      "http_method": "post",
+      "url": "v1/organizations/federation_rules/{federationRuleID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Federation\\RulesRawService",
+      "method": "archive",
+      "positional": [
+        "federationRuleID"
+      ],
+      "keywords": [],
+      "path": {
+        "federationRuleID": "anthropic.organization.federation_rule.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.invites.create",
+      "http_method": "post",
+      "url": "v1/organizations/invites?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\InvitesRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.organization.invite.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.invites.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/invites/{inviteID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\InvitesRawService",
+      "method": "retrieve",
+      "positional": [
+        "inviteID"
+      ],
+      "keywords": [],
+      "path": {
+        "inviteID": "anthropic.organization.invite.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.invites.delete",
+      "http_method": "delete",
+      "url": "v1/organizations/invites/{inviteID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\InvitesRawService",
+      "method": "delete",
+      "positional": [
+        "inviteID"
+      ],
+      "keywords": [],
+      "path": {
+        "inviteID": "anthropic.organization.invite.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.service_accounts.workspaces.list",
+      "http_method": "get",
+      "url": "v1/organizations/service_accounts/{serviceAccountID}/workspaces?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ServiceAccounts\\WorkspacesRawService",
+      "method": "list",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [],
+      "path": {
+        "serviceAccountID": "anthropic.organization.service_account.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.service_accounts.workspaces.add",
+      "http_method": "post",
+      "url": "v1/organizations/service_accounts/{serviceAccountID}/workspaces?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ServiceAccounts\\WorkspacesRawService",
+      "method": "add",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [],
+      "path": {
+        "serviceAccountID": "anthropic.organization.service_account.id"
+      },
+      "created": {
+        "attribute": "anthropic.organization.service_account.workspace.id",
+        "field": "workspace_id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.service_accounts.workspaces.remove",
+      "http_method": "delete",
+      "url": "v1/organizations/service_accounts/{serviceAccountID}/workspaces/{workspaceID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ServiceAccounts\\WorkspacesRawService",
+      "method": "remove",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [
+        "serviceAccountID"
+      ],
+      "path": {
+        "serviceAccountID": "anthropic.organization.service_account.id",
+        "workspaceID": "anthropic.organization.service_account.workspace.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.service_accounts.create",
+      "http_method": "post",
+      "url": "v1/organizations/service_accounts?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ServiceAccountsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.organization.service_account.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.service_accounts.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/service_accounts/{serviceAccountID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ServiceAccountsRawService",
+      "method": "retrieve",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [],
+      "path": {
+        "serviceAccountID": "anthropic.organization.service_account.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.service_accounts.update",
+      "http_method": "post",
+      "url": "v1/organizations/service_accounts/{serviceAccountID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ServiceAccountsRawService",
+      "method": "update",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [],
+      "path": {
+        "serviceAccountID": "anthropic.organization.service_account.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.service_accounts.archive",
+      "http_method": "post",
+      "url": "v1/organizations/service_accounts/{serviceAccountID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\ServiceAccountsRawService",
+      "method": "archive",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [],
+      "path": {
+        "serviceAccountID": "anthropic.organization.service_account.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.users.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/users/{userID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\UsersRawService",
+      "method": "retrieve",
+      "positional": [
+        "userID"
+      ],
+      "keywords": [],
+      "path": {
+        "userID": "anthropic.organization.user.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.users.update",
+      "http_method": "post",
+      "url": "v1/organizations/users/{userID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\UsersRawService",
+      "method": "update",
+      "positional": [
+        "userID"
+      ],
+      "keywords": [],
+      "path": {
+        "userID": "anthropic.organization.user.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.users.remove",
+      "http_method": "delete",
+      "url": "v1/organizations/users/{userID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\UsersRawService",
+      "method": "remove",
+      "positional": [
+        "userID"
+      ],
+      "keywords": [],
+      "path": {
+        "userID": "anthropic.organization.user.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.members.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/workspaces/{workspaceID}/members/{userID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\MembersRawService",
+      "method": "retrieve",
+      "positional": [
+        "userID"
+      ],
+      "keywords": [
+        "workspaceID"
+      ],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id",
+        "userID": "anthropic.organization.workspace.member.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.members.update",
+      "http_method": "post",
+      "url": "v1/organizations/workspaces/{workspaceID}/members/{userID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\MembersRawService",
+      "method": "update",
+      "positional": [
+        "userID"
+      ],
+      "keywords": [
+        "workspaceID"
+      ],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id",
+        "userID": "anthropic.organization.workspace.member.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.members.list",
+      "http_method": "get",
+      "url": "v1/organizations/workspaces/{workspaceID}/members?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\MembersRawService",
+      "method": "list",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.members.add",
+      "http_method": "post",
+      "url": "v1/organizations/workspaces/{workspaceID}/members?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\MembersRawService",
+      "method": "add",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": {
+        "attribute": "anthropic.organization.workspace.member.id",
+        "field": "user_id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.members.remove",
+      "http_method": "delete",
+      "url": "v1/organizations/workspaces/{workspaceID}/members/{userID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\MembersRawService",
+      "method": "remove",
+      "positional": [
+        "userID"
+      ],
+      "keywords": [
+        "workspaceID"
+      ],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id",
+        "userID": "anthropic.organization.workspace.member.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.rate_limits.list",
+      "http_method": "get",
+      "url": "v1/organizations/workspaces/{workspaceID}/rate_limits?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\RateLimitsRawService",
+      "method": "list",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.service_accounts.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/workspaces/{workspaceID}/service_accounts/{serviceAccountID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\ServiceAccountsRawService",
+      "method": "retrieve",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [
+        "workspaceID"
+      ],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id",
+        "serviceAccountID": "anthropic.organization.workspace.service_account.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.service_accounts.update",
+      "http_method": "post",
+      "url": "v1/organizations/workspaces/{workspaceID}/service_accounts/{serviceAccountID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\ServiceAccountsRawService",
+      "method": "update",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [
+        "workspaceID"
+      ],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id",
+        "serviceAccountID": "anthropic.organization.workspace.service_account.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.service_accounts.list",
+      "http_method": "get",
+      "url": "v1/organizations/workspaces/{workspaceID}/service_accounts?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\ServiceAccountsRawService",
+      "method": "list",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.service_accounts.add",
+      "http_method": "post",
+      "url": "v1/organizations/workspaces/{workspaceID}/service_accounts?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\ServiceAccountsRawService",
+      "method": "add",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": {
+        "attribute": "anthropic.organization.workspace.service_account.id",
+        "field": "service_account_id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.service_accounts.remove",
+      "http_method": "delete",
+      "url": "v1/organizations/workspaces/{workspaceID}/service_accounts/{serviceAccountID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\Workspaces\\ServiceAccountsRawService",
+      "method": "remove",
+      "positional": [
+        "serviceAccountID"
+      ],
+      "keywords": [
+        "workspaceID"
+      ],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id",
+        "serviceAccountID": "anthropic.organization.workspace.service_account.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.create",
+      "http_method": "post",
+      "url": "v1/organizations/workspaces?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\WorkspacesRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.organization.workspace.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.retrieve",
+      "http_method": "get",
+      "url": "v1/organizations/workspaces/{workspaceID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\WorkspacesRawService",
+      "method": "retrieve",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.update",
+      "http_method": "post",
+      "url": "v1/organizations/workspaces/{workspaceID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\WorkspacesRawService",
+      "method": "update",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.organization.workspaces.archive",
+      "http_method": "post",
+      "url": "v1/organizations/workspaces/{workspaceID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Organization\\WorkspacesRawService",
+      "method": "archive",
+      "positional": [
+        "workspaceID"
+      ],
+      "keywords": [],
+      "path": {
+        "workspaceID": "anthropic.organization.workspace.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.events.list",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/events?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\EventsRawService",
+      "method": "list",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.events.send",
+      "http_method": "post",
+      "url": "v1/sessions/{sessionID}/events?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\EventsRawService",
+      "method": "send",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.events.stream",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/events/stream?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\EventsRawService",
+      "method": "streamStream",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": true
+    },
+    {
+      "span": "anthropic.sessions.resources.retrieve",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/resources/{resourceID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ResourcesRawService",
+      "method": "retrieve",
+      "positional": [
+        "resourceID"
+      ],
+      "keywords": [
+        "sessionID"
+      ],
+      "path": {
+        "sessionID": "anthropic.session.id",
+        "resourceID": "anthropic.session.resource.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.resources.update",
+      "http_method": "post",
+      "url": "v1/sessions/{sessionID}/resources/{resourceID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ResourcesRawService",
+      "method": "update",
+      "positional": [
+        "resourceID"
+      ],
+      "keywords": [
+        "sessionID"
+      ],
+      "path": {
+        "sessionID": "anthropic.session.id",
+        "resourceID": "anthropic.session.resource.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.resources.list",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/resources?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ResourcesRawService",
+      "method": "list",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.resources.delete",
+      "http_method": "delete",
+      "url": "v1/sessions/{sessionID}/resources/{resourceID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ResourcesRawService",
+      "method": "delete",
+      "positional": [
+        "resourceID"
+      ],
+      "keywords": [
+        "sessionID"
+      ],
+      "path": {
+        "sessionID": "anthropic.session.id",
+        "resourceID": "anthropic.session.resource.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.resources.add",
+      "http_method": "post",
+      "url": "v1/sessions/{sessionID}/resources?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ResourcesRawService",
+      "method": "add",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": {
+        "attribute": "anthropic.session.resource.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.threads.events.list",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/threads/{threadID}/events?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\Threads\\EventsRawService",
+      "method": "list",
+      "positional": [
+        "threadID"
+      ],
+      "keywords": [
+        "sessionID"
+      ],
+      "path": {
+        "sessionID": "anthropic.session.id",
+        "threadID": "anthropic.session.thread.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.threads.events.stream",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/threads/{threadID}/stream?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\Threads\\EventsRawService",
+      "method": "streamStream",
+      "positional": [
+        "threadID"
+      ],
+      "keywords": [
+        "sessionID"
+      ],
+      "path": {
+        "sessionID": "anthropic.session.id",
+        "threadID": "anthropic.session.thread.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": true
+    },
+    {
+      "span": "anthropic.sessions.threads.retrieve",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/threads/{threadID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ThreadsRawService",
+      "method": "retrieve",
+      "positional": [
+        "threadID"
+      ],
+      "keywords": [
+        "sessionID"
+      ],
+      "path": {
+        "sessionID": "anthropic.session.id",
+        "threadID": "anthropic.session.thread.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.threads.list",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}/threads?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ThreadsRawService",
+      "method": "list",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.threads.archive",
+      "http_method": "post",
+      "url": "v1/sessions/{sessionID}/threads/{threadID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Sessions\\ThreadsRawService",
+      "method": "archive",
+      "positional": [
+        "threadID"
+      ],
+      "keywords": [
+        "sessionID"
+      ],
+      "path": {
+        "sessionID": "anthropic.session.id",
+        "threadID": "anthropic.session.thread.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.create",
+      "http_method": "post",
+      "url": "v1/sessions?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SessionsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.session.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.retrieve",
+      "http_method": "get",
+      "url": "v1/sessions/{sessionID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SessionsRawService",
+      "method": "retrieve",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.update",
+      "http_method": "post",
+      "url": "v1/sessions/{sessionID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SessionsRawService",
+      "method": "update",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.delete",
+      "http_method": "delete",
+      "url": "v1/sessions/{sessionID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SessionsRawService",
+      "method": "delete",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.sessions.archive",
+      "http_method": "post",
+      "url": "v1/sessions/{sessionID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SessionsRawService",
+      "method": "archive",
+      "positional": [
+        "sessionID"
+      ],
+      "keywords": [],
+      "path": {
+        "sessionID": "anthropic.session.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.create",
+      "http_method": "post",
+      "url": "v1/skills/{skillID}/versions?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Skills\\VersionsRawService",
+      "method": "create",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": {
+        "attribute": "anthropic.skill.version.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.retrieve",
+      "http_method": "get",
+      "url": "v1/skills/{skillID}/versions/{version}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Skills\\VersionsRawService",
+      "method": "retrieve",
+      "positional": [
+        "version"
+      ],
+      "keywords": [
+        "skillID"
+      ],
+      "path": {
+        "skillID": "anthropic.skill.id",
+        "version": "anthropic.skill.version.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.list",
+      "http_method": "get",
+      "url": "v1/skills/{skillID}/versions?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Skills\\VersionsRawService",
+      "method": "list",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.delete",
+      "http_method": "delete",
+      "url": "v1/skills/{skillID}/versions/{version}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Skills\\VersionsRawService",
+      "method": "delete",
+      "positional": [
+        "version"
+      ],
+      "keywords": [
+        "skillID"
+      ],
+      "path": {
+        "skillID": "anthropic.skill.id",
+        "version": "anthropic.skill.version.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.download",
+      "http_method": "get",
+      "url": "v1/skills/{skillID}/versions/{version}/content?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Skills\\VersionsRawService",
+      "method": "download",
+      "positional": [
+        "version"
+      ],
+      "keywords": [
+        "skillID"
+      ],
+      "path": {
+        "skillID": "anthropic.skill.id",
+        "version": "anthropic.skill.version.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.create",
+      "http_method": "post",
+      "url": "v1/skills?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SkillsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.skill.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.retrieve",
+      "http_method": "get",
+      "url": "v1/skills/{skillID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SkillsRawService",
+      "method": "retrieve",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.delete",
+      "http_method": "delete",
+      "url": "v1/skills/{skillID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\SkillsRawService",
+      "method": "delete",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.certificates.create",
+      "http_method": "post",
+      "url": "v1/tunnels/{tunnelID}/certificates?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Tunnels\\CertificatesRawService",
+      "method": "create",
+      "positional": [
+        "tunnelID"
+      ],
+      "keywords": [],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id"
+      },
+      "created": {
+        "attribute": "anthropic.tunnel.certificate.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.certificates.retrieve",
+      "http_method": "get",
+      "url": "v1/tunnels/{tunnelID}/certificates/{certificateID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Tunnels\\CertificatesRawService",
+      "method": "retrieve",
+      "positional": [
+        "certificateID"
+      ],
+      "keywords": [
+        "tunnelID"
+      ],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id",
+        "certificateID": "anthropic.tunnel.certificate.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.certificates.list",
+      "http_method": "get",
+      "url": "v1/tunnels/{tunnelID}/certificates?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Tunnels\\CertificatesRawService",
+      "method": "list",
+      "positional": [
+        "tunnelID"
+      ],
+      "keywords": [],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.certificates.archive",
+      "http_method": "post",
+      "url": "v1/tunnels/{tunnelID}/certificates/{certificateID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Tunnels\\CertificatesRawService",
+      "method": "archive",
+      "positional": [
+        "certificateID"
+      ],
+      "keywords": [
+        "tunnelID"
+      ],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id",
+        "certificateID": "anthropic.tunnel.certificate.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.create",
+      "http_method": "post",
+      "url": "v1/tunnels?beta=true",
+      "service": "Anthropic\\Services\\Beta\\TunnelsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.tunnel.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.retrieve",
+      "http_method": "get",
+      "url": "v1/tunnels/{tunnelID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\TunnelsRawService",
+      "method": "retrieve",
+      "positional": [
+        "tunnelID"
+      ],
+      "keywords": [],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.archive",
+      "http_method": "post",
+      "url": "v1/tunnels/{tunnelID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\TunnelsRawService",
+      "method": "archive",
+      "positional": [
+        "tunnelID"
+      ],
+      "keywords": [],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.reveal_token",
+      "http_method": "post",
+      "url": "v1/tunnels/{tunnelID}/reveal_token?beta=true",
+      "service": "Anthropic\\Services\\Beta\\TunnelsRawService",
+      "method": "revealToken",
+      "positional": [
+        "tunnelID"
+      ],
+      "keywords": [],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.tunnels.rotate_token",
+      "http_method": "post",
+      "url": "v1/tunnels/{tunnelID}/rotate_token?beta=true",
+      "service": "Anthropic\\Services\\Beta\\TunnelsRawService",
+      "method": "rotateToken",
+      "positional": [
+        "tunnelID"
+      ],
+      "keywords": [],
+      "path": {
+        "tunnelID": "anthropic.tunnel.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.user_profiles.create",
+      "http_method": "post",
+      "url": "v1/user_profiles?beta=true",
+      "service": "Anthropic\\Services\\Beta\\UserProfilesRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.user_profile.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.user_profiles.retrieve",
+      "http_method": "get",
+      "url": "v1/user_profiles/{userProfileID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\UserProfilesRawService",
+      "method": "retrieve",
+      "positional": [
+        "userProfileID"
+      ],
+      "keywords": [],
+      "path": {
+        "userProfileID": "anthropic.user_profile.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.user_profiles.update",
+      "http_method": "post",
+      "url": "v1/user_profiles/{userProfileID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\UserProfilesRawService",
+      "method": "update",
+      "positional": [
+        "userProfileID"
+      ],
+      "keywords": [],
+      "path": {
+        "userProfileID": "anthropic.user_profile.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.user_profiles.create_enrollment_url",
+      "http_method": "post",
+      "url": "v1/user_profiles/{userProfileID}/enrollment_url?beta=true",
+      "service": "Anthropic\\Services\\Beta\\UserProfilesRawService",
+      "method": "createEnrollmentURL",
+      "positional": [
+        "userProfileID"
+      ],
+      "keywords": [],
+      "path": {
+        "userProfileID": "anthropic.user_profile.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.credentials.create",
+      "http_method": "post",
+      "url": "v1/vaults/{vaultID}/credentials?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Vaults\\CredentialsRawService",
+      "method": "create",
+      "positional": [
+        "vaultID"
+      ],
+      "keywords": [],
+      "path": {
+        "vaultID": "anthropic.vault.id"
+      },
+      "created": {
+        "attribute": "anthropic.vault.credential.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.credentials.retrieve",
+      "http_method": "get",
+      "url": "v1/vaults/{vaultID}/credentials/{credentialID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Vaults\\CredentialsRawService",
+      "method": "retrieve",
+      "positional": [
+        "credentialID"
+      ],
+      "keywords": [
+        "vaultID"
+      ],
+      "path": {
+        "vaultID": "anthropic.vault.id",
+        "credentialID": "anthropic.vault.credential.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.credentials.update",
+      "http_method": "post",
+      "url": "v1/vaults/{vaultID}/credentials/{credentialID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Vaults\\CredentialsRawService",
+      "method": "update",
+      "positional": [
+        "credentialID"
+      ],
+      "keywords": [
+        "vaultID"
+      ],
+      "path": {
+        "vaultID": "anthropic.vault.id",
+        "credentialID": "anthropic.vault.credential.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.credentials.list",
+      "http_method": "get",
+      "url": "v1/vaults/{vaultID}/credentials?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Vaults\\CredentialsRawService",
+      "method": "list",
+      "positional": [
+        "vaultID"
+      ],
+      "keywords": [],
+      "path": {
+        "vaultID": "anthropic.vault.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.credentials.delete",
+      "http_method": "delete",
+      "url": "v1/vaults/{vaultID}/credentials/{credentialID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Vaults\\CredentialsRawService",
+      "method": "delete",
+      "positional": [
+        "credentialID"
+      ],
+      "keywords": [
+        "vaultID"
+      ],
+      "path": {
+        "vaultID": "anthropic.vault.id",
+        "credentialID": "anthropic.vault.credential.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.credentials.archive",
+      "http_method": "post",
+      "url": "v1/vaults/{vaultID}/credentials/{credentialID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Vaults\\CredentialsRawService",
+      "method": "archive",
+      "positional": [
+        "credentialID"
+      ],
+      "keywords": [
+        "vaultID"
+      ],
+      "path": {
+        "vaultID": "anthropic.vault.id",
+        "credentialID": "anthropic.vault.credential.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.credentials.mcp_oauth_validate",
+      "http_method": "post",
+      "url": "v1/vaults/{vaultID}/credentials/{credentialID}/mcp_oauth_validate?beta=true",
+      "service": "Anthropic\\Services\\Beta\\Vaults\\CredentialsRawService",
+      "method": "mcpOAuthValidate",
+      "positional": [
+        "credentialID"
+      ],
+      "keywords": [
+        "vaultID"
+      ],
+      "path": {
+        "vaultID": "anthropic.vault.id",
+        "credentialID": "anthropic.vault.credential.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.create",
+      "http_method": "post",
+      "url": "v1/vaults?beta=true",
+      "service": "Anthropic\\Services\\Beta\\VaultsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.vault.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.retrieve",
+      "http_method": "get",
+      "url": "v1/vaults/{vaultID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\VaultsRawService",
+      "method": "retrieve",
+      "positional": [
+        "vaultID"
+      ],
+      "keywords": [],
+      "path": {
+        "vaultID": "anthropic.vault.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.update",
+      "http_method": "post",
+      "url": "v1/vaults/{vaultID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\VaultsRawService",
+      "method": "update",
+      "positional": [
+        "vaultID"
+      ],
+      "keywords": [],
+      "path": {
+        "vaultID": "anthropic.vault.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.delete",
+      "http_method": "delete",
+      "url": "v1/vaults/{vaultID}?beta=true",
+      "service": "Anthropic\\Services\\Beta\\VaultsRawService",
+      "method": "delete",
+      "positional": [
+        "vaultID"
+      ],
+      "keywords": [],
+      "path": {
+        "vaultID": "anthropic.vault.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.vaults.archive",
+      "http_method": "post",
+      "url": "v1/vaults/{vaultID}/archive?beta=true",
+      "service": "Anthropic\\Services\\Beta\\VaultsRawService",
+      "method": "archive",
+      "positional": [
+        "vaultID"
+      ],
+      "keywords": [],
+      "path": {
+        "vaultID": "anthropic.vault.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.delete",
+      "http_method": "delete",
+      "url": "v1/files/{fileID}",
+      "service": "Anthropic\\Services\\FilesRawService",
+      "method": "delete",
+      "positional": [
+        "fileID"
+      ],
+      "keywords": [],
+      "path": {
+        "fileID": "anthropic.file.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.download",
+      "http_method": "get",
+      "url": "v1/files/{fileID}/content",
+      "service": "Anthropic\\Services\\FilesRawService",
+      "method": "download",
+      "positional": [
+        "fileID"
+      ],
+      "keywords": [],
+      "path": {
+        "fileID": "anthropic.file.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.retrieve_metadata",
+      "http_method": "get",
+      "url": "v1/files/{fileID}",
+      "service": "Anthropic\\Services\\FilesRawService",
+      "method": "retrieveMetadata",
+      "positional": [
+        "fileID"
+      ],
+      "keywords": [],
+      "path": {
+        "fileID": "anthropic.file.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.files.upload",
+      "http_method": "post",
+      "url": "v1/files",
+      "service": "Anthropic\\Services\\FilesRawService",
+      "method": "upload",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.file.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.create",
+      "http_method": "post",
+      "url": "v1/messages/batches",
+      "service": "Anthropic\\Services\\Messages\\BatchesRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.message.batch.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.retrieve",
+      "http_method": "get",
+      "url": "v1/messages/batches/{messageBatchID}",
+      "service": "Anthropic\\Services\\Messages\\BatchesRawService",
+      "method": "retrieve",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.delete",
+      "http_method": "delete",
+      "url": "v1/messages/batches/{messageBatchID}",
+      "service": "Anthropic\\Services\\Messages\\BatchesRawService",
+      "method": "delete",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.cancel",
+      "http_method": "post",
+      "url": "v1/messages/batches/{messageBatchID}/cancel",
+      "service": "Anthropic\\Services\\Messages\\BatchesRawService",
+      "method": "cancel",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.messages.batches.results",
+      "http_method": "get",
+      "url": "v1/messages/batches/{messageBatchID}/results",
+      "service": "Anthropic\\Services\\Messages\\BatchesRawService",
+      "method": "resultsStream",
+      "positional": [
+        "messageBatchID"
+      ],
+      "keywords": [],
+      "path": {
+        "messageBatchID": "anthropic.message.batch.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": true
+    },
+    {
+      "span": "anthropic.models.retrieve",
+      "http_method": "get",
+      "url": "v1/models/{modelID}",
+      "service": "Anthropic\\Services\\ModelsRawService",
+      "method": "retrieve",
+      "positional": [
+        "modelID"
+      ],
+      "keywords": [],
+      "path": {
+        "modelID": "anthropic.model.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.create",
+      "http_method": "post",
+      "url": "v1/skills/{skillID}/versions",
+      "service": "Anthropic\\Services\\Skills\\VersionsRawService",
+      "method": "create",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": {
+        "attribute": "anthropic.skill.version.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.retrieve",
+      "http_method": "get",
+      "url": "v1/skills/{skillID}/versions/{version}",
+      "service": "Anthropic\\Services\\Skills\\VersionsRawService",
+      "method": "retrieve",
+      "positional": [
+        "version"
+      ],
+      "keywords": [
+        "skillID"
+      ],
+      "path": {
+        "skillID": "anthropic.skill.id",
+        "version": "anthropic.skill.version.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.list",
+      "http_method": "get",
+      "url": "v1/skills/{skillID}/versions",
+      "service": "Anthropic\\Services\\Skills\\VersionsRawService",
+      "method": "list",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": null,
+      "list": true,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.versions.delete",
+      "http_method": "delete",
+      "url": "v1/skills/{skillID}/versions/{version}",
+      "service": "Anthropic\\Services\\Skills\\VersionsRawService",
+      "method": "delete",
+      "positional": [
+        "version"
+      ],
+      "keywords": [
+        "skillID"
+      ],
+      "path": {
+        "skillID": "anthropic.skill.id",
+        "version": "anthropic.skill.version.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.create",
+      "http_method": "post",
+      "url": "v1/skills",
+      "service": "Anthropic\\Services\\SkillsRawService",
+      "method": "create",
+      "positional": [],
+      "keywords": [],
+      "path": {},
+      "created": {
+        "attribute": "anthropic.skill.id",
+        "field": "id"
+      },
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.retrieve",
+      "http_method": "get",
+      "url": "v1/skills/{skillID}",
+      "service": "Anthropic\\Services\\SkillsRawService",
+      "method": "retrieve",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    },
+    {
+      "span": "anthropic.skills.delete",
+      "http_method": "delete",
+      "url": "v1/skills/{skillID}",
+      "service": "Anthropic\\Services\\SkillsRawService",
+      "method": "delete",
+      "positional": [
+        "skillID"
+      ],
+      "keywords": [],
+      "path": {
+        "skillID": "anthropic.skill.id"
+      },
+      "created": null,
+      "list": false,
+      "stream": false
+    }
+  ]
+}

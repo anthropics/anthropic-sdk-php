@@ -8,8 +8,8 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
-use Anthropic\Core\Tracing;
 use Anthropic\Core\Util;
+use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\RequestOptions;
 use OpenTelemetry\API\Trace\SpanInterface;
 use Psr\Http\Message\RequestInterface;
@@ -35,6 +35,9 @@ class RawResponse implements BaseResponse
 
     private bool $decoded = false;
     private bool $coerced = false;
+
+    /** @var (\Closure(R, mixed): R)|null */
+    private ?\Closure $transform = null;
 
     /**
      * @param NormalizedRequest $requestInfo
@@ -66,6 +69,20 @@ class RawResponse implements BaseResponse
         }
     }
 
+    /**
+     * Makes `parse()` return what `$transform` makes of the parsed body. `$transform` runs before the call span ends, so the SDK method that made the request records with it, on the span it started, what comes from the response. It also gets the decoded body that the parsed one was built from.
+     *
+     * @internal
+     *
+     * @param \Closure(R, mixed): R $transform
+     */
+    public function thenUnwrap(\Closure $transform): static
+    {
+        $this->transform = $transform;
+
+        return $this;
+    }
+
     public function getRequest(): RequestInterface
     {
         return $this->request;
@@ -86,7 +103,7 @@ class RawResponse implements BaseResponse
         if (!$this->coerced) {
             [$span, $this->span] = [$this->span, null];
             // @phpstan-ignore-next-line assign.propertyType
-            $this->coercedResponse = is_null($span) ? $this->coerce() : $this->coerceTraced($span);
+            $this->coercedResponse = is_null($span) ? $this->coerceAndTransform() : $this->coerceTraced($span);
             $this->coerced = true;
         }
 
@@ -113,7 +130,7 @@ class RawResponse implements BaseResponse
         $result = ['request' => $this->requestInfo, 'options' => $this->options, 'startTime' => $this->startTime, 'response' => $this->response];
 
         try {
-            $data = $this->coerce();
+            $data = $this->coerceAndTransform();
         } catch (\Throwable $e) {
             Tracing::endApiCallSpan($this->client, $span, [...$result, 'error' => $e]);
 
@@ -135,6 +152,16 @@ class RawResponse implements BaseResponse
         }
 
         return $this->decodedBody;
+    }
+
+    /**
+     * The response body as `coerce` returns it, or what the transform of `thenUnwrap` makes of it.
+     */
+    private function coerceAndTransform(): mixed
+    {
+        $data = $this->coerce();
+
+        return is_null($this->transform) ? $data : ($this->transform)($data, $this->getDecoded());
     }
 
     /**

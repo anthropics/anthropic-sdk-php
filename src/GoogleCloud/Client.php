@@ -29,6 +29,7 @@ use Psr\Http\Message\RequestInterface;
  * > 'global'. The derived base URL includes the project, location, and workspace ID.
  *
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ * @phpstan-import-type OpenTelemetryOptions from \Anthropic\Core\BaseClient
  */
 final class Client extends \Anthropic\Client
 {
@@ -41,6 +42,7 @@ final class Client extends \Anthropic\Client
      * @param FetchAuthTokenInterface|null $googleCredentials
      * @param (\Closure(): string)|null $tokenProvider
      * @param RequestOpts|null $requestOptions
+     * @param OpenTelemetryOptions|null $openTelemetry
      */
     public function __construct(
         ?string $project = null,
@@ -51,6 +53,7 @@ final class Client extends \Anthropic\Client
         ?\Closure $tokenProvider = null,
         private bool $skipAuth = false,
         RequestOptions|array|null $requestOptions = null,
+        array|false|null $openTelemetry = null,
     ) {
         // Env reads collocated here so the client's environment requirements
         // are discoverable in one place. Explicit "" is preserved (no ?: "").
@@ -105,6 +108,7 @@ final class Client extends \Anthropic\Client
             authToken: '',
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
+            openTelemetry: $openTelemetry,
         );
     }
 

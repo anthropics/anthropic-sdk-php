@@ -14,7 +14,9 @@ use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Core\Exceptions\RetryableException;
 use Anthropic\Core\Implementation\RawResponse;
 use Anthropic\Core\Implementation\SentRequests;
+use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\RequestOptions;
+use OpenTelemetry\API\Trace\Span;
 use OpenTelemetry\API\Trace\SpanInterface;
 use OpenTelemetry\API\Trace\TracerInterface;
 use OpenTelemetry\API\Trace\TracerProviderInterface;
@@ -61,22 +63,22 @@ abstract class BaseClient
     private UriInterface $baseUrl;
 
     /**
-     * Whether this client's spans are enabled, as its option and `ANTHROPIC_OPEN_TELEMETRY` said when it was built.
+     * Whether this client's spans are enabled, as its option said when it was built, or `ANTHROPIC_OPEN_TELEMETRY` for a client that is given no option.
      */
     private bool $traces;
 
     /**
-     * Whether this client's requests carry the trace context of their call span, as its option and `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION` said when it was built.
+     * Whether this client's requests carry the trace context of their call span, as its option said when it was built, or `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION` for a client that is given no option.
      */
     private bool $propagates;
 
     /**
-     * Whether this client's spans carry content, as its option said when it was built.
+     * Whether this client's spans carry content, as its option said when it was built, or `ANTHROPIC_OPEN_TELEMETRY_TRACES_CONTENT_MODE` for a client that is given no option.
      */
     private bool $recordsContent;
 
     /**
-     * The most bytes that the content of one of this client's spans holds, as its option and `ANTHROPIC_OPEN_TELEMETRY_TRACES_MAX_CONTENT_BYTES` said when it was built, or null for the SDK's own bound.
+     * The most bytes that the content of one of this client's spans holds, as its option said when it was built, or `ANTHROPIC_OPEN_TELEMETRY_TRACES_MAX_CONTENT_BYTES` for a client that is given no option, or null for the SDK's own bound.
      */
     private ?int $maxContentBytes;
 
@@ -84,7 +86,7 @@ abstract class BaseClient
      * @internal
      *
      * @param array<string,string|int|list<string|int>|null> $headers
-     * @param OpenTelemetryOptions|null $openTelemetry OpenTelemetry tracing of this client's API calls. Each call emits a span when the application has registered a tracer provider with the OpenTelemetry API. `false`, short for `['traces' => false]`, disables the spans, and `['traces' => false]` is itself short for `['traces' => ['enabled' => false]]`. `traces.contentMode` set to `'content'` adds the content of requests and responses to the spans, within `traces.maxContentBytes` bytes for each span when it is set. `propagation` set to `false` sends the requests without the trace context of their span, for an application whose HTTP client instrumentation already propagates it, so that a request does not carry it twice. The environment variables `ANTHROPIC_OPEN_TELEMETRY`, `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION`, `ANTHROPIC_OPEN_TELEMETRY_TRACES_CONTENT_MODE` and `ANTHROPIC_OPEN_TELEMETRY_TRACES_MAX_CONTENT_BYTES` apply to a client that leaves `traces.enabled`, `propagation`, `traces.contentMode` or `traces.maxContentBytes` unset. The client reads them once, when it is built.
+     * @param OpenTelemetryOptions|null $openTelemetry OpenTelemetry tracing of this client's API calls. Each call emits a span when the application has registered a tracer provider with the OpenTelemetry API. `false`, short for `['traces' => false]`, disables the spans, and `['traces' => false]` is itself short for `['traces' => ['enabled' => false]]`. `traces.contentMode` set to `'content'` adds the content of requests and responses to the spans, within `traces.maxContentBytes` bytes for each span when it is set. `propagation` set to `false` sends the requests without the trace context of their span, for an application whose HTTP client instrumentation already propagates it, so that a request does not carry it twice. The environment variables `ANTHROPIC_OPEN_TELEMETRY`, `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION`, `ANTHROPIC_OPEN_TELEMETRY_TRACES_CONTENT_MODE` and `ANTHROPIC_OPEN_TELEMETRY_TRACES_MAX_CONTENT_BYTES` set `traces.enabled`, `propagation`, `traces.contentMode` and `traces.maxContentBytes` for a client that is given no option, which reads them once, when it is built. A client that is given the option does not read them: what the option leaves unset has its default.
      */
     public function __construct(
         protected array $headers,
@@ -101,22 +103,6 @@ abstract class BaseClient
         $this->propagates = Tracing::propagates($openTelemetry);
         $this->recordsContent = Tracing::contentEnabled($openTelemetry);
         $this->maxContentBytes = Tracing::maxContentBytes($openTelemetry);
-    }
-
-    /**
-     * @internal
-     */
-    public function nextPageUrl(string $reference): string
-    {
-        $base = $this->baseUrl;
-        $uri = Util::resolveUri($base, reference: $reference);
-        // The follow-up request carries this client's credentials, so a response must not steer it to another
-        // scheme, host, port or userinfo. The message leaves the URL out because it may hold a token.
-        if ($uri->getScheme() !== $base->getScheme() || $uri->getAuthority() !== $base->getAuthority()) {
-            throw new \RuntimeException('The next page URL points away from the client base URL');
-        }
-
-        return $uri->withFragment('')->__toString();
     }
 
     /**
@@ -157,11 +143,26 @@ abstract class BaseClient
     public function tracer(): ?TracerInterface
     {
         try {
-            return $this->traces ? Tracing::tracer($this->openTelemetry) : null;
+            return $this->traces ? Tracing::clientTracer($this) : null;
         } catch (\Throwable) {
             // A tracer provider that throws must not fail the API call, which runs as if this client's spans were disabled.
             return null;
         }
+    }
+
+    /**
+     * @internal
+     *
+     * The headers that `request()` sends for a call with `$headers` and `$options`, merged with this client's own. An SDK method that starts its own call span reads them first, since a span starts with everything known of its call
+     *
+     * @param array<string,mixed> $headers
+     *
+     * @return array<string,string|list<string>|null>
+     */
+    public function mergedHeaders(array $headers, RequestOptions $options): array
+    {
+        // @phpstan-ignore argument.type
+        return $this->buildRequest(method: 'get', path: '', query: [], headers: $headers, body: null, opts: $options)[0]['headers'];
     }
 
     /**
@@ -174,6 +175,22 @@ abstract class BaseClient
     public function mergedOptions(RequestOptions|array|null $options): RequestOptions
     {
         return RequestOptions::parse($this->options, $options);
+    }
+
+    /**
+     * @internal
+     */
+    public function nextPageUrl(string $reference): string
+    {
+        $base = $this->baseUrl;
+        $uri = Util::resolveUri($base, reference: $reference);
+        // The follow-up request carries this client's credentials, so a response must not steer it to another
+        // scheme, host, port or userinfo. The message leaves the URL out because it may hold a token.
+        if ($uri->getScheme() !== $base->getScheme() || $uri->getAuthority() !== $base->getAuthority()) {
+            throw new \RuntimeException('The next page URL points away from the client base URL');
+        }
+
+        return $uri->withFragment('')->__toString();
     }
 
     /**
@@ -199,46 +216,58 @@ abstract class BaseClient
         ?string $stream = null,
         RequestOptions|array|null $options = [],
     ): BaseResponse {
-        [$req, $opts, $uri] = $this->buildRequest(
-            method: $method,
-            // @phpstan-ignore argument.type
-            path: $path,
-            query: $query,
-            // @phpstan-ignore argument.type
-            headers: $headers,
-            body: $body,
-            // @phpstan-ignore argument.type
-            opts: $options,
-        );
-        ['method' => $method, 'headers' => $headers, 'body' => $data] = $req;
-        assert(!is_null($opts->requestFactory));
-        $request = $opts->requestFactory->createRequest($method, uri: $uri);
-        $request = Util::withSetHeaders($request, headers: $headers);
-
-        // A file part that reads from a pipe or socket can be encoded only once, so such a request gets a single
-        // attempt: whatever that attempt throws is surfaced instead of retried, even when retries were asked for.
-        $sendOpts = Util::hasNonSeekableFilePart($data) ? $opts->withMaxRetries(0) : $opts;
-
         $startTime = hrtime(true);
         // What the SDK method that makes the request says of its call, for the call span. A request that was not made through an SDK method says nothing, and has no span.
-        $call = $opts->apiCall();
-        $tracer = $this->tracer();
-        $span = is_null($tracer) ? null : Tracing::startApiCallSpan($tracer, $call?->name, [...Tracing::requestAttributes($method, $call?->route), ...($call->attributes ?? []), ...Tracing::callSpanAttributes($this->baseUrl)], $this->propagates);
+        $call = $options instanceof RequestOptions ? $options->apiCall() : null;
+        // A span the SDK method started is this call's to end, whatever fails, even before a request exists.
+        $span = $call?->span;
+        // The span belongs to this request only. The options go on to the middleware, and to the request for a later page of a list, whose span has the name, the route, the query names and the resource IDs too.
+        $call = $call?->withoutSpan();
         $scope = null;
 
-        // The call span is the current span while the attempts run, so that the application's HTTP instrumentation parents their spans to it.
         try {
-            $scope = $span?->activate();
-        } catch (\Throwable) {
-            // A context storage that throws must not fail the API call: the attempts run with the span not current.
-        }
+            [$req, $opts, $uri] = $this->buildRequest(
+                method: $method,
+                // @phpstan-ignore argument.type
+                path: $path,
+                query: $query,
+                // @phpstan-ignore argument.type
+                headers: $headers,
+                body: $body,
+                // @phpstan-ignore argument.type
+                opts: $options,
+            );
+            ['method' => $method, 'headers' => $headers, 'body' => $data] = $req;
+            if (!is_null($span)) {
+                $opts = $opts->withApiCall($call);
+            }
+            assert(!is_null($opts->requestFactory));
+            $request = $opts->requestFactory->createRequest($method, uri: $uri);
+            $request = Util::withSetHeaders($request, headers: $headers);
 
-        try {
+            // A file part that reads from a pipe or socket can be encoded only once, so such a request gets a single
+            // attempt: whatever that attempt throws is surfaced instead of retried, even when retries were asked for.
+            $sendOpts = Util::hasNonSeekableFilePart($data) ? $opts->withMaxRetries(0) : $opts;
+
+            if (is_null($span)) {
+                $tracer = $this->tracer();
+                $span = is_null($tracer) ? null : Tracing::startApiCallSpan($tracer, $call?->name, [...Tracing::requestAttributes($method, $call?->route), ...($call->attributes ?? []), ...Tracing::apiCallSpanAttributes($this, $opts)], $this->propagates);
+            }
+
+            // The call span is the current span while the attempts run, so that the application's HTTP instrumentation parents their spans to it.
+            try {
+                $scope = $span?->activate();
+            } catch (\Throwable) {
+                // A context storage that throws must not fail the API call: the attempts run with the span not current.
+            }
+
             // @phpstan-ignore-next-line argument.type
             $rsp = $this->sendRequest($sendOpts, req: $request, data: $data, redirectCount: 0, retryCount: 0, crossOrigin: false, span: $span);
         } catch (\Throwable $e) {
             if (!is_null($span)) {
-                Tracing::endApiCallSpan($this, $span, ['request' => $req, 'options' => $opts, 'startTime' => $startTime, 'error' => $e]);
+                // A request that could not be built is recorded with what the method passed in.
+                $req ??= ['method' => $method, 'path' => '', 'query' => $query, 'headers' => [], 'body' => $body];
+                Tracing::endApiCallSpan($this, $span, ['request' => $req, 'options' => ($opts ?? $this->options)->withApiCall($call), 'startTime' => $startTime, 'error' => $e]);
             }
 
             throw $e;
@@ -262,7 +291,7 @@ abstract class BaseClient
      *
      * @internal
      */
-    protected function getBaseUrl(): UriInterface
+    public function getBaseUrl(): UriInterface
     {
         return $this->baseUrl;
     }
@@ -546,7 +575,24 @@ abstract class BaseClient
                 Tracing::traceRequest($span, $req, $call->query ?? [], $spanRequests, recordsContent: Tracing::recordsContent($this), contentQueryNames: $call->contentQuery ?? []);
             }
 
-            return $transporter->sendRequest($req);
+            // Middleware can send a request once `request()` has returned, as a fallback request is sent while the application reads the stream: the call span is made current for it too.
+            $scope = null;
+
+            try {
+                $scope = is_null($span) || Span::getCurrent() === $span ? null : $span->activate();
+            } catch (\Throwable) {
+                // A context storage that throws must not fail the API call.
+            }
+
+            try {
+                return $transporter->sendRequest($req);
+            } finally {
+                try {
+                    $scope?->detach();
+                } catch (\Throwable) {
+                    // Nor may it replace the response or the exception of the request.
+                }
+            }
         };
 
         // RequestOptions::parse merges by replacement, but middleware

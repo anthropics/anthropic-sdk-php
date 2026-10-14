@@ -6,7 +6,7 @@
 
 * **api:** add execution_identity to Managed Agents agents
 * **api:** add organization_type_not_supported error to spend limit lists
-* **client:** add OpenTelemetry spans for API calls
+* **client:** OpenTelemetry tracing for API calls, on by default: each call emits a span once the application has registered a tracer provider, and its requests carry the trace context in the headers that the registered propagator writes, such as `traceparent`. Adds a dependency on `open-telemetry/api` (`^1.0`). `openTelemetry: false` or `ANTHROPIC_OPEN_TELEMETRY=false` turns both off; `openTelemetry: ['propagation' => false]` or `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION=false` turns off the headers alone, and the variables apply only to a client that is given no `openTelemetry` option
 
 
 ### Bug Fixes

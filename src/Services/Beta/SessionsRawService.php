@@ -76,6 +76,7 @@ final class SessionsRawService implements SessionsRawContract
         $header_params = [
             'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
         ];
+        $agent = $parsed['agent'] ?? null;
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -95,6 +96,10 @@ final class SessionsRawService implements SessionsRawContract
             )->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.create',
                 route: '/v1/sessions',
+                attributes: [
+                    'gen_ai.agent.id' => is_array($agent) ? ($agent['id'] ?? null) : $agent,
+                    'anthropic.session.environment.id' => $parsed['environment_id'] ?? null,
+                ],
                 createdId: 'anthropic.session.id',
             )),
             convert: BetaManagedAgentsSession::class,
