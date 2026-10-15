@@ -79,7 +79,7 @@ final class DreamCreateParams implements BaseModel
     public BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting|null $outputBehavior;
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
@@ -203,7 +203,7 @@ final class DreamCreateParams implements BaseModel
     }
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
      */

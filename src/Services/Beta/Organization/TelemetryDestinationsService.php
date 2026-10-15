@@ -73,7 +73,7 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
      *
      * Reserved names are rejected, for example `host`, `cookie`, `user-agent`, and names that start with `content-`, `proxy-`, `x-forwarded-`, or `anthropic-`. For this check, `_` in a name counts as `-`.
      * @param TelemetryDestinationTracesParams|TelemetryDestinationTracesParamsShape $traces Body param: The settings for the traces that the destination receives. If you leave it out, every setting takes its default.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -112,7 +112,7 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
      * See the [OpenTelemetry export guide](https://platform.claude.com/docs/en/manage-claude/opentelemetry#delivery-and-health) to learn how the API delivers spans and when it disables a destination.
      *
      * @param string $destinationID ID of the destination (`tdst_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -160,7 +160,7 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
      * @param TelemetryDestinationWorkspacesParamsShape $workspaces Body param: The new workspace scope, in the same form as on create. The field can't be `null`.
      *
      * The API refuses an update that changes the type or sends `workspace_ids` while the destination's list has more than 750 workspaces. Remove workspaces one at a time until 750 or fewer remain, then send the update again.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -206,7 +206,7 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
      * @param list<string> $workspaceIDs Query param: Return only the destinations that cover at least one of these workspaces (`wrkspc_...`).
      *
      * Send at most 100 IDs, as `workspace_ids[]`. A destination covers a workspace when its `workspaces.type` is `all`, when its `include` list has the workspace, or when its `exclude` list doesn't have it. Destinations in either state can match. An ID that isn't the ID of one of the organization's workspaces doesn't match any destination, not even one whose type is `all`.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<TelemetryDestination>
@@ -245,7 +245,7 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
      * See the [OpenTelemetry export guide](https://platform.claude.com/docs/en/manage-claude/opentelemetry#delivery-and-health) to learn more about managing a destination.
      *
      * @param string $destinationID ID of the destination (`tdst_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -269,7 +269,7 @@ final class TelemetryDestinationsService implements TelemetryDestinationsContrac
      * Send one test span, named `anthropic.test`, to the destination with its registered headers, once and without retries, and report the destination's answer. The response is 200 whether or not the destination answered with a 2xx status: its `result` has the type `success`, or the type `failure` and the reason in `error`. The destination's configuration, `state` and `delivery_health` do not change. A disabled destination can be tested too. Wait 10 seconds between tests of one destination; a request that comes sooner may be answered with status 429.
      *
      * @param string $destinationID ID of the destination to test (starts with `tdst_`)
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

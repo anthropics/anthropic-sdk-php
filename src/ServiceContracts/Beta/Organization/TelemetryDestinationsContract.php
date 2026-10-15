@@ -44,7 +44,7 @@ interface TelemetryDestinationsContract
      *
      * Reserved names are rejected, for example `host`, `cookie`, `user-agent`, and names that start with `content-`, `proxy-`, `x-forwarded-`, or `anthropic-`. For this check, `_` in a name counts as `-`.
      * @param TelemetryDestinationTracesParams|TelemetryDestinationTracesParamsShape $traces Body param: The settings for the traces that the destination receives. If you leave it out, every setting takes its default.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -63,7 +63,7 @@ interface TelemetryDestinationsContract
      * @api
      *
      * @param string $destinationID ID of the destination (`tdst_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -96,7 +96,7 @@ interface TelemetryDestinationsContract
      * @param TelemetryDestinationWorkspacesParamsShape $workspaces Body param: The new workspace scope, in the same form as on create. The field can't be `null`.
      *
      * The API refuses an update that changes the type or sends `workspace_ids` while the destination's list has more than 750 workspaces. Remove workspaces one at a time until 750 or fewer remain, then send the update again.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -121,7 +121,7 @@ interface TelemetryDestinationsContract
      * @param list<string> $workspaceIDs Query param: Return only the destinations that cover at least one of these workspaces (`wrkspc_...`).
      *
      * Send at most 100 IDs, as `workspace_ids[]`. A destination covers a workspace when its `workspaces.type` is `all`, when its `include` list has the workspace, or when its `exclude` list doesn't have it. Destinations in either state can match. An ID that isn't the ID of one of the organization's workspaces doesn't match any destination, not even one whose type is `all`.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<TelemetryDestination>
@@ -140,7 +140,7 @@ interface TelemetryDestinationsContract
      * @api
      *
      * @param string $destinationID ID of the destination (`tdst_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -155,7 +155,7 @@ interface TelemetryDestinationsContract
      * @api
      *
      * @param string $destinationID ID of the destination to test (starts with `tdst_`)
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
