@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.59.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.58.0...v0.59.0) (2026-10-14)
+## [0.59.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.58.0...v0.59.0) (2026-10-15)
 
 ### Features
 
@@ -11,6 +11,11 @@
 ### Chores
 
 * **ci:** speed up breaking change detection
+
+
+### Documentation
+
+* **api:** note that some models need a beta header to use speed
 
 ## [0.58.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.57.0...v0.58.0) (2026-10-14)
 
