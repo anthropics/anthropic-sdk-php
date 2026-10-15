@@ -11,6 +11,7 @@ use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Client;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\AnthropicException;
+use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Core\Exceptions\InternalServerException;
 use Anthropic\Core\Util;
 use Anthropic\Lib\Helpers\StainlessHelperHeader;
@@ -19,6 +20,7 @@ use Anthropic\Lib\Middleware\RefusalFallbackMiddleware;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -611,6 +613,183 @@ class RefusalFallbackMiddlewareTest extends TestCase
         $this->assertArrayNotHasKey('fallback_credit_token', self::bodyOf($requests[2]));
     }
 
+    #[DataProvider('rateLimitStatuses')]
+    public function testARateLimitedFastHopIsResentOnceWithoutSpeed(int $status): void
+    {
+        $rejected = self::error($status);
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse($rejected);
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $message = $this->create($this->client(), requestOptions: ['maxRetries' => 0], speed: 'fast');
+
+        $this->assertSame('end_turn', $message->stopReason);
+        $this->assertSame(self::FALLBACK, $message->model);
+        $this->assertFalse($rejected->getBody()->isReadable(), 'the rejected response is released');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(3, $requests);
+        $hop = self::bodyOf($requests[1]);
+        $this->assertSame(self::FALLBACK, $hop['model']);
+        $this->assertSame('fast', $hop['speed']);
+        $this->assertSame(self::creditToken('tok_1'), $hop['fallback_credit_token']);
+
+        $resend = self::bodyOf($requests[2]);
+        $this->assertArrayNotHasKey('speed', $resend);
+        $this->assertEquals($hop, [...$resend, 'speed' => 'fast']);
+    }
+
+    /** @return iterable<string,array{int}> */
+    public static function rateLimitStatuses(): iterable
+    {
+        yield '429' => [429];
+
+        yield '529' => [529];
+    }
+
+    /**
+     * @param array{speed?: 'fast'} $entry
+     * @param 'fast'|'standard'|null $speed
+     * @param int $hops requests the fallback entry receives
+     */
+    #[DataProvider('hopsThatKeepTheirSpeed')]
+    public function testAFailedHopIsNotResentWithoutSpeed(array $entry, ?string $speed, int $status, int $hops): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        foreach (range(1, $hops) as $_) {
+            $this->transporter->addResponse(self::error($status));
+        }
+        $middleware = new RefusalFallbackMiddleware([['model' => self::FALLBACK, ...$entry]]);
+
+        try {
+            $this->create($this->client($middleware), requestOptions: ['maxRetries' => 0], speed: $speed);
+            $this->fail('Expected APIStatusException to be thrown');
+        } catch (APIStatusException $e) {
+            $this->assertSame($status, $e->status);
+        }
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(1 + $hops, $requests);
+        foreach (array_slice($requests, offset: 1) as $request) {
+            $this->assertSame($speed, self::bodyOf($request)['speed'] ?? null);
+        }
+    }
+
+    /** @return iterable<string,array{array{speed?: 'fast'}, 'fast'|'standard'|null, int, int}> */
+    public static function hopsThatKeepTheirSpeed(): iterable
+    {
+        yield 'the entry sets fast, 429' => [['speed' => 'fast'], 'fast', 429, 1];
+
+        yield 'the entry sets fast, 529' => [['speed' => 'fast'], 'fast', 529, 1];
+
+        yield 'the request has no speed' => [[], null, 429, 1];
+
+        yield 'the request is standard' => [[], 'standard', 429, 1];
+
+        yield '400, re-sent without the token only' => [[], 'fast', 400, 2];
+
+        yield '500' => [[], 'fast', 500, 1];
+    }
+
+    public function testAFastHopIsResentWithoutSpeedAtMostOnce(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::error(429));
+        $this->transporter->addResponse(self::error(429));
+        $state = new BetaFallbackState;
+
+        try {
+            $this->create(
+                $this->client(),
+                requestOptions: ['maxRetries' => 0, 'fallbackState' => $state],
+                speed: 'fast',
+            );
+            $this->fail('Expected APIStatusException to be thrown');
+        } catch (APIStatusException $e) {
+            $this->assertSame(429, $e->status);
+        }
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(3, $requests);
+        $this->assertArrayNotHasKey('speed', self::bodyOf($requests[2]));
+        $this->assertSame(0, $state->index);
+    }
+
+    /**
+     * @param list<int> $statuses what the fallback entry answers before it serves
+     * @param list<array{'fast'|null, bool}> $expected each request to the entry, as [speed, has a credit token]
+     */
+    #[DataProvider('tokenlessResends')]
+    public function testSpeedIsDroppedOncePerEntryAndStaysDropped(array $statuses, array $expected): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_rejected'));
+        foreach ($statuses as $status) {
+            $this->transporter->addResponse(self::error($status));
+        }
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $message = $this->create($this->client(), requestOptions: ['maxRetries' => 0], speed: 'fast');
+
+        $this->assertSame('end_turn', $message->stopReason);
+        $hops = array_map(self::bodyOf(...), array_slice($this->transporter->getRequests(), offset: 1));
+        $this->assertSame($expected, array_map(
+            static fn (array $hop): array => [$hop['speed'] ?? null, array_key_exists('fallback_credit_token', $hop)],
+            $hops,
+        ));
+        foreach ($hops as $hop) {
+            $this->assertSame(self::FALLBACK, $hop['model']);
+        }
+    }
+
+    /** @return iterable<string,array{list<int>, list<array{'fast'|null, bool}>}> */
+    public static function tokenlessResends(): iterable
+    {
+        yield '429, then 400' => [[429, 400], [['fast', true], [null, true], [null, false]]];
+
+        yield '400, then 429' => [[400, 429], [['fast', true], ['fast', false], [null, false]]];
+    }
+
+    public function testARateLimitedFastRequestPinnedToAFallbackIsResentWithoutSpeed(): void
+    {
+        $this->transporter->addResponse(self::error(429));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+        $state = new BetaFallbackState;
+        $state->index = 0;
+        $client = $this->client();
+        $requestOptions = ['maxRetries' => 0, 'fallbackState' => $state];
+
+        $message = $this->create($client, requestOptions: $requestOptions, speed: 'fast');
+        $this->create($client, requestOptions: $requestOptions, speed: 'fast');
+
+        $this->assertSame(self::FALLBACK, $message->model);
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(3, $requests);
+        $pinned = self::bodyOf($requests[0]);
+        $this->assertSame(self::FALLBACK, $pinned['model']);
+        $this->assertSame('fast', $pinned['speed']);
+        $resend = self::bodyOf($requests[1]);
+        $this->assertArrayNotHasKey('speed', $resend);
+        $this->assertEquals($pinned, [...$resend, 'speed' => 'fast']);
+        $this->assertEquals($pinned, self::bodyOf($requests[2]), 'the next request starts fast again');
+    }
+
+    public function testARateLimitedFastPrimaryIsNotResent(): void
+    {
+        $this->transporter->addResponse(self::error(429));
+
+        try {
+            $this->create($this->client(), requestOptions: ['maxRetries' => 0], speed: 'fast');
+            $this->fail('Expected APIStatusException to be thrown');
+        } catch (APIStatusException $e) {
+            $this->assertSame(429, $e->status);
+        }
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $this->assertSame(self::PRIMARY, self::bodyOf($requests[0])['model']);
+    }
+
     public function testHistorySeamsStripFromTheWireAndPinNothing(): void
     {
         $this->transporter->addResponse(self::message(model: self::PRIMARY));
@@ -986,6 +1165,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
      * @param RequestOptionShape|null $requestOptions
      * @param BetaThinkingConfigParamShape|null $thinking
      * @param BetaOutputConfig|BetaOutputConfigShape|null $outputConfig
+     * @param 'fast'|'standard'|null $speed
      */
     private function create(
         Client $client,
@@ -995,6 +1175,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
         ?array $requestOptions = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaOutputConfig|array|null $outputConfig = null,
+        ?string $speed = null,
     ): BetaMessage {
         return $client->beta->messages->create(
             maxTokens: 1024,
@@ -1003,6 +1184,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
             fallbackCreditToken: $fallbackCreditToken,
             fallbacks: $fallbacks,
             outputConfig: $outputConfig,
+            speed: $speed,
             thinking: $thinking,
             requestOptions: $requestOptions,
         );
@@ -1093,6 +1275,11 @@ class RefusalFallbackMiddlewareTest extends TestCase
             ],
             'usage' => ['input_tokens' => 1, 'output_tokens' => 0],
         ]);
+    }
+
+    private static function error(int $status): ResponseInterface
+    {
+        return self::json(['type' => 'error', 'error' => ['type' => 'api_error', 'message' => 'rejected']], status: $status);
     }
 
     /** @param array<string,mixed> $body */

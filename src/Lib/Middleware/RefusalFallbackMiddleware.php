@@ -45,6 +45,11 @@ use Psr\Http\Message\StreamInterface;
  * turns skip models that already refused — explicit-state pinning only;
  * history is never consulted.
  *
+ * A `speed: fast` request that falls back to an entry with no `speed`, and is
+ * rejected there with a 429 or 529, is retried once on that entry without
+ * `speed`, as is any later retry of that entry for the same request. Set
+ * `speed` to `fast` on the entry to keep it fast-only.
+ *
  * Streaming requests are retried in place: the retry's events are spliced
  * onto the open stream behind a `fallback` seam block, with one
  * message_start, monotonic block indices, and a merged usage.iterations
@@ -352,7 +357,10 @@ final class RefusalFallbackMiddleware implements Middleware
         int $index,
         ?BetaFallbackState $state,
     ): ResponseInterface {
-        $response = $next($this->withBody($request, body: $attemptBody));
+        $pinned = $this->fallbacks[$index] ?? null;
+        $response = is_null($pinned)
+            ? $next($this->withBody($request, body: $attemptBody))
+            : $this->sendHop($request, next: $next, body: $attemptBody, entry: $pinned)[0];
 
         $seams = [];
         $ledger = [];
@@ -391,7 +399,7 @@ final class RefusalFallbackMiddleware implements Middleware
                 $legBody['fallback_credit_token'] = self::creditTokenParam($token);
             }
             $response->getBody()->close();
-            $response = $next($this->withBody($request, body: $legBody));
+            [$response, $entry] = $this->sendHop($request, next: $next, body: $legBody, entry: $entry);
 
             if (null !== $token && 400 === $response->getStatusCode()) {
                 // The token contract's documented recovery: one re-send
@@ -399,7 +407,7 @@ final class RefusalFallbackMiddleware implements Middleware
                 // The seam block is tied to the redemption, so the recovered
                 // hop carries none — matching the server's stitching.
                 $response->getBody()->close();
-                $response = $next($this->withBody($request, body: self::mergeEntry($body, entry: $entry)));
+                [$response] = $this->sendHop($request, next: $next, body: self::mergeEntry($body, entry: $entry), entry: $entry);
             } elseif (null !== $token && 200 === $response->getStatusCode()) {
                 // A redeemed hop mirrors the server-side stitched envelope: a
                 // fallback seam block is prepended to the serving content.
@@ -413,6 +421,39 @@ final class RefusalFallbackMiddleware implements Middleware
         }
 
         return [] === $seams ? $response : $this->withSeamsPrepended($response, seams: $seams, ledger: $ledger, servingModel: $prevModel);
+    }
+
+    /**
+     * Sends one hop, re-sending a rate-limited fast one once. `speed` is
+     * removed rather than set to `standard`: a model without fast mode rejects
+     * any explicit `speed`.
+     *
+     * @param \Closure(RequestInterface): ResponseInterface $next
+     * @param array<string,mixed> $body
+     * @param array<string,mixed> $entry the chain entry `$body` was merged from
+     *
+     * @return array{ResponseInterface, array<string,mixed>} the response, and the entry a later re-send of this hop merges: it unsets `speed` once that was dropped
+     */
+    private function sendHop(
+        RequestInterface $request,
+        \Closure $next,
+        array $body,
+        array $entry,
+    ): array {
+        $response = $next($this->withBody($request, body: $body));
+
+        if (
+            array_key_exists('speed', $entry)
+            || 'fast' !== ($body['speed'] ?? null)
+            || !in_array($response->getStatusCode(), [429, 529], strict: true)
+        ) {
+            return [$response, $entry];
+        }
+
+        $response->getBody()->close();
+        unset($body['speed']);
+
+        return [$next($this->withBody($request, body: $body)), [...$entry, 'speed' => null]];
     }
 
     /**
@@ -501,9 +542,10 @@ final class RefusalFallbackMiddleware implements Middleware
         ?BetaFallbackState $state,
     ): ResponseInterface {
         // @phpstan-ignore-next-line argument.type
-        $send = fn (array $b): ResponseInterface => $next($this->withBody($request, body: $b));
+        $send = fn (array $b, array $entry): array => $this->sendHop($request, next: $next, body: $b, entry: $entry);
 
-        $response = $send($attemptBody);
+        $pinned = $this->fallbacks[$startIndex] ?? null;
+        $response = is_null($pinned) ? $next($this->withBody($request, body: $attemptBody)) : $send($attemptBody, $pinned)[0];
         if (!self::isEventStream($response)) {
             return $response;
         }
@@ -605,7 +647,7 @@ final class RefusalFallbackMiddleware implements Middleware
 
             private string $out = '';
 
-            /** @var callable(array<string,mixed>): ResponseInterface */
+            /** @var callable(array<string,mixed>, array<string,mixed>): array{ResponseInterface, array<string,mixed>} */
             private $send;
 
             /** @var callable(int,mixed): void */
@@ -616,7 +658,7 @@ final class RefusalFallbackMiddleware implements Middleware
              *                                  already armed/scrubbed by the middleware
              * @param list<array<string,mixed>> $fallbacks
              * @param int $next index of the first chain entry a refusal would try
-             * @param callable(array<string,mixed>): ResponseInterface $send issues one armed hop request through the chain
+             * @param callable(array<string,mixed>, array<string,mixed>): array{ResponseInterface, array<string,mixed>} $send issues one armed hop request, built from the given entry, through the chain; also returns the entry to re-send the hop from
              * @param callable(int,mixed): void $onHop pin + onFallback bookkeeping, called as each hop is attempted
              */
             public function __construct(
@@ -825,7 +867,7 @@ final class RefusalFallbackMiddleware implements Middleware
                     ++$this->next;
                     ++$attempts;
 
-                    [$response, $lastStatus] = $this->tryHop($entry, continuation: $this->continuation);
+                    [$response, $lastStatus, $entry] = $this->tryHop($entry, continuation: $this->continuation);
                     if (!is_null($response)) {
                         $this->engageWith($response, entry: $entry, continuation: $this->continuation);
 
@@ -845,7 +887,7 @@ final class RefusalFallbackMiddleware implements Middleware
                         : $this->continuation;
 
                     if ($this->lastClaimCount > 0) {
-                        [$response, $lastStatus] = $this->tryHop($lastEntry, continuation: $trimmed);
+                        [$response, $lastStatus, $lastEntry] = $this->tryHop($lastEntry, continuation: $trimmed);
                         if (!is_null($response)) {
                             $this->engageWith($response, entry: $lastEntry, continuation: $trimmed);
 
@@ -857,7 +899,7 @@ final class RefusalFallbackMiddleware implements Middleware
                         // the reprice is lost; this leg is the only one allowed to
                         // drop fallback_credit_token
                         $this->token = '';
-                        [$response, $lastStatus] = $this->tryHop($lastEntry, continuation: $trimmed);
+                        [$response, $lastStatus, $lastEntry] = $this->tryHop($lastEntry, continuation: $trimmed);
                         if (!is_null($response)) {
                             $this->engageWith($response, entry: $lastEntry, continuation: $trimmed);
 
@@ -873,12 +915,13 @@ final class RefusalFallbackMiddleware implements Middleware
              * Issues one hop attempt; a null response means the hop failed over
              * HTTP at the returned status (0 for transport failures) — the token
              * and continuation carry unchanged to the next entry, and no seam is
-             * emitted for a hop that never engaged.
+             * emitted for a hop that never engaged. The returned entry is the one
+             * to re-send this hop from.
              *
              * @param array<string,mixed> $entry
              * @param list<mixed> $continuation
              *
-             * @return array{ResponseInterface|null, int}
+             * @return array{ResponseInterface|null, int, array<string,mixed>}
              */
             private function tryHop(array $entry, array $continuation): array
             {
@@ -894,19 +937,19 @@ final class RefusalFallbackMiddleware implements Middleware
                 }
 
                 try {
-                    $response = ($this->send)($body);
+                    [$response, $entry] = ($this->send)($body, $entry);
                 } catch (ClientExceptionInterface) {
-                    return [null, 0];
+                    return [null, 0, $entry];
                 }
 
                 if (!RefusalFallbackMiddleware::isEventStream($response)) {
                     $status = $response->getStatusCode();
                     $response->getBody()->close();
 
-                    return [null, $status];
+                    return [null, $status, $entry];
                 }
 
-                return [$response, $response->getStatusCode()];
+                return [$response, $response->getStatusCode(), $entry];
             }
 
             /** @param array<string,mixed> $entry */
