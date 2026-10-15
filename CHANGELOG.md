@@ -6,6 +6,11 @@
 
 * **client:** yield server-sent events with unrecognized event names
 
+
+### Chores
+
+* **tests:** cover trace context propagation and dropped raw responses
+
 ## [0.59.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.58.0...v0.59.0) (2026-10-15)
 
 ### Features
