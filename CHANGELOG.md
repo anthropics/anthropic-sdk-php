@@ -20,7 +20,9 @@
 * **api:** add organization_type_not_supported error to spend limit lists
 * **api:** add telemetry destination test endpoint
 * **api:** add telemetry destinations to the Admin API
-* **client:** OpenTelemetry tracing for API calls, on by default: each call emits a span once the application has registered a tracer provider, and its requests carry the trace context in the headers that the registered propagator writes, such as `traceparent`. Adds a dependency on `open-telemetry/api` (`^1.0`). `openTelemetry: false` or `ANTHROPIC_OPEN_TELEMETRY=false` turns both off; `openTelemetry: ['propagation' => false]` or `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION=false` turns off the headers alone, and the variables apply only to a client that is given no `openTelemetry` option
+* **client:** add native support for OpenTelemetry tracing
+
+  If your app registers a global tracer provider, the SDK will create spans with it after upgrading, and they'll be exported with the rest of your traces. Requests will also get trace context headers from the global propagator. To disable, pass `openTelemetry: false` to the client or set `ANTHROPIC_OPEN_TELEMETRY=false`. Learn more in the [documentation](https://platform.claude.com/docs/en/manage-claude/opentelemetry/sdk).
 
 
 ### Bug Fixes
