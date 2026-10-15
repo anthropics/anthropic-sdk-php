@@ -5,8 +5,13 @@ namespace Tests\Core;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Conversion\ConstantOf;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\UnionOf;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -102,6 +107,112 @@ class Cat implements BaseModel
         $this->initialize();
 
         $this->name = $name;
+    }
+}
+
+enum Size: string
+{
+    case SMALL = 'small';
+
+    case LARGE = 'large';
+}
+
+class Crate implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Optional(enum: Size::class)]
+    public ?string $size;
+
+    /** @var list<string>|null */
+    #[Optional(list: Size::class)]
+    public ?array $sizes;
+
+    /** @var array<string, string>|null */
+    #[Optional(map: Size::class)]
+    public ?array $sizeByDog;
+
+    #[Optional(union: new UnionOf([Size::class, 'int']))]
+    public int|string|null $limit;
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+}
+
+enum CommandType: string
+{
+    case SIT = 'sit';
+
+    case FETCH = 'fetch';
+}
+
+class Sit implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Required(type: new ConstantOf('sit'))]
+    public string $type = 'sit';
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+}
+
+class Fetch implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Required(type: new ConstantOf('fetch'))]
+    public string $type = 'fetch';
+
+    #[Required('toy_name')]
+    public string $toyName;
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+}
+
+final class Command implements ConverterSource
+{
+    use SdkUnion;
+
+    public static function discriminator(): string
+    {
+        return 'type';
+    }
+
+    /**
+     * @return array<string, class-string<BaseModel>>
+     */
+    public static function variants(): array
+    {
+        return ['sit' => Sit::class, 'fetch' => Fetch::class];
+    }
+}
+
+class Routine implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Optional(union: Command::class)]
+    public Sit|Fetch|null $command;
+
+    /** @var string|list<Sit|Fetch>|null */
+    #[Optional(union: new UnionOf(['string', new ListOf(Command::class)]))]
+    public string|array|null $commands;
+
+    public function __construct()
+    {
+        $this->initialize();
     }
 }
 
@@ -287,5 +398,45 @@ class ModelTest extends TestCase
         $this->expectExceptionMessage('must not be accessed before initialization');
         // @phpstan-ignore-next-line expr.resultUnused
         $model->name;
+    }
+
+    #[Test]
+    public function testEnumCaseReadsBackAsTheCase(): void
+    {
+        $stored = Size::SMALL;
+
+        $model = new Crate;
+        $model['size'] = Size::SMALL;
+        $model['sizes'] = [Size::SMALL];
+        $model['sizeByDog'] = ['Bob' => Size::SMALL];
+        $model['limit'] = Size::SMALL;
+
+        $expected = ['size' => $stored, 'sizes' => [$stored], 'sizeByDog' => ['Bob' => $stored], 'limit' => $stored];
+        foreach ($expected as $property => $value) {
+            $this->assertSame($value, $model[$property]);
+        }
+    }
+
+    #[Test]
+    public function testBackedEnumSelectsSameVariantAsItsValue(): void
+    {
+        $byEnum = ['type' => CommandType::FETCH, 'toyName' => 'ball'];
+        $byValue = ['type' => 'fetch', 'toyName' => 'ball'];
+
+        $sent = ['type' => 'fetch', 'toy_name' => 'ball'];
+        foreach ([$byEnum, $byValue] as $command) {
+            $this->assertEquals(
+                ['command' => $sent, 'commands' => [$sent]],
+                Conversion::dump(Routine::class, value: ['command' => $command, 'commands' => [$command]])
+            );
+        }
+
+        $fromEnum = new Routine;
+        $fromEnum['command'] = $byEnum;
+        $fromValue = new Routine;
+        $fromValue['command'] = $byValue;
+
+        $this->assertInstanceOf(Fetch::class, $fromValue->command);
+        $this->assertEquals($fromValue->command, $fromEnum->command);
     }
 }
