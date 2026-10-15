@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.60.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.59.0...v0.60.0) (2026-10-15)
+
+### Features
+
+* **client:** yield server-sent events with unrecognized event names
+
 ## [0.59.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.58.0...v0.59.0) (2026-10-15)
 
 ### Features
