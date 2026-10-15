@@ -5,6 +5,7 @@ namespace Tests\Lib\Middleware;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\AnthropicException;
+use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Lib\Middleware\BetaFallbackState;
 use Anthropic\Lib\Middleware\RefusalFallbackMiddleware;
 use Http\Client\Exception\NetworkException;
@@ -16,6 +17,7 @@ use OpenTelemetry\SDK\Trace\SpanExporter\InMemoryExporter;
 use OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor;
 use OpenTelemetry\SDK\Trace\TracerProvider;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -840,6 +842,205 @@ class RefusalFallbackStreamingTest extends TestCase
         $this->assertSame(['type' => 'disabled'], $bodies[1]['thinking']);
     }
 
+    // --- rate-limited fast hops -----------------------------------------------------
+
+    #[DataProvider('rateLimitStatuses')]
+    public function testARateLimitedFastHopIsResentOnceWithoutSpeed(int $status): void
+    {
+        $rejected = self::errorResponse('rejected', $status);
+        $this->serve(self::sseResponse(self::streamA()), $rejected, self::sseResponse(self::streamB()));
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS));
+
+        $events = self::collect($this->createStream($client, speed: 'fast'));
+
+        $this->assertFalse($rejected->getBody()->isReadable(), 'the rejected response is released');
+        $this->assertSame('end_turn', self::at(self::first($events, 'message_delta'), 'delta', 'stop_reason'));
+        $this->assertSame([
+            ['claude-fable-5', self::FALLBACK_MODEL],
+        ], array_map(self::fromTo(...), self::boundaries($events)));
+
+        $bodies = $this->requestBodies();
+        $this->assertCount(3, $bodies);
+        $this->assertSame(self::FALLBACK_MODEL, $bodies[1]['model']);
+        $this->assertSame('fast', $bodies[1]['speed']);
+        $this->assertArrayHasKey('fallback_credit_token', $bodies[1]);
+        $this->assertArrayNotHasKey('speed', $bodies[2]);
+        $this->assertEquals($bodies[1], [...$bodies[2], 'speed' => 'fast']);
+    }
+
+    /** @return iterable<string,array{int}> */
+    public static function rateLimitStatuses(): iterable
+    {
+        yield '429' => [429];
+
+        yield '529' => [529];
+    }
+
+    /**
+     * @param array{speed?: 'fast'} $entry
+     * @param 'fast'|'standard'|null $speed
+     * @param int $hops requests the fallback entry receives
+     */
+    #[DataProvider('hopsThatKeepTheirSpeed')]
+    public function testAFailedHopIsNotResentWithoutSpeed(array $entry, ?string $speed, int $status, int $hops): void
+    {
+        $this->serve(
+            self::sseResponse(self::streamA()),
+            ...array_map(static fn () => self::errorResponse('rejected', $status), range(1, $hops)),
+        );
+        $client = $this->makeClient(new RefusalFallbackMiddleware([['model' => self::FALLBACK_MODEL, ...$entry]]));
+
+        $events = self::collect($this->createStream($client, speed: $speed));
+
+        $this->assertSame('refusal', self::at(self::first($events, 'message_delta'), 'delta', 'stop_reason'));
+        $bodies = $this->requestBodies();
+        $this->assertCount(1 + $hops, $bodies);
+        foreach (array_slice($bodies, offset: 1) as $body) {
+            $this->assertSame($speed, $body['speed'] ?? null);
+        }
+    }
+
+    /** @return iterable<string,array{array{speed?: 'fast'}, 'fast'|'standard'|null, int, int}> */
+    public static function hopsThatKeepTheirSpeed(): iterable
+    {
+        yield 'the entry sets fast, 429' => [['speed' => 'fast'], 'fast', 429, 1];
+
+        yield 'the entry sets fast, 529' => [['speed' => 'fast'], 'fast', 529, 1];
+
+        yield 'the request has no speed' => [[], null, 429, 1];
+
+        yield 'the request is standard' => [[], 'standard', 429, 1];
+
+        yield '400, re-sent without the partial, then without the token' => [[], 'fast', 400, 3];
+
+        yield '500' => [[], 'fast', 500, 1];
+    }
+
+    public function testAFastHopIsResentWithoutSpeedAtMostOnceThenSkipped(): void
+    {
+        $this->serve(
+            self::sseResponse(self::streamA()),
+            self::errorResponse('rejected', 429),
+            self::errorResponse('rejected', 429),
+            self::sseResponse(self::streamB()),
+        );
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::TWO_FALLBACKS));
+
+        $events = self::collect($this->createStream($client, speed: 'fast'));
+
+        $bodies = $this->requestBodies();
+        $this->assertCount(4, $bodies);
+        $this->assertSame(self::FALLBACK_MODEL, $bodies[2]['model']);
+        $this->assertArrayNotHasKey('speed', $bodies[2]);
+
+        // the next entry starts over from the original params
+        $this->assertSame(self::SECOND_MODEL, $bodies[3]['model']);
+        $this->assertSame('fast', $bodies[3]['speed']);
+        $this->assertSame($bodies[1]['fallback_credit_token'], $bodies[3]['fallback_credit_token']);
+        $this->assertSame([
+            ['claude-fable-5', self::SECOND_MODEL],
+        ], array_map(self::fromTo(...), self::boundaries($events)));
+    }
+
+    /**
+     * @param list<int> $statuses what the fallback entry answers before it serves
+     * @param list<array{'fast'|null, bool, bool}> $expected each request to the entry, as [speed, has the partial, has a credit token]
+     */
+    #[DataProvider('sameEntryResends')]
+    public function testSpeedIsDroppedOncePerEntryAndStaysDropped(array $statuses, array $expected): void
+    {
+        $this->serve(
+            self::sseResponse(self::streamA()),
+            ...array_map(static fn (int $status) => self::errorResponse('rejected', $status), $statuses),
+        );
+        $this->serve(self::sseResponse(self::streamB()));
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS));
+
+        $events = self::collect($this->createStream($client, speed: 'fast'));
+
+        $this->assertSame('end_turn', self::at(self::first($events, 'message_delta'), 'delta', 'stop_reason'));
+        $hops = array_slice($this->requestBodies(), offset: 1);
+        $this->assertSame($expected, array_map(
+            static fn (array $hop): array => [
+                $hop['speed'] ?? null,
+                count(self::items($hop['messages'])) > count(self::PARAMS['messages']),
+                array_key_exists('fallback_credit_token', $hop),
+            ],
+            $hops,
+        ));
+        foreach ($hops as $hop) {
+            $this->assertSame(self::FALLBACK_MODEL, $hop['model']);
+        }
+    }
+
+    /** @return iterable<string,array{list<int>, list<array{'fast'|null, bool, bool}>}> */
+    public static function sameEntryResends(): iterable
+    {
+        yield '429, then 400' => [
+            [429, 400],
+            [['fast', true, true], [null, true, true], [null, false, true]],
+        ];
+
+        yield '429, then 400 twice' => [
+            [429, 400, 400],
+            [['fast', true, true], [null, true, true], [null, false, true], [null, false, false]],
+        ];
+
+        yield '400, then 429' => [
+            [400, 429],
+            [['fast', true, true], ['fast', false, true], [null, false, true]],
+        ];
+
+        yield '400, then 429, then 400' => [
+            [400, 429, 400],
+            [['fast', true, true], ['fast', false, true], [null, false, true], [null, false, false]],
+        ];
+
+        yield '400 twice, then 429' => [
+            [400, 400, 429],
+            [['fast', true, true], ['fast', false, true], ['fast', false, false], [null, false, false]],
+        ];
+    }
+
+    public function testARateLimitedFastRequestPinnedToAFallbackIsResentWithoutSpeed(): void
+    {
+        $this->serve(
+            self::errorResponse('rejected', 429),
+            self::sseResponse(self::servingStream()),
+            self::sseResponse(self::servingStream()),
+        );
+        $state = new BetaFallbackState;
+        $state->index = 0;
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS, state: $state));
+
+        $events = self::collect($this->createStream($client, speed: 'fast'));
+        self::collect($this->createStream($client, speed: 'fast'));
+
+        $this->assertSame('end_turn', self::at(self::first($events, 'message_delta'), 'delta', 'stop_reason'));
+        $bodies = $this->requestBodies();
+        $this->assertCount(3, $bodies);
+        $this->assertSame(self::FALLBACK_MODEL, $bodies[0]['model']);
+        $this->assertSame('fast', $bodies[0]['speed']);
+        $this->assertArrayNotHasKey('speed', $bodies[1]);
+        $this->assertEquals($bodies[0], [...$bodies[1], 'speed' => 'fast']);
+        $this->assertEquals($bodies[0], $bodies[2], 'the next request starts fast again');
+    }
+
+    public function testARateLimitedFastPrimaryIsNotResent(): void
+    {
+        $this->serve(self::errorResponse('rejected', 429));
+        $client = $this->makeClient(new RefusalFallbackMiddleware(self::FALLBACKS));
+
+        try {
+            $this->createStream($client, speed: 'fast');
+            $this->fail('Expected APIStatusException to be thrown');
+        } catch (APIStatusException $e) {
+            $this->assertSame(429, $e->status);
+        }
+
+        $this->assertCount(1, $this->transporter->requests);
+    }
+
     // --- cancellation -----------------------------------------------------------
 
     public function testClosingTheStreamMidPassthroughTearsDownWithoutAFallbackRequest(): void
@@ -1188,15 +1389,17 @@ class RefusalFallbackStreamingTest extends TestCase
     /**
      * @param list<string>|null $betas
      * @param array{type: 'between_tools'}|null $thinking
+     * @param 'fast'|'standard'|null $speed
      *
      * @return EventStream
      */
-    private function createStream(Client $client, ?array $betas = null, ?array $thinking = null): BaseStream
+    private function createStream(Client $client, ?array $betas = null, ?array $thinking = null, ?string $speed = null): BaseStream
     {
         return $client->beta->messages->createStream(
             maxTokens: 1024,
             messages: [['role' => 'user', 'content' => 'Hey claudius! Can you tell me what a solar eclipse is?']],
             model: 'claude-fable-5',
+            speed: $speed,
             thinking: $thinking,
             betas: $betas,
         );

@@ -31,7 +31,7 @@ final class DreamCancelParams implements BaseModel
     use SdkParams;
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
@@ -71,7 +71,7 @@ final class DreamCancelParams implements BaseModel
     }
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
      */

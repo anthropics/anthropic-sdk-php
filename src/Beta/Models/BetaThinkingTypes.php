@@ -15,6 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaThinkingTypesShape = array{
  *   adaptive: BetaCapabilitySupport|BetaCapabilitySupportShape,
+ *   betweenTools: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   disabled: BetaCapabilitySupport|BetaCapabilitySupportShape,
  *   enabled: BetaCapabilitySupport|BetaCapabilitySupportShape,
  * }
@@ -31,7 +32,13 @@ final class BetaThinkingTypes implements BaseModel
     public BetaCapabilitySupport $adaptive;
 
     /**
-     * Whether the model accepts thinking with type 'disabled' (thinking turned off). False exactly when a request that sends it gets a 400 from this model. True on a model that does not support thinking.
+     * Whether the model accepts thinking with type 'between_tools' (thinking turned off, and any short progress updates the model writes between tool calls come back as thinking blocks). False exactly when a request that sends it gets a 400 from this model. A request that sends 'between_tools' can still be rejected for another reason, such as an effort level the model does not allow with thinking off.
+     */
+    #[Required('between_tools')]
+    public BetaCapabilitySupport $betweenTools;
+
+    /**
+     * Whether the model accepts thinking with type 'disabled' (thinking turned off). False exactly when a request that sends it gets a 400 from this model. True on a model that does not support thinking. A request that sends 'disabled' can still be rejected for another reason, such as an effort level the model does not allow with thinking off.
      */
     #[Required]
     public BetaCapabilitySupport $disabled;
@@ -47,7 +54,9 @@ final class BetaThinkingTypes implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaThinkingTypes::with(adaptive: ..., disabled: ..., enabled: ...)
+     * BetaThinkingTypes::with(
+     *   adaptive: ..., betweenTools: ..., disabled: ..., enabled: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,6 +64,7 @@ final class BetaThinkingTypes implements BaseModel
      * ```
      * (new BetaThinkingTypes())
      *   ->withAdaptive(...)
+     *   ->withBetweenTools(...)
      *   ->withDisabled(...)
      *   ->withEnabled(...)
      * ```
@@ -70,17 +80,20 @@ final class BetaThinkingTypes implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $adaptive
+     * @param BetaCapabilitySupport|BetaCapabilitySupportShape $betweenTools
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $disabled
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $enabled
      */
     public static function with(
         BetaCapabilitySupport|array $adaptive,
+        BetaCapabilitySupport|array $betweenTools,
         BetaCapabilitySupport|array $disabled,
         BetaCapabilitySupport|array $enabled,
     ): self {
         $self = new self;
 
         $self['adaptive'] = $adaptive;
+        $self['betweenTools'] = $betweenTools;
         $self['disabled'] = $disabled;
         $self['enabled'] = $enabled;
 
@@ -101,7 +114,21 @@ final class BetaThinkingTypes implements BaseModel
     }
 
     /**
-     * Whether the model accepts thinking with type 'disabled' (thinking turned off). False exactly when a request that sends it gets a 400 from this model. True on a model that does not support thinking.
+     * Whether the model accepts thinking with type 'between_tools' (thinking turned off, and any short progress updates the model writes between tool calls come back as thinking blocks). False exactly when a request that sends it gets a 400 from this model. A request that sends 'between_tools' can still be rejected for another reason, such as an effort level the model does not allow with thinking off.
+     *
+     * @param BetaCapabilitySupport|BetaCapabilitySupportShape $betweenTools
+     */
+    public function withBetweenTools(
+        BetaCapabilitySupport|array $betweenTools
+    ): self {
+        $self = clone $this;
+        $self['betweenTools'] = $betweenTools;
+
+        return $self;
+    }
+
+    /**
+     * Whether the model accepts thinking with type 'disabled' (thinking turned off). False exactly when a request that sends it gets a 400 from this model. True on a model that does not support thinking. A request that sends 'disabled' can still be rejected for another reason, such as an effort level the model does not allow with thinking off.
      *
      * @param BetaCapabilitySupport|BetaCapabilitySupportShape $disabled
      */

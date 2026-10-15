@@ -29,7 +29,7 @@ final class TunnelRevealTokenParams implements BaseModel
     use SdkParams;
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `mcp-tunnels-2026-06-22` in this header.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
@@ -69,7 +69,7 @@ final class TunnelRevealTokenParams implements BaseModel
     }
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `mcp-tunnels-2026-06-22` in this header.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
      */

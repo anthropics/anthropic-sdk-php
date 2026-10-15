@@ -17,4 +17,6 @@ enum Type: string
     case ORGANIZATION = 'organization';
 
     case WORKSPACE = 'workspace';
+
+    case USAGE_TIER = 'usage_tier';
 }

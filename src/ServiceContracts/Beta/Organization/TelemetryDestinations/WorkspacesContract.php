@@ -22,7 +22,7 @@ interface WorkspacesContract
      * @param string $destinationID Path param: ID of the destination (`tdst_...`).
      * @param int $limit Query param: Number of entries to return per page, between 1 and 1,000. Defaults to 20.
      * @param string $page Query param: Opaque cursor from a previous response's `next_page`. Leave it out to get the first page.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaTelemetryDestinationWorkspace>
@@ -42,7 +42,7 @@ interface WorkspacesContract
      *
      * @param string $workspaceID Path param: ID of the workspace to add (`wrkspc_...`).
      * @param string $destinationID Path param: ID of the destination (`tdst_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -59,7 +59,7 @@ interface WorkspacesContract
      *
      * @param string $workspaceID Path param: ID of the workspace to remove (`wrkspc_...`).
      * @param string $destinationID Path param: ID of the destination (`tdst_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

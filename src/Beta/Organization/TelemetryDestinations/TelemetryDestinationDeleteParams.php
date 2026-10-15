@@ -30,7 +30,7 @@ final class TelemetryDestinationDeleteParams implements BaseModel
     use SdkParams;
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
@@ -59,7 +59,7 @@ final class TelemetryDestinationDeleteParams implements BaseModel
     }
 
     /**
-     * Optional header to specify the beta version(s) you want to use.
+     * This endpoint is in beta: requests must send `telemetry-destinations-2026-08-11` in this header.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
