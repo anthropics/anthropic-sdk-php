@@ -38,7 +38,7 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the credential's access token expires, in RFC 3339. Absent if the expiry isn't known.
      */
     #[Optional('expires_at', nullable: true)]
     public ?\DateTimeInterface $expiresAt;
@@ -116,7 +116,7 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the credential's access token expires, in RFC 3339. Absent if the expiry isn't known.
      */
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {

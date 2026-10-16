@@ -38,7 +38,11 @@ final class ManagedAgentsMCPOAuthUpdateParams implements BaseModel
     public ?string $accessToken;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the credential's access token expires, in RFC 3339. Leave it out to keep the stored expiry.
+     *
+     * If you send a new `access_token`, send its `expires_at` too, or the new token keeps the old expiry.
+     *
+     * Must be in the future.
      */
     #[Optional('expires_at', nullable: true)]
     public ?\DateTimeInterface $expiresAt;
@@ -116,7 +120,11 @@ final class ManagedAgentsMCPOAuthUpdateParams implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When the credential's access token expires, in RFC 3339. Leave it out to keep the stored expiry.
+     *
+     * If you send a new `access_token`, send its `expires_at` too, or the new token keeps the old expiry.
+     *
+     * Must be in the future.
      */
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {

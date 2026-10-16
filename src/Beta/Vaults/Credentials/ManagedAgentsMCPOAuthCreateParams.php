@@ -45,7 +45,9 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
     public string $type;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When `access_token` expires, in RFC 3339.
+     *
+     * Must be in the future.
      */
     #[Optional('expires_at', nullable: true)]
     public ?\DateTimeInterface $expiresAt;
@@ -141,7 +143,9 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * When `access_token` expires, in RFC 3339.
+     *
+     * Must be in the future.
      */
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
