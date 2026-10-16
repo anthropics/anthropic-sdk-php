@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update Credential.
+ * Update a Credential.
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::update()
  *
@@ -43,7 +43,7 @@ final class CredentialUpdateParams implements BaseModel
     public string $vaultID;
 
     /**
-     * Updated authentication configuration. The `type` is immutable; the variant sent must match the stored credential's type.
+     * New authentication settings for the credential. The `type` must match the credential's current type, which can't be changed.
      *
      * @var AuthVariants|null $auth
      */
@@ -141,7 +141,7 @@ final class CredentialUpdateParams implements BaseModel
     }
 
     /**
-     * Updated authentication configuration. The `type` is immutable; the variant sent must match the stored credential's type.
+     * New authentication settings for the credential. The `type` must match the credential's current type, which can't be changed.
      *
      * @param AuthShape $auth
      */

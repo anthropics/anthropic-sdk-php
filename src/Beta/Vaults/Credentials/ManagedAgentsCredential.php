@@ -35,7 +35,7 @@ final class ManagedAgentsCredential implements BaseModel
     use SdkModel;
 
     /**
-     * Unique identifier for the credential.
+     * The unique ID of the credential (`vcrd_...`).
      */
     #[Required]
     public string $id;
@@ -163,7 +163,7 @@ final class ManagedAgentsCredential implements BaseModel
     }
 
     /**
-     * Unique identifier for the credential.
+     * The unique ID of the credential (`vcrd_...`).
      */
     public function withID(string $id): self
     {

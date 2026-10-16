@@ -22,7 +22,7 @@ final class ManagedAgentsTokenEndpointAuthPostParam implements BaseModel
     use SdkModel;
 
     /**
-     * OAuth client secret.
+     * The OAuth client secret, sent to `token_endpoint` in the POST body.
      */
     #[Required('client_secret')]
     public string $clientSecret;
@@ -70,7 +70,7 @@ final class ManagedAgentsTokenEndpointAuthPostParam implements BaseModel
     }
 
     /**
-     * OAuth client secret.
+     * The OAuth client secret, sent to `token_endpoint` in the POST body.
      */
     public function withClientSecret(string $clientSecret): self
     {

@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete Vault.
+ * Delete a Vault.
  *
  * @see Anthropic\Services\Beta\VaultsService::delete()
  *

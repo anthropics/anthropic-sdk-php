@@ -30,7 +30,7 @@ final class ManagedAgentsMCPOAuthRefreshResponse implements BaseModel
     use SdkModel;
 
     /**
-     * OAuth client ID.
+     * The OAuth client ID used when refreshing the access token.
      */
     #[Required('client_id')]
     public string $clientID;
@@ -108,7 +108,7 @@ final class ManagedAgentsMCPOAuthRefreshResponse implements BaseModel
     }
 
     /**
-     * OAuth client ID.
+     * The OAuth client ID used when refreshing the access token.
      */
     public function withClientID(string $clientID): self
     {

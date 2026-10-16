@@ -36,7 +36,7 @@ final class VaultsRawService implements VaultsRawContract
     /**
      * @api
      *
-     * Create Vault
+     * Create a Vault
      *
      * @param array{
      *   displayName: string,
@@ -89,7 +89,7 @@ final class VaultsRawService implements VaultsRawContract
     /**
      * @api
      *
-     * Get Vault
+     * Retrieve a Vault
      *
      * @param string $vaultID unique identifier of the vault to retrieve
      * @param array{
@@ -137,7 +137,7 @@ final class VaultsRawService implements VaultsRawContract
     /**
      * @api
      *
-     * Update Vault
+     * Update a Vault
      *
      * @param string $vaultID path param: Unique identifier of the vault to update
      * @param array{
@@ -250,7 +250,7 @@ final class VaultsRawService implements VaultsRawContract
     /**
      * @api
      *
-     * Delete Vault
+     * Delete a Vault
      *
      * @param string $vaultID unique identifier of the vault to delete
      * @param array{
@@ -298,7 +298,7 @@ final class VaultsRawService implements VaultsRawContract
     /**
      * @api
      *
-     * Archive Vault
+     * Archive a Vault
      *
      * @param string $vaultID unique identifier of the vault to archive
      * @param array{

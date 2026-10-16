@@ -22,7 +22,7 @@ final class ManagedAgentsDeletedCredential implements BaseModel
     use SdkModel;
 
     /**
-     * Unique identifier of the deleted credential.
+     * The unique ID of the deleted credential (`vcrd_...`).
      */
     #[Required]
     public string $id;
@@ -68,7 +68,7 @@ final class ManagedAgentsDeletedCredential implements BaseModel
     }
 
     /**
-     * Unique identifier of the deleted credential.
+     * The unique ID of the deleted credential (`vcrd_...`).
      */
     public function withID(string $id): self
     {

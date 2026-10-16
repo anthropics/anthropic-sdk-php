@@ -27,7 +27,9 @@ final class ManagedAgentsTokenEndpointAuthBasicUpdateParam implements BaseModel
     public string $type;
 
     /**
-     * Updated OAuth client secret.
+     * A new OAuth client secret to replace the stored one.
+     *
+     * The credential must already use `client_secret_basic` or `client_secret_post`. It keeps its current `token_endpoint_auth` type, even if the `type` sent with this secret is the other one.
      */
     #[Optional('client_secret', nullable: true)]
     public ?string $clientSecret;
@@ -83,7 +85,9 @@ final class ManagedAgentsTokenEndpointAuthBasicUpdateParam implements BaseModel
     }
 
     /**
-     * Updated OAuth client secret.
+     * A new OAuth client secret to replace the stored one.
+     *
+     * The credential must already use `client_secret_basic` or `client_secret_post`. It keeps its current `token_endpoint_auth` type, even if the `type` sent with this secret is the other one.
      */
     public function withClientSecret(?string $clientSecret): self
     {

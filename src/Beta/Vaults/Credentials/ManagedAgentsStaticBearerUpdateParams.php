@@ -27,7 +27,7 @@ final class ManagedAgentsStaticBearerUpdateParams implements BaseModel
     public string $type;
 
     /**
-     * Updated static bearer token value.
+     * The new static bearer token to replace the stored one.
      */
     #[Optional(nullable: true)]
     public ?string $token;
@@ -81,7 +81,7 @@ final class ManagedAgentsStaticBearerUpdateParams implements BaseModel
     }
 
     /**
-     * Updated static bearer token value.
+     * The new static bearer token to replace the stored one.
      */
     public function withToken(?string $token): self
     {

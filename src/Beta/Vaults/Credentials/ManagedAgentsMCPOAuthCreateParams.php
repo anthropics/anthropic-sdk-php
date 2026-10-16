@@ -29,7 +29,7 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
     use SdkModel;
 
     /**
-     * OAuth access token.
+     * The OAuth access token to send to the MCP server.
      */
     #[Required('access_token')]
     public string $accessToken;
@@ -110,7 +110,7 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
     }
 
     /**
-     * OAuth access token.
+     * The OAuth access token to send to the MCP server.
      */
     public function withAccessToken(string $accessToken): self
     {

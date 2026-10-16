@@ -42,7 +42,7 @@ final class VaultsService implements VaultsContract
     /**
      * @api
      *
-     * Create Vault
+     * Create a Vault
      *
      * @param string $displayName Body param: Human-readable name for the vault. 1-255 characters.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata to attach to the vault. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
@@ -79,7 +79,7 @@ final class VaultsService implements VaultsContract
     /**
      * @api
      *
-     * Get Vault
+     * Retrieve a Vault
      *
      * @param string $vaultID unique identifier of the vault to retrieve
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
@@ -109,7 +109,7 @@ final class VaultsService implements VaultsContract
     /**
      * @api
      *
-     * Update Vault
+     * Update a Vault
      *
      * @param string $vaultID path param: Unique identifier of the vault to update
      * @param string|null $displayName Body param: Updated human-readable name for the vault. 1-255 characters.
@@ -150,9 +150,9 @@ final class VaultsService implements VaultsContract
      *
      * List Vaults
      *
-     * @param bool $includeArchived query param: Whether to include archived vaults in the results
+     * @param bool $includeArchived Query param: Whether to include archived vaults in the results. Defaults to `false`.
      * @param int $limit Query param: Maximum number of vaults to return per page. Defaults to 20, maximum 100.
-     * @param string $page query param: Opaque pagination token from a previous `list_vaults` response
+     * @param string $page Query param: The `next_page` value from a previous [List Vaults](https://platform.claude.com/docs/en/api/beta/vaults/list) response, to get the next page. Leave it out to get the first page.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -190,7 +190,7 @@ final class VaultsService implements VaultsContract
     /**
      * @api
      *
-     * Delete Vault
+     * Delete a Vault
      *
      * @param string $vaultID unique identifier of the vault to delete
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
@@ -220,7 +220,7 @@ final class VaultsService implements VaultsContract
     /**
      * @api
      *
-     * Archive Vault
+     * Archive a Vault
      *
      * @param string $vaultID unique identifier of the vault to archive
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header

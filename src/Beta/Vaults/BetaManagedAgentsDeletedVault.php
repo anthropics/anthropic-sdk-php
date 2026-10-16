@@ -22,7 +22,7 @@ final class BetaManagedAgentsDeletedVault implements BaseModel
     use SdkModel;
 
     /**
-     * Unique identifier of the deleted vault.
+     * The unique ID of the deleted vault (`vlt_...`).
      */
     #[Required]
     public string $id;
@@ -68,7 +68,7 @@ final class BetaManagedAgentsDeletedVault implements BaseModel
     }
 
     /**
-     * Unique identifier of the deleted vault.
+     * The unique ID of the deleted vault (`vlt_...`).
      */
     public function withID(string $id): self
     {

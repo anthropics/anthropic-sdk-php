@@ -31,13 +31,13 @@ final class ManagedAgentsMCPOAuthRefreshParams implements BaseModel
     use SdkModel;
 
     /**
-     * OAuth client ID.
+     * The OAuth client ID to use when refreshing the access token. It can't be changed after the credential is created.
      */
     #[Required('client_id')]
     public string $clientID;
 
     /**
-     * OAuth refresh token.
+     * The OAuth refresh token that the API uses to get a new access token when the current one expires.
      */
     #[Required('refresh_token')]
     public string $refreshToken;
@@ -118,7 +118,7 @@ final class ManagedAgentsMCPOAuthRefreshParams implements BaseModel
     }
 
     /**
-     * OAuth client ID.
+     * The OAuth client ID to use when refreshing the access token. It can't be changed after the credential is created.
      */
     public function withClientID(string $clientID): self
     {
@@ -129,7 +129,7 @@ final class ManagedAgentsMCPOAuthRefreshParams implements BaseModel
     }
 
     /**
-     * OAuth refresh token.
+     * The OAuth refresh token that the API uses to get a new access token when the current one expires.
      */
     public function withRefreshToken(string $refreshToken): self
     {

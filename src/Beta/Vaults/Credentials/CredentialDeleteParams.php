@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete Credential.
+ * Delete a Credential.
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::delete()
  *

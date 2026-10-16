@@ -82,9 +82,9 @@ interface VaultsContract
     /**
      * @api
      *
-     * @param bool $includeArchived query param: Whether to include archived vaults in the results
+     * @param bool $includeArchived Query param: Whether to include archived vaults in the results. Defaults to `false`.
      * @param int $limit Query param: Maximum number of vaults to return per page. Defaults to 20, maximum 100.
-     * @param string $page query param: Opaque pagination token from a previous `list_vaults` response
+     * @param string $page Query param: The `next_page` value from a previous [List Vaults](https://platform.claude.com/docs/en/api/beta/vaults/list) response, to get the next page. Leave it out to get the first page.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

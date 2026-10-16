@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Vault.
+ * Retrieve a Vault.
  *
  * @see Anthropic\Services\Beta\VaultsService::retrieve()
  *

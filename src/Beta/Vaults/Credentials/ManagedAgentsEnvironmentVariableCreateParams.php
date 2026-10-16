@@ -45,7 +45,7 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
     public string $secretName;
 
     /**
-     * Secret value. Write-only; never returned in responses.
+     * The secret to substitute into the agent's outbound requests. It's write-only and never returned in responses.
      */
     #[Required('secret_value')]
     public string $secretValue;
@@ -139,7 +139,7 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
     }
 
     /**
-     * Secret value. Write-only; never returned in responses.
+     * The secret to substitute into the agent's outbound requests. It's write-only and never returned in responses.
      */
     public function withSecretValue(string $secretValue): self
     {

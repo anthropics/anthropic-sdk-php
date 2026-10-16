@@ -32,7 +32,7 @@ final class ManagedAgentsMCPOAuthUpdateParams implements BaseModel
     public string $type;
 
     /**
-     * Updated OAuth access token.
+     * The new OAuth access token to replace the stored one.
      */
     #[Optional('access_token', nullable: true)]
     public ?string $accessToken;
@@ -109,7 +109,7 @@ final class ManagedAgentsMCPOAuthUpdateParams implements BaseModel
     }
 
     /**
-     * Updated OAuth access token.
+     * The new OAuth access token to replace the stored one.
      */
     public function withAccessToken(?string $accessToken): self
     {

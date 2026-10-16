@@ -27,13 +27,13 @@ final class ManagedAgentsMCPOAuthRefreshUpdateParams implements BaseModel
     use SdkModel;
 
     /**
-     * Updated OAuth refresh token.
+     * The new OAuth refresh token to replace the stored one.
      */
     #[Optional('refresh_token', nullable: true)]
     public ?string $refreshToken;
 
     /**
-     * Updated OAuth scope for the refresh request.
+     * The new OAuth scope for refresh requests. Send an empty string to clear the stored scope.
      */
     #[Optional(nullable: true)]
     public ?string $scope;
@@ -69,7 +69,7 @@ final class ManagedAgentsMCPOAuthRefreshUpdateParams implements BaseModel
     }
 
     /**
-     * Updated OAuth refresh token.
+     * The new OAuth refresh token to replace the stored one.
      */
     public function withRefreshToken(?string $refreshToken): self
     {
@@ -80,7 +80,7 @@ final class ManagedAgentsMCPOAuthRefreshUpdateParams implements BaseModel
     }
 
     /**
-     * Updated OAuth scope for the refresh request.
+     * The new OAuth scope for refresh requests. Send an empty string to clear the stored scope.
      */
     public function withScope(?string $scope): self
     {
