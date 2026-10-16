@@ -96,7 +96,7 @@ final class BetaPluginVersion implements BaseModel
     public ?string $displayName;
 
     /**
-     * The version string the manifest declares; null when it declares none.
+     * The manifest's `version`, normalized for display: one leading `v` or `V` is dropped, and the result is returned only if it is 1 to 64 characters, starts with a digit, and uses only ASCII letters, digits, `.`, `+`, and `-`; otherwise `null`. For example, `"v1.4.0"` is returned as `"1.4.0"`, and `"latest"` as `null`. For a synchronized plugin, the `version` of its `marketplace.json` entry can take the place of the manifest's `version`. It is also `null` for a version stored before claude.ai began recording this field (August 2026).
      */
     #[Required('manifest_version')]
     public ?string $manifestVersion;
@@ -108,7 +108,7 @@ final class BetaPluginVersion implements BaseModel
     public string $pluginID;
 
     /**
-     * How far the version reaches: `remote`, `privileged` or `contained`, as on the Plugin; null when not classifiable.
+     * How far the version reaches: `remote`, `privileged`, `contained`, or `null`, as defined on the Plugin's `reach`.
      *
      * @var value-of<Reach>|null $reach
      */
@@ -289,7 +289,7 @@ final class BetaPluginVersion implements BaseModel
     }
 
     /**
-     * The version string the manifest declares; null when it declares none.
+     * The manifest's `version`, normalized for display: one leading `v` or `V` is dropped, and the result is returned only if it is 1 to 64 characters, starts with a digit, and uses only ASCII letters, digits, `.`, `+`, and `-`; otherwise `null`. For example, `"v1.4.0"` is returned as `"1.4.0"`, and `"latest"` as `null`. For a synchronized plugin, the `version` of its `marketplace.json` entry can take the place of the manifest's `version`. It is also `null` for a version stored before claude.ai began recording this field (August 2026).
      */
     public function withManifestVersion(?string $manifestVersion): self
     {
@@ -311,7 +311,7 @@ final class BetaPluginVersion implements BaseModel
     }
 
     /**
-     * How far the version reaches: `remote`, `privileged` or `contained`, as on the Plugin; null when not classifiable.
+     * How far the version reaches: `remote`, `privileged`, `contained`, or `null`, as defined on the Plugin's `reach`.
      *
      * @param Reach|value-of<Reach>|null $reach
      */

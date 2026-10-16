@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Organization\Plugins\Versions\BetaPluginVersion;
 
 /**
- * How far the version reaches: `remote`, `privileged` or `contained`, as on the Plugin; null when not classifiable.
+ * How far the version reaches: `remote`, `privileged`, `contained`, or `null`, as defined on the Plugin's `reach`.
  */
 enum Reach: string
 {
