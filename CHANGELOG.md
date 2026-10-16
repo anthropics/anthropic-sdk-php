@@ -10,6 +10,7 @@
 ### Bug Fixes
 
 * **client:** fix a crash and an unclosed body when closing a stream
+* **client:** treat x-amz-security-token as a sensitive header
 
 
 ### Chores

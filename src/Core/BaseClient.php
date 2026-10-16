@@ -49,6 +49,7 @@ abstract class BaseClient
         'proxy-authorization',
         'api-key',
         'x-api-key',
+        'x-amz-security-token',
         'cookie',
         'set-cookie',
     ];
