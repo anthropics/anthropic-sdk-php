@@ -252,12 +252,15 @@ final class StructuredOutput
         if (is_string($value)) {
             $minLength = $constraints['minLength'] ?? null;
             $maxLength = $constraints['maxLength'] ?? null;
+            // JSON Schema lengths count Unicode characters, not UTF-8 bytes.
+            $length = preg_match_all('/./us', $value);
+            $length = false === $length ? strlen($value) : $length;
 
-            if (is_int($minLength) && strlen($value) < $minLength) {
-                $violations[] = 'String length '.strlen($value)." is less than minimum {$minLength}";
+            if (is_int($minLength) && $length < $minLength) {
+                $violations[] = 'String length '.$length." is less than minimum {$minLength}";
             }
-            if (is_int($maxLength) && strlen($value) > $maxLength) {
-                $violations[] = 'String length '.strlen($value)." exceeds maximum {$maxLength}";
+            if (is_int($maxLength) && $length > $maxLength) {
+                $violations[] = 'String length '.$length." exceeds maximum {$maxLength}";
             }
         }
 
