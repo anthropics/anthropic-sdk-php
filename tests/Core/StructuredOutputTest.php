@@ -9,6 +9,7 @@ use Anthropic\Lib\Contracts\StructuredOutputModel;
 use Anthropic\Lib\Helpers\SchemaInference;
 use Anthropic\Lib\Helpers\StructuredOutput;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -126,6 +127,7 @@ class ModelWithArrayOfObjects implements StructuredOutputModel
 class ModelWithArrayMinItemsUnsupported implements StructuredOutputModel
 {
     use StructuredOutputModelTrait;
+
     /** @var array<SkillItem> */
     #[Constrained(description: 'Items with high minItems', itemClass: SkillItem::class, minItems: 5)]
     public array $items;
@@ -170,6 +172,33 @@ class ModelWithPhpDocAndExplicitItemClass implements StructuredOutputModel
     public array $skills;
 }
 
+class ModelWithFullyQualifiedDocItems implements StructuredOutputModel
+{
+    use StructuredOutputModelTrait;
+    public string $name;
+
+    /** @var SkillItem[] */
+    public array $skills;
+}
+
+class ModelWithInheritedDocItems extends ModelWithPhpDocItemClass {}
+
+class ModelWithNullableDocItems implements StructuredOutputModel
+{
+    use StructuredOutputModelTrait;
+
+    /** @var array<SkillItem>|null */
+    public ?array $skills = null;
+}
+
+class ModelWithScalarDocItems implements StructuredOutputModel
+{
+    use StructuredOutputModelTrait;
+
+    /** @var string[] */
+    public array $skills;
+}
+
 class ModelWithPhpDefaultValue implements StructuredOutputModel
 {
     use StructuredOutputModelTrait;
@@ -190,6 +219,7 @@ class ModelWithUntypedProperty implements StructuredOutputModel
 {
     use StructuredOutputModelTrait;
     public string $name;
+
     /** @phpstan-ignore-next-line missingType.property */
     public $anything;
 }
@@ -199,7 +229,7 @@ class ModelWithUntypedProperty implements StructuredOutputModel
  */
 #[CoversClass(StructuredOutput::class)]
 #[CoversClass(SchemaInference::class)]
-#[CoversClass(\Anthropic\Lib\Concerns\StructuredOutputModelTrait::class)]
+#[CoversClass(StructuredOutputModelTrait::class)]
 #[CoversClass(Required::class)]
 #[CoversClass(Constrained::class)]
 class StructuredOutputTest extends TestCase
@@ -676,18 +706,21 @@ class StructuredOutputTest extends TestCase
         $constraints = StructuredOutput::getConstraintsForModel(ModelWithUnsupportedConstraints::class);
 
         $this->assertArrayHasKey('age', $constraints);
+
         /** @var array{minimum: int, maximum: int} $ageConstraints */
         $ageConstraints = $constraints['age'];
         $this->assertEquals(0, $ageConstraints['minimum']);
         $this->assertEquals(150, $ageConstraints['maximum']);
 
         $this->assertArrayHasKey('username', $constraints);
+
         /** @var array{minLength: int, maxLength: int} $usernameConstraints */
         $usernameConstraints = $constraints['username'];
         $this->assertEquals(3, $usernameConstraints['minLength']);
         $this->assertEquals(20, $usernameConstraints['maxLength']);
 
         $this->assertArrayHasKey('score', $constraints);
+
         /** @var array{multipleOf: float} $scoreConstraints */
         $scoreConstraints = $constraints['score'];
         $this->assertEquals(0.5, $scoreConstraints['multipleOf']);
@@ -900,5 +933,76 @@ class StructuredOutputTest extends TestCase
         $this->markTestIncomplete(
             'Recursive models are not supported: self-referential models cause infinite recursion in schema generation (known limitation).'
         );
+    }
+
+    /** @param class-string<StructuredOutputModel> $modelClass */
+    #[Test]
+    #[DataProvider('documentedItemModels')]
+    public function testPhpDocItemsHydrateAndRoundTrip(string $modelClass): void
+    {
+        $data = ['skills' => [['name' => 'Alpha', 'level' => 'beginner'], ['name' => 'Beta', 'level' => 'expert']]];
+        $model = $modelClass::fromArray($data);
+        $property = new \ReflectionProperty($modelClass, 'skills');
+        $items = $property->getValue($model);
+        $this->assertIsArray($items);
+        $this->assertCount(2, $items);
+        foreach ($items as $index => $item) {
+            $this->assertInstanceOf(SkillItem::class, $item);
+            $this->assertSame($data['skills'][$index], $item->jsonSerialize());
+        }
+        $this->assertSame($data, json_decode($model->toJson(), true, flags: JSON_THROW_ON_ERROR));
+        $empty = $modelClass::fromArray(['skills' => []]);
+        $this->assertSame([], $property->getValue($empty));
+    }
+
+    /** @return iterable<string, array{class-string<StructuredOutputModel>}> */
+    public static function documentedItemModels(): iterable
+    {
+        yield 'suffix' => [ModelWithPhpDocItemClass::class];
+
+        yield 'generic' => [ModelWithPhpDocArraySyntax::class];
+
+        yield 'qualified' => [ModelWithFullyQualifiedDocItems::class];
+
+        yield 'inherited' => [ModelWithInheritedDocItems::class];
+
+        yield 'nullable array' => [ModelWithNullableDocItems::class];
+    }
+
+    #[Test]
+    public function testPhpDocHydrationKeepsExplicitClassAndScalarControls(): void
+    {
+        $address = ['street' => '10 Lane', 'city' => 'London', 'country' => 'UK'];
+        $model = ModelWithPhpDocAndExplicitItemClass::fromArray(['skills' => [$address]]);
+        $items = (new \ReflectionProperty($model, 'skills'))->getValue($model);
+        $this->assertIsArray($items);
+        $item = $items[0];
+        $this->assertInstanceOf(NestedAddress::class, $item);
+        $this->assertSame($address, $item->jsonSerialize());
+        $this->assertNull(ModelWithNullableDocItems::fromArray(['skills' => null])->skills);
+        $this->assertSame(['a', 'b'], ModelWithScalarDocItems::fromArray(['skills' => ['a', 'b']])->skills);
+        $existing = SkillItem::fromArray(['name' => 'Ready', 'level' => 'expert']);
+        $model = ModelWithPhpDocItemClass::fromArray(['skills' => [$existing]]);
+        $this->assertSame($existing, $model->skills[0]);
+    }
+
+    #[Test]
+    public function testPhpDocHydrationThroughStructuredResponseParser(): void
+    {
+        $data = ['name' => 'Result', 'skills' => [['name' => 'Typed', 'level' => 'expert']]];
+        $content = ['answer' => ['type' => 'text', 'text' => json_encode($data, JSON_THROW_ON_ERROR)]];
+        $original = $content;
+        StructuredOutput::parseResponseContent($content, ModelWithPhpDocArraySyntax::class);
+        $block = $content['answer'];
+        $this->assertIsArray($block);
+        $model = $block['parsed'];
+        $this->assertInstanceOf(ModelWithPhpDocArraySyntax::class, $model);
+        $items = (new \ReflectionProperty($model, 'skills'))->getValue($model);
+        $this->assertIsArray($items);
+        $item = $items[0];
+        $this->assertInstanceOf(SkillItem::class, $item);
+        $this->assertSame('Typed', $item->name);
+        $this->assertSame($original['answer']['text'], $block['text']);
+        $this->assertSame($data, json_decode($model->toJson(), true, flags: JSON_THROW_ON_ERROR));
     }
 }

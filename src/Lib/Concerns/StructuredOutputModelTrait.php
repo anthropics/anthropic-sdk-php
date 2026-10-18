@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Lib\Concerns;
 
 use Anthropic\Lib\Attributes\Constrained;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
+use Anthropic\Lib\Helpers\SchemaInference;
 
 /**
  * Trait for structured output models.
@@ -29,6 +31,7 @@ use Anthropic\Lib\Attributes\Constrained;
  * For nested objects, you have two options:
  * 1. Type hint with the model class directly: `public NestedModel $child;`
  * 2. For arrays of models, use `itemClass`: `#[Constrained(itemClass: Item::class)] public array $items;`
+ *    PHPDoc `@var Item[]` and `@var array<Item>` are also used for schema generation and hydration.
  *
  * **Note:** The schema generated from your class is subject to improvement between minor versions.
  * Pin your dependency if you need guaranteed schema stability.
@@ -106,11 +109,11 @@ trait StructuredOutputModelTrait
                 $value = $this->{$name};
 
                 // Recursively serialize nested models
-                if ($value instanceof \Anthropic\Lib\Contracts\StructuredOutputModel) {
+                if ($value instanceof StructuredOutputModel) {
                     $value = $value->jsonSerialize();
                 } elseif (is_array($value)) {
                     $value = array_map(
-                        fn ($item) => $item instanceof \Anthropic\Lib\Contracts\StructuredOutputModel ? $item->jsonSerialize() : $item,
+                        fn ($item) => $item instanceof StructuredOutputModel ? $item->jsonSerialize() : $item,
                         $value
                     );
                 }
@@ -205,7 +208,7 @@ trait StructuredOutputModelTrait
     /**
      * Resolves the target class for a property based on type hints and attributes.
      *
-     * @return class-string<\Anthropic\Lib\Contracts\StructuredOutputModel>|null The target class or null if not a nested model
+     * @return class-string<StructuredOutputModel>|null The target class or null if not a nested model
      */
     private static function resolveTargetClass(\ReflectionProperty $property): ?string
     {
@@ -213,7 +216,7 @@ trait StructuredOutputModelTrait
         $attributes = $property->getAttributes(Constrained::class);
         if (!empty($attributes)) {
             $constraintAttr = $attributes[0]->newInstance();
-            if (null !== $constraintAttr->itemClass && is_subclass_of($constraintAttr->itemClass, \Anthropic\Lib\Contracts\StructuredOutputModel::class)) {
+            if (null !== $constraintAttr->itemClass && is_subclass_of($constraintAttr->itemClass, StructuredOutputModel::class)) {
                 return $constraintAttr->itemClass;
             }
         }
@@ -222,7 +225,13 @@ trait StructuredOutputModelTrait
         $type = $property->getType();
         if ($type instanceof \ReflectionNamedType) {
             $typeName = $type->getName();
-            if (class_exists($typeName) && is_subclass_of($typeName, \Anthropic\Lib\Contracts\StructuredOutputModel::class)) {
+            if ('array' === $typeName) {
+                $itemClass = SchemaInference::inferItemClassFromDocComment($property);
+                if (null !== $itemClass && is_subclass_of($itemClass, StructuredOutputModel::class)) {
+                    return $itemClass;
+                }
+            }
+            if (class_exists($typeName) && is_subclass_of($typeName, StructuredOutputModel::class)) {
                 return $typeName;
             }
         }
