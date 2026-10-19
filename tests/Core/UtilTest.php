@@ -190,6 +190,12 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testPrettyEncodeJsonKeepsSlashes(): void
+    {
+        $this->assertSame('"https://example.com/a"', Util::prettyEncodeJson('https://example.com/a'));
+    }
+
+    #[Test]
     public function testGetenvFromGlobalEnv(): void
     {
         $_ENV[__FUNCTION__] = __FUNCTION__;

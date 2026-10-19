@@ -595,7 +595,7 @@ final class Util
 
     public static function prettyEncodeJson(mixed $obj): string
     {
-        return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+        return json_encode($obj, flags: JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
     /**

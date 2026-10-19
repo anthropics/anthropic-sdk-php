@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.60.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.59.0...v0.60.0) (2026-10-16)
+## [0.60.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.59.0...v0.60.0) (2026-10-19)
 
 ### Features
 
@@ -10,6 +10,7 @@
 ### Bug Fixes
 
 * **client:** fix a crash and an unclosed body when closing a stream
+* **client:** stop escaping slashes in error messages and model strings
 * **client:** treat x-amz-security-token as a sensitive header
 
 
