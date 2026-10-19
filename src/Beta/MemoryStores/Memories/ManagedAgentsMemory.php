@@ -11,7 +11,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * A `memory` object: a single text document at a hierarchical path inside a memory store. The `content` field is populated when `view=full` and `null` when `view=basic`; the `content_size_bytes` and `content_sha256` fields are always populated so sync clients can diff without fetching content. Memories are addressed by their `mem_...` ID; the path is the create key and can be changed via update.
+ * A text document at a path inside a memory store.
+ *
+ * `content` is `null` when the response uses `view=basic`. `content_size_bytes` and `content_sha256` are always set, so you can detect changes without fetching the content. To retrieve, update, or delete a memory, pass its ID, which stays the same when its path changes.
+ *
+ * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#view-and-edit-memories) to learn more about working with memories.
  *
  * @phpstan-type ManagedAgentsMemoryShape = array{
  *   id: string,
@@ -32,7 +36,9 @@ final class ManagedAgentsMemory implements BaseModel
     use SdkModel;
 
     /**
-     * Unique identifier for this memory (a `mem_...` value). Stable across renames; use this ID, not the path, to read, update, or delete the memory.
+     * The unique ID of the memory (`mem_...`). It stays the same when the memory's path changes.
+     *
+     * To retrieve, update, or delete the memory, pass this ID.
      */
     #[Required]
     public string $id;
@@ -44,7 +50,7 @@ final class ManagedAgentsMemory implements BaseModel
     public string $contentSha256;
 
     /**
-     * Size of `content` in bytes (the UTF-8 plaintext length). Always populated, regardless of `view`.
+     * The size of the memory's `content` in UTF-8 bytes. It is set regardless of `view`.
      */
     #[Required('content_size_bytes')]
     public int $contentSizeBytes;
@@ -62,7 +68,11 @@ final class ManagedAgentsMemory implements BaseModel
     public string $memoryStoreID;
 
     /**
-     * ID of the `memory_version` representing this memory's current content (a `memver_...` value). This is the authoritative head pointer; `memory_version` objects do not carry an `is_latest` flag, so compare against this field instead. Enumerate the history via [List memory versions](/en/api/beta/memory_stores/memory_versions/list).
+     * The ID of the memory version that holds the memory's current content (`memver_...`).
+     *
+     * Memory versions don't have a flag that marks the latest one. Compare their IDs with this field instead.
+     *
+     * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#audit-memory-changes) to learn more about memory versions.
      */
     #[Required('memory_version_id')]
     public string $memoryVersionID;
@@ -78,13 +88,17 @@ final class ManagedAgentsMemory implements BaseModel
     public string $type;
 
     /**
-     * When this memory was last modified, in RFC 3339 format. Use this as a cheap freshness signal; for who made the change, look up the head version's `created_by` via [List memory versions](/en/api/beta/memory_stores/memory_versions/list).
+     * When the memory was last changed, in RFC 3339.
+     *
+     * To find out who made the change, look at `created_by` on the memory version that `memory_version_id` references.
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
 
     /**
-     * The memory's UTF-8 text content. Populated when `view=full`; `null` when `view=basic`. Maximum 100 kB (102,400 bytes).
+     * The memory's UTF-8 text content, or `null` when the response uses `view=basic`.
+     *
+     * The maximum size is 100 kB (102,400 bytes).
      */
     #[Optional(nullable: true)]
     public ?string $content;
@@ -164,7 +178,9 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * Unique identifier for this memory (a `mem_...` value). Stable across renames; use this ID, not the path, to read, update, or delete the memory.
+     * The unique ID of the memory (`mem_...`). It stays the same when the memory's path changes.
+     *
+     * To retrieve, update, or delete the memory, pass this ID.
      */
     public function withID(string $id): self
     {
@@ -186,7 +202,7 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * Size of `content` in bytes (the UTF-8 plaintext length). Always populated, regardless of `view`.
+     * The size of the memory's `content` in UTF-8 bytes. It is set regardless of `view`.
      */
     public function withContentSizeBytes(int $contentSizeBytes): self
     {
@@ -219,7 +235,11 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * ID of the `memory_version` representing this memory's current content (a `memver_...` value). This is the authoritative head pointer; `memory_version` objects do not carry an `is_latest` flag, so compare against this field instead. Enumerate the history via [List memory versions](/en/api/beta/memory_stores/memory_versions/list).
+     * The ID of the memory version that holds the memory's current content (`memver_...`).
+     *
+     * Memory versions don't have a flag that marks the latest one. Compare their IDs with this field instead.
+     *
+     * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#audit-memory-changes) to learn more about memory versions.
      */
     public function withMemoryVersionID(string $memoryVersionID): self
     {
@@ -252,7 +272,9 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * When this memory was last modified, in RFC 3339 format. Use this as a cheap freshness signal; for who made the change, look up the head version's `created_by` via [List memory versions](/en/api/beta/memory_stores/memory_versions/list).
+     * When the memory was last changed, in RFC 3339.
+     *
+     * To find out who made the change, look at `created_by` on the memory version that `memory_version_id` references.
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
@@ -263,7 +285,9 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * The memory's UTF-8 text content. Populated when `view=full`; `null` when `view=basic`. Maximum 100 kB (102,400 bytes).
+     * The memory's UTF-8 text content, or `null` when the response uses `view=basic`.
+     *
+     * The maximum size is 100 kB (102,400 bytes).
      */
     public function withContent(?string $content): self
     {

@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Retrieve a memory store.
+ * Retrieve a Memory Store.
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::retrieve()
  *

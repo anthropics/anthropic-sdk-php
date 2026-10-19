@@ -36,7 +36,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * Create a memory store
+     * Create a Memory Store
      *
      * @param array{
      *   name: string,
@@ -90,9 +90,9 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * Retrieve a memory store
+     * Retrieve a Memory Store
      *
-     * @param string $memoryStoreID ID of the memory store to retrieve (a `memstore_...` identifier). Required. Enumerate IDs via `GET /v1/memory_stores`.
+     * @param string $memoryStoreID The ID of the memory store to retrieve (`memstore_...`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -138,9 +138,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * Update a memory store
+     * Update a Memory Store
      *
-     * @param string $memoryStoreID Path param: ID of the memory store to update (a `memstore_...` identifier). Required. Enumerate IDs via `GET /v1/memory_stores`. Updating an archived store returns 400.
+     * @param string $memoryStoreID Path param: The ID of the memory store to update (`memstore_...`).
+     *
+     * The request fails with HTTP status 400 if the store is archived.
      * @param array{
      *   description?: string|null,
      *   metadata?: array<string,string|null>|null,
@@ -194,7 +196,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * List memory stores
+     * List Memory Stores
      *
      * @param array{
      *   createdAtGte?: \DateTimeInterface,
@@ -266,9 +268,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * Delete a memory store
+     * Delete a Memory Store
      *
-     * @param string $memoryStoreID ID of the memory store to permanently delete (a `memstore_...` identifier). Required. Deletion cascades to all memories and memory versions in the store and cannot be undone.
+     * @param string $memoryStoreID The ID of the memory store to delete (`memstore_...`).
+     *
+     * Deleting a store also deletes all its memories and memory versions. It can't be undone.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -314,9 +318,11 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
     /**
      * @api
      *
-     * Archive a memory store
+     * Archive a Memory Store
      *
-     * @param string $memoryStoreID ID of the memory store to archive (a `memstore_...` identifier). Required. Archiving is one-way and idempotent; archived stores cannot be unarchived. Enumerate IDs via `GET /v1/memory_stores`.
+     * @param string $memoryStoreID The ID of the memory store to archive (`memstore_...`).
+     *
+     * Archiving can't be undone. Archiving a store that is already archived returns it unchanged.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

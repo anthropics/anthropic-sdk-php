@@ -40,7 +40,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * Create a memory
+     * Create a Memory
      *
      * @param string $memoryStoreID Path param: The ID of the memory store to create the memory in (`memstore_...`).
      * @param array{
@@ -100,7 +100,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * Retrieve a memory
+     * Retrieve a Memory
      *
      * @param string $memoryID Path param: The ID of the memory to retrieve (`mem_...`).
      * @param array{
@@ -165,7 +165,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * Update a memory
+     * Update a Memory
      *
      * @param string $memoryID Path param: The ID of the memory to update (`mem_...`).
      * @param array{
@@ -238,7 +238,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * List memories
+     * List Memories
      *
      * @param string $memoryStoreID Path param: The ID of the memory store to list memories from (`memstore_...`).
      * @param array{
@@ -304,7 +304,7 @@ final class MemoriesRawService implements MemoriesRawContract
     /**
      * @api
      *
-     * Delete a memory
+     * Delete a Memory
      *
      * @param string $memoryID Path param: The ID of the memory to delete (`mem_...`).
      * @param array{
