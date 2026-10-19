@@ -10,6 +10,7 @@ use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Implementation\RawResponse;
+use Anthropic\Core\Util;
 use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
@@ -31,6 +32,8 @@ use Anthropic\SSEStream;
  */
 final class MantleMessagesRawService implements MessagesRawContract
 {
+    private const BODY_PARAMS = ['userProfileID' => 'user_profile_id'];
+
     /**
      * @internal
      */
@@ -61,7 +64,7 @@ final class MantleMessagesRawService implements MessagesRawContract
         $response = $this->client->request(
             method: 'post',
             path: 'v1/messages',
-            body: (object) $parsed,
+            body: (object) Util::array_transform_keys($parsed, self::BODY_PARAMS),
             options: $options->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
@@ -102,7 +105,7 @@ final class MantleMessagesRawService implements MessagesRawContract
             method: 'post',
             path: 'v1/messages',
             headers: ['Accept' => 'text/event-stream'],
-            body: (object) $parsed,
+            body: (object) Util::array_transform_keys($parsed, self::BODY_PARAMS),
             options: $options->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
@@ -136,7 +139,7 @@ final class MantleMessagesRawService implements MessagesRawContract
         $response = $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens',
-            body: (object) $parsed,
+            body: (object) Util::array_transform_keys($parsed, self::BODY_PARAMS),
             options: $options->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,

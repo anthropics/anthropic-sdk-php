@@ -106,7 +106,7 @@ final class Tracing extends \Anthropic\Core\Tracing
         $platform = match (true) {
             $client instanceof Aws\Client => 'aws',
             $client instanceof Bedrock\Client, $client instanceof Bedrock\MantleClient => 'bedrock',
-            $client instanceof Foundry\Client => 'foundry',
+            $client instanceof Foundry\Client, $client instanceof Foundry\ServiceClient => 'foundry',
             $client instanceof GoogleCloud\Client => 'googlecloud',
             $client instanceof Vertex\Client => 'vertex',
             default => null,

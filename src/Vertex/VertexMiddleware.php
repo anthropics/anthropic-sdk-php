@@ -75,7 +75,6 @@ final class VertexMiddleware implements Middleware
     {
         return $r
             ->dropHeader('anthropic-version')
-            ->dropHeader('anthropic-user-profile-id')
             ->dropHeader('anthropic-workspace-id');
     }
 

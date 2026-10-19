@@ -4352,6 +4352,23 @@ final class TracingTest extends TestCase
         $this->assertSame($expected, $recorded);
     }
 
+    public function testFoundryUserProfilesCallsHaveTheFoundryScope(): void
+    {
+        $this->transporter->addResponse(self::json(['id' => 'uprof_1', 'type' => 'user_profile']));
+        $client = Foundry\Client::withCredentials(
+            apiKey: 'key',
+            baseUrl: 'https://foundry.example.test/anthropic',
+            requestOptions: ['transporter' => $this->transporter, 'maxRetries' => 0],
+            openTelemetry: ['tracerProvider' => $this->tracerProvider],
+        );
+
+        $client->userProfiles->retrieve('uprof_1');
+
+        $span = $this->onlySpan();
+        $this->assertSame('com.anthropic.sdk.php.foundry', $span->getInstrumentationScope()->getName());
+        $this->assertSame('https://foundry.example.test/anthropic/v1/user_profiles/uprof_1', $span->getAttributes()->get('url.full'));
+    }
+
     /**
      * A tracer provider, and the propagator to register if any, whose part named `$where` throws: one of {@see self::telemetryThatThrows()}.
      *
