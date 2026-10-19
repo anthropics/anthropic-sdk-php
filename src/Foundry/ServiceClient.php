@@ -28,15 +28,17 @@ final class ServiceClient extends \Anthropic\Client
         private \Closure $authHeaders,
         array|false|null $openTelemetry,
     ) {
-        // Empty strings keep the first-party constructor from reading its credentials from the environment.
+        // Empty strings keep the first-party constructor from reading these values from the environment.
         parent::__construct(
             apiKey: '',
-            authToken: '',
             webhookKey: '',
             baseUrl: $baseUrl,
             requestOptions: $options,
             openTelemetry: $openTelemetry,
         );
+
+        // The first-party constructor may read `ANTHROPIC_AUTH_TOKEN`, which a Foundry client does not keep.
+        $this->authToken = '';
 
         // The first-party constructor adds the headers of `ANTHROPIC_CUSTOM_HEADERS`, which a Foundry client does not send.
         $this->headers = $headers;

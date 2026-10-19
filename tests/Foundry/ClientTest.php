@@ -3,6 +3,7 @@
 namespace Tests\Foundry;
 
 use Anthropic\Foundry\Client;
+use Anthropic\Foundry\ServiceClient;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -155,11 +156,7 @@ final class ClientTest extends TestCase
     #[DataProvider('foundryCredentials')]
     public function testUserProfilesRequestsIgnoreTheFirstPartyEnvironment(array $credentials, array $expected, array $absent): void
     {
-        foreach (self::FIRST_PARTY_ENV as $key => $value) {
-            $this->savedEnv[$key] = [getenv($key), $_ENV[$key] ?? null];
-            putenv("{$key}={$value}");
-            $_ENV[$key] = $value;
-        }
+        $this->setFirstPartyEnv();
 
         $this->makeClient(...$credentials)->userProfiles->retrieve('uprof_1');
         $request = $this->getLastRequest();
@@ -181,6 +178,27 @@ final class ClientTest extends TestCase
         yield 'api key' => [['apiKey' => 'test-key'], ['x-api-key' => 'test-key'], ['Authorization']];
 
         yield 'auth token' => [['authToken' => 'test-token'], ['Authorization' => 'Bearer test-token'], ['x-api-key']];
+    }
+
+    public function testUserProfilesClientKeepsNoFirstPartyAuthToken(): void
+    {
+        $this->setFirstPartyEnv();
+
+        $client = $this->makeClient(apiKey: 'test-key');
+        $serviceClient = (new \ReflectionProperty($client->userProfiles, 'client'))->getValue($client->userProfiles);
+
+        $this->assertInstanceOf(ServiceClient::class, $serviceClient);
+        $this->assertSame('', $serviceClient->authToken);
+        $this->assertStringNotContainsString(self::FIRST_PARTY_ENV['ANTHROPIC_AUTH_TOKEN'], print_r($client, true));
+    }
+
+    private function setFirstPartyEnv(): void
+    {
+        foreach (self::FIRST_PARTY_ENV as $key => $value) {
+            $this->savedEnv[$key] = [getenv($key), $_ENV[$key] ?? null];
+            putenv("{$key}={$value}");
+            $_ENV[$key] = $value;
+        }
     }
 
     private function makeClient(?string $apiKey = null, ?string $authToken = null): Client
