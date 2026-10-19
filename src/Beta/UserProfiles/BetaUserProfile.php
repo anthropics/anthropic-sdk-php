@@ -23,6 +23,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   metadata: array<string,string>,
+ *   name: string|null,
  *   trustGrants: array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape>,
  *   type: Type|value-of<Type>,
  *   updatedAt: \DateTimeInterface,
@@ -30,7 +31,6 @@ use Anthropic\Core\Contracts\BaseModel;
  *   externalID?: string|null,
  *   externalUserDetails?: null|BetaUserProfileExternalUserDetails|BetaUserProfileExternalUserDetailsShape,
  *   externalUserOnboardedAt?: \DateTimeInterface|null,
- *   name?: string|null,
  * }
  */
 final class BetaUserProfile implements BaseModel
@@ -59,6 +59,12 @@ final class BetaUserProfile implements BaseModel
     public array $metadata;
 
     /**
+     * Real-world name of the entity this profile represents (company or individual). For a company the platform resells Claude access to (`access_type` `passthrough`) this is that company's name. `null` until the platform supplies one.
+     */
+    #[Required]
+    public ?string $name;
+
+    /**
      * Trust grants for this profile, keyed by grant name. Key omitted when no grant is active or in flight.
      *
      * @var array<string,BetaUserProfileTrustGrant> $trustGrants
@@ -75,13 +81,13 @@ final class BetaUserProfile implements BaseModel
     public string $type;
 
     /**
-     * When this user profile was last modified, in RFC 3339 format. Trust-grant status changes also bump this timestamp.
+     * When this user profile was last modified, in RFC 3339 format. It normally also updates shortly after Anthropic gives the profile an approval or withdraws one. Other changes to the statuses that Anthropic reports do not always update it, so read the status itself rather than watching this timestamp.
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
 
     /**
-     * How the platform uses the API for this entity: `application` (default) or `passthrough`. Present under the `user-profiles-2026-08-18` and later beta headers.
+     * How the platform uses the API for this entity: `application` (default) or `passthrough`. Absent under the legacy `user-profiles-2026-03-24` beta header.
      *
      * @var value-of<AccessType>|null $accessType
      */
@@ -89,28 +95,22 @@ final class BetaUserProfile implements BaseModel
     public ?string $accessType;
 
     /**
-     * Platform's own identifier for this user. Not enforced unique. Present under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` the value is `external_user_details.reference_id`.
+     * Platform's own identifier for this user. Not enforced unique. Legacy field, present only under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; without one of them, the value is `external_user_details.reference_id`.
      */
     #[Optional('external_id', nullable: true)]
     public ?string $externalID;
 
     /**
-     * Details about the entity this profile represents, as the platform states them; not verified by Anthropic. Present under the `user-profiles-2026-09-04` beta header, with every field present and `null` until the platform supplies a value; the earlier beta headers serve `reference_id` as the top-level `external_id`, and `user-profiles-2026-08-18` serves `onboarded_at` as `external_user_onboarded_at`.
+     * Details about the entity this profile represents, as the platform states them; not verified by Anthropic. Every field is present, `null` until the platform supplies a value. Absent under the legacy `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers, which serve `reference_id` as the top-level `external_id` and, under `user-profiles-2026-08-18`, `onboarded_at` as `external_user_onboarded_at`.
      */
     #[Optional('external_user_details')]
     public ?BetaUserProfileExternalUserDetails $externalUserDetails;
 
     /**
-     * When the entity this profile represents opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one. Present under the `user-profiles-2026-08-18` beta header; under `user-profiles-2026-09-04` the value is `external_user_details.onboarded_at`.
+     * When the entity this profile represents opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one. Legacy field, present only under the `user-profiles-2026-08-18` beta header; without a legacy header, the value is `external_user_details.onboarded_at`.
      */
     #[Optional('external_user_onboarded_at', nullable: true)]
     public ?\DateTimeInterface $externalUserOnboardedAt;
-
-    /**
-     * Real-world name of the entity this profile represents (company or individual). For a company the platform resells Claude access to (`access_type` `passthrough`) this is that company's name.
-     */
-    #[Optional(nullable: true)]
-    public ?string $name;
 
     /**
      * `new BetaUserProfile()` is missing required properties by the API.
@@ -121,6 +121,7 @@ final class BetaUserProfile implements BaseModel
      *   id: ...,
      *   createdAt: ...,
      *   metadata: ...,
+     *   name: ...,
      *   trustGrants: ...,
      *   type: ...,
      *   updatedAt: ...,
@@ -134,6 +135,7 @@ final class BetaUserProfile implements BaseModel
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withMetadata(...)
+     *   ->withName(...)
      *   ->withTrustGrants(...)
      *   ->withType(...)
      *   ->withUpdatedAt(...)
@@ -159,6 +161,7 @@ final class BetaUserProfile implements BaseModel
         string $id,
         \DateTimeInterface $createdAt,
         array $metadata,
+        ?string $name,
         array $trustGrants,
         Type|string $type,
         \DateTimeInterface $updatedAt,
@@ -166,13 +169,13 @@ final class BetaUserProfile implements BaseModel
         ?string $externalID = null,
         BetaUserProfileExternalUserDetails|array|null $externalUserDetails = null,
         ?\DateTimeInterface $externalUserOnboardedAt = null,
-        ?string $name = null,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['createdAt'] = $createdAt;
         $self['metadata'] = $metadata;
+        $self['name'] = $name;
         $self['trustGrants'] = $trustGrants;
         $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
@@ -181,7 +184,6 @@ final class BetaUserProfile implements BaseModel
         null !== $externalID && $self['externalID'] = $externalID;
         null !== $externalUserDetails && $self['externalUserDetails'] = $externalUserDetails;
         null !== $externalUserOnboardedAt && $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
-        null !== $name && $self['name'] = $name;
 
         return $self;
     }
@@ -222,6 +224,17 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
+     * Real-world name of the entity this profile represents (company or individual). For a company the platform resells Claude access to (`access_type` `passthrough`) this is that company's name. `null` until the platform supplies one.
+     */
+    public function withName(?string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
      * Trust grants for this profile, keyed by grant name. Key omitted when no grant is active or in flight.
      *
      * @param array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape> $trustGrants
@@ -248,7 +261,7 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * When this user profile was last modified, in RFC 3339 format. Trust-grant status changes also bump this timestamp.
+     * When this user profile was last modified, in RFC 3339 format. It normally also updates shortly after Anthropic gives the profile an approval or withdraws one. Other changes to the statuses that Anthropic reports do not always update it, so read the status itself rather than watching this timestamp.
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
@@ -259,7 +272,7 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * How the platform uses the API for this entity: `application` (default) or `passthrough`. Present under the `user-profiles-2026-08-18` and later beta headers.
+     * How the platform uses the API for this entity: `application` (default) or `passthrough`. Absent under the legacy `user-profiles-2026-03-24` beta header.
      *
      * @param AccessType|value-of<AccessType> $accessType
      */
@@ -272,7 +285,7 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * Platform's own identifier for this user. Not enforced unique. Present under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; under `user-profiles-2026-09-04` the value is `external_user_details.reference_id`.
+     * Platform's own identifier for this user. Not enforced unique. Legacy field, present only under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; without one of them, the value is `external_user_details.reference_id`.
      */
     public function withExternalID(?string $externalID): self
     {
@@ -283,7 +296,7 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * Details about the entity this profile represents, as the platform states them; not verified by Anthropic. Present under the `user-profiles-2026-09-04` beta header, with every field present and `null` until the platform supplies a value; the earlier beta headers serve `reference_id` as the top-level `external_id`, and `user-profiles-2026-08-18` serves `onboarded_at` as `external_user_onboarded_at`.
+     * Details about the entity this profile represents, as the platform states them; not verified by Anthropic. Every field is present, `null` until the platform supplies a value. Absent under the legacy `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers, which serve `reference_id` as the top-level `external_id` and, under `user-profiles-2026-08-18`, `onboarded_at` as `external_user_onboarded_at`.
      *
      * @param BetaUserProfileExternalUserDetails|BetaUserProfileExternalUserDetailsShape $externalUserDetails
      */
@@ -297,24 +310,13 @@ final class BetaUserProfile implements BaseModel
     }
 
     /**
-     * When the entity this profile represents opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one. Present under the `user-profiles-2026-08-18` beta header; under `user-profiles-2026-09-04` the value is `external_user_details.onboarded_at`.
+     * When the entity this profile represents opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one. Legacy field, present only under the `user-profiles-2026-08-18` beta header; without a legacy header, the value is `external_user_details.onboarded_at`.
      */
     public function withExternalUserOnboardedAt(
         ?\DateTimeInterface $externalUserOnboardedAt
     ): self {
         $self = clone $this;
         $self['externalUserOnboardedAt'] = $externalUserOnboardedAt;
-
-        return $self;
-    }
-
-    /**
-     * Real-world name of the entity this profile represents (company or individual). For a company the platform resells Claude access to (`access_type` `passthrough`) this is that company's name.
-     */
-    public function withName(?string $name): self
-    {
-        $self = clone $this;
-        $self['name'] = $name;
 
         return $self;
     }

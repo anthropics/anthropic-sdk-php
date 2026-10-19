@@ -350,7 +350,7 @@ final class MessageCreateParams implements BaseModel
     public ?float $topP;
 
     /**
-     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      */
     #[Optional]
     public ?string $userProfileID;
@@ -840,7 +840,7 @@ final class MessageCreateParams implements BaseModel
     }
 
     /**
-     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization. Requires the `user-profiles` beta header.
+     * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      */
     public function withUserProfileID(string $userProfileID): self
     {

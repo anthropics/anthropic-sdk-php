@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * A URL to give to the entity that a user profile represents, so that the entity can enroll for a trust grant.
+ * A URL to give to the entity that a user profile represents, so that the entity can enroll in a program.
  *
  * @phpstan-type BetaUserProfileEnrollmentURLShape = array{
  *   expiresAt: \DateTimeInterface, type: Type|value-of<Type>, url: string

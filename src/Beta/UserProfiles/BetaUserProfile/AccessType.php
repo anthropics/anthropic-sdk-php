@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\UserProfiles\BetaUserProfile;
 
 /**
- * How the platform uses the API for this entity: `application` (default) or `passthrough`. Present under the `user-profiles-2026-08-18` and later beta headers.
+ * How the platform uses the API for this entity: `application` (default) or `passthrough`. Absent under the legacy `user-profiles-2026-03-24` beta header.
  */
 enum AccessType: string
 {

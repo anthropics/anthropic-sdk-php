@@ -27,7 +27,7 @@ final class UserProfileCreateEnrollmentURLParams implements BaseModel
     use SdkParams;
 
     /**
-     * This endpoint is in beta: requests must send `user-profiles-2026-03-24`, `user-profiles-2026-08-18`, or `user-profiles-2026-09-04` in this header.
+     * Optional header to specify the beta version(s) you want to use.
      *
      * @var list<string|value-of<AnthropicBeta>>|null $betas
      */
@@ -67,7 +67,7 @@ final class UserProfileCreateEnrollmentURLParams implements BaseModel
     }
 
     /**
-     * This endpoint is in beta: requests must send `user-profiles-2026-03-24`, `user-profiles-2026-08-18`, or `user-profiles-2026-09-04` in this header.
+     * Optional header to specify the beta version(s) you want to use.
      *
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
      */
