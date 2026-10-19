@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\Workspaces;
 
 use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit;
+use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitUpdateValue;
 use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitListParams;
 use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitListParams\GroupType;
+use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -17,6 +19,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\Workspaces\RateLimitsRawContract;
 
 /**
+ * @phpstan-import-type BetaWorkspaceRateLimitUpdateValueShape from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitUpdateValue
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class RateLimitsRawService implements RateLimitsRawContract
@@ -26,6 +29,65 @@ final class RateLimitsRawService implements RateLimitsRawContract
      * @internal
      */
     public function __construct(private Client $client) {}
+
+    /**
+     * @api
+     *
+     * Set or clear rate-limit overrides for one rate-limit group in a workspace.
+     *
+     * Only the limiter types named in `limits` change: an integer `value` sets
+     * that type's override and `null` clears it. Types not named keep their
+     * current value. A value above the organization's own limit is stored, but
+     * the organization limit still applies, so the lower of the two is
+     * enforced.
+     *
+     * Returns the targeted group's entry with this request applied, in the shape
+     * `GET /v1/organizations/workspaces/{workspace_id}/rate_limits` returns.
+     * Changes take effect within about an hour.
+     *
+     * @param string $rateLimitID path param: The `id` of the organization's rate-limit entry to set overrides for
+     * @param array{
+     *   workspaceID: string,
+     *   limits: list<BetaWorkspaceRateLimitUpdateValue|BetaWorkspaceRateLimitUpdateValueShape>,
+     * }|RateLimitUpdateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<BetaWorkspaceRateLimit>
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $rateLimitID,
+        array|RateLimitUpdateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = RateLimitUpdateParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $workspaceID = $parsed['workspaceID'];
+        unset($parsed['workspaceID']);
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'v1/organizations/workspaces/%1$s/rate_limits/%2$s?beta=true',
+                $workspaceID,
+                $rateLimitID,
+            ],
+            body: (object) array_diff_key($parsed, array_flip(['workspaceID'])),
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.workspaces.rate_limits.update',
+                route: '/v1/organizations/workspaces/{workspace_id}/rate_limits/{rate_limit_id}',
+                attributes: [
+                    'anthropic.organization.workspace.id' => $workspaceID,
+                    'anthropic.organization.workspace.rate_limit.id' => $rateLimitID,
+                ],
+            )),
+            convert: BetaWorkspaceRateLimit::class,
+        );
+    }
 
     /**
      * @api

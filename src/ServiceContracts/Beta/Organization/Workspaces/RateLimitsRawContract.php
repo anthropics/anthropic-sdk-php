@@ -6,6 +6,7 @@ namespace Anthropic\ServiceContracts\Beta\Organization\Workspaces;
 
 use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit;
 use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitListParams;
+use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
@@ -16,6 +17,23 @@ use Anthropic\RequestOptions;
  */
 interface RateLimitsRawContract
 {
+    /**
+     * @api
+     *
+     * @param string $rateLimitID path param: The `id` of the organization's rate-limit entry to set overrides for
+     * @param array<string,mixed>|RateLimitUpdateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<BetaWorkspaceRateLimit>
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $rateLimitID,
+        array|RateLimitUpdateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
     /**
      * @api
      *

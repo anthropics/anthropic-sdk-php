@@ -9,11 +9,13 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\Organization\Workspaces\RateLimits\RateLimitListParams\GroupType;
 use Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimit;
+use Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitUpdateValue;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\Workspaces\RateLimitsContract;
 
 /**
+ * @phpstan-import-type WorkspaceRateLimitUpdateValueShape from \Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitUpdateValue
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 final class RateLimitsService implements RateLimitsContract
@@ -29,6 +31,44 @@ final class RateLimitsService implements RateLimitsContract
     public function __construct(private Client $client)
     {
         $this->raw = new RateLimitsRawService($client);
+    }
+
+    /**
+     * @api
+     *
+     * Set or clear rate-limit overrides for one rate-limit group in a workspace.
+     *
+     * Only the limiter types named in `limits` change: an integer `value` sets
+     * that type's override and `null` clears it. Types not named keep their
+     * current value. A value above the organization's own limit is stored, but
+     * the organization limit still applies, so the lower of the two is
+     * enforced.
+     *
+     * Returns the targeted group's entry with this request applied, in the shape
+     * `GET /v1/organizations/workspaces/{workspace_id}/rate_limits` returns.
+     * Changes take effect within about an hour.
+     *
+     * @param string $rateLimitID path param: The `id` of the organization's rate-limit entry to set overrides for
+     * @param string $workspaceID path param: The ID of the workspace
+     * @param list<WorkspaceRateLimitUpdateValue|WorkspaceRateLimitUpdateValueShape> $limits Body param: Limits to set or clear. Unspecified limit types are unchanged.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $rateLimitID,
+        string $workspaceID,
+        array $limits,
+        RequestOptions|array|null $requestOptions = null,
+    ): WorkspaceRateLimit {
+        $params = Util::removeNulls(
+            ['workspaceID' => $workspaceID, 'limits' => $limits]
+        );
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($rateLimitID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
     }
 
     /**
