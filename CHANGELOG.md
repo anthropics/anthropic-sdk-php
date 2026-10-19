@@ -9,6 +9,7 @@
 
 ### Bug Fixes
 
+* **client:** accept webhook header names in any case
 * **client:** fix a crash and an unclosed body when closing a stream
 * **client:** stop escaping slashes in error messages and model strings
 * **client:** treat x-amz-security-token as a sensitive header
