@@ -1,6 +1,11 @@
 # Changelog
 
-## [0.60.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.60.0...v0.60.1) (2026-10-20)
+## [0.61.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.60.0...v0.61.0) (2026-10-20)
+
+### Features
+
+* **api:** add org webhook endpoints and user profile enforcement events
+
 
 ### Chores
 

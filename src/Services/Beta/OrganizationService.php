@@ -24,6 +24,7 @@ use Anthropic\Services\Beta\Organization\ServiceAccountsService;
 use Anthropic\Services\Beta\Organization\SpendLimitsService;
 use Anthropic\Services\Beta\Organization\TelemetryDestinationsService;
 use Anthropic\Services\Beta\Organization\UsersService;
+use Anthropic\Services\Beta\Organization\WebhooksService;
 use Anthropic\Services\Beta\Organization\WorkspacesService;
 
 /**
@@ -117,6 +118,11 @@ final class OrganizationService implements OrganizationContract
     public TelemetryDestinationsService $telemetryDestinations;
 
     /**
+     * @api
+     */
+    public WebhooksService $webhooks;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -138,6 +144,7 @@ final class OrganizationService implements OrganizationContract
         $this->plugins = new PluginsService($client);
         $this->pluginMarketplaces = new PluginMarketplacesService($client);
         $this->telemetryDestinations = new TelemetryDestinationsService($client);
+        $this->webhooks = new WebhooksService($client);
     }
 
     /**
