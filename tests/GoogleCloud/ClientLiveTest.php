@@ -62,6 +62,33 @@ final class ClientLiveTest extends TestCase
         );
     }
 
+    public function testOrganizationRoute(): void
+    {
+        $workspaceId = getenv('ANTHROPIC_GOOGLE_CLOUD_WORKSPACE_ID');
+        if (!is_string($workspaceId)) {
+            $this->markTestSkipped('Set ANTHROPIC_GOOGLE_CLOUD_WORKSPACE_ID to run this test');
+        }
+
+        $workspace = $this->makeClient()->organization->workspaces->retrieve($workspaceId);
+
+        $this->assertSame($workspaceId, $workspace->id);
+    }
+
+    public function testManagedAgentsRoutes(): void
+    {
+        $client = $this->makeClient();
+        $agent = $client->beta->agents->create(model: Model::CLAUDE_HAIKU_4_5->value, name: 'sdk-live-test');
+
+        try {
+            $this->assertSame($agent->id, $client->beta->agents->retrieve($agent->id)->id);
+            $this->assertNotEmpty($client->beta->agents->list(limit: 1)->getItems());
+        } finally {
+            $archived = $client->beta->agents->archive($agent->id);
+        }
+
+        $this->assertNotNull($archived->archivedAt);
+    }
+
     private function makeClient(): Client
     {
         return new Client;

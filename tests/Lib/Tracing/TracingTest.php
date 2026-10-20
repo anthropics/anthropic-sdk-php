@@ -4330,7 +4330,7 @@ final class TracingTest extends TestCase
             'foundry' => ['com.anthropic.sdk.php.foundry', '/anthropic/v1/messages', 'https://foundry.example.test/anthropic/v1/messages'],
             'mantle' => ['com.anthropic.sdk.php.bedrock', '/anthropic/v1/messages', 'https://bedrock-mantle.us-east-1.api.aws/anthropic/v1/messages'],
             'aws' => ['com.anthropic.sdk.php.aws', '/v1/messages', 'https://aws-external-anthropic.us-east-1.api.aws/v1/messages'],
-            'googlecloud' => ['com.anthropic.sdk.php.googlecloud', '/v1alpha/projects/project/locations/global/workspaces/workspace/invoke/v1/messages', 'https://claude.googleapis.com/v1alpha/projects/project/locations/global/workspaces/workspace/invoke/v1/messages'],
+            'googlecloud' => ['com.anthropic.sdk.php.googlecloud', '/v1/projects/project/locations/global/workspaces/workspace/invoke/v1/messages', 'https://claude.googleapis.com/v1/projects/project/locations/global/workspaces/workspace/invoke/v1/messages'],
         ];
 
         $recorded = [];
