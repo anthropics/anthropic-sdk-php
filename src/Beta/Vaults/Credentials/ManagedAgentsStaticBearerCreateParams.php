@@ -22,7 +22,7 @@ final class ManagedAgentsStaticBearerCreateParams implements BaseModel
     use SdkModel;
 
     /**
-     * Static bearer token value.
+     * The static bearer token to send to the MCP server, such as an API key or personal access token.
      */
     #[Required]
     public string $token;
@@ -83,7 +83,7 @@ final class ManagedAgentsStaticBearerCreateParams implements BaseModel
     }
 
     /**
-     * Static bearer token value.
+     * The static bearer token to send to the MCP server, such as an API key or personal access token.
      */
     public function withToken(string $token): self
     {

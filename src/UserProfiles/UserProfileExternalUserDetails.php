@@ -1,0 +1,224 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\UserProfiles;
+
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+
+/**
+ * Details about the entity this profile represents, as the platform states them. Anthropic does not verify them. Every field is present, `null` until the platform supplies a value.
+ *
+ * @phpstan-type UserProfileExternalUserDetailsShape = array{
+ *   accountStatus: null|UserProfileExternalUserAccountStatus|value-of<UserProfileExternalUserAccountStatus>,
+ *   country: string|null,
+ *   emailHash: string|null,
+ *   entityType: null|UserProfileExternalUserEntityType|value-of<UserProfileExternalUserEntityType>,
+ *   nameHash: string|null,
+ *   onboardedAt: \DateTimeInterface|null,
+ *   referenceID: string|null,
+ * }
+ */
+final class UserProfileExternalUserDetails implements BaseModel
+{
+    /** @use SdkModel<UserProfileExternalUserDetailsShape> */
+    use SdkModel;
+
+    /**
+     * The status of the entity's account on the platform: `active`, `suspended` or `blocked`. `null` until the platform supplies one.
+     *
+     * @var value-of<UserProfileExternalUserAccountStatus>|null $accountStatus
+     */
+    #[Required(
+        'account_status',
+        enum: UserProfileExternalUserAccountStatus::class
+    )]
+    public ?string $accountStatus;
+
+    /**
+     * The country the platform associates with the entity, as an ISO 3166-1 alpha-2 code. `null` until the platform supplies one.
+     */
+    #[Required]
+    public ?string $country;
+
+    /**
+     * The platform-computed hash of the entity's email address. `null` until the platform supplies one.
+     */
+    #[Required('email_hash')]
+    public ?string $emailHash;
+
+    /**
+     * What kind of entity the profile represents: `individual`, `business`, `non_profit` or `government`. `null` until the platform supplies one.
+     *
+     * @var value-of<UserProfileExternalUserEntityType>|null $entityType
+     */
+    #[Required('entity_type', enum: UserProfileExternalUserEntityType::class)]
+    public ?string $entityType;
+
+    /**
+     * The platform-computed hash of the entity's name. `null` until the platform supplies one.
+     */
+    #[Required('name_hash')]
+    public ?string $nameHash;
+
+    /**
+     * When the entity opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one.
+     */
+    #[Required('onboarded_at')]
+    public ?\DateTimeInterface $onboardedAt;
+
+    /**
+     * The platform's own reference for the entity. `null` until the platform supplies one.
+     */
+    #[Required('reference_id')]
+    public ?string $referenceID;
+
+    /**
+     * `new UserProfileExternalUserDetails()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * UserProfileExternalUserDetails::with(
+     *   accountStatus: ...,
+     *   country: ...,
+     *   emailHash: ...,
+     *   entityType: ...,
+     *   nameHash: ...,
+     *   onboardedAt: ...,
+     *   referenceID: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new UserProfileExternalUserDetails())
+     *   ->withAccountStatus(...)
+     *   ->withCountry(...)
+     *   ->withEmailHash(...)
+     *   ->withEntityType(...)
+     *   ->withNameHash(...)
+     *   ->withOnboardedAt(...)
+     *   ->withReferenceID(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param UserProfileExternalUserAccountStatus|value-of<UserProfileExternalUserAccountStatus>|null $accountStatus
+     * @param UserProfileExternalUserEntityType|value-of<UserProfileExternalUserEntityType>|null $entityType
+     */
+    public static function with(
+        UserProfileExternalUserAccountStatus|string|null $accountStatus,
+        ?string $country,
+        ?string $emailHash,
+        UserProfileExternalUserEntityType|string|null $entityType,
+        ?string $nameHash,
+        ?\DateTimeInterface $onboardedAt,
+        ?string $referenceID,
+    ): self {
+        $self = new self;
+
+        $self['accountStatus'] = $accountStatus;
+        $self['country'] = $country;
+        $self['emailHash'] = $emailHash;
+        $self['entityType'] = $entityType;
+        $self['nameHash'] = $nameHash;
+        $self['onboardedAt'] = $onboardedAt;
+        $self['referenceID'] = $referenceID;
+
+        return $self;
+    }
+
+    /**
+     * The status of the entity's account on the platform: `active`, `suspended` or `blocked`. `null` until the platform supplies one.
+     *
+     * @param UserProfileExternalUserAccountStatus|value-of<UserProfileExternalUserAccountStatus>|null $accountStatus
+     */
+    public function withAccountStatus(
+        UserProfileExternalUserAccountStatus|string|null $accountStatus
+    ): self {
+        $self = clone $this;
+        $self['accountStatus'] = $accountStatus;
+
+        return $self;
+    }
+
+    /**
+     * The country the platform associates with the entity, as an ISO 3166-1 alpha-2 code. `null` until the platform supplies one.
+     */
+    public function withCountry(?string $country): self
+    {
+        $self = clone $this;
+        $self['country'] = $country;
+
+        return $self;
+    }
+
+    /**
+     * The platform-computed hash of the entity's email address. `null` until the platform supplies one.
+     */
+    public function withEmailHash(?string $emailHash): self
+    {
+        $self = clone $this;
+        $self['emailHash'] = $emailHash;
+
+        return $self;
+    }
+
+    /**
+     * What kind of entity the profile represents: `individual`, `business`, `non_profit` or `government`. `null` until the platform supplies one.
+     *
+     * @param UserProfileExternalUserEntityType|value-of<UserProfileExternalUserEntityType>|null $entityType
+     */
+    public function withEntityType(
+        UserProfileExternalUserEntityType|string|null $entityType
+    ): self {
+        $self = clone $this;
+        $self['entityType'] = $entityType;
+
+        return $self;
+    }
+
+    /**
+     * The platform-computed hash of the entity's name. `null` until the platform supplies one.
+     */
+    public function withNameHash(?string $nameHash): self
+    {
+        $self = clone $this;
+        $self['nameHash'] = $nameHash;
+
+        return $self;
+    }
+
+    /**
+     * When the entity opened its account with the platform, as stated by the platform, in RFC 3339 format (UTC). `null` until the platform supplies one.
+     */
+    public function withOnboardedAt(?\DateTimeInterface $onboardedAt): self
+    {
+        $self = clone $this;
+        $self['onboardedAt'] = $onboardedAt;
+
+        return $self;
+    }
+
+    /**
+     * The platform's own reference for the entity. `null` until the platform supplies one.
+     */
+    public function withReferenceID(?string $referenceID): self
+    {
+        $self = clone $this;
+        $self['referenceID'] = $referenceID;
+
+        return $self;
+    }
+}

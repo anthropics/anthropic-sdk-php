@@ -8,7 +8,7 @@ use Anthropic\Beta\Organization\Analytics\AnalyticsCostUsersItem;
 use Anthropic\Beta\Organization\Analytics\UserCostReport\UserCostReportListParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -22,7 +22,7 @@ interface UserCostReportRawContract
      * @param array<string,mixed>|UserCostReportListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<AnalyticsCostUsersItem>>
+     * @return BaseResponse<ReportPageCursor<AnalyticsCostUsersItem>>
      *
      * @throws APIException
      */

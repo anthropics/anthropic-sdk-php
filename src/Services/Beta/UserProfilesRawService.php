@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\UserProfiles\BetaDeletedUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
 use Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateEnrollmentURLParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams;
 use Anthropic\Beta\UserProfiles\UserProfileCreateParams\AccessType;
+use Anthropic\Beta\UserProfiles\UserProfileDeleteParams;
 use Anthropic\Beta\UserProfiles\UserProfileListParams;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\Order;
 use Anthropic\Beta\UserProfiles\UserProfileListParams\OrderBy;
@@ -257,6 +259,54 @@ final class UserProfilesRawService implements UserProfilesRawContract
             )),
             convert: BetaUserProfile::class,
             page: PageCursor::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Delete User Profile
+     *
+     * @param string $userProfileID The ID of the user profile to delete (`uprof_...`).
+     * @param array{
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     *   workspaceID?: string,
+     * }|UserProfileDeleteParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<BetaDeletedUserProfile>
+     *
+     * @throws APIException
+     */
+    public function delete(
+        string $userProfileID,
+        array|UserProfileDeleteParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = UserProfileDeleteParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'delete',
+            path: ['v1/user_profiles/%1$s?beta=true', $userProfileID],
+            headers: Util::array_transform_keys(
+                $parsed,
+                [
+                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
+                ],
+            ),
+            options: RequestOptions::parse(
+                ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
+                $options,
+            )->withApiCall(new ApiCallInfo(
+                name: 'anthropic.user_profiles.delete',
+                route: '/v1/user_profiles/{user_profile_id}',
+                attributes: ['anthropic.user_profile.id' => $userProfileID],
+            )),
+            convert: BetaDeletedUserProfile::class,
         );
     }
 

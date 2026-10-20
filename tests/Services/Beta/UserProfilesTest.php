@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta;
 
+use Anthropic\Beta\UserProfiles\BetaDeletedUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfile;
 use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL;
 use Anthropic\Client;
@@ -72,6 +73,17 @@ final class UserProfilesTest extends TestCase
             // @phpstan-ignore-next-line method.alreadyNarrowedType
             $this->assertInstanceOf(BetaUserProfile::class, $item);
         }
+    }
+
+    #[Test]
+    public function testDelete(): void
+    {
+        $result = $this->client->beta->userProfiles->delete(
+            'uprof_011CZkZCu8hGbp5mYRQgUmz9'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BetaDeletedUserProfile::class, $result);
     }
 
     #[Test]

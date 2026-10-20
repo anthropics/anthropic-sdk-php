@@ -10,6 +10,10 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
+ * A `cache_miss_reason` for a request whose `tools` differ from the previous request's, for example because tools were added, removed, or reordered.
+ *
+ * See the [cache diagnostics guide](https://platform.claude.com/docs/en/build-with-claude/cache-diagnostics#cache-miss-reason-types) to learn what to change for each reason.
+ *
  * @phpstan-type BetaCacheMissToolsChangedShape = array{
  *   cacheMissedInputTokens: int, type: 'tools_changed'
  * }

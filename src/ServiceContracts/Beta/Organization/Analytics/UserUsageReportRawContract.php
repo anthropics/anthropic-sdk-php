@@ -8,7 +8,7 @@ use Anthropic\Beta\Organization\Analytics\AnalyticsUsageUsersItem;
 use Anthropic\Beta\Organization\Analytics\UserUsageReport\UserUsageReportListParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -22,7 +22,7 @@ interface UserUsageReportRawContract
      * @param array<string,mixed>|UserUsageReportListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<AnalyticsUsageUsersItem>>
+     * @return BaseResponse<ReportPageCursor<AnalyticsUsageUsersItem>>
      *
      * @throws APIException
      */

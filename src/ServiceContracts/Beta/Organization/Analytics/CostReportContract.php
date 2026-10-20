@@ -13,7 +13,7 @@ use Anthropic\Beta\Organization\Analytics\CostReport\CostReportListParams\Bucket
 use Anthropic\Beta\Organization\Analytics\CostReport\CostReportListParams\GroupBy;
 use Anthropic\Beta\Organization\Analytics\CostReport\CostReportListParams\Speed;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -42,7 +42,7 @@ interface CostReportContract
      * @param list<string>|null $userIDs filter to specific users by tagged user ID
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<AnalyticsCostReportTimeBucket>
+     * @return ReportPageCursor<AnalyticsCostReportTimeBucket>
      *
      * @throws APIException
      */
@@ -64,5 +64,5 @@ interface CostReportContract
         ?array $speeds = null,
         ?array $userIDs = null,
         RequestOptions|array|null $requestOptions = null,
-    ): PageCursor;
+    ): ReportPageCursor;
 }

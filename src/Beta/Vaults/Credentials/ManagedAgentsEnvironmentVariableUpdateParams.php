@@ -40,7 +40,7 @@ final class ManagedAgentsEnvironmentVariableUpdateParams implements BaseModel
     public ?ManagedAgentsInjectionLocationUpdateParams $injectionLocation;
 
     /**
-     * Updated networking scope. Full replacement.
+     * The new networking scope, which replaces the stored one as a whole.
      *
      * @var ManagedAgentsCredentialNetworkingParamsVariants|null $networking
      */
@@ -51,7 +51,7 @@ final class ManagedAgentsEnvironmentVariableUpdateParams implements BaseModel
     public ManagedAgentsUnrestrictedCredentialNetworkingParams|ManagedAgentsLimitedCredentialNetworkingParams|null $networking;
 
     /**
-     * Updated secret value.
+     * The new secret value to replace the stored one.
      */
     #[Optional('secret_value', nullable: true)]
     public ?string $secretValue;
@@ -127,7 +127,7 @@ final class ManagedAgentsEnvironmentVariableUpdateParams implements BaseModel
     }
 
     /**
-     * Updated networking scope. Full replacement.
+     * The new networking scope, which replaces the stored one as a whole.
      *
      * @param ManagedAgentsCredentialNetworkingParamsShape|null $networking
      */
@@ -141,7 +141,7 @@ final class ManagedAgentsEnvironmentVariableUpdateParams implements BaseModel
     }
 
     /**
-     * Updated secret value.
+     * The new secret value to replace the stored one.
      */
     public function withSecretValue(?string $secretValue): self
     {

@@ -24,7 +24,7 @@ final class ManagedAgentsMCPProbe implements BaseModel
     use SdkModel;
 
     /**
-     * The captured HTTP error response. Null when no HTTP response was received (timeout, DNS, TLS).
+     * The HTTP error response from the MCP server, or `null` if the MCP server didn't return one for the failing step, for example after a timeout or a DNS or TLS failure.
      */
     #[Required('http_response')]
     public ?ManagedAgentsRefreshHTTPResponse $httpResponse;
@@ -74,7 +74,7 @@ final class ManagedAgentsMCPProbe implements BaseModel
     }
 
     /**
-     * The captured HTTP error response. Null when no HTTP response was received (timeout, DNS, TLS).
+     * The HTTP error response from the MCP server, or `null` if the MCP server didn't return one for the failing step, for example after a timeout or a DNS or TLS failure.
      *
      * @param ManagedAgentsRefreshHTTPResponse|ManagedAgentsRefreshHTTPResponseShape|null $httpResponse
      */

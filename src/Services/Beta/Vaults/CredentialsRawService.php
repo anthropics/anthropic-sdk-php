@@ -40,7 +40,7 @@ final class CredentialsRawService implements CredentialsRawContract
     /**
      * @api
      *
-     * Create Credential
+     * Create a Credential
      *
      * @param string $vaultID path param: Identifier of the vault to create the credential in
      * @param array{
@@ -97,7 +97,7 @@ final class CredentialsRawService implements CredentialsRawContract
     /**
      * @api
      *
-     * Get Credential
+     * Retrieve a Credential
      *
      * @param string $credentialID path param: Unique identifier of the credential to retrieve
      * @param array{
@@ -153,7 +153,7 @@ final class CredentialsRawService implements CredentialsRawContract
     /**
      * @api
      *
-     * Update Credential
+     * Update a Credential
      *
      * @param string $credentialID path param: Unique identifier of the credential to update
      * @param array{
@@ -278,7 +278,7 @@ final class CredentialsRawService implements CredentialsRawContract
     /**
      * @api
      *
-     * Delete Credential
+     * Delete a Credential
      *
      * @param string $credentialID path param: Unique identifier of the credential to delete
      * @param array{
@@ -334,7 +334,7 @@ final class CredentialsRawService implements CredentialsRawContract
     /**
      * @api
      *
-     * Archive Credential
+     * Archive a Credential
      *
      * @param string $credentialID path param: Unique identifier of the credential to archive
      * @param array{
@@ -392,7 +392,7 @@ final class CredentialsRawService implements CredentialsRawContract
     /**
      * @api
      *
-     * Validate Credential
+     * Validate an MCP OAuth Credential
      *
      * @param string $credentialID path param: Unique identifier of the credential to validate
      * @param array{

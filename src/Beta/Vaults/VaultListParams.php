@@ -30,7 +30,7 @@ final class VaultListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Whether to include archived vaults in the results.
+     * Whether to include archived vaults in the results. Defaults to `false`.
      */
     #[Optional]
     public ?bool $includeArchived;
@@ -42,7 +42,7 @@ final class VaultListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Opaque pagination token from a previous `list_vaults` response.
+     * The `next_page` value from a previous [List Vaults](https://platform.claude.com/docs/en/api/beta/vaults/list) response, to get the next page. Leave it out to get the first page.
      */
     #[Optional]
     public ?string $page;
@@ -94,7 +94,7 @@ final class VaultListParams implements BaseModel
     }
 
     /**
-     * Whether to include archived vaults in the results.
+     * Whether to include archived vaults in the results. Defaults to `false`.
      */
     public function withIncludeArchived(bool $includeArchived): self
     {
@@ -116,7 +116,7 @@ final class VaultListParams implements BaseModel
     }
 
     /**
-     * Opaque pagination token from a previous `list_vaults` response.
+     * The `next_page` value from a previous [List Vaults](https://platform.claude.com/docs/en/api/beta/vaults/list) response, to get the next page. Leave it out to get the first page.
      */
     public function withPage(string $page): self
     {

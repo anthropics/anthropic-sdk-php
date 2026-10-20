@@ -70,7 +70,7 @@ final class WebhooksService implements WebhooksContract
         }
 
         try {
-            $flatHeaders = array_map(fn (string|array $v): string => is_array($v) ? $v[0] : $v, $headers);
+            $flatHeaders = array_change_key_case(array_map(fn (string|array $v): string => is_array($v) ? $v[0] : $v, $headers), CASE_LOWER);
             $webhook = new Webhook($secret);
             $webhook->verify($body, $flatHeaders);
         } catch (WebhookVerificationException $e) {

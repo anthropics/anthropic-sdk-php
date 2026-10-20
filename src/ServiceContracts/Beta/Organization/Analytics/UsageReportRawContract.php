@@ -8,7 +8,7 @@ use Anthropic\Beta\Organization\Analytics\AnalyticsUsageReportTimeBucket;
 use Anthropic\Beta\Organization\Analytics\UsageReport\UsageReportListParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -22,7 +22,7 @@ interface UsageReportRawContract
      * @param array<string,mixed>|UsageReportListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<AnalyticsUsageReportTimeBucket>>
+     * @return BaseResponse<ReportPageCursor<AnalyticsUsageReportTimeBucket>>
      *
      * @throws APIException
      */

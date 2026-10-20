@@ -16,6 +16,7 @@ use Anthropic\Services\MessagesService;
 use Anthropic\Services\ModelsService;
 use Anthropic\Services\OrganizationService;
 use Anthropic\Services\SkillsService;
+use Anthropic\Services\UserProfilesService;
 use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -57,6 +58,11 @@ class Client extends BaseClient
      * @api
      */
     public SkillsService $skills;
+
+    /**
+     * @api
+     */
+    public UserProfilesService $userProfiles;
 
     /**
      * @api
@@ -159,6 +165,7 @@ class Client extends BaseClient
         $this->models = new ModelsService($this);
         $this->files = new FilesService($this);
         $this->skills = new SkillsService($this);
+        $this->userProfiles = new UserProfilesService($this);
         $this->organization = new OrganizationService($this);
         $this->beta = new BetaService($this);
     }

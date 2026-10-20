@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Aws;
 
+use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 use Psr\Http\Message\RequestInterface;
@@ -13,6 +14,10 @@ use Psr\Http\Message\RequestInterface;
  *
  * Connects to the Anthropic AWS gateway at https://aws-external-anthropic.{region}.api.aws
  * with support for x-api-key auth and AWS SigV4 signing.
+ *
+ * The gateway serves user profiles but not their action URLs, so
+ * `$userProfiles->actionURLs` and `$beta->userProfiles->actionURLs` throw an
+ * {@see AnthropicException} before any request is sent.
  *
  * Auth is resolved by precedence:
  *  0. $skipAuth (no auth — skips all below)
@@ -100,6 +105,10 @@ class Client extends \Anthropic\Client
      */
     protected function transformRequest(RequestInterface $request): RequestInterface
     {
+        if (1 === preg_match('~/v1/user_profiles/[^/]+/action_urls$~', $request->getUri()->getPath())) {
+            throw new AnthropicException('User profile action URLs are not available via the AWS gateway — use new Anthropic\Client() for this resource.');
+        }
+
         if (null !== $this->resolvedWorkspaceId && !$request->hasHeader('anthropic-workspace-id')) {
             $request = $request->withHeader('anthropic-workspace-id', $this->resolvedWorkspaceId);
         }

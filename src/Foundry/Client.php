@@ -8,6 +8,7 @@ use Anthropic\Core\BaseClient;
 use Anthropic\Core\Util;
 use Anthropic\Foundry\Services\MessagesService;
 use Anthropic\RequestOptions;
+use Anthropic\Services\UserProfilesService;
 use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -29,6 +30,11 @@ final class Client extends BaseClient
      * @api
      */
     public MessagesService $messages;
+
+    /**
+     * @api
+     */
+    public UserProfilesService $userProfiles;
 
     /**
      * @param RequestOpts|null $requestOptions
@@ -77,6 +83,13 @@ final class Client extends BaseClient
         );
 
         $this->messages = new MessagesService($this);
+        $this->userProfiles = new UserProfilesService(new ServiceClient(
+            headers: $this->headers,
+            baseUrl: $baseUrl,
+            options: $options,
+            authHeaders: $this->authHeaders(...),
+            openTelemetry: $openTelemetry,
+        ));
     }
 
     /**

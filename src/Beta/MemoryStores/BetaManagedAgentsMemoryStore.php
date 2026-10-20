@@ -29,31 +29,37 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     use SdkModel;
 
     /**
-     * Unique identifier for the memory store (a `memstore_...` tagged ID). Use this when attaching the store to a session, or in the `{memory_store_id}` path parameter of subsequent calls.
+     * The unique ID of the memory store (`memstore_...`). Use it to attach the store to a session.
      */
     #[Required]
     public string $id;
 
     /**
-     * Timestamp when the store was archived, or `null` if active. Set once and never cleared; archiving is one-way. Archived stores are read-only and cannot be attached to new sessions.
+     * When the memory store was archived, in RFC 3339, or `null` if it hasn't been.
+     *
+     * Archiving can't be undone. An archived store can't be attached to new sessions. You can't create or update its memories or update the store. You can still read and delete its memories, redact their versions, and delete the store.
+     *
+     * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#archive-a-store) to learn more about archiving.
      */
     #[Required('archived_at')]
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * Timestamp when the store was created.
+     * When the memory store was created, in RFC 3339.
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
     /**
-     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
+     * Free-text description of what the store contains, up to 1,024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
      */
     #[Required]
     public string $description;
 
     /**
-     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
+     * Key-value pairs for your own use, such as the end user that the store belongs to.
+     *
+     * A store has at most 16 pairs. Keys are 1 to 64 characters long and values at most 512 characters. You can't filter lists by metadata.
      *
      * @var array<string,string> $metadata
      */
@@ -71,7 +77,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     public string $type;
 
     /**
-     * Timestamp when the store's `name`, `description`, or `metadata` was last modified. Memory writes inside the store do not advance this.
+     * When the memory store was last changed, in RFC 3339.
+     *
+     * Changing its `name`, `description`, or `metadata` updates it. Archiving the store does too. Changes to the store's memories don't.
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
@@ -145,7 +153,7 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
-     * Unique identifier for the memory store (a `memstore_...` tagged ID). Use this when attaching the store to a session, or in the `{memory_store_id}` path parameter of subsequent calls.
+     * The unique ID of the memory store (`memstore_...`). Use it to attach the store to a session.
      */
     public function withID(string $id): self
     {
@@ -156,7 +164,11 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
-     * Timestamp when the store was archived, or `null` if active. Set once and never cleared; archiving is one-way. Archived stores are read-only and cannot be attached to new sessions.
+     * When the memory store was archived, in RFC 3339, or `null` if it hasn't been.
+     *
+     * Archiving can't be undone. An archived store can't be attached to new sessions. You can't create or update its memories or update the store. You can still read and delete its memories, redact their versions, and delete the store.
+     *
+     * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#archive-a-store) to learn more about archiving.
      */
     public function withArchivedAt(?\DateTimeInterface $archivedAt): self
     {
@@ -167,7 +179,7 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
-     * Timestamp when the store was created.
+     * When the memory store was created, in RFC 3339.
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -178,7 +190,7 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
-     * Free-text description of what the store contains, up to 1024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
+     * Free-text description of what the store contains, up to 1,024 characters. Included in the agent's system prompt when the store is attached, so word it to be useful to the agent. Empty string when unset.
      */
     public function withDescription(string $description): self
     {
@@ -189,7 +201,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
-     * Arbitrary key-value tags for your own bookkeeping (such as the end user a store belongs to). Up to 16 pairs; keys 1–64 characters; values up to 512 characters. Returned on retrieve/list but not filterable.
+     * Key-value pairs for your own use, such as the end user that the store belongs to.
+     *
+     * A store has at most 16 pairs. Keys are 1 to 64 characters long and values at most 512 characters. You can't filter lists by metadata.
      *
      * @param array<string,string> $metadata
      */
@@ -224,7 +238,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
-     * Timestamp when the store's `name`, `description`, or `metadata` was last modified. Memory writes inside the store do not advance this.
+     * When the memory store was last changed, in RFC 3339.
+     *
+     * Changing its `name`, `description`, or `metadata` updates it. Archiving the store does too. Changes to the store's memories don't.
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {

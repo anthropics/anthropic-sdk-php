@@ -3,6 +3,7 @@
 namespace Tests\Services\Beta\Organization\Workspaces;
 
 use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit;
+use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitType;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -26,6 +27,36 @@ final class RateLimitsTest extends TestCase
         $client = new Client(apiKey: 'my-anthropic-api-key', baseUrl: $testUrl);
 
         $this->client = $client;
+    }
+
+    #[Test]
+    public function testUpdate(): void
+    {
+        $result = $this->client->beta->organization->workspaces->rateLimits->update(
+            'rate_limit_id',
+            workspaceID: 'workspace_id',
+            limits: [
+                ['type' => BetaWorkspaceRateLimitType::FAST_ITPMCA, 'value' => 0],
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BetaWorkspaceRateLimit::class, $result);
+    }
+
+    #[Test]
+    public function testUpdateWithOptionalParams(): void
+    {
+        $result = $this->client->beta->organization->workspaces->rateLimits->update(
+            'rate_limit_id',
+            workspaceID: 'workspace_id',
+            limits: [
+                ['type' => BetaWorkspaceRateLimitType::FAST_ITPMCA, 'value' => 0],
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BetaWorkspaceRateLimit::class, $result);
     }
 
     #[Test]

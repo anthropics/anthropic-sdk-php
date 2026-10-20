@@ -126,6 +126,7 @@ final class MessagesService implements MessagesContract
                 'tools' => $tools,
                 'topK' => $topK,
                 'topP' => $topP,
+                'userProfileID' => $userProfileID,
             ],
         );
 
@@ -199,6 +200,7 @@ final class MessagesService implements MessagesContract
                 'tools' => $tools,
                 'topK' => $topK,
                 'topP' => $topP,
+                'userProfileID' => $userProfileID,
             ],
         );
 
@@ -247,6 +249,7 @@ final class MessagesService implements MessagesContract
                 'thinking' => $thinking,
                 'toolChoice' => $toolChoice,
                 'tools' => $tools,
+                'userProfileID' => $userProfileID,
             ],
         );
 

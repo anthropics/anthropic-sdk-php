@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Vault.
+ * Create a Vault.
  *
  * @see Anthropic\Services\Beta\VaultsService::create()
  *

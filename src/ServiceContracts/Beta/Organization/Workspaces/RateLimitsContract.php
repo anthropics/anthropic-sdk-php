@@ -5,16 +5,35 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta\Organization\Workspaces;
 
 use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimit;
+use Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitUpdateValue;
 use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitListParams\GroupType;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
 /**
+ * @phpstan-import-type BetaWorkspaceRateLimitUpdateValueShape from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitUpdateValue
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
 interface RateLimitsContract
 {
+    /**
+     * @api
+     *
+     * @param string $rateLimitID path param: The `id` of the organization's rate-limit entry to set overrides for
+     * @param string $workspaceID path param: The ID of the workspace
+     * @param list<BetaWorkspaceRateLimitUpdateValue|BetaWorkspaceRateLimitUpdateValueShape> $limits Body param: Limits to set or clear. Unspecified limit types are unchanged.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $rateLimitID,
+        string $workspaceID,
+        array $limits,
+        RequestOptions|array|null $requestOptions = null,
+    ): BetaWorkspaceRateLimit;
+
     /**
      * @api
      *

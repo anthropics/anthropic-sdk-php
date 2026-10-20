@@ -28,7 +28,7 @@ final class BetaManagedAgentsVault implements BaseModel
     use SdkModel;
 
     /**
-     * Unique identifier for the vault.
+     * The unique ID of the vault (`vlt_...`).
      */
     #[Required]
     public string $id;
@@ -134,7 +134,7 @@ final class BetaManagedAgentsVault implements BaseModel
     }
 
     /**
-     * Unique identifier for the vault.
+     * The unique ID of the vault (`vlt_...`).
      */
     public function withID(string $id): self
     {

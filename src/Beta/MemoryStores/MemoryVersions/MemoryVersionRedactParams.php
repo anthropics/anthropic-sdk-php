@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Redact a memory version.
+ * Redact a Memory Version.
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoryVersionsService::redact()
  *

@@ -6,6 +6,7 @@ use Anthropic\Bedrock\MantleClient;
 use Anthropic\Core\Util;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -367,8 +368,9 @@ class MantleClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $this->addToAssertionCount(1);
 
-        // models and beta should NOT exist
+        // models, user profiles and beta should NOT exist
         $this->assertFalse(property_exists($client, 'models'));
+        $this->assertFalse(property_exists($client, 'userProfiles'));
         $this->assertFalse(property_exists($client, 'beta'));
     }
 
@@ -417,6 +419,100 @@ class MantleClientTest extends TestCase
         $this->assertSame('fast', $body['speed']);
     }
 
+    /**
+     * @param \Closure(MantleClient, string|null, string|null): mixed $call
+     */
+    #[DataProvider('messagesCalls')]
+    public function testUserProfileIdIsSentInRequestBodyAndNotAsHeader(\Closure $call, string $contentType): void
+    {
+        $this->respondWith($contentType);
+
+        $call($this->makeClient(), 'uprof_123', null);
+        $request = $this->getLastRequest();
+
+        $body = json_decode((string) $request->getBody(), associative: true);
+        $this->assertIsArray($body);
+        $this->assertSame('uprof_123', $body['user_profile_id'] ?? null);
+        $this->assertArrayNotHasKey('userProfileID', $body);
+        $this->assertFalse($request->hasHeader('anthropic-user-profile-id'));
+    }
+
+    /**
+     * @param \Closure(MantleClient, string|null, string|null): mixed $call
+     */
+    #[DataProvider('messagesCalls')]
+    public function testUserProfileIdFromExtraBodyParamsWins(\Closure $call, string $contentType): void
+    {
+        $this->respondWith($contentType);
+
+        $call($this->makeClient(), 'uprof_123', 'uprof_extra');
+
+        $body = json_decode((string) $this->getLastRequest()->getBody(), associative: true);
+        $this->assertIsArray($body);
+        $this->assertSame('uprof_extra', $body['user_profile_id'] ?? null);
+    }
+
+    /**
+     * @param \Closure(MantleClient, string|null, string|null): mixed $call
+     */
+    #[DataProvider('messagesCalls')]
+    public function testUserProfileIdIsOmittedFromRequestBodyWhenNotGiven(\Closure $call, string $contentType): void
+    {
+        $this->respondWith($contentType);
+
+        $call($this->makeClient(), null, null);
+
+        $body = json_decode((string) $this->getLastRequest()->getBody(), associative: true);
+        $this->assertIsArray($body);
+        $this->assertArrayNotHasKey('user_profile_id', $body);
+    }
+
+    /**
+     * Each call takes the client, the `userProfileID` argument and a `user_profile_id` to pass in `extraBodyParams`.
+     *
+     * @return iterable<string, array{\Closure(MantleClient, string|null, string|null): mixed, string}>
+     */
+    public static function messagesCalls(): iterable
+    {
+        $params = static fn (?string $userProfileID): array => [
+            'maxTokens' => 1024,
+            'messages' => [],
+            'model' => 'claude-haiku-4-5',
+            ...(null === $userProfileID ? [] : ['userProfileID' => $userProfileID]),
+        ];
+        $options = static fn (?string $extra): ?array => null === $extra ? null : ['extraBodyParams' => ['user_profile_id' => $extra]];
+
+        yield 'create' => [
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->create(1024, [], 'claude-haiku-4-5', userProfileID: $userProfileID, requestOptions: $options($extra)),
+            'application/json',
+        ];
+
+        yield 'createStream' => [
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->createStream(1024, [], 'claude-haiku-4-5', userProfileID: $userProfileID, requestOptions: $options($extra)),
+            'text/event-stream',
+        ];
+
+        yield 'raw create' => [
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->raw->create($params($userProfileID), $options($extra)),
+            'application/json',
+        ];
+
+        yield 'raw createStream' => [
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->raw->createStream($params($userProfileID), $options($extra)),
+            'text/event-stream',
+        ];
+
+        yield 'countTokens' => [
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->countTokens([], 'claude-haiku-4-5', userProfileID: $userProfileID, requestOptions: $options($extra)),
+            'application/json',
+        ];
+
+        yield 'raw countTokens' => [
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->raw->countTokens(array_diff_key($params($userProfileID), ['maxTokens' => true]), $options($extra)),
+            'application/json',
+        ];
+    }
+
     // ── Helpers ─────────────────────────────────────────────────────
 
     private function makeClient(?string $apiKey = null): MantleClient
@@ -425,6 +521,16 @@ class MantleClientTest extends TestCase
             apiKey: $apiKey ?? 'test-key',
             awsRegion: 'us-east-1',
             requestOptions: ['transporter' => $this->transporter],
+        );
+    }
+
+    private function respondWith(string $contentType): void
+    {
+        $this->transporter->setDefaultResponse(
+            Psr17FactoryDiscovery::findResponseFactory()
+                ->createResponse(200)
+                ->withHeader('Content-Type', $contentType)
+                ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream('application/json' === $contentType ? '{}' : ''))
         );
     }
 

@@ -9,7 +9,11 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Updated injection location.
+ * Changes which parts of an outbound request the secret is substituted into. A location you leave out keeps its current setting.
+ *
+ * After the change, at least one location must be enabled.
+ *
+ * See [Authenticate with vaults](https://platform.claude.com/docs/en/managed-agents/vaults#add-a-credential) to learn more about injection locations.
  *
  * @phpstan-type ManagedAgentsInjectionLocationUpdateParamsShape = array{
  *   body?: bool|null, header?: bool|null

@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Validate Credential.
+ * Validate an MCP OAuth Credential.
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::mcpOAuthValidate()
  *

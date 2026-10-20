@@ -377,18 +377,28 @@ final class Util
         // so take one byte and then only what is already buffered.
         $http = 'http' === $stream->getMetadata('wrapper_type');
 
-        try {
-            while (!$stream->eof()) {
-                $chunk = $stream->read($http ? 1 : self::BUF_SIZE);
-                $buffered = $http ? $stream->getMetadata('unread_bytes') : 0;
-                if (is_int($buffered) && $buffered > 0) {
-                    $chunk .= $stream->read($buffered);
-                }
+        // Closes the stream once this generator ends or is destroyed. Not a `finally`: PHP 8.3.30+, 8.4.17+ and 8.5.2+
+        // can crash when they destroy a suspended generator that has one while an exception is in flight.
+        $closer = new class($stream) {
+            public function __construct(private StreamInterface $stream) {}
 
-                yield $chunk;
+            public function __destruct()
+            {
+                // No longer readable: something else has closed it.
+                if ($this->stream->isReadable()) {
+                    $this->stream->close();
+                }
             }
-        } finally {
-            $stream->close();
+        };
+
+        while (!$stream->eof()) {
+            $chunk = $stream->read($http ? 1 : self::BUF_SIZE);
+            $buffered = $http ? $stream->getMetadata('unread_bytes') : 0;
+            if (is_int($buffered) && $buffered > 0) {
+                $chunk .= $stream->read($buffered);
+            }
+
+            yield $chunk;
         }
     }
 
@@ -570,11 +580,7 @@ final class Util
             $it = self::streamIterator($body);
             $lines = self::decodeLines($it);
 
-            return (function () use ($lines) {
-                foreach ($lines as $line) {
-                    yield static::decodeJson($line);
-                }
-            })();
+            return self::decodeJsonLines($lines);
         }
 
         if (str_contains($content_type, needle: 'text/event-stream')) {
@@ -589,7 +595,7 @@ final class Util
 
     public static function prettyEncodeJson(mixed $obj): string
     {
-        return json_encode($obj, flags: JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
+        return json_encode($obj, flags: JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) ?: '';
     }
 
     /**
@@ -789,5 +795,24 @@ final class Util
         })();
 
         return [$boundary, $gen];
+    }
+
+    /**
+     * A method and not a closure: PHP 8.4+ holds what a closure uses until its generator is freed,
+     * so closing the generator would leave the stream open.
+     *
+     * @param \Iterator<string> $lines
+     *
+     * @return \Generator<mixed>
+     */
+    private static function decodeJsonLines(\Iterator $lines): \Generator
+    {
+        // Out of the parameter, so that the trace of a decoding error does not keep the stream open.
+        $rows = $lines;
+        unset($lines);
+
+        foreach ($rows as $row) {
+            yield self::decodeJson($row);
+        }
     }
 }

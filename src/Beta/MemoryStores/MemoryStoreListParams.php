@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List memory stores.
+ * List Memory Stores.
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::list()
  *
@@ -32,13 +32,13 @@ final class MemoryStoreListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Return only stores whose `created_at` is at or after this time (inclusive). Sent on the wire as `created_at[gte]`.
+     * Return only memory stores created at or after this time (inclusive).
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtGte;
 
     /**
-     * Return only stores whose `created_at` is at or before this time (inclusive). Sent on the wire as `created_at[lte]`.
+     * Return only memory stores created at or before this time (inclusive).
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
@@ -56,7 +56,7 @@ final class MemoryStoreListParams implements BaseModel
     public ?int $limit;
 
     /**
-     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
      */
     #[Optional]
     public ?string $page;
@@ -112,7 +112,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Return only stores whose `created_at` is at or after this time (inclusive). Sent on the wire as `created_at[gte]`.
+     * Return only memory stores created at or after this time (inclusive).
      */
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
@@ -123,7 +123,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Return only stores whose `created_at` is at or before this time (inclusive). Sent on the wire as `created_at[lte]`.
+     * Return only memory stores created at or before this time (inclusive).
      */
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
@@ -156,7 +156,7 @@ final class MemoryStoreListParams implements BaseModel
     }
 
     /**
-     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
      */
     public function withPage(string $page): self
     {

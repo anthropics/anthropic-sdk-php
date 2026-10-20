@@ -15,7 +15,7 @@ use Anthropic\Beta\Organization\Analytics\UserUsageReport\UserUsageReportListPar
 use Anthropic\Beta\Organization\Analytics\UserUsageReport\UserUsageReportListParams\OrderBy;
 use Anthropic\Beta\Organization\Analytics\UserUsageReport\UserUsageReportListParams\Speed;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -47,7 +47,7 @@ interface UserUsageReportContract
      * @param list<string>|null $userIDs filter to specific users by tagged user ID
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<AnalyticsUsageUsersItem>
+     * @return ReportPageCursor<AnalyticsUsageUsersItem>
      *
      * @throws APIException
      */
@@ -72,5 +72,5 @@ interface UserUsageReportContract
         ?array $speeds = null,
         ?array $userIDs = null,
         RequestOptions|array|null $requestOptions = null,
-    ): PageCursor;
+    ): ReportPageCursor;
 }

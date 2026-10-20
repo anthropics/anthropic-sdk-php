@@ -558,8 +558,12 @@ final class MiddlewareThirdPartyTest extends TestCase
         }
     }
 
+    /**
+     * @param \Closure(VertexClient): mixed $call
+     */
     #[Test]
-    public function testVertexStripsFirstPartyHeadersEvenWhenCallerSetsThem(): void
+    #[DataProvider('vertexUserProfileCalls')]
+    public function testVertexSendsUserProfileIdAndStripsOtherFirstPartyHeaders(\Closure $call): void
     {
         $transporter = $this->transporter();
         $client = VertexClient::withCredentials(self::fakeCreds('fake-token'),
@@ -568,19 +572,37 @@ final class MiddlewareThirdPartyTest extends TestCase
             requestOptions: ['transporter' => $transporter],
         );
 
-        $client->messages->create(
+        $call($client);
+
+        $sent = $this->lastRequest($transporter);
+        $this->assertSame('upid-123', $sent->getHeaderLine('anthropic-user-profile-id'));
+        foreach (['anthropic-version', 'anthropic-workspace-id'] as $h) {
+            $this->assertFalse($sent->hasHeader($h), "expected {$h} to be stripped before reaching Vertex");
+        }
+        $this->assertSame('', $sent->getHeaderLine('anthropic-beta'));
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(VertexClient): mixed}>
+     */
+    public static function vertexUserProfileCalls(): iterable
+    {
+        $requestOptions = ['extraHeaders' => ['anthropic-workspace-id' => 'ws-456']];
+
+        yield 'create' => [static fn (VertexClient $client) => $client->messages->create(
             maxTokens: 1,
             messages: [],
             model: 'm@v',
             userProfileID: 'upid-123',
-            requestOptions: ['extraHeaders' => ['anthropic-workspace-id' => 'ws-456']],
-        );
+            requestOptions: $requestOptions,
+        )];
 
-        $sent = $this->lastRequest($transporter);
-        foreach (['anthropic-version', 'anthropic-user-profile-id', 'anthropic-workspace-id'] as $h) {
-            $this->assertFalse($sent->hasHeader($h), "expected {$h} to be stripped before reaching Vertex");
-        }
-        $this->assertSame('', $sent->getHeaderLine('anthropic-beta'));
+        yield 'countTokens' => [static fn (VertexClient $client) => $client->messages->countTokens(
+            messages: [],
+            model: 'm@v',
+            userProfileID: 'upid-123',
+            requestOptions: $requestOptions,
+        )];
     }
 
     #[Test]
@@ -729,6 +751,81 @@ final class MiddlewareThirdPartyTest extends TestCase
         $client->models->list();
     }
 
+    /**
+     * @param \Closure(VertexClient|BedrockClient): mixed $call
+     */
+    #[Test]
+    #[DataProvider('userProfilesCalls')]
+    public function testVertexUserProfilesThrowsNotSupported(\Closure $call, string $path): void
+    {
+        $transporter = $this->transporter();
+        $client = VertexClient::withCredentials(self::fakeCreds('fake-token'),
+            location: 'us-east5',
+            projectId: 'test-project',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $this->assertUserProfilesNotAvailable(fn () => $call($client), $path, 'Vertex', $transporter);
+    }
+
+    /**
+     * @param \Closure(VertexClient|BedrockClient): mixed $call
+     */
+    #[Test]
+    #[DataProvider('userProfilesCalls')]
+    public function testBedrockUserProfilesThrowsNotSupported(\Closure $call, string $path): void
+    {
+        $transporter = $this->transporter();
+        $client = BedrockClient::withApiKey(
+            apiKey: 'test-key',
+            region: 'us-east-1',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $this->assertUserProfilesNotAvailable(fn () => $call($client), $path, 'Bedrock', $transporter);
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(VertexClient|BedrockClient): mixed, string}>
+     */
+    public static function userProfilesCalls(): iterable
+    {
+        yield 'create' => [
+            static fn (VertexClient|BedrockClient $client) => $client->userProfiles->create(name: 'Example'),
+            '/v1/user_profiles',
+        ];
+
+        yield 'retrieve' => [
+            static fn (VertexClient|BedrockClient $client) => $client->userProfiles->retrieve('uprof_1'),
+            '/v1/user_profiles/uprof_1',
+        ];
+
+        yield 'update' => [
+            static fn (VertexClient|BedrockClient $client) => $client->userProfiles->update('uprof_1', name: 'Example'),
+            '/v1/user_profiles/uprof_1',
+        ];
+
+        yield 'list' => [
+            static fn (VertexClient|BedrockClient $client) => $client->userProfiles->list(),
+            '/v1/user_profiles',
+        ];
+
+        yield 'delete' => [
+            static fn (VertexClient|BedrockClient $client) => $client->userProfiles->delete('uprof_1'),
+            '/v1/user_profiles/uprof_1',
+        ];
+
+        yield 'actionURLs create' => [
+            static fn (VertexClient|BedrockClient $client) => $client->userProfiles->actionURLs->create('uprof_1', action: ['type' => 'enroll_end_user']),
+            '/v1/user_profiles/uprof_1/action_urls',
+        ];
+
+        yield 'beta create' => [
+            static fn (VertexClient|BedrockClient $client) => $client->beta->userProfiles->create(name: 'Example'),
+            '/v1/user_profiles',
+        ];
+    }
+
     #[Test]
     public function testBedrockNonV1PathPassesThroughUnchanged(): void
     {
@@ -743,6 +840,22 @@ final class MiddlewareThirdPartyTest extends TestCase
         });
 
         $this->assertSame('/health', $seen?->getUri()->getPath());
+    }
+
+    /**
+     * @param \Closure(): mixed $call
+     */
+    private function assertUserProfilesNotAvailable(\Closure $call, string $path, string $platform, MockClient $transporter): void
+    {
+        try {
+            $call();
+            $this->fail("expected {$path} to be refused on {$platform}");
+        } catch (AnthropicException $e) {
+            $this->assertStringContainsString("{$path} is not available via {$platform}", $e->getMessage());
+            $this->assertStringContainsString('Anthropic\Client', $e->getMessage());
+        }
+
+        $this->assertSame([], $transporter->getRequests());
     }
 
     /**

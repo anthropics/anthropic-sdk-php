@@ -11,7 +11,13 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * A `memory_version` object: one immutable, attributed row in a memory's append-only history. Every non-no-op mutation to a memory produces a new version. Versions belong to the store (not the individual memory) and are not deleted with the memory; each version is retained for at least the version retention period after it was written, unless the store itself is deleted. Retrieving a redacted version returns 200 with `content`, `path`, `content_size_bytes`, and `content_sha256` set to `null`; branch on `redacted_at`, not HTTP status.
+ * One entry in a memory's history, recording a single change and who made it.
+ *
+ * Every change to a memory adds one version. Only redaction can change a version after that. Versions belong to the memory store and stay after the memory is deleted. Each version is retained for at least the version retention period after it was written, unless the store itself is deleted.
+ *
+ * Retrieving a redacted version succeeds, with `content`, `path`, `content_size_bytes`, and `content_sha256` set to `null`. Check `redacted_at` to find out whether a version was redacted.
+ *
+ * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#audit-memory-changes) to learn more about memory versions.
  *
  * @phpstan-import-type ManagedAgentsActorShape from \Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsActor
  * @phpstan-import-type ManagedAgentsActorVariants from \Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsActor
@@ -50,7 +56,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
-     * ID of the memory this version snapshots (a `mem_...` value). Remains valid after the memory is deleted; pass it as `memory_id` to [List memory versions](/en/api/beta/memory_stores/memory_versions/list) to retrieve the memory's retained versions, including the `deleted` row while the lineage is retained.
+     * The ID of the memory that this version belongs to (`mem_...`).
+     *
+     * The ID stays valid after the memory is deleted. Pass it as `memory_id` to [List Memory Versions](https://platform.claude.com/docs/en/api/beta/memory_stores/memory_versions/list) to get the memory's retained versions, including its `deleted` version while the lineage is retained.
      */
     #[Required('memory_id')]
     public string $memoryID;
@@ -92,7 +100,11 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     public ?int $contentSizeBytes;
 
     /**
-     * Who performed this write: one of `session_actor`, `api_actor`, `user_actor`, or `service_account_actor`; `null` when no writer is recorded. Captured at write time and preserved through redaction. A `session_actor` is an agent writing through the store's mounted filesystem at `/mnt/memory/`. The API key that created that session is not recorded on agent writes, so attribution names who made the write, not who is ultimately responsible; look up session provenance via the [Sessions API](/en/api/beta/sessions/retrieve).
+     * Who made this change to the memory, or `null` if the author wasn't recorded.
+     *
+     * Redacting the version doesn't change this field. A `session_actor` here is an agent that wrote through the store's mounted filesystem at `/mnt/memory/`. The version doesn't record the API key that created that session. So the author in `created_by` is who made the change, not who is ultimately responsible for it.
+     *
+     * You can [retrieve the session](https://platform.claude.com/docs/en/api/beta/sessions/retrieve) to learn more about where the change came from.
      *
      * @var ManagedAgentsActorVariants|null $createdBy
      */
@@ -106,7 +118,11 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     public ?string $path;
 
     /**
-     * When this version was redacted, in RFC 3339 format, or `null` if it has not been redacted. When set, `content`, `path`, `content_size_bytes`, and `content_sha256` are all `null`. See [Redact a memory version](/en/api/beta/memory_stores/memory_versions/redact).
+     * When the version was redacted, in RFC 3339, or `null` if it hasn't been.
+     *
+     * When set, `content`, `path`, `content_size_bytes`, and `content_sha256` are `null`.
+     *
+     * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#redact-a-version) to learn more about redaction.
      */
     #[Optional('redacted_at', nullable: true)]
     public ?\DateTimeInterface $redactedAt;
@@ -219,7 +235,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
-     * ID of the memory this version snapshots (a `mem_...` value). Remains valid after the memory is deleted; pass it as `memory_id` to [List memory versions](/en/api/beta/memory_stores/memory_versions/list) to retrieve the memory's retained versions, including the `deleted` row while the lineage is retained.
+     * The ID of the memory that this version belongs to (`mem_...`).
+     *
+     * The ID stays valid after the memory is deleted. Pass it as `memory_id` to [List Memory Versions](https://platform.claude.com/docs/en/api/beta/memory_stores/memory_versions/list) to get the memory's retained versions, including its `deleted` version while the lineage is retained.
      */
     public function withMemoryID(string $memoryID): self
     {
@@ -299,7 +317,11 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
-     * Who performed this write: one of `session_actor`, `api_actor`, `user_actor`, or `service_account_actor`; `null` when no writer is recorded. Captured at write time and preserved through redaction. A `session_actor` is an agent writing through the store's mounted filesystem at `/mnt/memory/`. The API key that created that session is not recorded on agent writes, so attribution names who made the write, not who is ultimately responsible; look up session provenance via the [Sessions API](/en/api/beta/sessions/retrieve).
+     * Who made this change to the memory, or `null` if the author wasn't recorded.
+     *
+     * Redacting the version doesn't change this field. A `session_actor` here is an agent that wrote through the store's mounted filesystem at `/mnt/memory/`. The version doesn't record the API key that created that session. So the author in `created_by` is who made the change, not who is ultimately responsible for it.
+     *
+     * You can [retrieve the session](https://platform.claude.com/docs/en/api/beta/sessions/retrieve) to learn more about where the change came from.
      *
      * @param ManagedAgentsActorShape $createdBy
      */
@@ -324,7 +346,11 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
-     * When this version was redacted, in RFC 3339 format, or `null` if it has not been redacted. When set, `content`, `path`, `content_size_bytes`, and `content_sha256` are all `null`. See [Redact a memory version](/en/api/beta/memory_stores/memory_versions/redact).
+     * When the version was redacted, in RFC 3339, or `null` if it hasn't been.
+     *
+     * When set, `content`, `path`, `content_size_bytes`, and `content_sha256` are `null`.
+     *
+     * See the [memory guide](https://platform.claude.com/docs/en/managed-agents/memory#redact-a-version) to learn more about redaction.
      */
     public function withRedactedAt(?\DateTimeInterface $redactedAt): self
     {

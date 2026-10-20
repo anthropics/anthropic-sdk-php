@@ -44,7 +44,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     public bool $hasRefreshToken;
 
     /**
-     * Details of the failing MCP probe step. Null when the probe succeeded.
+     * Details of the MCP probe step that failed, or `null` if the probe succeeded or there was no access token to test.
      */
     #[Required('mcp_probe')]
     public ?ManagedAgentsMCPProbe $mcpProbe;
@@ -172,7 +172,7 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     }
 
     /**
-     * Details of the failing MCP probe step. Null when the probe succeeded.
+     * Details of the MCP probe step that failed, or `null` if the probe succeeded or there was no access token to test.
      *
      * @param ManagedAgentsMCPProbe|ManagedAgentsMCPProbeShape|null $mcpProbe
      */

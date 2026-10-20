@@ -13,7 +13,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Credential.
+ * Create a Credential.
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::create()
  *

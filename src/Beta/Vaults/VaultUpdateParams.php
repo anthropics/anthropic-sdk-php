@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update Vault.
+ * Update a Vault.
  *
  * @see Anthropic\Services\Beta\VaultsService::update()
  *

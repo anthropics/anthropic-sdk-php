@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\Analytics\UserCostReportRawContract;
 
@@ -71,7 +71,7 @@ final class UserCostReportRawService implements UserCostReportRawContract
      * }|UserCostReportListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<AnalyticsCostUsersItem>>
+     * @return BaseResponse<ReportPageCursor<AnalyticsCostUsersItem>>
      *
      * @throws APIException
      */
@@ -132,7 +132,7 @@ final class UserCostReportRawService implements UserCostReportRawContract
                 ],
             )),
             convert: AnalyticsCostUsersItem::class,
-            page: PageCursor::class,
+            page: ReportPageCursor::class,
         );
     }
 }

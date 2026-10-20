@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete a memory store.
+ * Delete a Memory Store.
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::delete()
  *

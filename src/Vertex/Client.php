@@ -14,7 +14,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Supported on Vertex: `$messages` (create / createStream / countTokens) and
  * `$beta->messages`. Other resources inherited from {@see \Anthropic\Client}
- * (batches, files, models, agents) are not available via Vertex and throw an
+ * (batches, files, models, agents, user profiles) are not available via Vertex and throw an
  * {@see \Anthropic\Core\Exceptions\AnthropicException} before any request is
  * sent — use `new \Anthropic\Client()` for those.
  *

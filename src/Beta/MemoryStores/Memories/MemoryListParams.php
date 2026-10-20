@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List memories.
+ * List Memories.
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoriesService::list()
  *
@@ -32,31 +32,39 @@ final class MemoryListParams implements BaseModel
     use SdkParams;
 
     /**
-     * `0` (or omitted) returns all descendants below `path_prefix` (recursive). `1` returns immediate children only; deeper entries roll up as `memory_prefix` items. `depth=1` behaves like `ls`; omitting `depth` behaves like `find`.
+     * How far below `path_prefix` to list. Defaults to `0`, which lists every memory below the prefix.
+     *
+     * Pass `1` to list only the direct children. Deeper memories are then grouped into `memory_prefix` items.
      */
     #[Optional]
     public ?int $depth;
 
     /**
-     * Maximum number of items to return per page. Must be between 1 and 100. Defaults to 20 when omitted. Capped at 20 when `view=full`. Both `memory` and `memory_prefix` items count toward the limit.
+     * The maximum number of items to return per page, from 1 to 100. Defaults to 20.
+     *
+     * With `view=full`, a page holds at most 20 items. `memory` and `memory_prefix` items both count toward the limit.
      */
     #[Optional]
     public ?int $limit;
 
     /**
-     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
      */
     #[Optional]
     public ?string $page;
 
     /**
-     * Optional path prefix filter. Must end with `/` (segment-aligned), e.g., `/notes/`. This value appears in request URLs. Do not include secrets or personally identifiable information.
+     * Return only memories whose path starts with this prefix, such as `/notes/`. This value appears in request URLs. Do not include secrets or personally identifiable information.
+     *
+     * Omit it to list the whole store. The prefix must end with `/` and matches whole segments, so `/notes/` matches `/notes/todo.md` but not `/notes-archive/todo.md`.
      */
     #[Optional]
     public ?string $pathPrefix;
 
     /**
-     * Which projection of each `memory` to return. Defaults to `basic` (content omitted). `full` populates `content` on each item and caps `limit` at 20; use this as the bulk-read path for export and sync.
+     * Whether each memory in the response includes `content`. Defaults to `basic`, which sets it to `null`.
+     *
+     * With `full`, a page holds at most 20 items.
      *
      * @var value-of<ManagedAgentsMemoryView>|null $view
      */
@@ -115,7 +123,9 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * `0` (or omitted) returns all descendants below `path_prefix` (recursive). `1` returns immediate children only; deeper entries roll up as `memory_prefix` items. `depth=1` behaves like `ls`; omitting `depth` behaves like `find`.
+     * How far below `path_prefix` to list. Defaults to `0`, which lists every memory below the prefix.
+     *
+     * Pass `1` to list only the direct children. Deeper memories are then grouped into `memory_prefix` items.
      */
     public function withDepth(int $depth): self
     {
@@ -126,7 +136,9 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Maximum number of items to return per page. Must be between 1 and 100. Defaults to 20 when omitted. Capped at 20 when `view=full`. Both `memory` and `memory_prefix` items count toward the limit.
+     * The maximum number of items to return per page, from 1 to 100. Defaults to 20.
+     *
+     * With `view=full`, a page holds at most 20 items. `memory` and `memory_prefix` items both count toward the limit.
      */
     public function withLimit(int $limit): self
     {
@@ -137,7 +149,7 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Opaque pagination cursor (a `page_...` value). Pass the `next_page` value from a previous response to fetch the next page; omit for the first page.
+     * The `next_page` value from a previous response, to get the next page. Omit it to get the first page.
      */
     public function withPage(string $page): self
     {
@@ -148,7 +160,9 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Optional path prefix filter. Must end with `/` (segment-aligned), e.g., `/notes/`. This value appears in request URLs. Do not include secrets or personally identifiable information.
+     * Return only memories whose path starts with this prefix, such as `/notes/`. This value appears in request URLs. Do not include secrets or personally identifiable information.
+     *
+     * Omit it to list the whole store. The prefix must end with `/` and matches whole segments, so `/notes/` matches `/notes/todo.md` but not `/notes-archive/todo.md`.
      */
     public function withPathPrefix(string $pathPrefix): self
     {
@@ -159,7 +173,9 @@ final class MemoryListParams implements BaseModel
     }
 
     /**
-     * Which projection of each `memory` to return. Defaults to `basic` (content omitted). `full` populates `content` on each item and caps `limit` at 20; use this as the bulk-read path for export and sync.
+     * Whether each memory in the response includes `content`. Defaults to `basic`, which sets it to `null`.
+     *
+     * With `full`, a page holds at most 20 items.
      *
      * @param ManagedAgentsMemoryView|value-of<ManagedAgentsMemoryView> $view
      */

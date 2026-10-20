@@ -39,7 +39,7 @@ final class OrganizationRateLimit implements BaseModel
     public string $type = 'rate_limit';
 
     /**
-     * Identifier of this rate-limit entry. It is stable within the organization and differs between organizations; the group's own identifier is `group.id`.
+     * Identifier of this rate-limit entry. It is stable within the organization and differs between organizations; the group's own identifier is `group.id`. Pass it as `rate_limit_id` to set a workspace's overrides for this group.
      */
     #[Required]
     public string $id;
@@ -133,7 +133,7 @@ final class OrganizationRateLimit implements BaseModel
     }
 
     /**
-     * Identifier of this rate-limit entry. It is stable within the organization and differs between organizations; the group's own identifier is `group.id`.
+     * Identifier of this rate-limit entry. It is stable within the organization and differs between organizations; the group's own identifier is `group.id`. Pass it as `rate_limit_id` to set a workspace's overrides for this group.
      */
     public function withID(string $id): self
     {

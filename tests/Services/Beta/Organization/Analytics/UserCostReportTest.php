@@ -9,7 +9,7 @@ use Anthropic\Beta\Organization\Analytics\AnalyticsInferenceGeoFilter;
 use Anthropic\Beta\Organization\Analytics\AnalyticsProductFilter;
 use Anthropic\Client;
 use Anthropic\Core\Util;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -40,7 +40,7 @@ final class UserCostReportTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(PageCursor::class, $page);
+        $this->assertInstanceOf(ReportPageCursor::class, $page);
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -74,7 +74,7 @@ final class UserCostReportTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(PageCursor::class, $page);
+        $this->assertInstanceOf(ReportPageCursor::class, $page);
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType

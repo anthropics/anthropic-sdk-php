@@ -3,9 +3,11 @@
 namespace Tests\Aws;
 
 use Anthropic\Aws\Client;
+use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Util;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -445,6 +447,160 @@ class ClientTest extends TestCase
         // Smoke test: AWS client inherits all resources from the base client
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $this->addToAssertionCount(1);
+    }
+
+    // ── User profiles ───────────────────────────────────────────────
+
+    /**
+     * @param \Closure(Client): mixed $call
+     * @param array<string, mixed>|null $body
+     */
+    #[DataProvider('userProfilesCalls')]
+    public function testUserProfilesRequestsGoToTheGatewayWithItsAuthAndWorkspace(\Closure $call, string $method, string $path, ?array $body): void
+    {
+        $call($this->makeClient(apiKey: 'my-aws-key'));
+        $request = $this->getLastRequest();
+
+        $this->assertSame($method, $request->getMethod());
+        $this->assertSame('https://aws-external-anthropic.us-east-1.api.aws'.$path, (string) $request->getUri());
+        $this->assertSame('my-aws-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('default', $request->getHeaderLine('anthropic-workspace-id'));
+        $this->assertSame($body, json_decode((string) $request->getBody(), associative: true));
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client): mixed, string, string, array<string, mixed>|null}>
+     */
+    public static function userProfilesCalls(): iterable
+    {
+        yield 'create' => [
+            static fn (Client $client) => $client->userProfiles->create(name: 'Example'),
+            'POST',
+            '/v1/user_profiles',
+            ['name' => 'Example'],
+        ];
+
+        yield 'retrieve' => [
+            static fn (Client $client) => $client->userProfiles->retrieve('uprof_1'),
+            'GET',
+            '/v1/user_profiles/uprof_1',
+            null,
+        ];
+
+        yield 'update' => [
+            static fn (Client $client) => $client->userProfiles->update('uprof_1', name: 'Example'),
+            'POST',
+            '/v1/user_profiles/uprof_1',
+            ['name' => 'Example'],
+        ];
+
+        yield 'list' => [
+            static fn (Client $client) => $client->userProfiles->list(limit: 2),
+            'GET',
+            '/v1/user_profiles?limit=2',
+            null,
+        ];
+
+        yield 'delete' => [
+            static fn (Client $client) => $client->userProfiles->delete('uprof_1'),
+            'DELETE',
+            '/v1/user_profiles/uprof_1',
+            null,
+        ];
+    }
+
+    public function testUserProfileRequestsAreSignedWithSigV4(): void
+    {
+        $client = new Client(
+            awsAccessKey: 'AKIAIOSFODNN7EXAMPLE',
+            awsSecretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+            awsRegion: 'us-east-1',
+            workspaceId: 'default',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->userProfiles->delete('uprof_1');
+        $request = $this->getLastRequest();
+
+        $this->assertStringStartsWith('AWS4-HMAC-SHA256', $request->getHeaderLine('Authorization'));
+        $this->assertSame('default', $request->getHeaderLine('anthropic-workspace-id'));
+    }
+
+    /**
+     * @param \Closure(Client, string|null): mixed $call
+     */
+    #[DataProvider('messagesCalls')]
+    public function testUserProfileIdIsSentAsAHeaderAndNotInTheBody(\Closure $call): void
+    {
+        $call($this->makeClient(), 'uprof_123');
+        $request = $this->getLastRequest();
+
+        $this->assertSame('uprof_123', $request->getHeaderLine('anthropic-user-profile-id'));
+        $body = json_decode((string) $request->getBody(), associative: true);
+        $this->assertIsArray($body);
+        $this->assertArrayNotHasKey('user_profile_id', $body);
+        $this->assertArrayNotHasKey('userProfileID', $body);
+    }
+
+    /**
+     * @param \Closure(Client, string|null): mixed $call
+     */
+    #[DataProvider('messagesCalls')]
+    public function testUserProfileIdHeaderIsOmittedWhenNotGiven(\Closure $call): void
+    {
+        $call($this->makeClient(), null);
+
+        $this->assertFalse($this->getLastRequest()->hasHeader('anthropic-user-profile-id'));
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client, string|null): mixed}>
+     */
+    public static function messagesCalls(): iterable
+    {
+        yield 'create' => [static fn (Client $client, ?string $id) => $client->messages->create(
+            maxTokens: 1024,
+            messages: [],
+            model: 'claude-haiku-4-5',
+            userProfileID: $id,
+        )];
+
+        yield 'countTokens' => [static fn (Client $client, ?string $id) => $client->messages->countTokens(
+            messages: [],
+            model: 'claude-haiku-4-5',
+            userProfileID: $id,
+        )];
+    }
+
+    /**
+     * @param \Closure(Client): mixed $call
+     */
+    #[DataProvider('actionURLsCalls')]
+    public function testUserProfileActionUrlsThrowBeforeAnyRequestIsSent(\Closure $call): void
+    {
+        try {
+            $call($this->makeClient());
+            $this->fail('expected action URLs to be refused on the AWS gateway');
+        } catch (AnthropicException $e) {
+            $this->assertStringContainsString('action URLs are not available via the AWS gateway', $e->getMessage());
+            $this->assertStringContainsString('Anthropic\Client', $e->getMessage());
+        }
+
+        $this->assertSame([], $this->transporter->getRequests());
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client): mixed}>
+     */
+    public static function actionURLsCalls(): iterable
+    {
+        yield 'userProfiles' => [
+            static fn (Client $client) => $client->userProfiles->actionURLs->create('uprof_1', action: ['type' => 'enroll_end_user']),
+        ];
+
+        yield 'beta userProfiles' => [
+            static fn (Client $client) => $client->beta->userProfiles->actionURLs->create('uprof_1', action: ['type' => 'enroll_end_user']),
+        ];
     }
 
     // ── Helpers ─────────────────────────────────────────────────────
