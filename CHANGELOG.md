@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.60.1](https://github.com/anthropics/anthropic-sdk-php/compare/v0.60.0...v0.60.1) (2026-10-20)
+
+### Chores
+
+* **ci:** run the changelog check on a standard runner
+* **docs:** remove the repeated autoloading note from the README
+
 ## [0.60.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.59.0...v0.60.0) (2026-10-20)
 
 ### Features
@@ -27,7 +34,6 @@
 * **docs:** correct plugin manifest_version and reach descriptions
 * **docs:** improve Managed Agents memory store descriptions
 * **docs:** improve Managed Agents vault and credential descriptions
-* **docs:** remove the repeated autoloading note from the README
 * **tests:** cover trace context propagation and dropped raw responses
 
 ## [0.59.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.58.0...v0.59.0) (2026-10-15)
