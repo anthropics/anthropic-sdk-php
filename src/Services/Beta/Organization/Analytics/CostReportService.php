@@ -15,7 +15,7 @@ use Anthropic\Beta\Organization\Analytics\CostReport\CostReportListParams\Speed;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\Analytics\CostReportContract;
 
@@ -65,7 +65,7 @@ final class CostReportService implements CostReportContract
      * @param list<string>|null $userIDs filter to specific users by tagged user ID
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<AnalyticsCostReportTimeBucket>
+     * @return ReportPageCursor<AnalyticsCostReportTimeBucket>
      *
      * @throws APIException
      */
@@ -87,7 +87,7 @@ final class CostReportService implements CostReportContract
         ?array $speeds = null,
         ?array $userIDs = null,
         RequestOptions|array|null $requestOptions = null,
-    ): PageCursor {
+    ): ReportPageCursor {
         $params = Util::removeNulls(
             [
                 'startingAt' => $startingAt,

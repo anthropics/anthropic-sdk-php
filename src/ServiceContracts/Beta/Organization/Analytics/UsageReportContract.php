@@ -13,7 +13,7 @@ use Anthropic\Beta\Organization\Analytics\UsageReport\UsageReportListParams\Buck
 use Anthropic\Beta\Organization\Analytics\UsageReport\UsageReportListParams\GroupBy;
 use Anthropic\Beta\Organization\Analytics\UsageReport\UsageReportListParams\Speed;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -42,7 +42,7 @@ interface UsageReportContract
      * @param list<string>|null $userIDs filter to specific users by tagged user ID
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<AnalyticsUsageReportTimeBucket>
+     * @return ReportPageCursor<AnalyticsUsageReportTimeBucket>
      *
      * @throws APIException
      */
@@ -64,5 +64,5 @@ interface UsageReportContract
         ?array $speeds = null,
         ?array $userIDs = null,
         RequestOptions|array|null $requestOptions = null,
-    ): PageCursor;
+    ): ReportPageCursor;
 }

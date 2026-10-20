@@ -8,7 +8,7 @@ use Anthropic\Beta\Organization\Analytics\AnalyticsCostReportTimeBucket;
 use Anthropic\Beta\Organization\Analytics\CostReport\CostReportListParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
-use Anthropic\PageCursor;
+use Anthropic\ReportPageCursor;
 use Anthropic\RequestOptions;
 
 /**
@@ -22,7 +22,7 @@ interface CostReportRawContract
      * @param array<string,mixed>|CostReportListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<AnalyticsCostReportTimeBucket>>
+     * @return BaseResponse<ReportPageCursor<AnalyticsCostReportTimeBucket>>
      *
      * @throws APIException
      */
