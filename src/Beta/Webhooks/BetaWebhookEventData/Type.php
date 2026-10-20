@@ -93,4 +93,8 @@ enum Type: string
     case MEMORY_STORE_DELETED = 'memory_store.deleted';
 
     case SESSION_BUDGET_REACHED = 'session.budget_reached';
+
+    case USER_PROFILE_ENFORCEMENT_ACTION_OPENED = 'user_profile.enforcement_action_opened';
+
+    case USER_PROFILE_ENFORCEMENT_ACTION_RESOLVED = 'user_profile.enforcement_action_resolved';
 }
