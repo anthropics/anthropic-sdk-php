@@ -4,89 +4,69 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Required;
-use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Messages\MessageParam\Content;
+use Anthropic\Core\Concerns\SdkUnion;
+use Anthropic\Core\Conversion\Contracts\Converter;
+use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\MessageParam\Role;
 
 /**
- * @phpstan-import-type ContentShape from \Anthropic\Messages\MessageParam\Content
- * @phpstan-import-type ContentVariants from \Anthropic\Messages\MessageParam\Content
+ * @phpstan-import-type UserMessageParamShape from \Anthropic\Messages\UserMessageParam
+ * @phpstan-import-type AssistantMessageParamShape from \Anthropic\Messages\AssistantMessageParam
+ * @phpstan-import-type SystemMessageParamShape from \Anthropic\Messages\SystemMessageParam
+ * @phpstan-import-type MessageContentParamShape from \Anthropic\Messages\MessageContentParam
+ * @phpstan-import-type ContentShape from \Anthropic\Messages\SystemMessageParam\Content
  *
- * @phpstan-type MessageParamShape = array{
- *   content: ContentShape, role: Role|value-of<Role>
- * }
+ * @phpstan-type MessageParamVariants = UserMessageParam|AssistantMessageParam|SystemMessageParam
+ * @phpstan-type MessageParamShape = MessageParamVariants|UserMessageParamShape|AssistantMessageParamShape|SystemMessageParamShape
  */
-final class MessageParam implements BaseModel
+final class MessageParam implements ConverterSource
 {
-    /** @use SdkModel<MessageParamShape> */
-    use SdkModel;
+    use SdkUnion;
 
-    /** @var ContentVariants $content */
-    #[Required(union: Content::class)]
-    public string|array $content;
-
-    /** @var value-of<Role> $role */
-    #[Required(enum: Role::class)]
-    public string $role;
-
-    /**
-     * `new MessageParam()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * MessageParam::with(content: ..., role: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new MessageParam())->withContent(...)->withRole(...)
-     * ```
-     */
-    public function __construct()
+    public static function discriminator(): string
     {
-        $this->initialize();
+        return 'role';
     }
 
     /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param ContentShape $content
-     * @param Role|value-of<Role> $role
+     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
-    public static function with(string|array $content, Role|string $role): self
+    public static function variants(): array
     {
-        $self = new self;
-
-        $self['content'] = $content;
-        $self['role'] = $role;
-
-        return $self;
+        return [
+            'user' => UserMessageParam::class,
+            'assistant' => AssistantMessageParam::class,
+            'system' => SystemMessageParam::class,
+        ];
     }
 
     /**
-     * @param ContentShape $content
+     * Constructs the variant whose `role` matches the given value, forwarding the remaining arguments to its own `with()`.
+     *
+     * @param ($role is Role::USER|'user'|Role::ASSISTANT|'assistant' ? MessageContentParamShape : ContentShape) $content
+     *
+     * @return ($role is Role::USER|'user' ? UserMessageParam : ($role is Role::ASSISTANT|'assistant' ? AssistantMessageParam : ($role is Role::SYSTEM|'system' ? SystemMessageParam : UserMessageParam|AssistantMessageParam|SystemMessageParam)))
+     *
+     * @throws \UnhandledMatchError
      */
-    public function withContent(string|array $content): self
-    {
-        $self = clone $this;
-        $self['content'] = $content;
-
-        return $self;
-    }
-
-    /**
-     * @param Role|value-of<Role> $role
-     */
-    public function withRole(Role|string $role): self
-    {
-        $self = clone $this;
-        $self['role'] = $role;
-
-        return $self;
+    public static function with(
+        Role|string $role,
+        string|array $content
+    ): UserMessageParam|AssistantMessageParam|SystemMessageParam {
+        return match ($role) {
+            Role::USER, 'user' => UserMessageParam::with(
+                // @phpstan-ignore argument.type
+                content: $content,
+            ),
+            Role::ASSISTANT, 'assistant' => AssistantMessageParam::with(
+                // @phpstan-ignore argument.type
+                content: $content,
+            ),
+            Role::SYSTEM, 'system' => SystemMessageParam::with(
+                // @phpstan-ignore argument.type
+                content: $content,
+            ),
+            default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($role, true)))
+        };
     }
 }

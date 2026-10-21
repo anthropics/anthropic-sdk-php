@@ -83,7 +83,6 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            temperature: 1,
             thinking: ['type' => 'adaptive', 'display' => 'summarized'],
             toolChoice: ['type' => 'auto', 'disableParallelToolUse' => true],
             tools: [
@@ -104,8 +103,6 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-            topK: 5,
-            topP: 0.7,
             userProfileID: 'anthropic-user-profile-id',
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
         );

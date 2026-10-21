@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Vertex;
 
+use Anthropic\Client;
 use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\RequestTransformer;
 use Anthropic\Middleware;
@@ -14,8 +15,6 @@ use Psr\Http\Message\StreamFactoryInterface;
 /** @internal */
 final class VertexMiddleware implements Middleware
 {
-    private const VERSION = 'vertex-2023-10-16';
-
     /**
      * @param \Closure(): string $projectId
      * @param \Closure(RequestInterface): RequestInterface $authorize
@@ -40,7 +39,7 @@ final class VertexMiddleware implements Middleware
             $prefix = substr($path, 0, -strlen('/v1/messages/count_tokens'));
 
             return self::dropFirstPartyHeaders(new RequestTransformer($request, $this->streamFactory))
-                ->setBodyParamDefault('anthropic_version', self::VERSION)
+                ->setBodyParamDefault('anthropic_version', Client::ANTHROPIC_API_VERSION)
                 ->setPath($prefix.$this->modelsPath().'/count-tokens:rawPredict')
                 ->dropQueryParam('beta')
                 ->build();
@@ -49,7 +48,7 @@ final class VertexMiddleware implements Middleware
         if (str_ends_with($path, '/v1/messages')) {
             $prefix = substr($path, 0, -strlen('/v1/messages'));
             $r = self::dropFirstPartyHeaders(new RequestTransformer($request, $this->streamFactory));
-            $r->setBodyParamDefault('anthropic_version', self::VERSION);
+            $r->setBodyParamDefault('anthropic_version', Client::ANTHROPIC_API_VERSION);
 
             $model = $r->takeBodyParam('model');
             if (!is_string($model) || '' === $model) {

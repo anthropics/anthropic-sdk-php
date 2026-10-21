@@ -131,8 +131,7 @@ final class ResourcesTest extends TestCase
     {
         $result = $this->client->beta->sessions->resources->add(
             'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            fileID: 'file_011CNha8iCJcU1wXNR6q4V8w',
-            type: 'file',
+            fileID: 'file_011CNha8iCJcU1wXNR6q4V8w'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

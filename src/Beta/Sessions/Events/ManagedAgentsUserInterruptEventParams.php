@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserInterruptEventParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Parameters for sending an interrupt to pause the agent.
  *
  * @phpstan-type ManagedAgentsUserInterruptEventParamsShape = array{
- *   type: Type|value-of<Type>, sessionThreadID?: string|null
+ *   type: 'user.interrupt', sessionThreadID?: string|null
  * }
  */
 final class ManagedAgentsUserInterruptEventParams implements BaseModel
@@ -22,9 +22,9 @@ final class ManagedAgentsUserInterruptEventParams implements BaseModel
     /** @use SdkModel<ManagedAgentsUserInterruptEventParamsShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'user.interrupt' $type */
+    #[Required(type: new ConstantOf('user.interrupt'))]
+    public string $type = 'user.interrupt';
 
     /**
      * If absent, interrupts every non-archived thread in a multiagent session (or the primary alone in a single-agent session). If present, interrupts only the named thread.
@@ -32,20 +32,6 @@ final class ManagedAgentsUserInterruptEventParams implements BaseModel
     #[Optional('session_thread_id', nullable: true)]
     public ?string $sessionThreadID;
 
-    /**
-     * `new ManagedAgentsUserInterruptEventParams()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * ManagedAgentsUserInterruptEventParams::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new ManagedAgentsUserInterruptEventParams())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -55,16 +41,10 @@ final class ManagedAgentsUserInterruptEventParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        Type|string $type,
-        ?string $sessionThreadID = null
-    ): self {
+    public static function with(?string $sessionThreadID = null): self
+    {
         $self = new self;
-
-        $self['type'] = $type;
 
         null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
 
@@ -72,9 +52,9 @@ final class ManagedAgentsUserInterruptEventParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.interrupt' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

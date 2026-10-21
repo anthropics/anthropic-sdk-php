@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanModelRequestEndEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Emitted when a model request completes.
@@ -20,13 +20,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   modelRequestStartID: string,
  *   modelUsage: ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape,
  *   processedAt: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'span.model_request_end',
  * }
  */
 final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSpanModelRequestEndEventShape> */
     use SdkModel;
+
+    /** @var 'span.model_request_end' $type */
+    #[Required(type: new ConstantOf('span.model_request_end'))]
+    public string $type = 'span.model_request_end';
 
     /**
      * Unique identifier for this event.
@@ -58,10 +62,6 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSpanModelRequestEndEvent()` is missing required properties by the API.
      *
@@ -73,7 +73,6 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
      *   modelRequestStartID: ...,
      *   modelUsage: ...,
      *   processedAt: ...,
-     *   type: ...,
      * )
      * ```
      *
@@ -86,7 +85,6 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
      *   ->withModelRequestStartID(...)
      *   ->withModelUsage(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -100,7 +98,6 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape $modelUsage
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -108,7 +105,6 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
         string $modelRequestStartID,
         ManagedAgentsSpanModelUsage|array $modelUsage,
         \DateTimeInterface $processedAt,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -117,7 +113,6 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
         $self['modelRequestStartID'] = $modelRequestStartID;
         $self['modelUsage'] = $modelUsage;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -181,9 +176,9 @@ final class ManagedAgentsSpanModelRequestEndEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'span.model_request_end' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -401,9 +401,9 @@ class ModelTest extends TestCase
     }
 
     #[Test]
-    public function testEnumCaseReadsBackAsTheCase(): void
+    public function testEnumCaseReadsBackAsItsValue(): void
     {
-        $stored = Size::SMALL;
+        $stored = 'small';
 
         $model = new Crate;
         $model['size'] = Size::SMALL;

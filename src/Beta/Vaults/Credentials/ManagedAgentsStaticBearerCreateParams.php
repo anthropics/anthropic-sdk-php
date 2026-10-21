@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerCreateParams\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Parameters for creating a static bearer token credential.
  *
  * @phpstan-type ManagedAgentsStaticBearerCreateParamsShape = array{
- *   token: string, mcpServerURL: string, type: Type|value-of<Type>
+ *   token: string, mcpServerURL: string, type: 'static_bearer'
  * }
  */
 final class ManagedAgentsStaticBearerCreateParams implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsStaticBearerCreateParamsShape> */
     use SdkModel;
+
+    /** @var 'static_bearer' $type */
+    #[Required(type: new ConstantOf('static_bearer'))]
+    public string $type = 'static_bearer';
 
     /**
      * The static bearer token to send to the MCP server, such as an API key or personal access token.
@@ -33,18 +37,12 @@ final class ManagedAgentsStaticBearerCreateParams implements BaseModel
     #[Required('mcp_server_url')]
     public string $mcpServerURL;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsStaticBearerCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsStaticBearerCreateParams::with(
-     *   token: ..., mcpServerURL: ..., type: ...
-     * )
+     * ManagedAgentsStaticBearerCreateParams::with(token: ..., mcpServerURL: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,7 +51,6 @@ final class ManagedAgentsStaticBearerCreateParams implements BaseModel
      * (new ManagedAgentsStaticBearerCreateParams())
      *   ->withToken(...)
      *   ->withMCPServerURL(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -65,19 +62,13 @@ final class ManagedAgentsStaticBearerCreateParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $token,
-        string $mcpServerURL,
-        Type|string $type
-    ): self {
+    public static function with(string $token, string $mcpServerURL): self
+    {
         $self = new self;
 
         $self['token'] = $token;
         $self['mcpServerURL'] = $mcpServerURL;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -105,9 +96,9 @@ final class ManagedAgentsStaticBearerCreateParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'static_bearer' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

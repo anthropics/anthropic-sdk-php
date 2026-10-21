@@ -53,15 +53,11 @@ final class TokenEndpointAuth implements ConverterSource
         ?string $clientSecret = null
     ): ManagedAgentsTokenEndpointAuthNoneParam|ManagedAgentsTokenEndpointAuthBasicParam|ManagedAgentsTokenEndpointAuthPostParam {
         return match ($type) {
-            Type::NONE, 'none' => ManagedAgentsTokenEndpointAuthNoneParam::with(
-                type: 'none'
-            ),
+            Type::NONE, 'none' => ManagedAgentsTokenEndpointAuthNoneParam::with(),
             Type::CLIENT_SECRET_BASIC, 'client_secret_basic' => ManagedAgentsTokenEndpointAuthBasicParam::with(
-                type: 'client_secret_basic',
                 clientSecret: $clientSecret ?? throw new \ArgumentCountError('$clientSecret is required'),
             ),
             Type::CLIENT_SECRET_POST, 'client_secret_post' => ManagedAgentsTokenEndpointAuthPostParam::with(
-                type: 'client_secret_post',
                 clientSecret: $clientSecret ?? throw new \ArgumentCountError('$clientSecret is required'),
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))

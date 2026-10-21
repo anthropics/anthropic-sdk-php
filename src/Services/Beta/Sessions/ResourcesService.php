@@ -9,7 +9,6 @@ use Anthropic\Beta\Sessions\Resources\ManagedAgentsDeleteSessionResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource;
-use Anthropic\Beta\Sessions\Resources\ResourceAddParams\Type;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -194,7 +193,7 @@ final class ResourcesService implements ResourcesContract
      *
      * @param string $sessionID Path param
      * @param string $fileID body param: ID of a previously uploaded file
-     * @param Type|value-of<Type> $type Body param
+     * @param 'file' $type Body param
      * @param string|null $mountPath Body param: Mount path in the container. Defaults to `/mnt/session/uploads/<file_id>`.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
@@ -207,7 +206,7 @@ final class ResourcesService implements ResourcesContract
     public function add(
         string $sessionID,
         string $fileID,
-        Type|string $type,
+        string $type = 'file',
         ?string $mountPath = null,
         ?array $betas = null,
         ?string $workspaceID = null,

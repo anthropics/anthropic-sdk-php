@@ -104,12 +104,11 @@ final class Client extends \Anthropic\Client
                 : "{$locationUrl}/workspaces/{$workspaceId}/invoke";
         }
 
-        // Pass '' for apiKey and authToken to suppress ANTHROPIC_API_KEY,
+        // Pass '' for apiKey to suppress ANTHROPIC_API_KEY,
         // ANTHROPIC_AUTH_TOKEN, and credentials-file lookups in the base
         // client. Auth is handled entirely by transformRequest() below.
         parent::__construct(
             apiKey: '',
-            authToken: '',
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
             openTelemetry: $openTelemetry,

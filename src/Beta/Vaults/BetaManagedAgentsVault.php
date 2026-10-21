@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults;
 
-use Anthropic\Beta\Vaults\BetaManagedAgentsVault\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A vault that stores credentials for use by agents during sessions.
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   displayName: string,
  *   metadata: array<string,string>,
- *   type: Type|value-of<Type>,
+ *   type: 'vault',
  *   updatedAt: \DateTimeInterface,
  * }
  */
@@ -26,6 +26,10 @@ final class BetaManagedAgentsVault implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsVaultShape> */
     use SdkModel;
+
+    /** @var 'vault' $type */
+    #[Required(type: new ConstantOf('vault'))]
+    public string $type = 'vault';
 
     /**
      * The unique ID of the vault (`vlt_...`).
@@ -59,10 +63,6 @@ final class BetaManagedAgentsVault implements BaseModel
     #[Required(map: 'string')]
     public array $metadata;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * A timestamp in RFC 3339 format.
      */
@@ -80,7 +80,6 @@ final class BetaManagedAgentsVault implements BaseModel
      *   createdAt: ...,
      *   displayName: ...,
      *   metadata: ...,
-     *   type: ...,
      *   updatedAt: ...,
      * )
      * ```
@@ -94,7 +93,6 @@ final class BetaManagedAgentsVault implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)
      *   ->withMetadata(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -109,7 +107,6 @@ final class BetaManagedAgentsVault implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,string> $metadata
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -117,7 +114,6 @@ final class BetaManagedAgentsVault implements BaseModel
         \DateTimeInterface $createdAt,
         string $displayName,
         array $metadata,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -127,7 +123,6 @@ final class BetaManagedAgentsVault implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
         $self['metadata'] = $metadata;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
 
         return $self;
@@ -191,9 +186,9 @@ final class BetaManagedAgentsVault implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'vault' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

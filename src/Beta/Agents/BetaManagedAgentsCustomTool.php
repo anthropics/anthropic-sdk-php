@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsCustomTool\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A custom tool as returned in API responses.
@@ -18,13 +18,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   description: string,
  *   inputSchema: BetaManagedAgentsCustomToolInputSchema|BetaManagedAgentsCustomToolInputSchemaShape,
  *   name: string,
- *   type: Type|value-of<Type>,
+ *   type: 'custom',
  * }
  */
 final class BetaManagedAgentsCustomTool implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsCustomToolShape> */
     use SdkModel;
+
+    /** @var 'custom' $type */
+    #[Required(type: new ConstantOf('custom'))]
+    public string $type = 'custom';
 
     #[Required]
     public string $description;
@@ -38,18 +42,12 @@ final class BetaManagedAgentsCustomTool implements BaseModel
     #[Required]
     public string $name;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsCustomTool()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsCustomTool::with(
-     *   description: ..., inputSchema: ..., name: ..., type: ...
-     * )
+     * BetaManagedAgentsCustomTool::with(description: ..., inputSchema: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -59,7 +57,6 @@ final class BetaManagedAgentsCustomTool implements BaseModel
      *   ->withDescription(...)
      *   ->withInputSchema(...)
      *   ->withName(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -73,20 +70,17 @@ final class BetaManagedAgentsCustomTool implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaManagedAgentsCustomToolInputSchema|BetaManagedAgentsCustomToolInputSchemaShape $inputSchema
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $description,
         BetaManagedAgentsCustomToolInputSchema|array $inputSchema,
         string $name,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['description'] = $description;
         $self['inputSchema'] = $inputSchema;
         $self['name'] = $name;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -122,9 +116,9 @@ final class BetaManagedAgentsCustomTool implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'custom' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

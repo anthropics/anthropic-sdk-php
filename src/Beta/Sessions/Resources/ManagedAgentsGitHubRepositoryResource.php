@@ -7,11 +7,11 @@ namespace Anthropic\Beta\Sessions\Resources;
 use Anthropic\Beta\Sessions\BetaManagedAgentsBranchCheckout;
 use Anthropic\Beta\Sessions\BetaManagedAgentsCommitCheckout;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource\Checkout;
-use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type CheckoutShape from \Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource\Checkout
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   mountPath: string,
- *   type: Type|value-of<Type>,
+ *   type: 'github_repository',
  *   updatedAt: \DateTimeInterface,
  *   url: string,
  *   checkout?: CheckoutShape|null,
@@ -31,6 +31,10 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsGitHubRepositoryResourceShape> */
     use SdkModel;
+
+    /** @var 'github_repository' $type */
+    #[Required(type: new ConstantOf('github_repository'))]
+    public string $type = 'github_repository';
 
     #[Required]
     public string $id;
@@ -43,10 +47,6 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
 
     #[Required('mount_path')]
     public string $mountPath;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * A timestamp in RFC 3339 format.
@@ -67,7 +67,7 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsGitHubRepositoryResource::with(
-     *   id: ..., createdAt: ..., mountPath: ..., type: ..., updatedAt: ..., url: ...
+     *   id: ..., createdAt: ..., mountPath: ..., updatedAt: ..., url: ...
      * )
      * ```
      *
@@ -78,7 +78,6 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withMountPath(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      *   ->withURL(...)
      * ```
@@ -93,14 +92,12 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param CheckoutShape|null $checkout
      */
     public static function with(
         string $id,
         \DateTimeInterface $createdAt,
         string $mountPath,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
         string $url,
         BetaManagedAgentsBranchCheckout|array|BetaManagedAgentsCommitCheckout|null $checkout = null,
@@ -110,7 +107,6 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
         $self['id'] = $id;
         $self['createdAt'] = $createdAt;
         $self['mountPath'] = $mountPath;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
         $self['url'] = $url;
 
@@ -147,9 +143,9 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'github_repository' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

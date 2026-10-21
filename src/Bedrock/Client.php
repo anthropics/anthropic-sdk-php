@@ -72,12 +72,11 @@ final class Client extends \Anthropic\Client
 
         $baseUrl ??= Util::getenv('ANTHROPIC_BEDROCK_BASE_URL') ?: 'https://bedrock-runtime.'.$region.'.amazonaws.com';
 
-        // Pass '' for apiKey/authToken to suppress ANTHROPIC_API_KEY and
+        // Pass '' for apiKey to suppress ANTHROPIC_API_KEY and
         // ANTHROPIC_AUTH_TOKEN env lookups; Bedrock auth is handled entirely
         // by the $authorize closure in backendMiddleware().
         parent::__construct(
             apiKey: '',
-            authToken: '',
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
             openTelemetry: $openTelemetry,

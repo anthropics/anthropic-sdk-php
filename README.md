@@ -49,10 +49,14 @@ var_dump($message->content);
 
 ### Value Objects
 
-It is recommended to use the static `with` constructor `Base64ImageSource::with(data: 'U3RhaW5sZXNzIHJvY2tz', ...)`
+It is recommended to use the static `with` constructor `AssistantMessageParam::with(content: [
+  ['text' => 'What is a quaternion?', 'type' => 'text']
+], ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new Base64ImageSource())->withData('U3RhaW5sZXNzIHJvY2tz')`.
+However, builders are also provided `(new AssistantMessageParam())->withContent([
+  ['text' => 'What is a quaternion?', 'type' => 'text']
+])`.
 
 ### Streaming
 
@@ -410,7 +414,7 @@ The `openTelemetry` request option of a call replaces the one in the client's `r
 
 ## Versioning
 
-This package follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions. As the library is in initial development and has a major version of `0`, APIs may change at any time.
+This package follows [SemVer](https://semver.org/spec/v2.0.0.html) conventions.
 
 This package considers improvements to the (non-runtime) PHPDoc type definitions to be non-breaking changes.
 
@@ -434,4 +438,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License, Version 2.0. See the [LICENSE](LICENSE) file for details. Versions released before the change from the MIT License, and third-party contributions merged before it, remain under the MIT License. See [LICENSE-MIT](LICENSE-MIT).

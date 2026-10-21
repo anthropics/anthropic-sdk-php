@@ -4,41 +4,25 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsAlwaysAskPolicy\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Tool calls require user confirmation before execution.
  *
- * @phpstan-type BetaManagedAgentsAlwaysAskPolicyShape = array{
- *   type: Type|value-of<Type>
- * }
+ * @phpstan-type BetaManagedAgentsAlwaysAskPolicyShape = array{type: 'always_ask'}
  */
 final class BetaManagedAgentsAlwaysAskPolicy implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsAlwaysAskPolicyShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'always_ask' $type */
+    #[Required(type: new ConstantOf('always_ask'))]
+    public string $type = 'always_ask';
 
-    /**
-     * `new BetaManagedAgentsAlwaysAskPolicy()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsAlwaysAskPolicy::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsAlwaysAskPolicy())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +32,16 @@ final class BetaManagedAgentsAlwaysAskPolicy implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'always_ask' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

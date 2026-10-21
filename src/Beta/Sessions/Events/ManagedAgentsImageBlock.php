@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock\Source;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Image content specified directly as base64 data or as a reference via a URL.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type SourceVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsImageBlock\Source
  *
  * @phpstan-type ManagedAgentsImageBlockShape = array{
- *   source: SourceShape, type: Type|value-of<Type>
+ *   source: SourceShape, type: 'image'
  * }
  */
 final class ManagedAgentsImageBlock implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsImageBlockShape> */
     use SdkModel;
+
+    /** @var 'image' $type */
+    #[Required(type: new ConstantOf('image'))]
+    public string $type = 'image';
 
     /**
      * The source of the image data.
@@ -33,22 +37,18 @@ final class ManagedAgentsImageBlock implements BaseModel
     #[Required(union: Source::class)]
     public ManagedAgentsBase64ImageSource|ManagedAgentsURLImageSource|ManagedAgentsFileImageSource $source;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsImageBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsImageBlock::with(source: ..., type: ...)
+     * ManagedAgentsImageBlock::with(source: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsImageBlock())->withSource(...)->withType(...)
+     * (new ManagedAgentsImageBlock())->withSource(...)
      * ```
      */
     public function __construct()
@@ -62,16 +62,13 @@ final class ManagedAgentsImageBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param SourceShape $source
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         ManagedAgentsBase64ImageSource|array|ManagedAgentsURLImageSource|ManagedAgentsFileImageSource $source,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['source'] = $source;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -91,9 +88,9 @@ final class ManagedAgentsImageBlock implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'image' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

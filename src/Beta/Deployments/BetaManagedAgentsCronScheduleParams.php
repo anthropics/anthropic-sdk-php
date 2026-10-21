@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsCronScheduleParams\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * 5-field POSIX cron schedule. Literal wall-clock matching in the configured timezone.
  *
  * @phpstan-type BetaManagedAgentsCronScheduleParamsShape = array{
- *   expression: string, timezone: string, type: Type|value-of<Type>
+ *   expression: string, timezone: string, type: 'cron'
  * }
  */
 final class BetaManagedAgentsCronScheduleParams implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsCronScheduleParamsShape> */
     use SdkModel;
+
+    /** @var 'cron' $type */
+    #[Required(type: new ConstantOf('cron'))]
+    public string $type = 'cron';
 
     /**
      * 5-field POSIX cron expression: minute hour day-of-month month day-of-week (e.g., "0 9 * * 1-5" for weekdays at 9am). Day-of-week is 0-7 where 0 and 7 both mean Sunday. Extended cron syntax - seconds or year fields, and the special characters L, W, #, and ? - is not supported, nor are predefined shortcuts (@daily).
@@ -33,18 +37,12 @@ final class BetaManagedAgentsCronScheduleParams implements BaseModel
     #[Required]
     public string $timezone;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsCronScheduleParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsCronScheduleParams::with(
-     *   expression: ..., timezone: ..., type: ...
-     * )
+     * BetaManagedAgentsCronScheduleParams::with(expression: ..., timezone: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,7 +51,6 @@ final class BetaManagedAgentsCronScheduleParams implements BaseModel
      * (new BetaManagedAgentsCronScheduleParams())
      *   ->withExpression(...)
      *   ->withTimezone(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -65,19 +62,13 @@ final class BetaManagedAgentsCronScheduleParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $expression,
-        string $timezone,
-        Type|string $type
-    ): self {
+    public static function with(string $expression, string $timezone): self
+    {
         $self = new self;
 
         $self['expression'] = $expression;
         $self['timezone'] = $timezone;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -105,9 +96,9 @@ final class BetaManagedAgentsCronScheduleParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'cron' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -40,7 +40,8 @@ interface SpendLimitsContract
      *
      * @param int $limit Query param: Maximum number of limits per page. Defaults to `20`.
      * @param string|null $page query param: Opaque cursor from a previous response's `next_page` field
-     * @param list<ScopeType|value-of<ScopeType>>|null $scopeType Query param: Return only limits with these scope types. Omit for all.
+     * @param list<ScopeType|value-of<ScopeType>>|null $scopeType Query param: Return only limits with these scope types. Omit for all. A scope type that doesn't apply to the organization gets a 400 error.
+     * @param string|null $workspaceID Query param: Return only the limits whose `scope.workspace_id` is this workspace (`wrkspc_...`). Claude Console organizations only; other organizations get a 400 error.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `spend-limit-reads-2026-09-26` in this header
      * @param RequestOpts|null $requestOptions
      *
@@ -52,6 +53,7 @@ interface SpendLimitsContract
         ?int $limit = null,
         ?string $page = null,
         ?array $scopeType = null,
+        ?string $workspaceID = null,
         ?array $betas = null,
         RequestOptions|array|null $requestOptions = null,
     ): PageCursor;

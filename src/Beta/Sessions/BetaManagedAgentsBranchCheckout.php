@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Sessions\BetaManagedAgentsBranchCheckout\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type BetaManagedAgentsBranchCheckoutShape = array{
- *   name: string, type: Type|value-of<Type>
+ *   name: string, type: 'branch'
  * }
  */
 final class BetaManagedAgentsBranchCheckout implements BaseModel
@@ -19,28 +19,28 @@ final class BetaManagedAgentsBranchCheckout implements BaseModel
     /** @use SdkModel<BetaManagedAgentsBranchCheckoutShape> */
     use SdkModel;
 
+    /** @var 'branch' $type */
+    #[Required(type: new ConstantOf('branch'))]
+    public string $type = 'branch';
+
     /**
      * Branch name to check out.
      */
     #[Required]
     public string $name;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsBranchCheckout()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsBranchCheckout::with(name: ..., type: ...)
+     * BetaManagedAgentsBranchCheckout::with(name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsBranchCheckout())->withName(...)->withType(...)
+     * (new BetaManagedAgentsBranchCheckout())->withName(...)
      * ```
      */
     public function __construct()
@@ -52,15 +52,12 @@ final class BetaManagedAgentsBranchCheckout implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $name, Type|string $type): self
+    public static function with(string $name): self
     {
         $self = new self;
 
         $self['name'] = $name;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -77,9 +74,9 @@ final class BetaManagedAgentsBranchCheckout implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'branch' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

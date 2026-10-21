@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\DeploymentRuns;
 
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsAgentArchivedRunError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The deployment's agent was archived.
  *
  * @phpstan-type BetaManagedAgentsAgentArchivedRunErrorShape = array{
- *   message: string, type: Type|value-of<Type>
+ *   message: string, type: 'agent_archived_error'
  * }
  */
 final class BetaManagedAgentsAgentArchivedRunError implements BaseModel
@@ -21,28 +21,28 @@ final class BetaManagedAgentsAgentArchivedRunError implements BaseModel
     /** @use SdkModel<BetaManagedAgentsAgentArchivedRunErrorShape> */
     use SdkModel;
 
+    /** @var 'agent_archived_error' $type */
+    #[Required(type: new ConstantOf('agent_archived_error'))]
+    public string $type = 'agent_archived_error';
+
     /**
      * Human-readable error description.
      */
     #[Required]
     public string $message;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsAgentArchivedRunError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsAgentArchivedRunError::with(message: ..., type: ...)
+     * BetaManagedAgentsAgentArchivedRunError::with(message: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentArchivedRunError())->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsAgentArchivedRunError())->withMessage(...)
      * ```
      */
     public function __construct()
@@ -54,15 +54,12 @@ final class BetaManagedAgentsAgentArchivedRunError implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $message, Type|string $type): self
+    public static function with(string $message): self
     {
         $self = new self;
 
         $self['message'] = $message;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +76,9 @@ final class BetaManagedAgentsAgentArchivedRunError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent_archived_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

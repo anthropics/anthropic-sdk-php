@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableCreateParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Parameters for creating an environment variable credential.
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   networking: ManagedAgentsCredentialNetworkingParamsShape,
  *   secretName: string,
  *   secretValue: string,
- *   type: Type|value-of<Type>,
+ *   type: 'environment_variable',
  *   injectionLocation?: null|ManagedAgentsInjectionLocationParams|ManagedAgentsInjectionLocationParamsShape,
  * }
  */
@@ -29,6 +29,10 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsEnvironmentVariableCreateParamsShape> */
     use SdkModel;
+
+    /** @var 'environment_variable' $type */
+    #[Required(type: new ConstantOf('environment_variable'))]
+    public string $type = 'environment_variable';
 
     /**
      * Outbound hosts the secret value is substituted on.
@@ -50,10 +54,6 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
     #[Required('secret_value')]
     public string $secretValue;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Where in the outbound request the secret value may be substituted.
      */
@@ -66,7 +66,7 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsEnvironmentVariableCreateParams::with(
-     *   networking: ..., secretName: ..., secretValue: ..., type: ...
+     *   networking: ..., secretName: ..., secretValue: ...
      * )
      * ```
      *
@@ -77,7 +77,6 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
      *   ->withNetworking(...)
      *   ->withSecretName(...)
      *   ->withSecretValue(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -91,14 +90,12 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ManagedAgentsCredentialNetworkingParamsShape $networking
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsInjectionLocationParams|ManagedAgentsInjectionLocationParamsShape|null $injectionLocation
      */
     public static function with(
         ManagedAgentsUnrestrictedCredentialNetworkingParams|array|ManagedAgentsLimitedCredentialNetworkingParams $networking,
         string $secretName,
         string $secretValue,
-        Type|string $type,
         ManagedAgentsInjectionLocationParams|array|null $injectionLocation = null,
     ): self {
         $self = new self;
@@ -106,7 +103,6 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
         $self['networking'] = $networking;
         $self['secretName'] = $secretName;
         $self['secretValue'] = $secretValue;
-        $self['type'] = $type;
 
         null !== $injectionLocation && $self['injectionLocation'] = $injectionLocation;
 
@@ -150,9 +146,9 @@ final class ManagedAgentsEnvironmentVariableCreateParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'environment_variable' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

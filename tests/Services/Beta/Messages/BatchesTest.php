@@ -61,14 +61,7 @@ final class BatchesTest extends TestCase
                     'customID' => 'my-custom-id-1',
                     'params' => [
                         'maxTokens' => 1024,
-                        'messages' => [
-                            [
-                                'content' => 'Hello, world',
-                                'role' => 'user',
-                                'clearAt' => 'next_user_message',
-                                'outputConfig' => ['effort' => 'low'],
-                            ],
-                        ],
+                        'messages' => [['content' => 'Hello, world', 'role' => 'user']],
                         'model' => Model::CLAUDE_OPUS_5_5,
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                         'compaction' => [
@@ -145,7 +138,6 @@ final class BatchesTest extends TestCase
                                 ],
                             ],
                         ],
-                        'temperature' => 1,
                         'thinking' => [
                             'type' => 'adaptive',
                             'blockBinding' => [
@@ -174,8 +166,6 @@ final class BatchesTest extends TestCase
                                 'type' => 'custom',
                             ],
                         ],
-                        'topK' => 5,
-                        'topP' => 0.7,
                     ],
                 ],
             ],

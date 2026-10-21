@@ -12,6 +12,7 @@ use Anthropic\Beta\Messages\BetaStopReason;
 use Anthropic\Beta\Messages\BetaToolUseBlock;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion;
 use Anthropic\Lib\Helpers\StainlessHelperHeader;
 use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\Messages\Model;
@@ -26,6 +27,7 @@ use OpenTelemetry\Context\Context;
  * the tool execution loop. The loop continues until the model stops requesting
  * tools or max_iterations is reached.
  *
+ * @phpstan-import-type BetaMessageParamVariants from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  *
@@ -212,7 +214,7 @@ final class BetaToolRunner implements \IteratorAggregate
      * Like setMessagesParams(), calling this during iteration signals manual
      * history management for that turn.
      *
-     * @param array<string, mixed>|BetaMessageParam|BetaMessage ...$messages
+     * @param array<string, mixed>|BetaMessageParamVariants|BetaMessage ...$messages
      */
     public function pushMessages(array|BaseModel ...$messages): void
     {
@@ -841,7 +843,7 @@ final class BetaToolRunner implements \IteratorAggregate
         $available = array_fill_keys(array_keys($this->runnableToolsByName), true);
 
         foreach ([...$this->messages, ['role' => 'system', 'content' => $this->pendingToolChanges]] as $message) {
-            $message = self::toArray($message);
+            $message = Conversion::dump(BetaMessageParam::class, value: $message);
             if (!is_array($message)) {
                 continue;
             }

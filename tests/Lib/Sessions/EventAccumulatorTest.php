@@ -38,8 +38,7 @@ final class EventAccumulatorTest extends TestCase
     public function eventStartForThinkingPreviewReturnsAccumulatedUnchanged(): void
     {
         $start = BetaManagedAgentsStartEvent::with(
-            event: BetaManagedAgentsAgentThinkingPreview::with(id: 'evt_1', type: 'agent.thinking'),
-            type: 'event_start',
+            event: BetaManagedAgentsAgentThinkingPreview::with(id: 'evt_1'),
         );
 
         self::assertNull(EventAccumulator::accumulate(null, $start));
@@ -179,8 +178,7 @@ final class EventAccumulatorTest extends TestCase
     {
         $final = self::finalMessage('evt_1', 'complete');
         $start = BetaManagedAgentsStartEvent::with(
-            event: BetaManagedAgentsAgentMessagePreview::with(id: 'evt_1', type: 'agent.message'),
-            type: 'event_start',
+            event: BetaManagedAgentsAgentMessagePreview::with(id: 'evt_1'),
         );
 
         self::assertSame($final, EventAccumulator::accumulate($final, $start));
@@ -211,7 +209,7 @@ final class EventAccumulatorTest extends TestCase
     #[Test]
     public function unknownFragmentTypeOnExistingIndexIsNoOp(): void
     {
-        $block = ManagedAgentsTextBlock::with(text: 'kept', type: 'text');
+        $block = ManagedAgentsTextBlock::with(text: 'kept');
         $block['type'] = 'tool_use'; // a future, non-text block type
         $msg = self::seed('evt_1')->withContent([$block]);
 
@@ -226,7 +224,7 @@ final class EventAccumulatorTest extends TestCase
     #[Test]
     public function redactedBlockOnExistingIndexIsNoOp(): void
     {
-        $msg = self::seed('evt_1')->withContent([ManagedAgentsRedactedBlock::with(type: 'redacted')]);
+        $msg = self::seed('evt_1')->withContent([ManagedAgentsRedactedBlock::with()]);
 
         $next = EventAccumulator::accumulate($msg, self::delta('evt_1', 'ignored', 0));
 
@@ -236,8 +234,7 @@ final class EventAccumulatorTest extends TestCase
     private static function seed(string $eventID): ManagedAgentsAgentMessageEvent
     {
         $msg = EventAccumulator::accumulate(null, BetaManagedAgentsStartEvent::with(
-            event: BetaManagedAgentsAgentMessagePreview::with(id: $eventID, type: 'agent.message'),
-            type: 'event_start',
+            event: BetaManagedAgentsAgentMessagePreview::with(id: $eventID),
         ));
         self::assertNotNull($msg);
 
@@ -258,12 +255,10 @@ final class EventAccumulatorTest extends TestCase
     {
         return BetaManagedAgentsDeltaEvent::with(
             delta: BetaManagedAgentsDeltaContent::with(
-                content: ManagedAgentsTextBlock::with(text: $text, type: 'text'),
-                type: 'content_delta',
+                content: ManagedAgentsTextBlock::with(text: $text),
                 index: $index,
             ),
             eventID: $eventID,
-            type: 'event_delta',
         );
     }
 
@@ -271,9 +266,8 @@ final class EventAccumulatorTest extends TestCase
     {
         return ManagedAgentsAgentMessageEvent::with(
             id: $eventID,
-            content: [ManagedAgentsTextBlock::with(text: $text, type: 'text')],
+            content: [ManagedAgentsTextBlock::with(text: $text)],
             processedAt: new \DateTimeImmutable('2024-01-01T00:00:00Z'),
-            type: 'agent.message',
         );
     }
 

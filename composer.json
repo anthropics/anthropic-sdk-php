@@ -1,6 +1,6 @@
 {
   "$schema": "https://getcomposer.org/schema.json",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "autoload": {
     "files": [
       "src/Version.php"

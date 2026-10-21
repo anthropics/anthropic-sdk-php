@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEventParams\Content;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEventParams\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Parameters for sending a user message to the session.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ContentVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEventParams\Content
  *
  * @phpstan-type ManagedAgentsUserMessageEventParamsShape = array{
- *   content: list<ContentShape>, type: Type|value-of<Type>
+ *   content: list<ContentShape>, type: 'user.message'
  * }
  */
 final class ManagedAgentsUserMessageEventParams implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsUserMessageEventParamsShape> */
     use SdkModel;
+
+    /** @var 'user.message' $type */
+    #[Required(type: new ConstantOf('user.message'))]
+    public string $type = 'user.message';
 
     /**
      * Array of content blocks for the user message.
@@ -33,22 +37,18 @@ final class ManagedAgentsUserMessageEventParams implements BaseModel
     #[Required(list: Content::class)]
     public array $content;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsUserMessageEventParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsUserMessageEventParams::with(content: ..., type: ...)
+     * ManagedAgentsUserMessageEventParams::with(content: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserMessageEventParams())->withContent(...)->withType(...)
+     * (new ManagedAgentsUserMessageEventParams())->withContent(...)
      * ```
      */
     public function __construct()
@@ -62,14 +62,12 @@ final class ManagedAgentsUserMessageEventParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ContentShape> $content
-     * @param Type|value-of<Type> $type
      */
-    public static function with(array $content, Type|string $type): self
+    public static function with(array $content): self
     {
         $self = new self;
 
         $self['content'] = $content;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -88,9 +86,9 @@ final class ManagedAgentsUserMessageEventParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.message' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

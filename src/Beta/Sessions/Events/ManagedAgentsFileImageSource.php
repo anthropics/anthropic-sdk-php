@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsFileImageSource\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Image referenced by file ID.
  *
  * @phpstan-type ManagedAgentsFileImageSourceShape = array{
- *   fileID: string, type: Type|value-of<Type>
+ *   fileID: string, type: 'file'
  * }
  */
 final class ManagedAgentsFileImageSource implements BaseModel
@@ -21,28 +21,28 @@ final class ManagedAgentsFileImageSource implements BaseModel
     /** @use SdkModel<ManagedAgentsFileImageSourceShape> */
     use SdkModel;
 
+    /** @var 'file' $type */
+    #[Required(type: new ConstantOf('file'))]
+    public string $type = 'file';
+
     /**
      * ID of a previously uploaded file.
      */
     #[Required('file_id')]
     public string $fileID;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsFileImageSource()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsFileImageSource::with(fileID: ..., type: ...)
+     * ManagedAgentsFileImageSource::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsFileImageSource())->withFileID(...)->withType(...)
+     * (new ManagedAgentsFileImageSource())->withFileID(...)
      * ```
      */
     public function __construct()
@@ -54,15 +54,12 @@ final class ManagedAgentsFileImageSource implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $fileID, Type|string $type): self
+    public static function with(string $fileID): self
     {
         $self = new self;
 
         $self['fileID'] = $fileID;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +76,9 @@ final class ManagedAgentsFileImageSource implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'file' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

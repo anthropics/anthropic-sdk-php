@@ -15,7 +15,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+ * The rate-limit group this entry's limits apply to.
  *
  * @phpstan-import-type OrganizationRateLimitModelGroupShape from \Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitModelGroup
  * @phpstan-import-type OrganizationRateLimitBatchGroupShape from \Anthropic\Beta\Organization\RateLimits\OrganizationRateLimitBatchGroup

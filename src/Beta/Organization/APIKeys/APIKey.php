@@ -30,7 +30,6 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   scope: ScopeShape,
  *   status: Status|value-of<Status>,
  *   type: 'api_key',
- *   workspaceID: string|null,
  * }
  */
 final class APIKey implements BaseModel
@@ -111,14 +110,6 @@ final class APIKey implements BaseModel
     public string $status;
 
     /**
-     * @deprecated Use `scope` instead. `workspace_id` is `null` both for an API key in the default Workspace and for a principal-bound API key that has no Workspace.
-     *
-     * Deprecated: use `scope` instead. ID of the Workspace associated with the API key, or `null` if the API key belongs to the default Workspace. Also `null` for a principal-bound API key that has no Workspace; `scope` tells the two apart.
-     */
-    #[Required('workspace_id')]
-    public ?string $workspaceID;
-
-    /**
      * `new APIKey()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -133,7 +124,6 @@ final class APIKey implements BaseModel
      *   principal: ...,
      *   scope: ...,
      *   status: ...,
-     *   workspaceID: ...,
      * )
      * ```
      *
@@ -150,7 +140,6 @@ final class APIKey implements BaseModel
      *   ->withPrincipal(...)
      *   ->withScope(...)
      *   ->withStatus(...)
-     *   ->withWorkspaceID(...)
      * ```
      */
     public function __construct()
@@ -178,7 +167,6 @@ final class APIKey implements BaseModel
         APIKeyUserActor|array|APIKeyServiceAccountActor|null $principal,
         APIKeyOrganizationScope|array|APIKeyWorkspaceScope $scope,
         Status|string $status,
-        ?string $workspaceID,
     ): self {
         $self = new self;
 
@@ -191,7 +179,6 @@ final class APIKey implements BaseModel
         $self['principal'] = $principal;
         $self['scope'] = $scope;
         $self['status'] = $status;
-        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }
@@ -318,17 +305,6 @@ final class APIKey implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
-
-        return $self;
-    }
-
-    /**
-     * Deprecated: use `scope` instead. ID of the Workspace associated with the API key, or `null` if the API key belongs to the default Workspace. Also `null` for a principal-bound API key that has no Workspace; `scope` tells the two apart.
-     */
-    public function withWorkspaceID(?string $workspaceID): self
-    {
-        $self = clone $this;
-        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

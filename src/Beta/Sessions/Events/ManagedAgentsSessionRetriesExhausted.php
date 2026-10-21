@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionRetriesExhausted\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The turn ended because repeated errors exhausted the retry budget or an error escalated to `retry_status: 'exhausted'`.
  *
  * @phpstan-type ManagedAgentsSessionRetriesExhaustedShape = array{
- *   type: Type|value-of<Type>
+ *   type: 'retries_exhausted'
  * }
  */
 final class ManagedAgentsSessionRetriesExhausted implements BaseModel
@@ -21,24 +21,10 @@ final class ManagedAgentsSessionRetriesExhausted implements BaseModel
     /** @use SdkModel<ManagedAgentsSessionRetriesExhaustedShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'retries_exhausted' $type */
+    #[Required(type: new ConstantOf('retries_exhausted'))]
+    public string $type = 'retries_exhausted';
 
-    /**
-     * `new ManagedAgentsSessionRetriesExhausted()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * ManagedAgentsSessionRetriesExhausted::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new ManagedAgentsSessionRetriesExhausted())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +34,16 @@ final class ManagedAgentsSessionRetriesExhausted implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'retries_exhausted' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

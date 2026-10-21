@@ -3,6 +3,7 @@
 namespace Tests\Bedrock;
 
 use Anthropic\Bedrock\MantleClient;
+use Anthropic\Client;
 use Anthropic\Core\Util;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
@@ -374,23 +375,22 @@ class MantleClientTest extends TestCase
         $this->assertFalse(property_exists($client, 'beta'));
     }
 
-    // ── API key env var doesn't leak into SigV4 ─────────────────────
+    // ── ANTHROPIC_API_KEY env var doesn't leak ──────────────────────
 
     public function testAnthropicApiKeyEnvDoesNotLeak(): void
     {
         putenv('ANTHROPIC_API_KEY=leaked-key');
 
         $client = new MantleClient(
-            awsAccessKey: 'AKID',
-            awsSecretAccessKey: 'secret',
             awsRegion: 'us-west-2',
+            skipAuth: true,
             requestOptions: ['transporter' => $this->transporter],
         );
 
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('', $request->getHeaderLine('X-Api-Key'));
+        $this->assertFalse($request->hasHeader('Authorization'));
     }
 
     // ── Request path ────────────────────────────────────────────────
@@ -403,6 +403,15 @@ class MantleClientTest extends TestCase
         $request = $this->getLastRequest();
 
         $this->assertSame('/anthropic/v1/messages', $request->getUri()->getPath());
+    }
+
+    public function testSendsTheFirstPartyClientsVersion(): void
+    {
+        $client = $this->makeClient();
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $this->assertSame(Client::ANTHROPIC_API_VERSION, $this->getLastRequest()->getHeaderLine('anthropic-version'));
     }
 
     // ── Request body ────────────────────────────────────────────────

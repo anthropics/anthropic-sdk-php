@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\DeploymentRuns;
 
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsEnvironmentArchivedRunError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The deployment's environment was archived.
  *
  * @phpstan-type BetaManagedAgentsEnvironmentArchivedRunErrorShape = array{
- *   message: string, type: Type|value-of<Type>
+ *   message: string, type: 'environment_archived_error'
  * }
  */
 final class BetaManagedAgentsEnvironmentArchivedRunError implements BaseModel
@@ -21,30 +21,28 @@ final class BetaManagedAgentsEnvironmentArchivedRunError implements BaseModel
     /** @use SdkModel<BetaManagedAgentsEnvironmentArchivedRunErrorShape> */
     use SdkModel;
 
+    /** @var 'environment_archived_error' $type */
+    #[Required(type: new ConstantOf('environment_archived_error'))]
+    public string $type = 'environment_archived_error';
+
     /**
      * Human-readable error description.
      */
     #[Required]
     public string $message;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsEnvironmentArchivedRunError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsEnvironmentArchivedRunError::with(message: ..., type: ...)
+     * BetaManagedAgentsEnvironmentArchivedRunError::with(message: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsEnvironmentArchivedRunError())
-     *   ->withMessage(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsEnvironmentArchivedRunError())->withMessage(...)
      * ```
      */
     public function __construct()
@@ -56,15 +54,12 @@ final class BetaManagedAgentsEnvironmentArchivedRunError implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $message, Type|string $type): self
+    public static function with(string $message): self
     {
         $self = new self;
 
         $self['message'] = $message;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -81,9 +76,9 @@ final class BetaManagedAgentsEnvironmentArchivedRunError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'environment_archived_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

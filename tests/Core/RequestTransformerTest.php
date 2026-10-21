@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Core;
 
 use Anthropic\Bedrock\BedrockMiddleware;
+use Anthropic\Client;
 use Anthropic\Core\RequestTransformer;
 use Anthropic\Middleware;
 use Anthropic\Vertex\VertexMiddleware;
@@ -123,26 +124,26 @@ final class RequestTransformerTest extends TestCase
         yield 'bedrock messages' => [
             $bedrock,
             '/v1/messages',
-            '{"max_tokens":1,'.self::EMPTY_OBJECTS.',"anthropic_version":"bedrock-2023-05-31"}',
+            '{"max_tokens":1,'.self::EMPTY_OBJECTS.',"anthropic_version":"'.Client::ANTHROPIC_API_VERSION.'"}',
         ];
 
         yield 'bedrock count_tokens' => [
             $bedrock,
             '/v1/messages/count_tokens',
-            '{"max_tokens":1024,'.self::EMPTY_OBJECTS.',"anthropic_version":"bedrock-2023-05-31"}',
+            '{"max_tokens":1024,'.self::EMPTY_OBJECTS.',"anthropic_version":"'.Client::ANTHROPIC_API_VERSION.'"}',
             true,
         ];
 
         yield 'vertex messages' => [
             $vertex,
             '/v1/messages',
-            '{"max_tokens":1,'.self::EMPTY_OBJECTS.',"anthropic_version":"vertex-2023-10-16"}',
+            '{"max_tokens":1,'.self::EMPTY_OBJECTS.',"anthropic_version":"'.Client::ANTHROPIC_API_VERSION.'"}',
         ];
 
         yield 'vertex count_tokens' => [
             $vertex,
             '/v1/messages/count_tokens',
-            '{"model":"m","max_tokens":1,'.self::EMPTY_OBJECTS.',"anthropic_version":"vertex-2023-10-16"}',
+            '{"model":"m","max_tokens":1,'.self::EMPTY_OBJECTS.',"anthropic_version":"'.Client::ANTHROPIC_API_VERSION.'"}',
         ];
     }
 

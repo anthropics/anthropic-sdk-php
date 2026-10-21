@@ -73,17 +73,14 @@ final class Auth implements ConverterSource
     ): ManagedAgentsMCPOAuthUpdateParams|ManagedAgentsStaticBearerUpdateParams|ManagedAgentsEnvironmentVariableUpdateParams {
         return match ($type) {
             Type::MCP_OAUTH, 'mcp_oauth' => ManagedAgentsMCPOAuthUpdateParams::with(
-                type: 'mcp_oauth',
                 accessToken: $accessToken,
                 expiresAt: $expiresAt,
-                refresh: $refresh,
+                refresh: $refresh
             ),
             Type::STATIC_BEARER, 'static_bearer' => ManagedAgentsStaticBearerUpdateParams::with(
-                type: 'static_bearer',
                 token: $token
             ),
             Type::ENVIRONMENT_VARIABLE, 'environment_variable' => ManagedAgentsEnvironmentVariableUpdateParams::with(
-                type: 'environment_variable',
                 injectionLocation: $injectionLocation,
                 networking: $networking,
                 secretValue: $secretValue,

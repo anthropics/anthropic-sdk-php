@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\DeploymentRuns;
 
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsSelfHostedResourcesUnsupportedRunError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The deployment configures resources, but its environment is self-hosted and cannot mount them.
  *
  * @phpstan-type BetaManagedAgentsSelfHostedResourcesUnsupportedRunErrorShape = array{
- *   message: string, type: Type|value-of<Type>
+ *   message: string, type: 'self_hosted_resources_unsupported_error'
  * }
  */
 final class BetaManagedAgentsSelfHostedResourcesUnsupportedRunError implements BaseModel
@@ -21,24 +21,22 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedRunError implements B
     /** @use SdkModel<BetaManagedAgentsSelfHostedResourcesUnsupportedRunErrorShape> */
     use SdkModel;
 
+    /** @var 'self_hosted_resources_unsupported_error' $type */
+    #[Required(type: new ConstantOf('self_hosted_resources_unsupported_error'))]
+    public string $type = 'self_hosted_resources_unsupported_error';
+
     /**
      * Human-readable error description.
      */
     #[Required]
     public string $message;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsSelfHostedResourcesUnsupportedRunError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsSelfHostedResourcesUnsupportedRunError::with(
-     *   message: ..., type: ...
-     * )
+     * BetaManagedAgentsSelfHostedResourcesUnsupportedRunError::with(message: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -46,7 +44,6 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedRunError implements B
      * ```
      * (new BetaManagedAgentsSelfHostedResourcesUnsupportedRunError())
      *   ->withMessage(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -58,15 +55,12 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedRunError implements B
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $message, Type|string $type): self
+    public static function with(string $message): self
     {
         $self = new self;
 
         $self['message'] = $message;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -83,9 +77,9 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedRunError implements B
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'self_hosted_resources_unsupported_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

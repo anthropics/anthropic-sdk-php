@@ -14,6 +14,8 @@ enum ScopeType: string
 
     case SEAT_TIER = 'seat_tier';
 
+    case USAGE_TIER = 'usage_tier';
+
     case USER = 'user';
 
     case WORKSPACE = 'workspace';

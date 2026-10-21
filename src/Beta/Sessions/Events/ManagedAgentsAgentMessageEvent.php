@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Content;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentMessageEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An agent response event in the session conversation.
@@ -20,13 +20,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   content: list<ContentShape>,
  *   processedAt: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'agent.message',
  * }
  */
 final class ManagedAgentsAgentMessageEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsAgentMessageEventShape> */
     use SdkModel;
+
+    /** @var 'agent.message' $type */
+    #[Required(type: new ConstantOf('agent.message'))]
+    public string $type = 'agent.message';
 
     /**
      * Unique identifier for this event.
@@ -48,18 +52,12 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsAgentMessageEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsAgentMessageEvent::with(
-     *   id: ..., content: ..., processedAt: ..., type: ...
-     * )
+     * ManagedAgentsAgentMessageEvent::with(id: ..., content: ..., processedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -69,7 +67,6 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
      *   ->withID(...)
      *   ->withContent(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -83,20 +80,17 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ContentShape> $content
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         array $content,
-        \DateTimeInterface $processedAt,
-        Type|string $type,
+        \DateTimeInterface $processedAt
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['content'] = $content;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -137,9 +131,9 @@ final class ManagedAgentsAgentMessageEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent.message' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

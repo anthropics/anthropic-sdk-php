@@ -59,16 +59,13 @@ final class Source implements ConverterSource
     ): ManagedAgentsBase64ImageSource|ManagedAgentsURLImageSource|ManagedAgentsFileImageSource {
         return match ($type) {
             Type::BASE64, 'base64' => ManagedAgentsBase64ImageSource::with(
-                type: 'base64',
                 data: $data ?? throw new \ArgumentCountError('$data is required'),
                 mediaType: $mediaType ?? throw new \ArgumentCountError('$mediaType is required'),
             ),
             Type::URL, 'url' => ManagedAgentsURLImageSource::with(
-                type: 'url',
-                url: $url ?? throw new \ArgumentCountError('$url is required'),
+                url: $url ?? throw new \ArgumentCountError('$url is required')
             ),
             Type::FILE, 'file' => ManagedAgentsFileImageSource::with(
-                type: 'file',
                 fileID: $fileID ?? throw new \ArgumentCountError('$fileID is required'),
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))

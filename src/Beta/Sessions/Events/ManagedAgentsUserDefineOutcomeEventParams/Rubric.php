@@ -50,15 +50,13 @@ final class Rubric implements ConverterSource
     public static function with(
         Type|string $type,
         ?string $fileID = null,
-        ?string $content = null,
+        ?string $content = null
     ): ManagedAgentsFileRubricParams|ManagedAgentsTextRubricParams {
         return match ($type) {
             Type::FILE, 'file' => ManagedAgentsFileRubricParams::with(
-                type: 'file',
                 fileID: $fileID ?? throw new \ArgumentCountError('$fileID is required'),
             ),
             Type::TEXT, 'text' => ManagedAgentsTextRubricParams::with(
-                type: 'text',
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))

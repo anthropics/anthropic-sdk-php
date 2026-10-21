@@ -51,11 +51,9 @@ final class TokenEndpointAuth implements ConverterSource
     ): ManagedAgentsTokenEndpointAuthBasicUpdateParam|ManagedAgentsTokenEndpointAuthPostUpdateParam {
         return match ($type) {
             Type::CLIENT_SECRET_BASIC, 'client_secret_basic' => ManagedAgentsTokenEndpointAuthBasicUpdateParam::with(
-                type: 'client_secret_basic',
                 clientSecret: $clientSecret
             ),
             Type::CLIENT_SECRET_POST, 'client_secret_post' => ManagedAgentsTokenEndpointAuthPostUpdateParam::with(
-                type: 'client_secret_post',
                 clientSecret: $clientSecret
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))

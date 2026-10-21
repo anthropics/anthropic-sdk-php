@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\UserProfiles;
 
 use Anthropic\Beta\UserProfiles\BetaUserProfile\AccessType;
-use Anthropic\Beta\UserProfiles\BetaUserProfile\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A record of an entity that the platform serves through the API, such as an end-user of the platform's product or a company that the platform resells Claude access to.
@@ -25,7 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   metadata: array<string,string>,
  *   name: string|null,
  *   trustGrants: array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape>,
- *   type: Type|value-of<Type>,
+ *   type: 'user_profile',
  *   updatedAt: \DateTimeInterface,
  *   accessType?: null|AccessType|value-of<AccessType>,
  *   externalID?: string|null,
@@ -37,6 +37,14 @@ final class BetaUserProfile implements BaseModel
 {
     /** @use SdkModel<BetaUserProfileShape> */
     use SdkModel;
+
+    /**
+     * Object type. Always `user_profile`.
+     *
+     * @var 'user_profile' $type
+     */
+    #[Required(type: new ConstantOf('user_profile'))]
+    public string $type = 'user_profile';
 
     /**
      * Unique identifier for this user profile, prefixed `uprof_`.
@@ -71,14 +79,6 @@ final class BetaUserProfile implements BaseModel
      */
     #[Required('trust_grants', map: BetaUserProfileTrustGrant::class)]
     public array $trustGrants;
-
-    /**
-     * Object type. Always `user_profile`.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * When this user profile was last modified, in RFC 3339 format. It normally also updates shortly after Anthropic gives the profile an approval or withdraws one. Other changes to the statuses that Anthropic reports do not always update it, so read the status itself rather than watching this timestamp.
@@ -123,7 +123,6 @@ final class BetaUserProfile implements BaseModel
      *   metadata: ...,
      *   name: ...,
      *   trustGrants: ...,
-     *   type: ...,
      *   updatedAt: ...,
      * )
      * ```
@@ -137,7 +136,6 @@ final class BetaUserProfile implements BaseModel
      *   ->withMetadata(...)
      *   ->withName(...)
      *   ->withTrustGrants(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -153,7 +151,6 @@ final class BetaUserProfile implements BaseModel
      *
      * @param array<string,string> $metadata
      * @param array<string,BetaUserProfileTrustGrant|BetaUserProfileTrustGrantShape> $trustGrants
-     * @param Type|value-of<Type> $type
      * @param AccessType|value-of<AccessType>|null $accessType
      * @param BetaUserProfileExternalUserDetails|BetaUserProfileExternalUserDetailsShape|null $externalUserDetails
      */
@@ -163,7 +160,6 @@ final class BetaUserProfile implements BaseModel
         array $metadata,
         ?string $name,
         array $trustGrants,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
         AccessType|string|null $accessType = null,
         ?string $externalID = null,
@@ -177,7 +173,6 @@ final class BetaUserProfile implements BaseModel
         $self['metadata'] = $metadata;
         $self['name'] = $name;
         $self['trustGrants'] = $trustGrants;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
 
         null !== $accessType && $self['accessType'] = $accessType;
@@ -250,9 +245,9 @@ final class BetaUserProfile implements BaseModel
     /**
      * Object type. Always `user_profile`.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'user_profile' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

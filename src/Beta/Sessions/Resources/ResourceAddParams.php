@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Resources;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Sessions\Resources\ResourceAddParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Add Session Resource.
@@ -18,8 +18,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Sessions\ResourcesService::add()
  *
  * @phpstan-type ResourceAddParamsShape = array{
+ *   type: 'file',
  *   fileID: string,
- *   type: Type|value-of<Type>,
  *   mountPath?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  *   workspaceID?: string|null,
@@ -31,15 +31,15 @@ final class ResourceAddParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
+    /** @var 'file' $type */
+    #[Required(type: new ConstantOf('file'))]
+    public string $type = 'file';
+
     /**
      * ID of a previously uploaded file.
      */
     #[Required('file_id')]
     public string $fileID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Mount path in the container. Defaults to `/mnt/session/uploads/<file_id>`.
@@ -68,13 +68,13 @@ final class ResourceAddParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ResourceAddParams::with(fileID: ..., type: ...)
+     * ResourceAddParams::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ResourceAddParams())->withFileID(...)->withType(...)
+     * (new ResourceAddParams())->withFileID(...)
      * ```
      */
     public function __construct()
@@ -87,12 +87,10 @@ final class ResourceAddParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         string $fileID,
-        Type|string $type,
         ?string $mountPath = null,
         ?array $betas = null,
         ?string $workspaceID = null,
@@ -100,11 +98,21 @@ final class ResourceAddParams implements BaseModel
         $self = new self;
 
         $self['fileID'] = $fileID;
-        $self['type'] = $type;
 
         null !== $mountPath && $self['mountPath'] = $mountPath;
         null !== $betas && $self['betas'] = $betas;
         null !== $workspaceID && $self['workspaceID'] = $workspaceID;
+
+        return $self;
+    }
+
+    /**
+     * @param 'file' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
 
         return $self;
     }
@@ -116,17 +124,6 @@ final class ResourceAddParams implements BaseModel
     {
         $self = clone $this;
         $self['fileID'] = $fileID;
-
-        return $self;
-    }
-
-    /**
-     * @param Type|value-of<Type> $type
-     */
-    public function withType(Type|string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
 
         return $self;
     }

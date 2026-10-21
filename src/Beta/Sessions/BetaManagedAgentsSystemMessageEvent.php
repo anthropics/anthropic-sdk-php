@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Sessions\BetaManagedAgentsSystemMessageEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A mid-conversation system message event. Carries system-role content that is appended to the session as a `role: "system"` turn.
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaManagedAgentsSystemMessageEventShape = array{
  *   id: string,
  *   content: list<BetaManagedAgentsSystemContentBlock|BetaManagedAgentsSystemContentBlockShape>,
- *   type: Type|value-of<Type>,
+ *   type: 'system.message',
  *   processedAt?: \DateTimeInterface|null,
  * }
  */
@@ -26,6 +26,10 @@ final class BetaManagedAgentsSystemMessageEvent implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsSystemMessageEventShape> */
     use SdkModel;
+
+    /** @var 'system.message' $type */
+    #[Required(type: new ConstantOf('system.message'))]
+    public string $type = 'system.message';
 
     /**
      * Unique identifier for this event.
@@ -41,10 +45,6 @@ final class BetaManagedAgentsSystemMessageEvent implements BaseModel
     #[Required(list: BetaManagedAgentsSystemContentBlock::class)]
     public array $content;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Timestamp when this system message was processed.
      */
@@ -56,16 +56,13 @@ final class BetaManagedAgentsSystemMessageEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsSystemMessageEvent::with(id: ..., content: ..., type: ...)
+     * BetaManagedAgentsSystemMessageEvent::with(id: ..., content: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSystemMessageEvent())
-     *   ->withID(...)
-     *   ->withContent(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsSystemMessageEvent())->withID(...)->withContent(...)
      * ```
      */
     public function __construct()
@@ -79,19 +76,16 @@ final class BetaManagedAgentsSystemMessageEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaManagedAgentsSystemContentBlock|BetaManagedAgentsSystemContentBlockShape> $content
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         array $content,
-        Type|string $type,
-        ?\DateTimeInterface $processedAt = null,
+        ?\DateTimeInterface $processedAt = null
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['content'] = $content;
-        $self['type'] = $type;
 
         null !== $processedAt && $self['processedAt'] = $processedAt;
 
@@ -123,9 +117,9 @@ final class BetaManagedAgentsSystemMessageEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'system.message' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

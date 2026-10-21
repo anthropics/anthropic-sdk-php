@@ -5,6 +5,7 @@ namespace Tests\Core;
 use Anthropic\Aws\Client as AwsClient;
 use Anthropic\Bedrock\BedrockMiddleware;
 use Anthropic\Bedrock\Client as BedrockClient;
+use Anthropic\Client;
 use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Messages\RawMessageDeltaEvent;
@@ -79,7 +80,7 @@ final class MiddlewareThirdPartyTest extends TestCase
         $this->assertSame('/model/anthropic.claude-haiku-4-5-v1:0/invoke', $sent->getUri()->getPath());
         $this->assertIsArray($sentBody);
         $this->assertArrayNotHasKey('model', $sentBody);
-        $this->assertSame('bedrock-2023-05-31', $sentBody['anthropic_version'] ?? null);
+        $this->assertSame(Client::ANTHROPIC_API_VERSION, $sentBody['anthropic_version'] ?? null);
     }
 
     #[Test]
@@ -124,7 +125,7 @@ final class MiddlewareThirdPartyTest extends TestCase
         $this->assertStringEndsWith('/claude-haiku-4-5:rawPredict', $sent->getUri()->getPath());
         $this->assertIsArray($sentBody);
         $this->assertArrayNotHasKey('model', $sentBody);
-        $this->assertSame('vertex-2023-10-16', $sentBody['anthropic_version'] ?? null);
+        $this->assertSame(Client::ANTHROPIC_API_VERSION, $sentBody['anthropic_version'] ?? null);
     }
 
     #[Test]
@@ -433,7 +434,7 @@ final class MiddlewareThirdPartyTest extends TestCase
         $this->assertIsString($inner);
         $decoded = json_decode($inner, true);
         $this->assertIsArray($decoded);
-        $this->assertSame('bedrock-2023-05-31', $decoded['anthropic_version'] ?? null);
+        $this->assertSame(Client::ANTHROPIC_API_VERSION, $decoded['anthropic_version'] ?? null);
         $this->assertSame(1024, $decoded['max_tokens'] ?? null);
         $this->assertSame([['role' => 'user', 'content' => 'hi']], $decoded['messages'] ?? null);
         $this->assertArrayNotHasKey('model', $decoded);
@@ -464,7 +465,7 @@ final class MiddlewareThirdPartyTest extends TestCase
         $body = json_decode((string) $sent->getBody(), true);
         $this->assertIsArray($body);
         $this->assertSame('claude-3-7-sonnet@20250219', $body['model'] ?? null);
-        $this->assertSame('vertex-2023-10-16', $body['anthropic_version'] ?? null);
+        $this->assertSame(Client::ANTHROPIC_API_VERSION, $body['anthropic_version'] ?? null);
     }
 
     #[Test]
@@ -493,7 +494,7 @@ final class MiddlewareThirdPartyTest extends TestCase
         $this->assertSame('foo-2025-01-01', $sent->getHeaderLine('anthropic-beta'));
         $body = json_decode((string) $sent->getBody(), true);
         $this->assertIsArray($body);
-        $this->assertSame('vertex-2023-10-16', $body['anthropic_version'] ?? null);
+        $this->assertSame(Client::ANTHROPIC_API_VERSION, $body['anthropic_version'] ?? null);
         $this->assertArrayNotHasKey('model', $body);
     }
 
@@ -549,11 +550,11 @@ final class MiddlewareThirdPartyTest extends TestCase
             messages: [],
             model: 'm:0',
             userProfileID: 'upid-123',
-            requestOptions: ['extraHeaders' => ['anthropic-workspace-id' => 'ws-456']],
+            requestOptions: ['extraHeaders' => ['anthropic-version' => '2030-01-01', 'anthropic-workspace-id' => 'ws-456']],
         );
 
         $sent = $this->lastRequest($transporter);
-        foreach (['anthropic-version', 'anthropic-beta', 'anthropic-user-profile-id', 'anthropic-workspace-id'] as $h) {
+        foreach (['anthropic-beta', 'anthropic-user-profile-id', 'anthropic-version', 'anthropic-workspace-id'] as $h) {
             $this->assertFalse($sent->hasHeader($h), "expected {$h} to be stripped before reaching Bedrock");
         }
     }
@@ -587,7 +588,7 @@ final class MiddlewareThirdPartyTest extends TestCase
      */
     public static function vertexUserProfileCalls(): iterable
     {
-        $requestOptions = ['extraHeaders' => ['anthropic-workspace-id' => 'ws-456']];
+        $requestOptions = ['extraHeaders' => ['anthropic-version' => '2030-01-01', 'anthropic-workspace-id' => 'ws-456']];
 
         yield 'create' => [static fn (VertexClient $client) => $client->messages->create(
             maxTokens: 1,
@@ -606,6 +607,28 @@ final class MiddlewareThirdPartyTest extends TestCase
     }
 
     #[Test]
+    public function testVertexKeepsAnthropicVersionTheCallerPutsInTheBody(): void
+    {
+        $transporter = $this->transporter();
+        $client = VertexClient::withCredentials(self::fakeCreds('fake-token'),
+            location: 'us-east5',
+            projectId: 'test-project',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $client->messages->create(
+            maxTokens: 1,
+            messages: [],
+            model: 'm@v',
+            requestOptions: ['extraBodyParams' => ['anthropic_version' => 'vertex-2023-10-16']],
+        );
+
+        $body = json_decode((string) $this->lastRequest($transporter)->getBody(), true);
+        $this->assertIsArray($body);
+        $this->assertSame('vertex-2023-10-16', $body['anthropic_version'] ?? null);
+    }
+
+    #[Test]
     public function testBedrockApiKeyAuthDoesNotOverwriteCallerAuthorization(): void
     {
         $transporter = $this->transporter();
@@ -619,6 +642,24 @@ final class MiddlewareThirdPartyTest extends TestCase
         );
 
         $this->assertSame('Bearer caller-wins', $this->lastRequest($transporter)->getHeaderLine('Authorization'));
+    }
+
+    #[Test]
+    public function testBedrockKeepsAnthropicVersionTheCallerPutsInTheBody(): void
+    {
+        $transporter = $this->transporter();
+        $client = BedrockClient::withApiKey('test-key', region: 'us-east-1', requestOptions: ['transporter' => $transporter]);
+
+        $client->messages->create(
+            maxTokens: 1,
+            messages: [],
+            model: 'm:0',
+            requestOptions: ['extraBodyParams' => ['anthropic_version' => '2000-01-01']],
+        );
+
+        $body = json_decode((string) $this->lastRequest($transporter)->getBody(), true);
+        $this->assertIsArray($body);
+        $this->assertSame('2000-01-01', $body['anthropic_version'] ?? null);
     }
 
     #[Test]
@@ -824,6 +865,17 @@ final class MiddlewareThirdPartyTest extends TestCase
             static fn (VertexClient|BedrockClient $client) => $client->beta->userProfiles->create(name: 'Example'),
             '/v1/user_profiles',
         ];
+    }
+
+    #[Test]
+    public function testBedrockTextCompletionsThrowsNotSupported(): void
+    {
+        $mw = new BedrockMiddleware(Psr17FactoryDiscovery::findStreamFactory(), static fn (RequestInterface $r): RequestInterface => $r);
+        $request = Psr17FactoryDiscovery::findRequestFactory()->createRequest('POST', 'https://h/v1/complete');
+
+        $this->expectException(AnthropicException::class);
+        $this->expectExceptionMessageMatches('/\/v1\/complete.*not available via Bedrock.*Anthropic\\\\Client/i');
+        $mw->handle($request, fn (RequestInterface $req): ResponseInterface => $this->response(200));
     }
 
     #[Test]

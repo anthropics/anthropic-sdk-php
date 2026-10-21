@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsCredentialValidation\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Result of live-probing a credential against its configured MCP server.
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   mcpProbe: null|ManagedAgentsMCPProbe|ManagedAgentsMCPProbeShape,
  *   refresh: null|ManagedAgentsRefreshObject|ManagedAgentsRefreshObjectShape,
  *   status: ManagedAgentsCredentialValidationStatus|value-of<ManagedAgentsCredentialValidationStatus>,
- *   type: Type|value-of<Type>,
+ *   type: 'vault_credential_validation',
  *   validatedAt: \DateTimeInterface,
  *   vaultID: string,
  * }
@@ -30,6 +30,10 @@ final class ManagedAgentsCredentialValidation implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsCredentialValidationShape> */
     use SdkModel;
+
+    /** @var 'vault_credential_validation' $type */
+    #[Required(type: new ConstantOf('vault_credential_validation'))]
+    public string $type = 'vault_credential_validation';
 
     /**
      * Unique identifier of the credential that was validated.
@@ -63,10 +67,6 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     #[Required(enum: ManagedAgentsCredentialValidationStatus::class)]
     public string $status;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * When the validation probe was performed.
      */
@@ -90,7 +90,6 @@ final class ManagedAgentsCredentialValidation implements BaseModel
      *   mcpProbe: ...,
      *   refresh: ...,
      *   status: ...,
-     *   type: ...,
      *   validatedAt: ...,
      *   vaultID: ...,
      * )
@@ -105,7 +104,6 @@ final class ManagedAgentsCredentialValidation implements BaseModel
      *   ->withMCPProbe(...)
      *   ->withRefresh(...)
      *   ->withStatus(...)
-     *   ->withType(...)
      *   ->withValidatedAt(...)
      *   ->withVaultID(...)
      * ```
@@ -123,7 +121,6 @@ final class ManagedAgentsCredentialValidation implements BaseModel
      * @param ManagedAgentsMCPProbe|ManagedAgentsMCPProbeShape|null $mcpProbe
      * @param ManagedAgentsRefreshObject|ManagedAgentsRefreshObjectShape|null $refresh
      * @param ManagedAgentsCredentialValidationStatus|value-of<ManagedAgentsCredentialValidationStatus> $status
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $credentialID,
@@ -131,7 +128,6 @@ final class ManagedAgentsCredentialValidation implements BaseModel
         ManagedAgentsMCPProbe|array|null $mcpProbe,
         ManagedAgentsRefreshObject|array|null $refresh,
         ManagedAgentsCredentialValidationStatus|string $status,
-        Type|string $type,
         \DateTimeInterface $validatedAt,
         string $vaultID,
     ): self {
@@ -142,7 +138,6 @@ final class ManagedAgentsCredentialValidation implements BaseModel
         $self['mcpProbe'] = $mcpProbe;
         $self['refresh'] = $refresh;
         $self['status'] = $status;
-        $self['type'] = $type;
         $self['validatedAt'] = $validatedAt;
         $self['vaultID'] = $vaultID;
 
@@ -214,9 +209,9 @@ final class ManagedAgentsCredentialValidation implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'vault_credential_validation' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

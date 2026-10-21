@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsErrorDeploymentPausedReason\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A scheduled fire recorded a failed run whose error auto-pauses the deployment.
@@ -16,14 +16,17 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type BetaManagedAgentsDeploymentPausedReasonErrorVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentPausedReasonError
  *
  * @phpstan-type BetaManagedAgentsErrorDeploymentPausedReasonShape = array{
- *   error: BetaManagedAgentsDeploymentPausedReasonErrorShape,
- *   type: Type|value-of<Type>,
+ *   error: BetaManagedAgentsDeploymentPausedReasonErrorShape, type: 'error'
  * }
  */
 final class BetaManagedAgentsErrorDeploymentPausedReason implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsErrorDeploymentPausedReasonShape> */
     use SdkModel;
+
+    /** @var 'error' $type */
+    #[Required(type: new ConstantOf('error'))]
+    public string $type = 'error';
 
     /**
      * The failed run's error.
@@ -33,24 +36,18 @@ final class BetaManagedAgentsErrorDeploymentPausedReason implements BaseModel
     #[Required(union: BetaManagedAgentsDeploymentPausedReasonError::class)]
     public BetaManagedAgentsEnvironmentArchivedDeploymentPausedReasonError|BetaManagedAgentsAgentArchivedDeploymentPausedReasonError|BetaManagedAgentsEnvironmentNotFoundDeploymentPausedReasonError|BetaManagedAgentsVaultNotFoundDeploymentPausedReasonError|BetaManagedAgentsFileNotFoundDeploymentPausedReasonError|BetaManagedAgentsSessionResourceNotFoundDeploymentPausedReasonError|BetaManagedAgentsWorkspaceArchivedDeploymentPausedReasonError|BetaManagedAgentsOrganizationDisabledDeploymentPausedReasonError|BetaManagedAgentsMemoryStoreArchivedDeploymentPausedReasonError|BetaManagedAgentsSkillNotFoundDeploymentPausedReasonError|BetaManagedAgentsVaultArchivedDeploymentPausedReasonError|BetaManagedAgentsUnknownDeploymentPausedReasonError|BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError|BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonError $error;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsErrorDeploymentPausedReason()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsErrorDeploymentPausedReason::with(error: ..., type: ...)
+     * BetaManagedAgentsErrorDeploymentPausedReason::with(error: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsErrorDeploymentPausedReason())
-     *   ->withError(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsErrorDeploymentPausedReason())->withError(...)
      * ```
      */
     public function __construct()
@@ -64,16 +61,13 @@ final class BetaManagedAgentsErrorDeploymentPausedReason implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BetaManagedAgentsDeploymentPausedReasonErrorShape $error
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         BetaManagedAgentsEnvironmentArchivedDeploymentPausedReasonError|array|BetaManagedAgentsAgentArchivedDeploymentPausedReasonError|BetaManagedAgentsEnvironmentNotFoundDeploymentPausedReasonError|BetaManagedAgentsVaultNotFoundDeploymentPausedReasonError|BetaManagedAgentsFileNotFoundDeploymentPausedReasonError|BetaManagedAgentsSessionResourceNotFoundDeploymentPausedReasonError|BetaManagedAgentsWorkspaceArchivedDeploymentPausedReasonError|BetaManagedAgentsOrganizationDisabledDeploymentPausedReasonError|BetaManagedAgentsMemoryStoreArchivedDeploymentPausedReasonError|BetaManagedAgentsSkillNotFoundDeploymentPausedReasonError|BetaManagedAgentsVaultArchivedDeploymentPausedReasonError|BetaManagedAgentsUnknownDeploymentPausedReasonError|BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError|BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonError $error,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['error'] = $error;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -93,9 +87,9 @@ final class BetaManagedAgentsErrorDeploymentPausedReason implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

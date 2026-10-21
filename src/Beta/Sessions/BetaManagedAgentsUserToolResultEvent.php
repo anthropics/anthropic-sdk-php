@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions;
 
 use Anthropic\Beta\Sessions\BetaManagedAgentsUserToolResultEvent\Content;
-use Anthropic\Beta\Sessions\BetaManagedAgentsUserToolResultEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Event sent by the client providing the result of an agent-toolset tool execution. Only valid on `self_hosted` environments, where sandbox-routed tools are executed by the client rather than the server.
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaManagedAgentsUserToolResultEventShape = array{
  *   id: string,
  *   toolUseID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'user.tool_result',
  *   content?: list<ContentShape>|null,
  *   isError?: bool|null,
  *   processedAt?: \DateTimeInterface|null,
@@ -31,6 +31,10 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsUserToolResultEventShape> */
     use SdkModel;
+
+    /** @var 'user.tool_result' $type */
+    #[Required(type: new ConstantOf('user.tool_result'))]
+    public string $type = 'user.tool_result';
 
     /**
      * Unique identifier for this event.
@@ -43,10 +47,6 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
      */
     #[Required('tool_use_id')]
     public string $toolUseID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The result content returned by the tool.
@@ -79,16 +79,13 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsUserToolResultEvent::with(id: ..., toolUseID: ..., type: ...)
+     * BetaManagedAgentsUserToolResultEvent::with(id: ..., toolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsUserToolResultEvent())
-     *   ->withID(...)
-     *   ->withToolUseID(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsUserToolResultEvent())->withID(...)->withToolUseID(...)
      * ```
      */
     public function __construct()
@@ -101,13 +98,11 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param list<ContentShape>|null $content
      */
     public static function with(
         string $id,
         string $toolUseID,
-        Type|string $type,
         ?array $content = null,
         ?bool $isError = null,
         ?\DateTimeInterface $processedAt = null,
@@ -117,7 +112,6 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
 
         $self['id'] = $id;
         $self['toolUseID'] = $toolUseID;
-        $self['type'] = $type;
 
         null !== $content && $self['content'] = $content;
         null !== $isError && $self['isError'] = $isError;
@@ -150,9 +144,9 @@ final class BetaManagedAgentsUserToolResultEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.tool_result' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolResultEvent\Content;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolResultEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Event representing the result of an agent tool execution.
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   processedAt: \DateTimeInterface,
  *   toolUseID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'agent.tool_result',
  *   content?: list<ContentShape>|null,
  *   isError?: bool|null,
  * }
@@ -30,6 +30,10 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsAgentToolResultEventShape> */
     use SdkModel;
+
+    /** @var 'agent.tool_result' $type */
+    #[Required(type: new ConstantOf('agent.tool_result'))]
+    public string $type = 'agent.tool_result';
 
     /**
      * Unique identifier for this event.
@@ -48,10 +52,6 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
      */
     #[Required('tool_use_id')]
     public string $toolUseID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The result content returned by the tool.
@@ -73,7 +73,7 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsAgentToolResultEvent::with(
-     *   id: ..., processedAt: ..., toolUseID: ..., type: ...
+     *   id: ..., processedAt: ..., toolUseID: ...
      * )
      * ```
      *
@@ -84,7 +84,6 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
      *   ->withID(...)
      *   ->withProcessedAt(...)
      *   ->withToolUseID(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -97,14 +96,12 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param list<ContentShape>|null $content
      */
     public static function with(
         string $id,
         \DateTimeInterface $processedAt,
         string $toolUseID,
-        Type|string $type,
         ?array $content = null,
         ?bool $isError = null,
     ): self {
@@ -113,7 +110,6 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
         $self['id'] = $id;
         $self['processedAt'] = $processedAt;
         $self['toolUseID'] = $toolUseID;
-        $self['type'] = $type;
 
         null !== $content && $self['content'] = $content;
         null !== $isError && $self['isError'] = $isError;
@@ -155,9 +151,9 @@ final class ManagedAgentsAgentToolResultEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent.tool_result' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

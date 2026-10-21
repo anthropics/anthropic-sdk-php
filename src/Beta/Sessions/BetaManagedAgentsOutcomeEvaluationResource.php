@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Sessions\BetaManagedAgentsOutcomeEvaluationResource\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Evaluation state for a single outcome defined via a `define_outcome` event.
@@ -19,13 +19,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   iteration: int,
  *   outcomeID: string,
  *   result: string,
- *   type: Type|value-of<Type>,
+ *   type: 'outcome_evaluation',
  * }
  */
 final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsOutcomeEvaluationResourceShape> */
     use SdkModel;
+
+    /** @var 'outcome_evaluation' $type */
+    #[Required(type: new ConstantOf('outcome_evaluation'))]
+    public string $type = 'outcome_evaluation';
 
     /**
      * When the outcome reached a terminal result. Null while `pending`/`running`/`evaluating`.
@@ -63,10 +67,6 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     #[Required]
     public string $result;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsOutcomeEvaluationResource()` is missing required properties by the API.
      *
@@ -79,7 +79,6 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
      *   iteration: ...,
      *   outcomeID: ...,
      *   result: ...,
-     *   type: ...,
      * )
      * ```
      *
@@ -93,7 +92,6 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
      *   ->withIteration(...)
      *   ->withOutcomeID(...)
      *   ->withResult(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -105,8 +103,6 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         ?\DateTimeInterface $completedAt,
@@ -115,7 +111,6 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
         int $iteration,
         string $outcomeID,
         string $result,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -125,7 +120,6 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
         $self['iteration'] = $iteration;
         $self['outcomeID'] = $outcomeID;
         $self['result'] = $result;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -197,9 +191,9 @@ final class BetaManagedAgentsOutcomeEvaluationResource implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'outcome_evaluation' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

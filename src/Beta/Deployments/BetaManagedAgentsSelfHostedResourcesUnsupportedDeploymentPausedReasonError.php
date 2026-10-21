@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The deployment configures resources, but its environment is self-hosted and cannot mount them.
  *
  * @phpstan-type BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonErrorShape = array{
- *   type: Type|value-of<Type>
+ *   type: 'self_hosted_resources_unsupported_error'
  * }
  */
 final class BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError implements BaseModel
@@ -23,27 +23,10 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReaso
      */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'self_hosted_resources_unsupported_error' $type */
+    #[Required(type: new ConstantOf('self_hosted_resources_unsupported_error'))]
+    public string $type = 'self_hosted_resources_unsupported_error';
 
-    /**
-     * `new BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError::with(
-     *   type: ...
-     * )
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReasonError())
-     *   ->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -53,22 +36,16 @@ final class BetaManagedAgentsSelfHostedResourcesUnsupportedDeploymentPausedReaso
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'self_hosted_resources_unsupported_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

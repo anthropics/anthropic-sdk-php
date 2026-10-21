@@ -14,7 +14,6 @@ use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageCreateParams\Speed;
-use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
@@ -67,7 +66,7 @@ final class MessagesService implements MessagesContract
     /**
      * @api
      *
-     * @param list<MessageParam|MessageParamShape> $messages
+     * @param list<MessageParamShape> $messages
      * @param Model::CLAUDE_OPUS_4_5|Model::CLAUDE_OPUS_4_6|Model::CLAUDE_SONNET_4_5|Model::CLAUDE_HAIKU_4_5 $model
      * @param MessageCreateParamsContainerShape|null $container
      * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
@@ -96,12 +95,9 @@ final class MessagesService implements MessagesContract
         Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
-        ?float $temperature = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
-        ?int $topK = null,
-        ?float $topP = null,
         ?string $userProfileID = null,
         ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
@@ -120,12 +116,9 @@ final class MessagesService implements MessagesContract
                 'speed' => $speed,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
-                'temperature' => $temperature,
                 'thinking' => $thinking,
                 'toolChoice' => $toolChoice,
                 'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
                 'userProfileID' => $userProfileID,
             ],
         );
@@ -139,7 +132,7 @@ final class MessagesService implements MessagesContract
     /**
      * @api
      *
-     * @param list<MessageParam|MessageParamShape> $messages
+     * @param list<MessageParamShape> $messages
      * @param Model::CLAUDE_OPUS_4_5|Model::CLAUDE_OPUS_4_6|Model::CLAUDE_SONNET_4_5|Model::CLAUDE_HAIKU_4_5 $model
      * @param MessageCreateParamsContainerShape|null $container
      * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics
@@ -170,12 +163,9 @@ final class MessagesService implements MessagesContract
         Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
-        ?float $temperature = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
-        ?int $topK = null,
-        ?float $topP = null,
         ?string $userProfileID = null,
         ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
@@ -194,12 +184,9 @@ final class MessagesService implements MessagesContract
                 'speed' => $speed,
                 'stopSequences' => $stopSequences,
                 'system' => $system,
-                'temperature' => $temperature,
                 'thinking' => $thinking,
                 'toolChoice' => $toolChoice,
                 'tools' => $tools,
-                'topK' => $topK,
-                'topP' => $topP,
                 'userProfileID' => $userProfileID,
             ],
         );
@@ -213,7 +200,7 @@ final class MessagesService implements MessagesContract
     /**
      * @api
      *
-     * @param list<MessageParam|MessageParamShape> $messages
+     * @param list<MessageParamShape> $messages
      * @param Model::CLAUDE_OPUS_4_5|Model::CLAUDE_OPUS_4_6|Model::CLAUDE_SONNET_4_5|Model::CLAUDE_HAIKU_4_5 $model
      * @param OutputConfig|OutputConfigShape $outputConfig
      * @param SystemShape $system

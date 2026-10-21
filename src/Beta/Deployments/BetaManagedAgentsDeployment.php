@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Deployments;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAgentReference;
-use Anthropic\Beta\Deployments\BetaManagedAgentsDeployment\Type;
 use Anthropic\Beta\Sessions\BetaManagedAgentsBudgetLimit;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A deployment is a configured instance of an agent — it binds the agent to everything needed to run it autonomously: an environment, credentials, initial events, and an optional schedule.
@@ -39,7 +39,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   resources: list<BetaManagedAgentsSessionResourceConfigShape>,
  *   schedule: null|BetaManagedAgentsSchedule|BetaManagedAgentsScheduleShape,
  *   status: BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus>,
- *   type: Type|value-of<Type>,
+ *   type: 'deployment',
  *   updatedAt: \DateTimeInterface,
  *   vaultIDs: list<string>,
  *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
@@ -49,6 +49,10 @@ final class BetaManagedAgentsDeployment implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsDeploymentShape> */
     use SdkModel;
+
+    /** @var 'deployment' $type */
+    #[Required(type: new ConstantOf('deployment'))]
+    public string $type = 'deployment';
 
     /**
      * Unique identifier for this deployment.
@@ -144,10 +148,6 @@ final class BetaManagedAgentsDeployment implements BaseModel
     #[Required(enum: BetaManagedAgentsDeploymentStatus::class)]
     public string $status;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Time the deployment was last updated.
      */
@@ -187,7 +187,6 @@ final class BetaManagedAgentsDeployment implements BaseModel
      *   resources: ...,
      *   schedule: ...,
      *   status: ...,
-     *   type: ...,
      *   updatedAt: ...,
      *   vaultIDs: ...,
      * )
@@ -210,7 +209,6 @@ final class BetaManagedAgentsDeployment implements BaseModel
      *   ->withResources(...)
      *   ->withSchedule(...)
      *   ->withStatus(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      *   ->withVaultIDs(...)
      * ```
@@ -232,7 +230,6 @@ final class BetaManagedAgentsDeployment implements BaseModel
      * @param list<BetaManagedAgentsSessionResourceConfigShape> $resources
      * @param BetaManagedAgentsSchedule|BetaManagedAgentsScheduleShape|null $schedule
      * @param BetaManagedAgentsDeploymentStatus|value-of<BetaManagedAgentsDeploymentStatus> $status
-     * @param Type|value-of<Type> $type
      * @param list<string> $vaultIDs
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */
@@ -250,7 +247,6 @@ final class BetaManagedAgentsDeployment implements BaseModel
         array $resources,
         BetaManagedAgentsSchedule|array|null $schedule,
         BetaManagedAgentsDeploymentStatus|string $status,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
         array $vaultIDs,
         BetaManagedAgentsBudgetLimit|array|null $budget = null,
@@ -270,7 +266,6 @@ final class BetaManagedAgentsDeployment implements BaseModel
         $self['resources'] = $resources;
         $self['schedule'] = $schedule;
         $self['status'] = $status;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
         $self['vaultIDs'] = $vaultIDs;
 
@@ -441,9 +436,9 @@ final class BetaManagedAgentsDeployment implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'deployment' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

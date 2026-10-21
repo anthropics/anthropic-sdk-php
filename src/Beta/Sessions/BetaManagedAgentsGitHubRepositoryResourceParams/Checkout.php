@@ -50,16 +50,14 @@ final class Checkout implements ConverterSource
     public static function with(
         Type|string $type,
         ?string $name = null,
-        ?string $sha = null,
+        ?string $sha = null
     ): BetaManagedAgentsBranchCheckout|BetaManagedAgentsCommitCheckout {
         return match ($type) {
             Type::BRANCH, 'branch' => BetaManagedAgentsBranchCheckout::with(
-                type: 'branch',
-                name: $name ?? throw new \ArgumentCountError('$name is required'),
+                name: $name ?? throw new \ArgumentCountError('$name is required')
             ),
             Type::COMMIT, 'commit' => BetaManagedAgentsCommitCheckout::with(
-                type: 'commit',
-                sha: $sha ?? throw new \ArgumentCountError('$sha is required'),
+                sha: $sha ?? throw new \ArgumentCountError('$sha is required')
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
         };

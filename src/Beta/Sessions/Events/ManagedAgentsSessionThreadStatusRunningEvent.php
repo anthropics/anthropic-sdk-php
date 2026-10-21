@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusRunningEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A session thread has begun executing. Emitted on the thread's own stream and cross-posted to the primary stream for child threads.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   agentName: string,
  *   processedAt: \DateTimeInterface,
  *   sessionThreadID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'session.thread_status_running',
  * }
  */
 final class ManagedAgentsSessionThreadStatusRunningEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSessionThreadStatusRunningEventShape> */
     use SdkModel;
+
+    /** @var 'session.thread_status_running' $type */
+    #[Required(type: new ConstantOf('session.thread_status_running'))]
+    public string $type = 'session.thread_status_running';
 
     /**
      * Unique identifier for this event.
@@ -49,17 +53,13 @@ final class ManagedAgentsSessionThreadStatusRunningEvent implements BaseModel
     #[Required('session_thread_id')]
     public string $sessionThreadID;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSessionThreadStatusRunningEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * ManagedAgentsSessionThreadStatusRunningEvent::with(
-     *   id: ..., agentName: ..., processedAt: ..., sessionThreadID: ..., type: ...
+     *   id: ..., agentName: ..., processedAt: ..., sessionThreadID: ...
      * )
      * ```
      *
@@ -71,7 +71,6 @@ final class ManagedAgentsSessionThreadStatusRunningEvent implements BaseModel
      *   ->withAgentName(...)
      *   ->withProcessedAt(...)
      *   ->withSessionThreadID(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -83,15 +82,12 @@ final class ManagedAgentsSessionThreadStatusRunningEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         string $agentName,
         \DateTimeInterface $processedAt,
         string $sessionThreadID,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -99,7 +95,6 @@ final class ManagedAgentsSessionThreadStatusRunningEvent implements BaseModel
         $self['agentName'] = $agentName;
         $self['processedAt'] = $processedAt;
         $self['sessionThreadID'] = $sessionThreadID;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -149,9 +144,9 @@ final class ManagedAgentsSessionThreadStatusRunningEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session.thread_status_running' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

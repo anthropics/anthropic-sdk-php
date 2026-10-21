@@ -30,6 +30,7 @@ class ClientTest extends TestCase
         'ANTHROPIC_AWS_BASE_URL',
         'ANTHROPIC_AWS_API_KEY',
         'ANTHROPIC_API_KEY',
+        'ANTHROPIC_AUTH_TOKEN',
     ];
 
     protected function setUp(): void
@@ -108,9 +109,9 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('my-aws-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer my-aws-key', $request->getHeaderLine('Authorization'));
         $this->assertSame('default', $request->getHeaderLine('anthropic-workspace-id'));
-        $this->assertSame('', $request->getHeaderLine('Authorization'));
+        $this->assertSame('', $request->getHeaderLine('X-Api-Key'));
     }
 
     public function testApiKeyFromEnvVar(): void
@@ -126,7 +127,7 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('env-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer env-key', $request->getHeaderLine('Authorization'));
     }
 
     public function testExplicitApiKeyOverridesEnvVar(): void
@@ -138,7 +139,7 @@ class ClientTest extends TestCase
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('explicit-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer explicit-key', $request->getHeaderLine('Authorization'));
     }
 
     // ── SigV4 mode ──────────────────────────────────────────────────
@@ -418,24 +419,25 @@ class ClientTest extends TestCase
         $this->assertSame(['default'], $request->getHeader('anthropic-workspace-id'));
     }
 
-    // ── API key env var doesn't leak into SigV4 ─────────────────────
+    // ── ANTHROPIC_API_KEY env var doesn't leak ──────────────────────
 
     public function testAnthropicApiKeyEnvDoesNotLeak(): void
     {
         putenv('ANTHROPIC_API_KEY=leaked-key');
+        putenv('ANTHROPIC_AUTH_TOKEN=leaked-token');
 
         $client = new Client(
-            awsAccessKey: 'AKID',
-            awsSecretAccessKey: 'secret',
             awsRegion: 'us-west-2',
-            workspaceId: 'default',
+            skipAuth: true,
             requestOptions: ['transporter' => $this->transporter],
         );
 
         $client->messages->create(1024, [], 'claude-haiku-4-5');
         $request = $this->getLastRequest();
 
-        $this->assertSame('', $request->getHeaderLine('X-Api-Key'));
+        $this->assertFalse($request->hasHeader('Authorization'));
+        $this->assertSame('', $client->apiKey);
+        $this->assertSame('', $client->authToken);
     }
 
     // ── Resources exist ─────────────────────────────────────────────
@@ -463,7 +465,7 @@ class ClientTest extends TestCase
 
         $this->assertSame($method, $request->getMethod());
         $this->assertSame('https://aws-external-anthropic.us-east-1.api.aws'.$path, (string) $request->getUri());
-        $this->assertSame('my-aws-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertSame('Bearer my-aws-key', $request->getHeaderLine('Authorization'));
         $this->assertSame('default', $request->getHeaderLine('anthropic-workspace-id'));
         $this->assertSame($body, json_decode((string) $request->getBody(), associative: true));
     }

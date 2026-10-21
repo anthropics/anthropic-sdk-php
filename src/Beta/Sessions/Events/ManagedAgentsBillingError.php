@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError\RetryStatus;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The caller's organization or workspace cannot make model requests — out of credits or spend limit reached. Retrying with the same credentials will not succeed; the caller must resolve the billing state.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError\RetryStatus
  *
  * @phpstan-type ManagedAgentsBillingErrorShape = array{
- *   message: string, retryStatus: RetryStatusShape, type: Type|value-of<Type>
+ *   message: string, retryStatus: RetryStatusShape, type: 'billing_error'
  * }
  */
 final class ManagedAgentsBillingError implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsBillingErrorShape> */
     use SdkModel;
+
+    /** @var 'billing_error' $type */
+    #[Required(type: new ConstantOf('billing_error'))]
+    public string $type = 'billing_error';
 
     /**
      * Human-readable error description.
@@ -39,25 +43,18 @@ final class ManagedAgentsBillingError implements BaseModel
     #[Required('retry_status', union: RetryStatus::class)]
     public ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsBillingError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsBillingError::with(message: ..., retryStatus: ..., type: ...)
+     * ManagedAgentsBillingError::with(message: ..., retryStatus: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsBillingError())
-     *   ->withMessage(...)
-     *   ->withRetryStatus(...)
-     *   ->withType(...)
+     * (new ManagedAgentsBillingError())->withMessage(...)->withRetryStatus(...)
      * ```
      */
     public function __construct()
@@ -71,18 +68,15 @@ final class ManagedAgentsBillingError implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RetryStatusShape $retryStatus
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $message,
         ManagedAgentsRetryStatusRetrying|array|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['message'] = $message;
         $self['retryStatus'] = $retryStatus;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -113,9 +107,9 @@ final class ManagedAgentsBillingError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'billing_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

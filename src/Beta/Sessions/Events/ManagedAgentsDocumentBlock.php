@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsDocumentBlock\Source;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsDocumentBlock\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Document content, either specified directly as base64 data, as text, or as a reference via a URL.
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type ManagedAgentsDocumentBlockShape = array{
  *   source: SourceShape,
- *   type: Type|value-of<Type>,
+ *   type: 'document',
  *   context?: string|null,
  *   title?: string|null,
  * }
@@ -29,6 +29,10 @@ final class ManagedAgentsDocumentBlock implements BaseModel
     /** @use SdkModel<ManagedAgentsDocumentBlockShape> */
     use SdkModel;
 
+    /** @var 'document' $type */
+    #[Required(type: new ConstantOf('document'))]
+    public string $type = 'document';
+
     /**
      * The source of the document data.
      *
@@ -36,10 +40,6 @@ final class ManagedAgentsDocumentBlock implements BaseModel
      */
     #[Required(union: Source::class)]
     public ManagedAgentsBase64DocumentSource|ManagedAgentsPlainTextDocumentSource|ManagedAgentsURLDocumentSource|ManagedAgentsFileDocumentSource $source;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Additional context about the document for the model.
@@ -58,13 +58,13 @@ final class ManagedAgentsDocumentBlock implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsDocumentBlock::with(source: ..., type: ...)
+     * ManagedAgentsDocumentBlock::with(source: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsDocumentBlock())->withSource(...)->withType(...)
+     * (new ManagedAgentsDocumentBlock())->withSource(...)
      * ```
      */
     public function __construct()
@@ -78,18 +78,15 @@ final class ManagedAgentsDocumentBlock implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param SourceShape $source
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         ManagedAgentsBase64DocumentSource|array|ManagedAgentsPlainTextDocumentSource|ManagedAgentsURLDocumentSource|ManagedAgentsFileDocumentSource $source,
-        Type|string $type,
         ?string $context = null,
         ?string $title = null,
     ): self {
         $self = new self;
 
         $self['source'] = $source;
-        $self['type'] = $type;
 
         null !== $context && $self['context'] = $context;
         null !== $title && $self['title'] = $title;
@@ -112,9 +109,9 @@ final class ManagedAgentsDocumentBlock implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'document' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

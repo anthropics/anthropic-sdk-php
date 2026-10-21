@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsMCPToolset\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type BetaManagedAgentsMCPToolConfigShape from \Anthropic\Beta\Agents\BetaManagedAgentsMCPToolConfig
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   configs: list<BetaManagedAgentsMCPToolConfig|BetaManagedAgentsMCPToolConfigShape>,
  *   defaultConfig: BetaManagedAgentsMCPToolsetDefaultConfig|BetaManagedAgentsMCPToolsetDefaultConfigShape,
  *   mcpServerName: string,
- *   type: Type|value-of<Type>,
+ *   type: 'mcp_toolset',
  * }
  */
 final class BetaManagedAgentsMCPToolset implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsMCPToolsetShape> */
     use SdkModel;
+
+    /** @var 'mcp_toolset' $type */
+    #[Required(type: new ConstantOf('mcp_toolset'))]
+    public string $type = 'mcp_toolset';
 
     /** @var list<BetaManagedAgentsMCPToolConfig> $configs */
     #[Required(list: BetaManagedAgentsMCPToolConfig::class)]
@@ -38,17 +42,13 @@ final class BetaManagedAgentsMCPToolset implements BaseModel
     #[Required('mcp_server_name')]
     public string $mcpServerName;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsMCPToolset()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * BetaManagedAgentsMCPToolset::with(
-     *   configs: ..., defaultConfig: ..., mcpServerName: ..., type: ...
+     *   configs: ..., defaultConfig: ..., mcpServerName: ...
      * )
      * ```
      *
@@ -59,7 +59,6 @@ final class BetaManagedAgentsMCPToolset implements BaseModel
      *   ->withConfigs(...)
      *   ->withDefaultConfig(...)
      *   ->withMCPServerName(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -74,20 +73,17 @@ final class BetaManagedAgentsMCPToolset implements BaseModel
      *
      * @param list<BetaManagedAgentsMCPToolConfig|BetaManagedAgentsMCPToolConfigShape> $configs
      * @param BetaManagedAgentsMCPToolsetDefaultConfig|BetaManagedAgentsMCPToolsetDefaultConfigShape $defaultConfig
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         array $configs,
         BetaManagedAgentsMCPToolsetDefaultConfig|array $defaultConfig,
         string $mcpServerName,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['configs'] = $configs;
         $self['defaultConfig'] = $defaultConfig;
         $self['mcpServerName'] = $mcpServerName;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -126,9 +122,9 @@ final class BetaManagedAgentsMCPToolset implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'mcp_toolset' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

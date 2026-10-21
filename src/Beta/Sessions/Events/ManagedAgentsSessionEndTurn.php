@@ -4,41 +4,25 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionEndTurn\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The agent completed its turn naturally and is ready for the next user message.
  *
- * @phpstan-type ManagedAgentsSessionEndTurnShape = array{
- *   type: Type|value-of<Type>
- * }
+ * @phpstan-type ManagedAgentsSessionEndTurnShape = array{type: 'end_turn'}
  */
 final class ManagedAgentsSessionEndTurn implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSessionEndTurnShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'end_turn' $type */
+    #[Required(type: new ConstantOf('end_turn'))]
+    public string $type = 'end_turn';
 
-    /**
-     * `new ManagedAgentsSessionEndTurn()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * ManagedAgentsSessionEndTurn::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new ManagedAgentsSessionEndTurn())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +32,16 @@ final class ManagedAgentsSessionEndTurn implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'end_turn' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

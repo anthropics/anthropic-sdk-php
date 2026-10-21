@@ -31,7 +31,7 @@ use Psr\Http\Message\ResponseInterface;
 class Client extends BaseClient
 {
     /** @internal */
-    public const ANTHROPIC_API_VERSION = '2023-06-01';
+    public const ANTHROPIC_API_VERSION = '2026-10-21';
 
     public string $apiKey;
 
@@ -76,9 +76,18 @@ class Client extends BaseClient
 
     private ?CredentialResult $credentialResult = null;
 
-    private ?TokenCache $tokenCache = null;
+    private static bool $warnedOfEnvKeyAndToken = false;
 
     /**
+     * Pass at most one of `$apiKey`, `$authToken` and `$credentials`; more than one throws
+     * `\InvalidArgumentException`. The one passed is used, and no credential is read from the environment or from
+     * a profile on disk.
+     *
+     * With none passed, the first of these that is set is used: `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, the
+     * profile named by `ANTHROPIC_PROFILE`, the workload identity federation variables, the active profile on disk.
+     * The constructor throws `AnthropicException` when `ANTHROPIC_PROFILE` names a missing or invalid profile.
+     * With both `ANTHROPIC_API_KEY` and `ANTHROPIC_AUTH_TOKEN` set, a warning goes to `error_log()` once per process.
+     *
      * @param RequestOpts|null $requestOptions
      * @param OpenTelemetryOptions|null $openTelemetry OpenTelemetry tracing of this client's API calls. Each call emits a span when the application has registered a tracer provider with the OpenTelemetry API. `false`, short for `['traces' => false]`, disables the spans, and `['traces' => false]` is itself short for `['traces' => ['enabled' => false]]`. `traces.contentMode` set to `'content'` adds the content of requests and responses to the spans, within `traces.maxContentBytes` bytes for each span when it is set. `propagation` set to `false` sends the requests without the trace context of their span, for an application whose HTTP client instrumentation already propagates it, so that a request does not carry it twice. The environment variables `ANTHROPIC_OPEN_TELEMETRY`, `ANTHROPIC_OPEN_TELEMETRY_PROPAGATION`, `ANTHROPIC_OPEN_TELEMETRY_TRACES_CONTENT_MODE` and `ANTHROPIC_OPEN_TELEMETRY_TRACES_MAX_CONTENT_BYTES` set `traces.enabled`, `propagation`, `traces.contentMode` and `traces.maxContentBytes` for a client that is given no option, which reads them once, when it is built. A client that is given the option does not read them: what the option leaves unset has its default.
      */
@@ -91,23 +100,39 @@ class Client extends BaseClient
         ?CredentialResult $credentials = null,
         array|false|null $openTelemetry = null,
     ) {
-        $this->apiKey = (string) ($apiKey ?? getenv('ANTHROPIC_API_KEY'));
-        $this->authToken = (string) ($authToken ?? getenv('ANTHROPIC_AUTH_TOKEN'));
-        $this->webhookKey = (string) ($webhookKey ?? getenv(
-            'ANTHROPIC_WEBHOOK_SIGNING_KEY'
+        $passed = array_keys(array_filter(
+            ['apiKey' => $apiKey, 'authToken' => $authToken, 'credentials' => $credentials],
+            static fn (string|CredentialResult|null $option): bool => !is_null($option),
         ));
+        if (count($passed) > 1) {
+            throw new \InvalidArgumentException(sprintf(
+                'Pass at most one of `apiKey`, `authToken`, or `credentials`. Received `%s`.',
+                implode('`, `', $passed),
+            ));
+        }
 
-        // If explicit credentials were provided, use them.
-        // Otherwise, if no apiKey/authToken are configured and this is
-        // the base Client class (not a subclass), auto-detect credentials.
-        if (!is_null($credentials)) {
-            $this->setCredentials($credentials);
-        } elseif ('' === $this->apiKey && '' === $this->authToken && self::class === static::class) {
-            $resolved = DefaultCredentials::resolve();
-            if (!is_null($resolved)) {
-                $this->setCredentials($resolved);
+        if ([] === $passed) {
+            $apiKey = Util::getenv('ANTHROPIC_API_KEY') ?: '';
+            $authToken = Util::getenv('ANTHROPIC_AUTH_TOKEN') ?: '';
+            if ('' !== $apiKey && '' !== $authToken) {
+                $authToken = '';
+                if (!self::$warnedOfEnvKeyAndToken) {
+                    self::$warnedOfEnvKeyAndToken = true;
+                    error_log('Anthropic: ANTHROPIC_API_KEY and ANTHROPIC_AUTH_TOKEN are both set. Using ANTHROPIC_API_KEY.');
+                }
+            }
+
+            // Subclasses have their own auth, so only the base client looks for a profile or workload identity.
+            if ('' === $apiKey && '' === $authToken && self::class === static::class) {
+                $credentials = DefaultCredentials::resolve();
             }
         }
+
+        $this->apiKey = $apiKey ?? '';
+        $this->authToken = $authToken ?? '';
+        $this->webhookKey = $webhookKey ?? Util::getenv('ANTHROPIC_WEBHOOK_SIGNING_KEY') ?? '';
+
+        $this->credentialResult = $credentials;
 
         $baseUrl ??= Util::getenv('ANTHROPIC_BASE_URL') ?: ($this->credentialResult->baseUrl ?? 'https://api.anthropic.com');
 
@@ -190,7 +215,7 @@ class Client extends BaseClient
     /** @return array<string,string> */
     protected function apiKeyAuth(): array
     {
-        return $this->apiKey ? ['X-Api-Key' => $this->apiKey] : [];
+        return $this->apiKey ? ['Authorization' => "Bearer {$this->apiKey}"] : [];
     }
 
     /** @return array<string,string> */
@@ -234,8 +259,8 @@ class Client extends BaseClient
         bool $wantsRetryFromException = false,
     ): bool {
         // On 401 with OAuth credentials, invalidate the token cache and retry once.
-        if (401 === $rsp?->getStatusCode() && !is_null($this->tokenCache)) {
-            $this->tokenCache->invalidate();
+        if (401 === $rsp?->getStatusCode() && $this->credentialResult?->provider instanceof TokenCache) {
+            $this->credentialResult->provider->invalidate();
 
             return $retryCount < 1;
         }
@@ -269,16 +294,5 @@ class Client extends BaseClient
             body: $body,
             opts: $opts,
         );
-    }
-
-    private function setCredentials(CredentialResult $credentials): void
-    {
-        $this->credentialResult = $credentials;
-
-        // Keep a reference to the TokenCache for invalidation on 401.
-        $provider = $credentials->provider;
-        if ($provider instanceof TokenCache) {
-            $this->tokenCache = $provider;
-        }
     }
 }

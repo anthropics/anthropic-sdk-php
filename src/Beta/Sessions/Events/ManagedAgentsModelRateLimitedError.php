@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError\RetryStatus;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The model request was rate-limited.
@@ -17,13 +17,19 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError\RetryStatus
  *
  * @phpstan-type ManagedAgentsModelRateLimitedErrorShape = array{
- *   message: string, retryStatus: RetryStatusShape, type: Type|value-of<Type>
+ *   message: string,
+ *   retryStatus: RetryStatusShape,
+ *   type: 'model_rate_limited_error',
  * }
  */
 final class ManagedAgentsModelRateLimitedError implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsModelRateLimitedErrorShape> */
     use SdkModel;
+
+    /** @var 'model_rate_limited_error' $type */
+    #[Required(type: new ConstantOf('model_rate_limited_error'))]
+    public string $type = 'model_rate_limited_error';
 
     /**
      * Human-readable error description.
@@ -39,18 +45,12 @@ final class ManagedAgentsModelRateLimitedError implements BaseModel
     #[Required('retry_status', union: RetryStatus::class)]
     public ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsModelRateLimitedError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsModelRateLimitedError::with(
-     *   message: ..., retryStatus: ..., type: ...
-     * )
+     * ManagedAgentsModelRateLimitedError::with(message: ..., retryStatus: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -59,7 +59,6 @@ final class ManagedAgentsModelRateLimitedError implements BaseModel
      * (new ManagedAgentsModelRateLimitedError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -73,18 +72,15 @@ final class ManagedAgentsModelRateLimitedError implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RetryStatusShape $retryStatus
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $message,
         ManagedAgentsRetryStatusRetrying|array|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['message'] = $message;
         $self['retryStatus'] = $retryStatus;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -115,9 +111,9 @@ final class ManagedAgentsModelRateLimitedError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'model_rate_limited_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

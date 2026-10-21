@@ -60,7 +60,7 @@ final class ClientTest extends TestCase
 
         $this->assertIsArray($body);
 
-        $this->assertSame('bedrock-2023-05-31', $body['anthropic_version']);
+        $this->assertSame(\Anthropic\Client::ANTHROPIC_API_VERSION, $body['anthropic_version']);
         $this->assertSame(1024, $body['max_tokens']);
         $this->assertSame([['content' => 'Hello', 'role' => 'user']], $body['messages']);
         $this->assertArrayNotHasKey('model', $body);
@@ -118,6 +118,25 @@ final class ClientTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('x-api-key'));
         $this->assertStringContainsString('AWS4-HMAC-SHA256', $request->getHeaderLine('authorization'));
         $this->assertNotSame('', $request->getHeaderLine('x-amz-date'));
+    }
+
+    public function testAnthropicCredentialEnvDoesNotLeak(): void
+    {
+        $names = ['ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN'];
+        $original = array_map(Util::getenv(...), array_combine($names, $names));
+        putenv('ANTHROPIC_API_KEY=leaked-key');
+        putenv('ANTHROPIC_AUTH_TOKEN=leaked-token');
+
+        try {
+            $client = Client::withCredentials(accessKeyId: 'test-access-key', secretAccessKey: 'test-secret-key', region: 'us-east-1');
+        } finally {
+            foreach ($original as $name => $value) {
+                putenv(is_null($value) ? $name : "{$name}={$value}");
+            }
+        }
+
+        $this->assertSame('', $client->apiKey);
+        $this->assertSame('', $client->authToken);
     }
 
     public function testSigV4CredentialsNotSentOnCrossOriginRedirect(): void

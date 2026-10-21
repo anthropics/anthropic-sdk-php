@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions;
 
 use Anthropic\Beta\Sessions\BetaManagedAgentsSession\Status;
-use Anthropic\Beta\Sessions\BetaManagedAgentsSession\Type;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A Managed Agents `session`.
@@ -36,7 +36,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   stats: BetaManagedAgentsSessionStats|BetaManagedAgentsSessionStatsShape,
  *   status: Status|value-of<Status>,
  *   title: string|null,
- *   type: Type|value-of<Type>,
+ *   type: 'session',
  *   updatedAt: \DateTimeInterface,
  *   usage: BetaManagedAgentsSessionUsage|BetaManagedAgentsSessionUsageShape,
  *   vaultIDs: list<string>,
@@ -47,6 +47,10 @@ final class BetaManagedAgentsSession implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsSessionShape> */
     use SdkModel;
+
+    /** @var 'session' $type */
+    #[Required(type: new ConstantOf('session'))]
+    public string $type = 'session';
 
     #[Required]
     public string $id;
@@ -110,10 +114,6 @@ final class BetaManagedAgentsSession implements BaseModel
     #[Required]
     public ?string $title;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * A timestamp in RFC 3339 format.
      */
@@ -158,7 +158,6 @@ final class BetaManagedAgentsSession implements BaseModel
      *   stats: ...,
      *   status: ...,
      *   title: ...,
-     *   type: ...,
      *   updatedAt: ...,
      *   usage: ...,
      *   vaultIDs: ...,
@@ -181,7 +180,6 @@ final class BetaManagedAgentsSession implements BaseModel
      *   ->withStats(...)
      *   ->withStatus(...)
      *   ->withTitle(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      *   ->withUsage(...)
      *   ->withVaultIDs(...)
@@ -204,7 +202,6 @@ final class BetaManagedAgentsSession implements BaseModel
      * @param list<ManagedAgentsSessionResourceShape> $resources
      * @param BetaManagedAgentsSessionStats|BetaManagedAgentsSessionStatsShape $stats
      * @param Status|value-of<Status> $status
-     * @param Type|value-of<Type> $type
      * @param BetaManagedAgentsSessionUsage|BetaManagedAgentsSessionUsageShape $usage
      * @param list<string> $vaultIDs
      */
@@ -221,7 +218,6 @@ final class BetaManagedAgentsSession implements BaseModel
         BetaManagedAgentsSessionStats|array $stats,
         Status|string $status,
         ?string $title,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
         BetaManagedAgentsSessionUsage|array $usage,
         array $vaultIDs,
@@ -241,7 +237,6 @@ final class BetaManagedAgentsSession implements BaseModel
         $self['stats'] = $stats;
         $self['status'] = $status;
         $self['title'] = $title;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
         $self['usage'] = $usage;
         $self['vaultIDs'] = $vaultIDs;
@@ -384,9 +379,9 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

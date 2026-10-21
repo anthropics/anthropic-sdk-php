@@ -49,14 +49,7 @@ final class MessagesTest extends TestCase
     {
         $result = $this->client->beta->messages->create(
             maxTokens: 1024,
-            messages: [
-                [
-                    'content' => 'Hello, world',
-                    'role' => 'user',
-                    'clearAt' => 'next_user_message',
-                    'outputConfig' => ['effort' => 'low'],
-                ],
-            ],
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: Model::CLAUDE_OPUS_5_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             compaction: ['type' => 'summarize', 'instructions' => 'instructions'],
@@ -120,7 +113,6 @@ final class MessagesTest extends TestCase
                     ],
                 ],
             ],
-            temperature: 1,
             thinking: [
                 'type' => 'adaptive',
                 'blockBinding' => [
@@ -147,8 +139,6 @@ final class MessagesTest extends TestCase
                     'type' => 'custom',
                 ],
             ],
-            topK: 5,
-            topP: 0.7,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
@@ -174,14 +164,7 @@ final class MessagesTest extends TestCase
     public function testCountTokensWithOptionalParams(): void
     {
         $result = $this->client->beta->messages->countTokens(
-            messages: [
-                [
-                    'content' => 'Hello, world',
-                    'role' => 'user',
-                    'clearAt' => 'next_user_message',
-                    'outputConfig' => ['effort' => 'low'],
-                ],
-            ],
+            messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: Model::CLAUDE_OPUS_5_5,
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             compaction: ['type' => 'summarize', 'instructions' => 'instructions'],

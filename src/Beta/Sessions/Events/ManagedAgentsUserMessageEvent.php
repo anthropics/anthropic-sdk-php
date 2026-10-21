@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent\Content;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserMessageEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A user message event in the session conversation.
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ManagedAgentsUserMessageEventShape = array{
  *   id: string,
  *   content: list<ContentShape>,
- *   type: Type|value-of<Type>,
+ *   type: 'user.message',
  *   processedAt?: \DateTimeInterface|null,
  * }
  */
@@ -28,6 +28,10 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsUserMessageEventShape> */
     use SdkModel;
+
+    /** @var 'user.message' $type */
+    #[Required(type: new ConstantOf('user.message'))]
+    public string $type = 'user.message';
 
     /**
      * Unique identifier for this event.
@@ -43,10 +47,6 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
     #[Required(list: Content::class)]
     public array $content;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Timestamp when the agent finished processing this message.
      */
@@ -58,16 +58,13 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsUserMessageEvent::with(id: ..., content: ..., type: ...)
+     * ManagedAgentsUserMessageEvent::with(id: ..., content: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserMessageEvent())
-     *   ->withID(...)
-     *   ->withContent(...)
-     *   ->withType(...)
+     * (new ManagedAgentsUserMessageEvent())->withID(...)->withContent(...)
      * ```
      */
     public function __construct()
@@ -81,19 +78,16 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ContentShape> $content
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         array $content,
-        Type|string $type,
-        ?\DateTimeInterface $processedAt = null,
+        ?\DateTimeInterface $processedAt = null
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['content'] = $content;
-        $self['type'] = $type;
 
         null !== $processedAt && $self['processedAt'] = $processedAt;
 
@@ -125,9 +119,9 @@ final class ManagedAgentsUserMessageEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.message' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

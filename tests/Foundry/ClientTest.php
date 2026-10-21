@@ -2,6 +2,7 @@
 
 namespace Tests\Foundry;
 
+use Anthropic\Core\Util;
 use Anthropic\Foundry\Client;
 use Anthropic\Foundry\ServiceClient;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -20,6 +21,14 @@ final class ClientTest extends TestCase
 {
     private const BASE_URL = 'https://foundry.example.test/anthropic';
 
+    private const ENV_KEYS = [
+        'ANTHROPIC_FOUNDRY_API_KEY',
+        'ANTHROPIC_FOUNDRY_BASE_URL',
+        'ANTHROPIC_FOUNDRY_RESOURCE',
+        'ANTHROPIC_API_KEY',
+        'ANTHROPIC_AUTH_TOKEN',
+    ];
+
     private const FIRST_PARTY_ENV = [
         'ANTHROPIC_API_KEY' => 'first-party-key',
         'ANTHROPIC_AUTH_TOKEN' => 'first-party-token',
@@ -29,6 +38,9 @@ final class ClientTest extends TestCase
 
     private MockClient $transporter;
 
+    /** @var array<string,string|null> */
+    private array $clearedEnv = [];
+
     /** @var array<string, array{string|false, mixed}> */
     private array $savedEnv = [];
 
@@ -36,6 +48,11 @@ final class ClientTest extends TestCase
     {
         $this->transporter = new MockClient;
         $this->transporter->setDefaultResponse(self::json('{}'));
+
+        foreach (self::ENV_KEYS as $key) {
+            $this->clearedEnv[$key] = Util::getenv($key);
+            putenv($key);
+        }
     }
 
     protected function tearDown(): void
@@ -48,6 +65,81 @@ final class ClientTest extends TestCase
                 $_ENV[$key] = $superglobal;
             }
         }
+
+        foreach ($this->clearedEnv as $key => $value) {
+            if (null === $value) {
+                putenv($key);
+            } else {
+                putenv("{$key}={$value}");
+            }
+        }
+    }
+
+    public function testApiKeyAuthSendsCorrectHeaders(): void
+    {
+        $this->makeResourceClient()->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $this->assertSame('my-foundry-key', $requests[0]->getHeaderLine('x-api-key'));
+        $this->assertFalse($requests[0]->hasHeader('Authorization'));
+    }
+
+    public function testApiKeyFromEnvVar(): void
+    {
+        putenv('ANTHROPIC_FOUNDRY_API_KEY=env-key');
+
+        $client = Client::fromEnvironment(
+            resource: 'my-resource',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $this->assertSame('env-key', $requests[0]->getHeaderLine('x-api-key'));
+        $this->assertFalse($requests[0]->hasHeader('Authorization'));
+    }
+
+    public function testAnthropicApiKeyEnvDoesNotLeak(): void
+    {
+        putenv('ANTHROPIC_API_KEY=leaked-key');
+        putenv('ANTHROPIC_AUTH_TOKEN=leaked-token');
+
+        $this->makeResourceClient()->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $this->assertSame('my-foundry-key', $requests[0]->getHeaderLine('x-api-key'));
+        $this->assertFalse($requests[0]->hasHeader('Authorization'));
+    }
+
+    public function testApiKeyNotSentOnCrossOriginRedirect(): void
+    {
+        $this->transporter->addResponse(
+            Psr17FactoryDiscovery::findResponseFactory()
+                ->createResponse(307)
+                ->withHeader('Location', 'https://elsewhere.example/v1/messages')
+        );
+
+        $this->makeResourceClient()->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(2, $requests);
+        $this->assertSame('my-foundry-key', $requests[0]->getHeaderLine('x-api-key'));
+        $this->assertSame('elsewhere.example', $requests[1]->getUri()->getHost());
+        $this->assertFalse($requests[1]->hasHeader('x-api-key'));
+        $this->assertFalse($requests[1]->hasHeader('Authorization'));
+    }
+
+    public function testSendsTheFirstPartyClientsVersion(): void
+    {
+        $this->makeResourceClient()->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $this->assertSame(\Anthropic\Client::ANTHROPIC_API_VERSION, $requests[0]->getHeaderLine('anthropic-version'));
     }
 
     /**
@@ -199,6 +291,15 @@ final class ClientTest extends TestCase
             putenv("{$key}={$value}");
             $_ENV[$key] = $value;
         }
+    }
+
+    private function makeResourceClient(): Client
+    {
+        return Client::withCredentials(
+            apiKey: 'my-foundry-key',
+            resource: 'my-resource',
+            requestOptions: ['transporter' => $this->transporter],
+        );
     }
 
     private function makeClient(?string $apiKey = null, ?string $authToken = null): Client

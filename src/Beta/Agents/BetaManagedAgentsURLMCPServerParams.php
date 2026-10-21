@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * URL-based MCP server connection.
  *
  * @phpstan-type BetaManagedAgentsURLMCPServerParamsShape = array{
- *   name: string, type: Type|value-of<Type>, url: string
+ *   name: string, type: 'url', url: string
  * }
  */
 final class BetaManagedAgentsURLMCPServerParams implements BaseModel
@@ -21,15 +21,15 @@ final class BetaManagedAgentsURLMCPServerParams implements BaseModel
     /** @use SdkModel<BetaManagedAgentsURLMCPServerParamsShape> */
     use SdkModel;
 
+    /** @var 'url' $type */
+    #[Required(type: new ConstantOf('url'))]
+    public string $type = 'url';
+
     /**
      * Unique name for this server, referenced by mcp_toolset configurations. 1-255 characters.
      */
     #[Required]
     public string $name;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Endpoint URL for the MCP server.
@@ -42,16 +42,13 @@ final class BetaManagedAgentsURLMCPServerParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsURLMCPServerParams::with(name: ..., type: ..., url: ...)
+     * BetaManagedAgentsURLMCPServerParams::with(name: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsURLMCPServerParams())
-     *   ->withName(...)
-     *   ->withType(...)
-     *   ->withURL(...)
+     * (new BetaManagedAgentsURLMCPServerParams())->withName(...)->withURL(...)
      * ```
      */
     public function __construct()
@@ -63,18 +60,12 @@ final class BetaManagedAgentsURLMCPServerParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $name,
-        Type|string $type,
-        string $url
-    ): self {
+    public static function with(string $name, string $url): self
+    {
         $self = new self;
 
         $self['name'] = $name;
-        $self['type'] = $type;
         $self['url'] = $url;
 
         return $self;
@@ -92,9 +83,9 @@ final class BetaManagedAgentsURLMCPServerParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'url' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\MemoryStores\MemoryVersions;
 
-use Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsMemoryVersion\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * One entry in a memory's history, recording a single change and who made it.
@@ -28,7 +28,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   memoryID: string,
  *   memoryStoreID: string,
  *   operation: ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation>,
- *   type: Type|value-of<Type>,
+ *   type: 'memory_version',
  *   content?: string|null,
  *   contentSha256?: string|null,
  *   contentSizeBytes?: int|null,
@@ -42,6 +42,10 @@ final class ManagedAgentsMemoryVersion implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsMemoryVersionShape> */
     use SdkModel;
+
+    /** @var 'memory_version' $type */
+    #[Required(type: new ConstantOf('memory_version'))]
+    public string $type = 'memory_version';
 
     /**
      * Unique identifier for this version (a `memver_...` value).
@@ -76,10 +80,6 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      */
     #[Required(enum: ManagedAgentsMemoryVersionOperation::class)]
     public string $operation;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The memory's UTF-8 text content as of this version. `null` when `view=basic`, when `operation` is `deleted`, or when `redacted_at` is set.
@@ -141,12 +141,7 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsMemoryVersion::with(
-     *   id: ...,
-     *   createdAt: ...,
-     *   memoryID: ...,
-     *   memoryStoreID: ...,
-     *   operation: ...,
-     *   type: ...,
+     *   id: ..., createdAt: ..., memoryID: ..., memoryStoreID: ..., operation: ...
      * )
      * ```
      *
@@ -159,7 +154,6 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      *   ->withMemoryID(...)
      *   ->withMemoryStoreID(...)
      *   ->withOperation(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -173,7 +167,6 @@ final class ManagedAgentsMemoryVersion implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ManagedAgentsMemoryVersionOperation|value-of<ManagedAgentsMemoryVersionOperation> $operation
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsActorShape|null $createdBy
      * @param ManagedAgentsActorShape|null $redactedBy
      */
@@ -183,7 +176,6 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         string $memoryID,
         string $memoryStoreID,
         ManagedAgentsMemoryVersionOperation|string $operation,
-        Type|string $type,
         ?string $content = null,
         ?string $contentSha256 = null,
         ?int $contentSizeBytes = null,
@@ -199,7 +191,6 @@ final class ManagedAgentsMemoryVersion implements BaseModel
         $self['memoryID'] = $memoryID;
         $self['memoryStoreID'] = $memoryStoreID;
         $self['operation'] = $operation;
-        $self['type'] = $type;
 
         null !== $content && $self['content'] = $content;
         null !== $contentSha256 && $self['contentSha256'] = $contentSha256;
@@ -273,9 +264,9 @@ final class ManagedAgentsMemoryVersion implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'memory_version' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

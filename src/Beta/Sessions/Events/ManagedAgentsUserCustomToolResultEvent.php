@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEvent\Content;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Event sent by the client providing the result of a custom tool execution.
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ManagedAgentsUserCustomToolResultEventShape = array{
  *   id: string,
  *   customToolUseID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'user.custom_tool_result',
  *   content?: list<ContentShape>|null,
  *   isError?: bool|null,
  *   processedAt?: \DateTimeInterface|null,
@@ -31,6 +31,10 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsUserCustomToolResultEventShape> */
     use SdkModel;
+
+    /** @var 'user.custom_tool_result' $type */
+    #[Required(type: new ConstantOf('user.custom_tool_result'))]
+    public string $type = 'user.custom_tool_result';
 
     /**
      * Unique identifier for this event.
@@ -43,10 +47,6 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
      */
     #[Required('custom_tool_use_id')]
     public string $customToolUseID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The result content returned by the tool.
@@ -79,9 +79,7 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsUserCustomToolResultEvent::with(
-     *   id: ..., customToolUseID: ..., type: ...
-     * )
+     * ManagedAgentsUserCustomToolResultEvent::with(id: ..., customToolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -90,7 +88,6 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
      * (new ManagedAgentsUserCustomToolResultEvent())
      *   ->withID(...)
      *   ->withCustomToolUseID(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -103,13 +100,11 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param list<ContentShape>|null $content
      */
     public static function with(
         string $id,
         string $customToolUseID,
-        Type|string $type,
         ?array $content = null,
         ?bool $isError = null,
         ?\DateTimeInterface $processedAt = null,
@@ -119,7 +114,6 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
 
         $self['id'] = $id;
         $self['customToolUseID'] = $customToolUseID;
-        $self['type'] = $type;
 
         null !== $content && $self['content'] = $content;
         null !== $isError && $self['isError'] = $isError;
@@ -152,9 +146,9 @@ final class ManagedAgentsUserCustomToolResultEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.custom_tool_result' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

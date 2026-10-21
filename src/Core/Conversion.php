@@ -52,7 +52,7 @@ final class Conversion
 
     public static function coerce(Converter|ConverterSource|string $target, mixed $value, CoerceState $state = new CoerceState): mixed
     {
-        if ($value instanceof $target) {
+        if ($value instanceof $target && !$value instanceof \BackedEnum) {
             ++$state->yes;
 
             return $value;

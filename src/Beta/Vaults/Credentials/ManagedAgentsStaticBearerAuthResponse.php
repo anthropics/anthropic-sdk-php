@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsStaticBearerAuthResponse\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Static bearer token credential details for an MCP server.
  *
  * @phpstan-type ManagedAgentsStaticBearerAuthResponseShape = array{
- *   mcpServerURL: string, type: Type|value-of<Type>
+ *   mcpServerURL: string, type: 'static_bearer'
  * }
  */
 final class ManagedAgentsStaticBearerAuthResponse implements BaseModel
@@ -21,30 +21,28 @@ final class ManagedAgentsStaticBearerAuthResponse implements BaseModel
     /** @use SdkModel<ManagedAgentsStaticBearerAuthResponseShape> */
     use SdkModel;
 
+    /** @var 'static_bearer' $type */
+    #[Required(type: new ConstantOf('static_bearer'))]
+    public string $type = 'static_bearer';
+
     /**
      * URL of the MCP server this credential authenticates against.
      */
     #[Required('mcp_server_url')]
     public string $mcpServerURL;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsStaticBearerAuthResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsStaticBearerAuthResponse::with(mcpServerURL: ..., type: ...)
+     * ManagedAgentsStaticBearerAuthResponse::with(mcpServerURL: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsStaticBearerAuthResponse())
-     *   ->withMCPServerURL(...)
-     *   ->withType(...)
+     * (new ManagedAgentsStaticBearerAuthResponse())->withMCPServerURL(...)
      * ```
      */
     public function __construct()
@@ -56,15 +54,12 @@ final class ManagedAgentsStaticBearerAuthResponse implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $mcpServerURL, Type|string $type): self
+    public static function with(string $mcpServerURL): self
     {
         $self = new self;
 
         $self['mcpServerURL'] = $mcpServerURL;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -81,9 +76,9 @@ final class ManagedAgentsStaticBearerAuthResponse implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'static_bearer' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

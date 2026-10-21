@@ -35,13 +35,14 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type ToolShape from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
+ * @phpstan-import-type BetaMessageParamVariants from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\MessageCountTokensParams\System
  * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type ToolVariants from \Anthropic\Beta\Messages\MessageCountTokensParams\Tool
  *
  * @phpstan-type MessageCountTokensParamsShape = array{
- *   messages: list<BetaMessageParam|BetaMessageParamShape>,
+ *   messages: list<BetaMessageParamShape>,
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   compaction?: null|BetaCompactionConfig|BetaCompactionConfigShape,
@@ -111,11 +112,11 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See [input examples](https://platform.claude.com/docs/en/build-with-claude/working-with-messages).
      *
-     * Note that if you want to include a [system prompt](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
+     * Note that if you want to include a [system prompt](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role), you can use the top-level `system` parameter.
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @var list<BetaMessageParam> $messages
+     * @var list<BetaMessageParamVariants> $messages
      */
     #[Required(list: BetaMessageParam::class)]
     public array $messages;
@@ -330,7 +331,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaMessageParam|BetaMessageParamShape> $messages
+     * @param list<BetaMessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
@@ -432,11 +433,11 @@ final class MessageCountTokensParams implements BaseModel
      *
      * See [input examples](https://platform.claude.com/docs/en/build-with-claude/working-with-messages).
      *
-     * Note that if you want to include a [system prompt](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role), you can use the top-level `system` parameter — there is no `"system"` role for input messages in the Messages API.
+     * Note that if you want to include a [system prompt](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#give-claude-a-role), you can use the top-level `system` parameter.
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<BetaMessageParam|BetaMessageParamShape> $messages
+     * @param list<BetaMessageParamShape> $messages
      */
     public function withMessages(array $messages): self
     {

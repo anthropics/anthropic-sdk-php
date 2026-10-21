@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Services;
 
-use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -40,7 +39,6 @@ final class ModelsService implements ModelsContract
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
      * @param string $modelID model identifier or alias
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -50,13 +48,10 @@ final class ModelsService implements ModelsContract
      */
     public function retrieve(
         string $modelID,
-        ?array $betas = null,
         ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): ModelInfo {
-        $params = Util::removeNulls(
-            ['betas' => $betas, 'workspaceID' => $workspaceID]
-        );
+        $params = Util::removeNulls(['workspaceID' => $workspaceID]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($modelID, params: $params, requestOptions: $requestOptions);
@@ -77,7 +72,6 @@ final class ModelsService implements ModelsContract
      * @param int $limit Query param: Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -92,7 +86,6 @@ final class ModelsService implements ModelsContract
         ?string $beforeID = null,
         ?array $lifecycle = null,
         ?int $limit = null,
-        ?array $betas = null,
         ?string $workspaceID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Page {
@@ -102,7 +95,6 @@ final class ModelsService implements ModelsContract
                 'beforeID' => $beforeID,
                 'lifecycle' => $lifecycle,
                 'limit' => $limit,
-                'betas' => $betas,
                 'workspaceID' => $workspaceID,
             ],
         );

@@ -73,24 +73,19 @@ final class Content implements ConverterSource
     ): ManagedAgentsTextBlock|ManagedAgentsImageBlock|ManagedAgentsDocumentBlock|ManagedAgentsRedactedBlock {
         return match ($type) {
             Type::TEXT, 'text' => ManagedAgentsTextBlock::with(
-                type: 'text',
-                text: $text ?? throw new \ArgumentCountError('$text is required'),
+                text: $text ?? throw new \ArgumentCountError('$text is required')
             ),
             Type::IMAGE, 'image' => ManagedAgentsImageBlock::with(
-                type: 'image',
                 // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
             ),
             Type::DOCUMENT, 'document' => ManagedAgentsDocumentBlock::with(
-                type: 'document',
                 // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
                 context: $context,
                 title: $title,
             ),
-            Type::REDACTED, 'redacted' => ManagedAgentsRedactedBlock::with(
-                type: 'redacted'
-            ),
+            Type::REDACTED, 'redacted' => ManagedAgentsRedactedBlock::with(),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))
         };
     }

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\MemoryStores;
 
-use Anthropic\Beta\MemoryStores\BetaManagedAgentsDeletedMemoryStore\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Confirmation that a `memory_store` was deleted.
  *
  * @phpstan-type BetaManagedAgentsDeletedMemoryStoreShape = array{
- *   id: string, type: Type|value-of<Type>
+ *   id: string, type: 'memory_store_deleted'
  * }
  */
 final class BetaManagedAgentsDeletedMemoryStore implements BaseModel
@@ -21,28 +21,28 @@ final class BetaManagedAgentsDeletedMemoryStore implements BaseModel
     /** @use SdkModel<BetaManagedAgentsDeletedMemoryStoreShape> */
     use SdkModel;
 
+    /** @var 'memory_store_deleted' $type */
+    #[Required(type: new ConstantOf('memory_store_deleted'))]
+    public string $type = 'memory_store_deleted';
+
     /**
      * ID of the deleted memory store (a `memstore_...` identifier). The store and all its memories and versions are no longer retrievable.
      */
     #[Required]
     public string $id;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsDeletedMemoryStore()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsDeletedMemoryStore::with(id: ..., type: ...)
+     * BetaManagedAgentsDeletedMemoryStore::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeletedMemoryStore())->withID(...)->withType(...)
+     * (new BetaManagedAgentsDeletedMemoryStore())->withID(...)
      * ```
      */
     public function __construct()
@@ -54,15 +54,12 @@ final class BetaManagedAgentsDeletedMemoryStore implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $id, Type|string $type): self
+    public static function with(string $id): self
     {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +76,9 @@ final class BetaManagedAgentsDeletedMemoryStore implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'memory_store_deleted' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

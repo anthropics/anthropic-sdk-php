@@ -68,18 +68,15 @@ final class BetaManagedAgentsDeploymentInitialEventParams implements ConverterSo
     ): ManagedAgentsUserMessageEventParams|ManagedAgentsUserDefineOutcomeEventParams|ManagedAgentsSystemMessageEventParams {
         return match ($type) {
             Type::USER_MESSAGE, 'user.message' => ManagedAgentsUserMessageEventParams::with(
-                type: 'user.message',
                 // @phpstan-ignore argument.type
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),
             Type::USER_DEFINE_OUTCOME, 'user.define_outcome' => ManagedAgentsUserDefineOutcomeEventParams::with(
-                type: 'user.define_outcome',
                 description: $description ?? throw new \ArgumentCountError('$description is required'),
                 rubric: $rubric ?? throw new \ArgumentCountError('$rubric is required'),
                 maxIterations: $maxIterations,
             ),
             Type::SYSTEM_MESSAGE, 'system.message' => ManagedAgentsSystemMessageEventParams::with(
-                type: 'system.message',
                 // @phpstan-ignore argument.type
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),

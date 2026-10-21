@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\MemoryStores;
 
-use Anthropic\Beta\MemoryStores\BetaManagedAgentsMemoryStore\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A `memory_store`: a named container for agent memories, scoped to a workspace. Attach a store to a session via `resources[]` to mount it as a directory the agent can read and write.
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   description: string,
  *   metadata: array<string,string>,
  *   name: string,
- *   type: Type|value-of<Type>,
+ *   type: 'memory_store',
  *   updatedAt: \DateTimeInterface,
  * }
  */
@@ -27,6 +27,10 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsMemoryStoreShape> */
     use SdkModel;
+
+    /** @var 'memory_store' $type */
+    #[Required(type: new ConstantOf('memory_store'))]
+    public string $type = 'memory_store';
 
     /**
      * The unique ID of the memory store (`memstore_...`). Use it to attach the store to a session.
@@ -72,10 +76,6 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     #[Required]
     public string $name;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * When the memory store was last changed, in RFC 3339.
      *
@@ -96,7 +96,6 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
      *   description: ...,
      *   metadata: ...,
      *   name: ...,
-     *   type: ...,
      *   updatedAt: ...,
      * )
      * ```
@@ -111,7 +110,6 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
      *   ->withDescription(...)
      *   ->withMetadata(...)
      *   ->withName(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -126,7 +124,6 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,string> $metadata
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -135,7 +132,6 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
         string $description,
         array $metadata,
         string $name,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -146,7 +142,6 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
         $self['description'] = $description;
         $self['metadata'] = $metadata;
         $self['name'] = $name;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
 
         return $self;
@@ -227,9 +222,9 @@ final class BetaManagedAgentsMemoryStore implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'memory_store' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

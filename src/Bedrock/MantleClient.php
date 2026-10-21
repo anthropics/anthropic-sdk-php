@@ -6,6 +6,7 @@ namespace Anthropic\Bedrock;
 
 use Anthropic\Aws\AwsAuth;
 use Anthropic\Bedrock\Services\MantleMessagesService;
+use Anthropic\Client;
 use Anthropic\Core\BaseClient;
 use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
@@ -21,17 +22,17 @@ use const Anthropic\VERSION;
  *
  * Connects to the Bedrock Mantle gateway at
  * https://bedrock-mantle.{region}.api.aws/anthropic with support for
- * x-api-key auth and AWS SigV4 signing.
+ * API key auth and AWS SigV4 signing.
  *
  * Only the /v1/messages endpoint (and subpaths) are supported.
  *
  * Auth is resolved by precedence:
  *  0. $skipAuth (no auth — skips all below)
- *  1. $apiKey arg (x-api-key header)
+ *  1. $apiKey arg (Authorization: Bearer header)
  *  2. $awsAccessKey + $awsSecretAccessKey args (SigV4)
  *  3. $awsProfile arg (SigV4 via named profile)
- *  4. AWS_BEARER_TOKEN_BEDROCK env var (x-api-key header)
- *  5. ANTHROPIC_AWS_API_KEY env var fallback (x-api-key header)
+ *  4. AWS_BEARER_TOKEN_BEDROCK env var (Authorization: Bearer header)
+ *  5. ANTHROPIC_AWS_API_KEY env var fallback (Authorization: Bearer header)
  *  6. Default AWS credential chain (SigV4)
  *
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
@@ -76,7 +77,6 @@ final class MantleClient extends BaseClient
             awsRegion: $awsRegion,
             baseUrl: $baseUrl,
             skipAuth: $skipAuth,
-            useBearerAuth: true,
         );
 
         try {
@@ -95,7 +95,7 @@ final class MantleClient extends BaseClient
 
         parent::__construct(
             headers: [
-                'anthropic-version' => '2023-06-01',
+                'anthropic-version' => Client::ANTHROPIC_API_VERSION,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
                 'User-Agent' => sprintf('anthropic/PHP %s', VERSION),

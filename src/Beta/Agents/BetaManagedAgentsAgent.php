@@ -6,11 +6,11 @@ namespace Anthropic\Beta\Agents;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent\Skill;
 use Anthropic\Beta\Agents\BetaManagedAgentsAgent\Tool;
-use Anthropic\Beta\Agents\BetaManagedAgentsAgent\Type;
 use Anthropic\Beta\Sessions\BetaManagedAgentsMultiagent;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A Managed Agents `agent`.
@@ -40,7 +40,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   skills: list<SkillShape>,
  *   system: string|null,
  *   tools: list<ToolShape>,
- *   type: Type|value-of<Type>,
+ *   type: 'agent',
  *   updatedAt: \DateTimeInterface,
  *   version: int,
  * }
@@ -49,6 +49,10 @@ final class BetaManagedAgentsAgent implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsAgentShape> */
     use SdkModel;
+
+    /** @var 'agent' $type */
+    #[Required(type: new ConstantOf('agent'))]
+    public string $type = 'agent';
 
     #[Required]
     public string $id;
@@ -118,10 +122,6 @@ final class BetaManagedAgentsAgent implements BaseModel
     #[Required(list: Tool::class)]
     public array $tools;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * A timestamp in RFC 3339 format.
      */
@@ -153,7 +153,6 @@ final class BetaManagedAgentsAgent implements BaseModel
      *   skills: ...,
      *   system: ...,
      *   tools: ...,
-     *   type: ...,
      *   updatedAt: ...,
      *   version: ...,
      * )
@@ -176,7 +175,6 @@ final class BetaManagedAgentsAgent implements BaseModel
      *   ->withSkills(...)
      *   ->withSystem(...)
      *   ->withTools(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      *   ->withVersion(...)
      * ```
@@ -198,7 +196,6 @@ final class BetaManagedAgentsAgent implements BaseModel
      * @param BetaManagedAgentsMultiagentShape|null $multiagent
      * @param list<SkillShape> $skills
      * @param list<ToolShape> $tools
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -214,7 +211,6 @@ final class BetaManagedAgentsAgent implements BaseModel
         array $skills,
         ?string $system,
         array $tools,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
         int $version,
     ): self {
@@ -233,7 +229,6 @@ final class BetaManagedAgentsAgent implements BaseModel
         $self['skills'] = $skills;
         $self['system'] = $system;
         $self['tools'] = $tools;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
         $self['version'] = $version;
 
@@ -380,9 +375,9 @@ final class BetaManagedAgentsAgent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

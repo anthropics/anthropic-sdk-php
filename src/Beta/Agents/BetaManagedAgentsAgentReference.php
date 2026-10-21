@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsAgentReference\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A resolved agent reference with a concrete version.
  *
  * @phpstan-type BetaManagedAgentsAgentReferenceShape = array{
- *   id: string, type: Type|value-of<Type>, version: int
+ *   id: string, type: 'agent', version: int
  * }
  */
 final class BetaManagedAgentsAgentReference implements BaseModel
@@ -21,12 +21,12 @@ final class BetaManagedAgentsAgentReference implements BaseModel
     /** @use SdkModel<BetaManagedAgentsAgentReferenceShape> */
     use SdkModel;
 
+    /** @var 'agent' $type */
+    #[Required(type: new ConstantOf('agent'))]
+    public string $type = 'agent';
+
     #[Required]
     public string $id;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     #[Required]
     public int $version;
@@ -36,16 +36,13 @@ final class BetaManagedAgentsAgentReference implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsAgentReference::with(id: ..., type: ..., version: ...)
+     * BetaManagedAgentsAgentReference::with(id: ..., version: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentReference())
-     *   ->withID(...)
-     *   ->withType(...)
-     *   ->withVersion(...)
+     * (new BetaManagedAgentsAgentReference())->withID(...)->withVersion(...)
      * ```
      */
     public function __construct()
@@ -57,18 +54,12 @@ final class BetaManagedAgentsAgentReference implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $id,
-        Type|string $type,
-        int $version
-    ): self {
+    public static function with(string $id, int $version): self
+    {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
         $self['version'] = $version;
 
         return $self;
@@ -83,9 +74,9 @@ final class BetaManagedAgentsAgentReference implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

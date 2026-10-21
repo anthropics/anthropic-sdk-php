@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Dreams;
 
-use Anthropic\Beta\Dreams\BetaDreamSessionsInput\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The sessions that a dream reads, given as an entry in `inputs`.
  *
  * @phpstan-type BetaDreamSessionsInputShape = array{
- *   sessionIDs: list<string>, type: Type|value-of<Type>
+ *   sessionIDs: list<string>, type: 'sessions'
  * }
  */
 final class BetaDreamSessionsInput implements BaseModel
 {
     /** @use SdkModel<BetaDreamSessionsInputShape> */
     use SdkModel;
+
+    /** @var 'sessions' $type */
+    #[Required(type: new ConstantOf('sessions'))]
+    public string $type = 'sessions';
 
     /**
      * The IDs of the sessions whose transcripts the dream reads (`sesn_...`).
@@ -33,22 +37,18 @@ final class BetaDreamSessionsInput implements BaseModel
     #[Required('session_ids', list: 'string')]
     public array $sessionIDs;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaDreamSessionsInput()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaDreamSessionsInput::with(sessionIDs: ..., type: ...)
+     * BetaDreamSessionsInput::with(sessionIDs: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaDreamSessionsInput())->withSessionIDs(...)->withType(...)
+     * (new BetaDreamSessionsInput())->withSessionIDs(...)
      * ```
      */
     public function __construct()
@@ -62,14 +62,12 @@ final class BetaDreamSessionsInput implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $sessionIDs
-     * @param Type|value-of<Type> $type
      */
-    public static function with(array $sessionIDs, Type|string $type): self
+    public static function with(array $sessionIDs): self
     {
         $self = new self;
 
         $self['sessionIDs'] = $sessionIDs;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -92,9 +90,9 @@ final class BetaDreamSessionsInput implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'sessions' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

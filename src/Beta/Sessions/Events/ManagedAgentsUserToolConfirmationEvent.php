@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEvent\Result;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserToolConfirmationEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A tool confirmation event that approves or denies a pending tool execution.
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   id: string,
  *   result: Result|value-of<Result>,
  *   toolUseID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'user.tool_confirmation',
  *   denyMessage?: string|null,
  *   processedAt?: \DateTimeInterface|null,
  *   sessionThreadID?: string|null,
@@ -28,6 +28,10 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsUserToolConfirmationEventShape> */
     use SdkModel;
+
+    /** @var 'user.tool_confirmation' $type */
+    #[Required(type: new ConstantOf('user.tool_confirmation'))]
+    public string $type = 'user.tool_confirmation';
 
     /**
      * Unique identifier for this event.
@@ -48,10 +52,6 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
      */
     #[Required('tool_use_id')]
     public string $toolUseID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Optional message providing context for a 'deny' decision. Only allowed when result is 'deny'.
@@ -77,7 +77,7 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsUserToolConfirmationEvent::with(
-     *   id: ..., result: ..., toolUseID: ..., type: ...
+     *   id: ..., result: ..., toolUseID: ...
      * )
      * ```
      *
@@ -88,7 +88,6 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
      *   ->withID(...)
      *   ->withResult(...)
      *   ->withToolUseID(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -102,13 +101,11 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Result|value-of<Result> $result
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         Result|string $result,
         string $toolUseID,
-        Type|string $type,
         ?string $denyMessage = null,
         ?\DateTimeInterface $processedAt = null,
         ?string $sessionThreadID = null,
@@ -118,7 +115,6 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
         $self['id'] = $id;
         $self['result'] = $result;
         $self['toolUseID'] = $toolUseID;
-        $self['type'] = $type;
 
         null !== $denyMessage && $self['denyMessage'] = $denyMessage;
         null !== $processedAt && $self['processedAt'] = $processedAt;
@@ -163,9 +159,9 @@ final class ManagedAgentsUserToolConfirmationEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.tool_confirmation' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

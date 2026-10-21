@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThinkingEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Indicates the agent is making forward progress via extended thinking. A progress signal, not a content carrier.
  *
  * @phpstan-type ManagedAgentsAgentThinkingEventShape = array{
- *   id: string, processedAt: \DateTimeInterface, type: Type|value-of<Type>
+ *   id: string, processedAt: \DateTimeInterface, type: 'agent.thinking'
  * }
  */
 final class ManagedAgentsAgentThinkingEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsAgentThinkingEventShape> */
     use SdkModel;
+
+    /** @var 'agent.thinking' $type */
+    #[Required(type: new ConstantOf('agent.thinking'))]
+    public string $type = 'agent.thinking';
 
     /**
      * Unique identifier for this event.
@@ -33,25 +37,18 @@ final class ManagedAgentsAgentThinkingEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsAgentThinkingEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsAgentThinkingEvent::with(id: ..., processedAt: ..., type: ...)
+     * ManagedAgentsAgentThinkingEvent::with(id: ..., processedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsAgentThinkingEvent())
-     *   ->withID(...)
-     *   ->withProcessedAt(...)
-     *   ->withType(...)
+     * (new ManagedAgentsAgentThinkingEvent())->withID(...)->withProcessedAt(...)
      * ```
      */
     public function __construct()
@@ -63,19 +60,15 @@ final class ManagedAgentsAgentThinkingEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
-        \DateTimeInterface $processedAt,
-        Type|string $type
+        \DateTimeInterface $processedAt
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -103,9 +96,9 @@ final class ManagedAgentsAgentThinkingEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent.thinking' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

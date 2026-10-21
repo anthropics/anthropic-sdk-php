@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError\RetryStatus;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An `environment_variable` credential's `auth.networking.allowed_hosts` includes a host the environment's network policy does not permit.
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   credentialID: string,
  *   message: string,
  *   retryStatus: RetryStatusShape,
- *   type: Type|value-of<Type>,
+ *   type: 'credential_host_unreachable_error',
  *   vaultID: string,
  * }
  */
@@ -28,6 +28,10 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsCredentialHostUnreachableErrorShape> */
     use SdkModel;
+
+    /** @var 'credential_host_unreachable_error' $type */
+    #[Required(type: new ConstantOf('credential_host_unreachable_error'))]
+    public string $type = 'credential_host_unreachable_error';
 
     /**
      * ID of the affected credential.
@@ -49,10 +53,6 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
     #[Required('retry_status', union: RetryStatus::class)]
     public ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * ID of the vault containing the affected credential.
      */
@@ -65,7 +65,7 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsCredentialHostUnreachableError::with(
-     *   credentialID: ..., message: ..., retryStatus: ..., type: ..., vaultID: ...
+     *   credentialID: ..., message: ..., retryStatus: ..., vaultID: ...
      * )
      * ```
      *
@@ -76,7 +76,6 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
      *   ->withCredentialID(...)
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
-     *   ->withType(...)
      *   ->withVaultID(...)
      * ```
      */
@@ -91,13 +90,11 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RetryStatusShape $retryStatus
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $credentialID,
         string $message,
         ManagedAgentsRetryStatusRetrying|array|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus,
-        Type|string $type,
         string $vaultID,
     ): self {
         $self = new self;
@@ -105,7 +102,6 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
         $self['credentialID'] = $credentialID;
         $self['message'] = $message;
         $self['retryStatus'] = $retryStatus;
-        $self['type'] = $type;
         $self['vaultID'] = $vaultID;
 
         return $self;
@@ -148,9 +144,9 @@ final class ManagedAgentsCredentialHostUnreachableError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'credential_host_unreachable_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;
