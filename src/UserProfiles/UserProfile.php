@@ -14,13 +14,17 @@ use Anthropic\Core\Conversion\ConstantOf;
  *
  * A Messages, Message Batches or token counting request can send a profile's `id` in the `anthropic-user-profile-id` header to attribute the request to that entity.
  *
+ * @phpstan-import-type UserProfileEnforcementActionShape from \Anthropic\UserProfiles\UserProfileEnforcementAction
  * @phpstan-import-type UserProfileExternalUserDetailsShape from \Anthropic\UserProfiles\UserProfileExternalUserDetails
  * @phpstan-import-type UserProfileProgramsShape from \Anthropic\UserProfiles\UserProfilePrograms
+ * @phpstan-import-type UserProfileEnforcementActionVariants from \Anthropic\UserProfiles\UserProfileEnforcementAction
  *
  * @phpstan-type UserProfileShape = array{
  *   id: string,
  *   accessType: UserProfileAccessType|value-of<UserProfileAccessType>,
  *   createdAt: \DateTimeInterface,
+ *   enforcementActions: list<UserProfileEnforcementActionShape>,
+ *   enforcementStatus: UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>,
  *   externalUserDetails: UserProfileExternalUserDetails|UserProfileExternalUserDetailsShape,
  *   metadata: array<string,string>,
  *   name: string|null,
@@ -63,6 +67,22 @@ final class UserProfile implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
+     * The enforcement actions open on this profile; empty when none is open. Absent under the `user-profiles-2026-09-04` and earlier beta headers.
+     *
+     * @var list<UserProfileEnforcementActionVariants> $enforcementActions
+     */
+    #[Required('enforcement_actions', list: UserProfileEnforcementAction::class)]
+    public array $enforcementActions;
+
+    /**
+     * Anthropic's enforcement status of this profile, from its open enforcement actions and any identity check under review, by the first rule that applies: `banned` while any open action is a `ban`; `pending` while a restriction that an identity check can clear is open, the end user has submitted that check, Anthropic's review of it has not ended, and no open action's `reason` is `account_compromise`; `restricted` while any action is open; `unrestricted` while none is. Absent under the `user-profiles-2026-09-04` and earlier beta headers.
+     *
+     * @var value-of<UserProfileEnforcementStatus> $enforcementStatus
+     */
+    #[Required('enforcement_status', enum: UserProfileEnforcementStatus::class)]
+    public string $enforcementStatus;
+
+    /**
      * Details about the entity this profile represents, as the platform states them; not verified by Anthropic. Every field is present, `null` until the platform supplies a value. Absent under the legacy `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers, which serve `reference_id` as the top-level `external_id` and, under `user-profiles-2026-08-18`, `onboarded_at` as `external_user_onboarded_at`.
      */
     #[Required('external_user_details')]
@@ -103,6 +123,8 @@ final class UserProfile implements BaseModel
      *   id: ...,
      *   accessType: ...,
      *   createdAt: ...,
+     *   enforcementActions: ...,
+     *   enforcementStatus: ...,
      *   externalUserDetails: ...,
      *   metadata: ...,
      *   name: ...,
@@ -118,6 +140,8 @@ final class UserProfile implements BaseModel
      *   ->withID(...)
      *   ->withAccessType(...)
      *   ->withCreatedAt(...)
+     *   ->withEnforcementActions(...)
+     *   ->withEnforcementStatus(...)
      *   ->withExternalUserDetails(...)
      *   ->withMetadata(...)
      *   ->withName(...)
@@ -136,6 +160,8 @@ final class UserProfile implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param UserProfileAccessType|value-of<UserProfileAccessType> $accessType
+     * @param list<UserProfileEnforcementActionShape> $enforcementActions
+     * @param UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus> $enforcementStatus
      * @param UserProfileExternalUserDetails|UserProfileExternalUserDetailsShape $externalUserDetails
      * @param array<string,string> $metadata
      * @param UserProfilePrograms|UserProfileProgramsShape $programs
@@ -144,6 +170,8 @@ final class UserProfile implements BaseModel
         string $id,
         UserProfileAccessType|string $accessType,
         \DateTimeInterface $createdAt,
+        array $enforcementActions,
+        UserProfileEnforcementStatus|string $enforcementStatus,
         UserProfileExternalUserDetails|array $externalUserDetails,
         array $metadata,
         ?string $name,
@@ -155,6 +183,8 @@ final class UserProfile implements BaseModel
         $self['id'] = $id;
         $self['accessType'] = $accessType;
         $self['createdAt'] = $createdAt;
+        $self['enforcementActions'] = $enforcementActions;
+        $self['enforcementStatus'] = $enforcementStatus;
         $self['externalUserDetails'] = $externalUserDetails;
         $self['metadata'] = $metadata;
         $self['name'] = $name;
@@ -196,6 +226,33 @@ final class UserProfile implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * The enforcement actions open on this profile; empty when none is open. Absent under the `user-profiles-2026-09-04` and earlier beta headers.
+     *
+     * @param list<UserProfileEnforcementActionShape> $enforcementActions
+     */
+    public function withEnforcementActions(array $enforcementActions): self
+    {
+        $self = clone $this;
+        $self['enforcementActions'] = $enforcementActions;
+
+        return $self;
+    }
+
+    /**
+     * Anthropic's enforcement status of this profile, from its open enforcement actions and any identity check under review, by the first rule that applies: `banned` while any open action is a `ban`; `pending` while a restriction that an identity check can clear is open, the end user has submitted that check, Anthropic's review of it has not ended, and no open action's `reason` is `account_compromise`; `restricted` while any action is open; `unrestricted` while none is. Absent under the `user-profiles-2026-09-04` and earlier beta headers.
+     *
+     * @param UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus> $enforcementStatus
+     */
+    public function withEnforcementStatus(
+        UserProfileEnforcementStatus|string $enforcementStatus
+    ): self {
+        $self = clone $this;
+        $self['enforcementStatus'] = $enforcementStatus;
 
         return $self;
     }

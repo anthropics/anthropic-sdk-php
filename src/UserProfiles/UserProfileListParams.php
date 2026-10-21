@@ -15,6 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\UserProfilesService::list()
  *
  * @phpstan-type UserProfileListParamsShape = array{
+ *   enforcementStatus?: list<UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>>|null,
  *   limit?: int|null,
  *   order?: null|UserProfileListOrder|value-of<UserProfileListOrder>,
  *   orderBy?: null|UserProfileListOrderBy|value-of<UserProfileListOrderBy>,
@@ -27,6 +28,14 @@ final class UserProfileListParams implements BaseModel
     /** @use SdkModel<UserProfileListParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * Return only the user profiles whose `enforcement_status` is one of these values: `unrestricted`, `pending`, `restricted` or `banned`. Repeat the parameter to match any of several. With it set, a page may hold fewer than `limit` profiles, or none, and still carry a `next_page`: the service examines a bounded number of profiles per request, and only a null `next_page` means the listing is complete. Rejected with `invalid_request_error` under the `user-profiles-2026-09-04` and earlier beta headers. Fails with `overloaded_error` when a profile's enforcement actions cannot be read for the moment.
+     *
+     * @var list<value-of<UserProfileEnforcementStatus>>|null $enforcementStatus
+     */
+    #[Optional(list: UserProfileEnforcementStatus::class)]
+    public ?array $enforcementStatus;
 
     /**
      * The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
@@ -76,10 +85,12 @@ final class UserProfileListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>>|null $enforcementStatus
      * @param UserProfileListOrder|value-of<UserProfileListOrder>|null $order
      * @param UserProfileListOrderBy|value-of<UserProfileListOrderBy>|null $orderBy
      */
     public static function with(
+        ?array $enforcementStatus = null,
         ?int $limit = null,
         UserProfileListOrder|string|null $order = null,
         UserProfileListOrderBy|string|null $orderBy = null,
@@ -88,11 +99,25 @@ final class UserProfileListParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $enforcementStatus && $self['enforcementStatus'] = $enforcementStatus;
         null !== $limit && $self['limit'] = $limit;
         null !== $order && $self['order'] = $order;
         null !== $orderBy && $self['orderBy'] = $orderBy;
         null !== $page && $self['page'] = $page;
         null !== $workspaceID && $self['workspaceID'] = $workspaceID;
+
+        return $self;
+    }
+
+    /**
+     * Return only the user profiles whose `enforcement_status` is one of these values: `unrestricted`, `pending`, `restricted` or `banned`. Repeat the parameter to match any of several. With it set, a page may hold fewer than `limit` profiles, or none, and still carry a `next_page`: the service examines a bounded number of profiles per request, and only a null `next_page` means the listing is complete. Rejected with `invalid_request_error` under the `user-profiles-2026-09-04` and earlier beta headers. Fails with `overloaded_error` when a profile's enforcement actions cannot be read for the moment.
+     *
+     * @param list<UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>> $enforcementStatus
+     */
+    public function withEnforcementStatus(array $enforcementStatus): self
+    {
+        $self = clone $this;
+        $self['enforcementStatus'] = $enforcementStatus;
 
         return $self;
     }

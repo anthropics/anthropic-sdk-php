@@ -14,6 +14,7 @@ use Anthropic\Services\UserProfiles\ActionURLsService;
 use Anthropic\UserProfiles\DeletedUserProfile;
 use Anthropic\UserProfiles\UserProfile;
 use Anthropic\UserProfiles\UserProfileAccessType;
+use Anthropic\UserProfiles\UserProfileEnforcementStatus;
 use Anthropic\UserProfiles\UserProfileExternalUserDetailsParams;
 use Anthropic\UserProfiles\UserProfileListOrder;
 use Anthropic\UserProfiles\UserProfileListOrderBy;
@@ -156,6 +157,7 @@ final class UserProfilesService implements UserProfilesContract
      *
      * List User Profiles
      *
+     * @param list<UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>> $enforcementStatus Query param: Return only the user profiles whose `enforcement_status` is one of these values: `unrestricted`, `pending`, `restricted` or `banned`. Repeat the parameter to match any of several. With it set, a page may hold fewer than `limit` profiles, or none, and still carry a `next_page`: the service examines a bounded number of profiles per request, and only a null `next_page` means the listing is complete. Rejected with `invalid_request_error` under the `user-profiles-2026-09-04` and earlier beta headers. Fails with `overloaded_error` when a profile's enforcement actions cannot be read for the moment.
      * @param int $limit Query param: The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
      * @param UserProfileListOrder|value-of<UserProfileListOrder> $order Query param: The sort direction, applied to the field that `order_by` selects. Defaults to `desc`.
      * @param UserProfileListOrderBy|value-of<UserProfileListOrderBy> $orderBy Query param: The field to sort user profiles by, in the direction that `order` sets. Defaults to `created_at`.
@@ -172,6 +174,7 @@ final class UserProfilesService implements UserProfilesContract
      * @throws APIException
      */
     public function list(
+        ?array $enforcementStatus = null,
         ?int $limit = null,
         UserProfileListOrder|string|null $order = null,
         UserProfileListOrderBy|string|null $orderBy = null,
@@ -181,6 +184,7 @@ final class UserProfilesService implements UserProfilesContract
     ): PageCursor {
         $params = Util::removeNulls(
             [
+                'enforcementStatus' => $enforcementStatus,
                 'limit' => $limit,
                 'order' => $order,
                 'orderBy' => $orderBy,
