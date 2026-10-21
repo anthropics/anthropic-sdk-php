@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.62.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.61.0...v0.62.0) (2026-10-21)
+## [1.0.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.61.0...v1.0.0) (2026-10-21)
 
 ### ⚠ BREAKING CHANGES
 
