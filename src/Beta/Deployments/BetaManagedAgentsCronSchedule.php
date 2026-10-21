@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsCronSchedule\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * 5-field POSIX cron schedule with computed runtime timestamps.
@@ -16,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaManagedAgentsCronScheduleShape = array{
  *   expression: string,
  *   timezone: string,
- *   type: Type|value-of<Type>,
+ *   type: 'cron',
  *   lastRunAt?: \DateTimeInterface|null,
  *   upcomingRunsAt?: list<\DateTimeInterface>|null,
  * }
@@ -25,6 +25,10 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsCronScheduleShape> */
     use SdkModel;
+
+    /** @var 'cron' $type */
+    #[Required(type: new ConstantOf('cron'))]
+    public string $type = 'cron';
 
     /**
      * 5-field POSIX cron expression: minute hour day-of-month month day-of-week (e.g., "0 9 * * 1-5" for weekdays at 9am). Day-of-week is 0-7 where 0 and 7 both mean Sunday. Extended cron syntax - seconds or year fields, and the special characters L, W, #, and ? - is not supported, nor are predefined shortcuts (@daily).
@@ -37,10 +41,6 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
      */
     #[Required]
     public string $timezone;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Time the most recent scheduled run actually started. Null until one completes; preserved after the deployment is archived. Manual runs do not update this.
@@ -61,16 +61,13 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsCronSchedule::with(expression: ..., timezone: ..., type: ...)
+     * BetaManagedAgentsCronSchedule::with(expression: ..., timezone: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsCronSchedule())
-     *   ->withExpression(...)
-     *   ->withTimezone(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsCronSchedule())->withExpression(...)->withTimezone(...)
      * ```
      */
     public function __construct()
@@ -83,13 +80,11 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param list<\DateTimeInterface>|null $upcomingRunsAt
      */
     public static function with(
         string $expression,
         string $timezone,
-        Type|string $type,
         ?\DateTimeInterface $lastRunAt = null,
         ?array $upcomingRunsAt = null,
     ): self {
@@ -97,7 +92,6 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
 
         $self['expression'] = $expression;
         $self['timezone'] = $timezone;
-        $self['type'] = $type;
 
         null !== $lastRunAt && $self['lastRunAt'] = $lastRunAt;
         null !== $upcomingRunsAt && $self['upcomingRunsAt'] = $upcomingRunsAt;
@@ -128,9 +122,9 @@ final class BetaManagedAgentsCronSchedule implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'cron' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

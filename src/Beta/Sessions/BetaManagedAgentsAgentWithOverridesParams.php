@@ -10,11 +10,11 @@ use Anthropic\Beta\Agents\BetaManagedAgentsSkillParams;
 use Anthropic\Beta\Agents\BetaManagedAgentsURLMCPServerParams;
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Model;
 use Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Tool;
-use Anthropic\Beta\Sessions\BetaManagedAgentsAgentWithOverridesParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Reference to an `agent` plus optional configuration overrides. Each provided field replaces the agent's value for the caller's use; the agent resource is unchanged.
@@ -29,7 +29,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaManagedAgentsAgentWithOverridesParamsShape = array{
  *   id: string,
- *   type: Type|value-of<Type>,
+ *   type: 'agent_with_overrides',
  *   mcpServers?: list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null,
  *   model?: ModelShape|null,
  *   skills?: list<BetaManagedAgentsSkillParamsShape>|null,
@@ -43,15 +43,15 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
     /** @use SdkModel<BetaManagedAgentsAgentWithOverridesParamsShape> */
     use SdkModel;
 
+    /** @var 'agent_with_overrides' $type */
+    #[Required(type: new ConstantOf('agent_with_overrides'))]
+    public string $type = 'agent_with_overrides';
+
     /**
      * The `agent` ID.
      */
     #[Required]
     public string $id;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Replacement MCP server list. Full replacement: the provided array becomes the MCP servers. Send an empty array to clear; omit to preserve the agent's servers.
@@ -102,13 +102,13 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsAgentWithOverridesParams::with(id: ..., type: ...)
+     * BetaManagedAgentsAgentWithOverridesParams::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentWithOverridesParams())->withID(...)->withType(...)
+     * (new BetaManagedAgentsAgentWithOverridesParams())->withID(...)
      * ```
      */
     public function __construct()
@@ -121,7 +121,6 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param list<BetaManagedAgentsURLMCPServerParams|BetaManagedAgentsURLMCPServerParamsShape>|null $mcpServers
      * @param ModelShape|null $model
      * @param list<BetaManagedAgentsSkillParamsShape>|null $skills
@@ -129,7 +128,6 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
      */
     public static function with(
         string $id,
-        Type|string $type,
         ?array $mcpServers = null,
         BetaManagedAgentsModel|BetaManagedAgentsModelConfigParams|array|string|null $model = null,
         ?array $skills = null,
@@ -140,7 +138,6 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         null !== $mcpServers && $self['mcpServers'] = $mcpServers;
         null !== $model && $self['model'] = $model;
@@ -164,9 +161,9 @@ final class BetaManagedAgentsAgentWithOverridesParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent_with_overrides' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

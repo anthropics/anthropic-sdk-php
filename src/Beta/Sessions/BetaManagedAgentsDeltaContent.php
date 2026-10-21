@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Sessions\BetaManagedAgentsDeltaContent\Type;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ManagedAgentsTextBlockShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock
  *
  * @phpstan-type BetaManagedAgentsDeltaContentShape = array{
  *   content: ManagedAgentsTextBlock|ManagedAgentsTextBlockShape,
- *   type: Type|value-of<Type>,
+ *   type: 'content_delta',
  *   index?: int|null,
  * }
  */
@@ -25,15 +25,15 @@ final class BetaManagedAgentsDeltaContent implements BaseModel
     /** @use SdkModel<BetaManagedAgentsDeltaContentShape> */
     use SdkModel;
 
+    /** @var 'content_delta' $type */
+    #[Required(type: new ConstantOf('content_delta'))]
+    public string $type = 'content_delta';
+
     /**
      * A partial element of the content array at index, typed like the element itself — the same shape the buffered agent.message carries in content.
      */
     #[Required]
     public ManagedAgentsTextBlock $content;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Which entry in the previewed event's content array this fragment lands in. Insert content as that entry when the index is new; append to the existing entry otherwise.
@@ -46,13 +46,13 @@ final class BetaManagedAgentsDeltaContent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsDeltaContent::with(content: ..., type: ...)
+     * BetaManagedAgentsDeltaContent::with(content: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeltaContent())->withContent(...)->withType(...)
+     * (new BetaManagedAgentsDeltaContent())->withContent(...)
      * ```
      */
     public function __construct()
@@ -66,17 +66,14 @@ final class BetaManagedAgentsDeltaContent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ManagedAgentsTextBlock|ManagedAgentsTextBlockShape $content
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         ManagedAgentsTextBlock|array $content,
-        Type|string $type,
         ?int $index = null
     ): self {
         $self = new self;
 
         $self['content'] = $content;
-        $self['type'] = $type;
 
         null !== $index && $self['index'] = $index;
 
@@ -97,9 +94,9 @@ final class BetaManagedAgentsDeltaContent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'content_delta' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

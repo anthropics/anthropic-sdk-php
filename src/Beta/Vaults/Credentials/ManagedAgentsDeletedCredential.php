@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsDeletedCredential\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Confirmation of a deleted credential.
  *
  * @phpstan-type ManagedAgentsDeletedCredentialShape = array{
- *   id: string, type: Type|value-of<Type>
+ *   id: string, type: 'vault_credential_deleted'
  * }
  */
 final class ManagedAgentsDeletedCredential implements BaseModel
@@ -21,28 +21,28 @@ final class ManagedAgentsDeletedCredential implements BaseModel
     /** @use SdkModel<ManagedAgentsDeletedCredentialShape> */
     use SdkModel;
 
+    /** @var 'vault_credential_deleted' $type */
+    #[Required(type: new ConstantOf('vault_credential_deleted'))]
+    public string $type = 'vault_credential_deleted';
+
     /**
      * The unique ID of the deleted credential (`vcrd_...`).
      */
     #[Required]
     public string $id;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsDeletedCredential()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsDeletedCredential::with(id: ..., type: ...)
+     * ManagedAgentsDeletedCredential::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsDeletedCredential())->withID(...)->withType(...)
+     * (new ManagedAgentsDeletedCredential())->withID(...)
      * ```
      */
     public function __construct()
@@ -54,15 +54,12 @@ final class ManagedAgentsDeletedCredential implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $id, Type|string $type): self
+    public static function with(string $id): self
     {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +76,9 @@ final class ManagedAgentsDeletedCredential implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'vault_credential_deleted' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

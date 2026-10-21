@@ -32,6 +32,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  * @phpstan-import-type ThinkingConfigParamShape from \Anthropic\Messages\ThinkingConfigParam
  * @phpstan-import-type ToolChoiceShape from \Anthropic\Messages\ToolChoice
  * @phpstan-import-type ToolUnionShape from \Anthropic\Messages\ToolUnion
+ * @phpstan-import-type MessageParamVariants from \Anthropic\Messages\MessageParam
  * @phpstan-import-type MessageCreateParamsContainerVariants from \Anthropic\Messages\MessageCreateParamsContainer
  * @phpstan-import-type SystemVariants from \Anthropic\Messages\MessageCreateParams\System
  * @phpstan-import-type ThinkingConfigParamVariants from \Anthropic\Messages\ThinkingConfigParam
@@ -40,7 +41,7 @@ use Anthropic\Messages\MessageCreateParams\System;
  *
  * @phpstan-type MessageCreateParamsShape = array{
  *   maxTokens: int,
- *   messages: list<MessageParam|MessageParamShape>,
+ *   messages: list<MessageParamShape>,
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|CacheControlEphemeral|CacheControlEphemeralShape,
  *   container?: MessageCreateParamsContainerShape|null,
@@ -52,12 +53,9 @@ use Anthropic\Messages\MessageCreateParams\System;
  *   speed?: null|Speed|value-of<Speed>,
  *   stopSequences?: list<string>|null,
  *   system?: SystemShape|null,
- *   temperature?: float|null,
  *   thinking?: ThinkingConfigParamShape|null,
  *   toolChoice?: ToolChoiceShape|null,
  *   tools?: list<ToolUnionShape>|null,
- *   topK?: int|null,
- *   topP?: float|null,
  *   userProfileID?: string|null,
  *   workspaceID?: string|null,
  * }
@@ -130,7 +128,7 @@ final class MessageCreateParams implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @var list<MessageParam> $messages
+     * @var list<MessageParamVariants> $messages
      */
     #[Required(list: MessageParam::class)]
     public array $messages;
@@ -226,18 +224,6 @@ final class MessageCreateParams implements BaseModel
     public string|array|null $system;
 
     /**
-     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not support setting temperature. A value of 1.0 will be accepted for backwards compatibility, all other values will be rejected with a 400 error.
-     *
-     * Amount of randomness injected into the response.
-     *
-     * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
-     *
-     * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     */
-    #[Optional]
-    public ?float $temperature;
-
-    /**
      * Configuration for Claude's thinking.
      *
      * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
@@ -326,30 +312,6 @@ final class MessageCreateParams implements BaseModel
     public ?array $tools;
 
     /**
-     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not accept top_k; any value will be rejected with a 400 error.
-     *
-     * Only sample from the top K options for each subsequent token.
-     *
-     * Used to remove "long tail" low probability responses. [Learn more technical details here](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277).
-     *
-     * Recommended for advanced use cases only.
-     */
-    #[Optional('top_k')]
-    public ?int $topK;
-
-    /**
-     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not support setting top_p. A value >= 0.99 will be accepted for backwards compatibility, all other values will be rejected with a 400 error.
-     *
-     * Use nucleus sampling.
-     *
-     * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
-     *
-     * Recommended for advanced use cases only.
-     */
-    #[Optional('top_p')]
-    public ?float $topP;
-
-    /**
      * The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      */
     #[Optional]
@@ -390,7 +352,7 @@ final class MessageCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<MessageParam|MessageParamShape> $messages
+     * @param list<MessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
      * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl
      * @param MessageCreateParamsContainerShape|null $container
@@ -419,12 +381,9 @@ final class MessageCreateParams implements BaseModel
         Speed|string|null $speed = null,
         ?array $stopSequences = null,
         string|array|null $system = null,
-        ?float $temperature = null,
         ThinkingConfigEnabled|array|ThinkingConfigDisabled|ThinkingConfigBetweenTools|ThinkingConfigAdaptive|null $thinking = null,
         ToolChoiceAuto|array|ToolChoiceAny|ToolChoiceTool|ToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
-        ?int $topK = null,
-        ?float $topP = null,
         ?string $userProfileID = null,
         ?string $workspaceID = null,
     ): self {
@@ -444,12 +403,9 @@ final class MessageCreateParams implements BaseModel
         null !== $speed && $self['speed'] = $speed;
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $system && $self['system'] = $system;
-        null !== $temperature && $self['temperature'] = $temperature;
         null !== $thinking && $self['thinking'] = $thinking;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
         null !== $tools && $self['tools'] = $tools;
-        null !== $topK && $self['topK'] = $topK;
-        null !== $topP && $self['topP'] = $topP;
         null !== $userProfileID && $self['userProfileID'] = $userProfileID;
         null !== $workspaceID && $self['workspaceID'] = $workspaceID;
 
@@ -523,7 +479,7 @@ final class MessageCreateParams implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<MessageParam|MessageParamShape> $messages
+     * @param list<MessageParamShape> $messages
      */
     public function withMessages(array $messages): self
     {
@@ -690,21 +646,6 @@ final class MessageCreateParams implements BaseModel
     }
 
     /**
-     * Amount of randomness injected into the response.
-     *
-     * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
-     *
-     * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     */
-    public function withTemperature(float $temperature): self
-    {
-        $self = clone $this;
-        $self['temperature'] = $temperature;
-
-        return $self;
-    }
-
-    /**
      * Configuration for Claude's thinking.
      *
      * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
@@ -805,36 +746,6 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['tools'] = $tools;
-
-        return $self;
-    }
-
-    /**
-     * Only sample from the top K options for each subsequent token.
-     *
-     * Used to remove "long tail" low probability responses. [Learn more technical details here](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277).
-     *
-     * Recommended for advanced use cases only.
-     */
-    public function withTopK(int $topK): self
-    {
-        $self = clone $this;
-        $self['topK'] = $topK;
-
-        return $self;
-    }
-
-    /**
-     * Use nucleus sampling.
-     *
-     * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
-     *
-     * Recommended for advanced use cases only.
-     */
-    public function withTopP(float $topP): self
-    {
-        $self = clone $this;
-        $self['topP'] = $topP;
 
         return $self;
     }

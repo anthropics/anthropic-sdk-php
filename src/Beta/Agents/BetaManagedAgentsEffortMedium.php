@@ -4,41 +4,25 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsEffortMedium\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Medium effort. Balances latency and reasoning depth.
  *
- * @phpstan-type BetaManagedAgentsEffortMediumShape = array{
- *   type: Type|value-of<Type>
- * }
+ * @phpstan-type BetaManagedAgentsEffortMediumShape = array{type: 'medium'}
  */
 final class BetaManagedAgentsEffortMedium implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsEffortMediumShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'medium' $type */
+    #[Required(type: new ConstantOf('medium'))]
+    public string $type = 'medium';
 
-    /**
-     * `new BetaManagedAgentsEffortMedium()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsEffortMedium::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsEffortMedium())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +32,16 @@ final class BetaManagedAgentsEffortMedium implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'medium' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

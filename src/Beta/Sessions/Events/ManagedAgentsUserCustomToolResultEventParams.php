@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams\Content;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserCustomToolResultEventParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Parameters for providing the result of a custom tool execution.
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type ManagedAgentsUserCustomToolResultEventParamsShape = array{
  *   customToolUseID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'user.custom_tool_result',
  *   content?: list<ContentShape>|null,
  *   isError?: bool|null,
  * }
@@ -29,15 +29,15 @@ final class ManagedAgentsUserCustomToolResultEventParams implements BaseModel
     /** @use SdkModel<ManagedAgentsUserCustomToolResultEventParamsShape> */
     use SdkModel;
 
+    /** @var 'user.custom_tool_result' $type */
+    #[Required(type: new ConstantOf('user.custom_tool_result'))]
+    public string $type = 'user.custom_tool_result';
+
     /**
      * The id of the `agent.custom_tool_use` event this result corresponds to. It is also listed in the last `session.status_idle` [event's](https://platform.claude.com/docs/en/api/beta/sessions/events/list#beta_managed_agents_session_requires_action.event_ids) `stop_reason.event_ids` field.
      */
     #[Required('custom_tool_use_id')]
     public string $customToolUseID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The result content returned by the tool.
@@ -58,17 +58,13 @@ final class ManagedAgentsUserCustomToolResultEventParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsUserCustomToolResultEventParams::with(
-     *   customToolUseID: ..., type: ...
-     * )
+     * ManagedAgentsUserCustomToolResultEventParams::with(customToolUseID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserCustomToolResultEventParams())
-     *   ->withCustomToolUseID(...)
-     *   ->withType(...)
+     * (new ManagedAgentsUserCustomToolResultEventParams())->withCustomToolUseID(...)
      * ```
      */
     public function __construct()
@@ -81,19 +77,16 @@ final class ManagedAgentsUserCustomToolResultEventParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param list<ContentShape>|null $content
      */
     public static function with(
         string $customToolUseID,
-        Type|string $type,
         ?array $content = null,
-        ?bool $isError = null,
+        ?bool $isError = null
     ): self {
         $self = new self;
 
         $self['customToolUseID'] = $customToolUseID;
-        $self['type'] = $type;
 
         null !== $content && $self['content'] = $content;
         null !== $isError && $self['isError'] = $isError;
@@ -113,9 +106,9 @@ final class ManagedAgentsUserCustomToolResultEventParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.custom_tool_result' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

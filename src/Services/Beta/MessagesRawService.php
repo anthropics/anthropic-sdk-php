@@ -11,7 +11,6 @@ use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaDiagnosticsParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessage;
-use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaMessageTokensCount;
 use Anthropic\Beta\Messages\BetaMetadata;
 use Anthropic\Beta\Messages\BetaOutputConfig;
@@ -80,7 +79,7 @@ final class MessagesRawService implements MessagesRawContract
      *
      * @param array{
      *   maxTokens: int,
-     *   messages: list<BetaMessageParam|BetaMessageParamShape>,
+     *   messages: list<BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
@@ -98,12 +97,9 @@ final class MessagesRawService implements MessagesRawContract
      *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
-     *   temperature?: float,
      *   thinking?: BetaThinkingConfigParamShape,
      *   toolChoice?: BetaToolChoiceShape,
      *   tools?: list<BetaToolUnionShape>,
-     *   topK?: int,
-     *   topP?: float,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   userProfileID?: string,
      *   workspaceID?: string,
@@ -159,7 +155,7 @@ final class MessagesRawService implements MessagesRawContract
      *
      * @param array{
      *   maxTokens: int,
-     *   messages: list<BetaMessageParam|BetaMessageParamShape>,
+     *   messages: list<BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
@@ -177,12 +173,9 @@ final class MessagesRawService implements MessagesRawContract
      *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
-     *   temperature?: float,
      *   thinking?: BetaThinkingConfigParamShape,
      *   toolChoice?: BetaToolChoiceShape,
      *   tools?: list<BetaToolUnionShape>,
-     *   topK?: int,
-     *   topP?: float,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   userProfileID?: string,
      *   workspaceID?: string,
@@ -248,7 +241,7 @@ final class MessagesRawService implements MessagesRawContract
      * Learn more about token counting in our [user guide](https://platform.claude.com/docs/en/build-with-claude/token-counting)
      *
      * @param array{
-     *   messages: list<BetaMessageParam|BetaMessageParamShape>,
+     *   messages: list<BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,

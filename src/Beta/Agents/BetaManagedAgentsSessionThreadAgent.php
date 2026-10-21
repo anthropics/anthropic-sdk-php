@@ -6,10 +6,10 @@ namespace Anthropic\Beta\Agents;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Skill;
 use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Tool;
-use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Resolved `agent` definition for a single `session_thread`. Snapshot of the agent at thread creation time. The multiagent roster is not repeated here; read it from `Session.agent`.
@@ -33,7 +33,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   skills: list<SkillShape>,
  *   system: string|null,
  *   tools: list<ToolShape>,
- *   type: Type|value-of<Type>,
+ *   type: 'agent',
  *   version: int,
  * }
  */
@@ -41,6 +41,10 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsSessionThreadAgentShape> */
     use SdkModel;
+
+    /** @var 'agent' $type */
+    #[Required(type: new ConstantOf('agent'))]
+    public string $type = 'agent';
 
     #[Required]
     public string $id;
@@ -86,10 +90,6 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
     #[Required(list: Tool::class)]
     public array $tools;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     #[Required]
     public int $version;
 
@@ -108,7 +108,6 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
      *   skills: ...,
      *   system: ...,
      *   tools: ...,
-     *   type: ...,
      *   version: ...,
      * )
      * ```
@@ -126,7 +125,6 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
      *   ->withSkills(...)
      *   ->withSystem(...)
      *   ->withTools(...)
-     *   ->withType(...)
      *   ->withVersion(...)
      * ```
      */
@@ -145,7 +143,6 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
      * @param BetaManagedAgentsModelConfig|BetaManagedAgentsModelConfigShape $model
      * @param list<SkillShape> $skills
      * @param list<ToolShape> $tools
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -157,7 +154,6 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
         array $skills,
         ?string $system,
         array $tools,
-        Type|string $type,
         int $version,
     ): self {
         $self = new self;
@@ -171,7 +167,6 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
         $self['skills'] = $skills;
         $self['system'] = $system;
         $self['tools'] = $tools;
-        $self['type'] = $type;
         $self['version'] = $version;
 
         return $self;
@@ -270,9 +265,9 @@ final class BetaManagedAgentsSessionThreadAgent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

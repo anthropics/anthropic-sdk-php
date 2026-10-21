@@ -2,6 +2,7 @@
 
 namespace Tests\Vertex;
 
+use Anthropic\Core\Util;
 use Anthropic\Vertex\Client;
 use PHPUnit\Framework\TestCase;
 
@@ -57,6 +58,25 @@ class ClientTest extends TestCase
         $sent = $transporter->getLastRequest();
         $this->assertInstanceOf(\Psr\Http\Message\RequestInterface::class, $sent);
         $this->assertSame('Bearer static-token', $sent->getHeaderLine('Authorization'));
+    }
+
+    public function testAnthropicCredentialEnvDoesNotLeak(): void
+    {
+        $names = ['ANTHROPIC_API_KEY', 'ANTHROPIC_AUTH_TOKEN'];
+        $original = array_map(Util::getenv(...), array_combine($names, $names));
+        putenv('ANTHROPIC_API_KEY=leaked-key');
+        putenv('ANTHROPIC_AUTH_TOKEN=leaked-token');
+
+        try {
+            $client = Client::withAccessToken('static-token', region: 'us-east5', projectId: 'p');
+        } finally {
+            foreach ($original as $name => $value) {
+                putenv(is_null($value) ? $name : "{$name}={$value}");
+            }
+        }
+
+        $this->assertSame('', $client->apiKey);
+        $this->assertSame('', $client->authToken);
     }
 
     public function testExtraQueryParamsKeepGeneratedEncoding(): void

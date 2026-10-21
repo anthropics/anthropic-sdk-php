@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentToolUseEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Event emitted when the agent invokes a built-in agent tool.
@@ -21,7 +21,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   input: array<string,mixed>,
  *   name: string,
  *   processedAt: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'agent.tool_use',
  *   evaluatedPermission?: null|ManagedAgentsAgentEvaluatedPermission|value-of<ManagedAgentsAgentEvaluatedPermission>,
  *   evaluation?: ManagedAgentsAgentToolEvaluationShape|null,
  *   sessionThreadID?: string|null,
@@ -31,6 +31,10 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsAgentToolUseEventShape> */
     use SdkModel;
+
+    /** @var 'agent.tool_use' $type */
+    #[Required(type: new ConstantOf('agent.tool_use'))]
+    public string $type = 'agent.tool_use';
 
     /**
      * Unique identifier for this event.
@@ -57,10 +61,6 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The evaluated permission policy for this tool invocation.
@@ -93,7 +93,7 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsAgentToolUseEvent::with(
-     *   id: ..., input: ..., name: ..., processedAt: ..., type: ...
+     *   id: ..., input: ..., name: ..., processedAt: ...
      * )
      * ```
      *
@@ -105,7 +105,6 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
      *   ->withInput(...)
      *   ->withName(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -119,7 +118,6 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,mixed> $input
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsAgentEvaluatedPermission|value-of<ManagedAgentsAgentEvaluatedPermission>|null $evaluatedPermission
      * @param ManagedAgentsAgentToolEvaluationShape|null $evaluation
      */
@@ -128,7 +126,6 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
         array $input,
         string $name,
         \DateTimeInterface $processedAt,
-        Type|string $type,
         ManagedAgentsAgentEvaluatedPermission|string|null $evaluatedPermission = null,
         ManagedAgentsAgentToolEvaluationAlwaysAllow|array|ManagedAgentsAgentToolEvaluationAlwaysAsk|ManagedAgentsAgentToolEvaluationAuto|null $evaluation = null,
         ?string $sessionThreadID = null,
@@ -139,7 +136,6 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
         $self['input'] = $input;
         $self['name'] = $name;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         null !== $evaluatedPermission && $self['evaluatedPermission'] = $evaluatedPermission;
         null !== $evaluation && $self['evaluation'] = $evaluation;
@@ -195,9 +191,9 @@ final class ManagedAgentsAgentToolUseEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent.tool_use' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

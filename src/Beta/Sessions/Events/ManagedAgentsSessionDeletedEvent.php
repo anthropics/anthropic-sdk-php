@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionDeletedEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Emitted when a session has been deleted. Terminates any active event stream — no further events will be emitted for this session.
  *
  * @phpstan-type ManagedAgentsSessionDeletedEventShape = array{
- *   id: string, processedAt: \DateTimeInterface, type: Type|value-of<Type>
+ *   id: string, processedAt: \DateTimeInterface, type: 'session.deleted'
  * }
  */
 final class ManagedAgentsSessionDeletedEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSessionDeletedEventShape> */
     use SdkModel;
+
+    /** @var 'session.deleted' $type */
+    #[Required(type: new ConstantOf('session.deleted'))]
+    public string $type = 'session.deleted';
 
     /**
      * Unique identifier for this event.
@@ -33,25 +37,18 @@ final class ManagedAgentsSessionDeletedEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSessionDeletedEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsSessionDeletedEvent::with(id: ..., processedAt: ..., type: ...)
+     * ManagedAgentsSessionDeletedEvent::with(id: ..., processedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionDeletedEvent())
-     *   ->withID(...)
-     *   ->withProcessedAt(...)
-     *   ->withType(...)
+     * (new ManagedAgentsSessionDeletedEvent())->withID(...)->withProcessedAt(...)
      * ```
      */
     public function __construct()
@@ -63,19 +60,15 @@ final class ManagedAgentsSessionDeletedEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
-        \DateTimeInterface $processedAt,
-        Type|string $type
+        \DateTimeInterface $processedAt
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -103,9 +96,9 @@ final class ManagedAgentsSessionDeletedEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session.deleted' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

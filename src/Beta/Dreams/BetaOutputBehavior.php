@@ -50,11 +50,8 @@ final class BetaOutputBehavior implements ConverterSource
         ?string $memoryStoreID = null
     ): BetaOutputBehaviorCreateNew|BetaOutputBehaviorUpdateExisting {
         return match ($type) {
-            Type::CREATE_NEW, 'create_new' => BetaOutputBehaviorCreateNew::with(
-                type: 'create_new'
-            ),
+            Type::CREATE_NEW, 'create_new' => BetaOutputBehaviorCreateNew::with(),
             Type::UPDATE_EXISTING, 'update_existing' => BetaOutputBehaviorUpdateExisting::with(
-                type: 'update_existing',
                 memoryStoreID: $memoryStoreID ?? throw new \ArgumentCountError('$memoryStoreID is required'),
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))

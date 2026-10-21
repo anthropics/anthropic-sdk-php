@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsAnthropicSkillParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An Anthropic-managed skill.
  *
  * @phpstan-type BetaManagedAgentsAnthropicSkillParamsShape = array{
- *   skillID: string, type: Type|value-of<Type>, version?: string|null
+ *   skillID: string, type: 'anthropic', version?: string|null
  * }
  */
 final class BetaManagedAgentsAnthropicSkillParams implements BaseModel
@@ -22,15 +22,15 @@ final class BetaManagedAgentsAnthropicSkillParams implements BaseModel
     /** @use SdkModel<BetaManagedAgentsAnthropicSkillParamsShape> */
     use SdkModel;
 
+    /** @var 'anthropic' $type */
+    #[Required(type: new ConstantOf('anthropic'))]
+    public string $type = 'anthropic';
+
     /**
      * Identifier of the Anthropic skill (e.g., "xlsx").
      */
     #[Required('skill_id')]
     public string $skillID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Version to pin. Defaults to latest if omitted.
@@ -43,13 +43,13 @@ final class BetaManagedAgentsAnthropicSkillParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsAnthropicSkillParams::with(skillID: ..., type: ...)
+     * BetaManagedAgentsAnthropicSkillParams::with(skillID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAnthropicSkillParams())->withSkillID(...)->withType(...)
+     * (new BetaManagedAgentsAnthropicSkillParams())->withSkillID(...)
      * ```
      */
     public function __construct()
@@ -61,18 +61,12 @@ final class BetaManagedAgentsAnthropicSkillParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $skillID,
-        Type|string $type,
-        ?string $version = null
-    ): self {
+    public static function with(string $skillID, ?string $version = null): self
+    {
         $self = new self;
 
         $self['skillID'] = $skillID;
-        $self['type'] = $type;
 
         null !== $version && $self['version'] = $version;
 
@@ -91,9 +85,9 @@ final class BetaManagedAgentsAnthropicSkillParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'anthropic' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

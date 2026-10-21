@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Vaults\Credentials;
 
 use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableAuthResponse\Networking;
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsEnvironmentVariableAuthResponse\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Environment variable credential details. The secret value is never returned.
@@ -21,13 +21,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   injectionLocation: ManagedAgentsInjectionLocationResponse|ManagedAgentsInjectionLocationResponseShape,
  *   networking: NetworkingShape,
  *   secretName: string,
- *   type: Type|value-of<Type>,
+ *   type: 'environment_variable',
  * }
  */
 final class ManagedAgentsEnvironmentVariableAuthResponse implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsEnvironmentVariableAuthResponseShape> */
     use SdkModel;
+
+    /** @var 'environment_variable' $type */
+    #[Required(type: new ConstantOf('environment_variable'))]
+    public string $type = 'environment_variable';
 
     /**
      * Where in the outbound request the secret value is substituted.
@@ -49,17 +53,13 @@ final class ManagedAgentsEnvironmentVariableAuthResponse implements BaseModel
     #[Required('secret_name')]
     public string $secretName;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsEnvironmentVariableAuthResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * ManagedAgentsEnvironmentVariableAuthResponse::with(
-     *   injectionLocation: ..., networking: ..., secretName: ..., type: ...
+     *   injectionLocation: ..., networking: ..., secretName: ...
      * )
      * ```
      *
@@ -70,7 +70,6 @@ final class ManagedAgentsEnvironmentVariableAuthResponse implements BaseModel
      *   ->withInjectionLocation(...)
      *   ->withNetworking(...)
      *   ->withSecretName(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -85,20 +84,17 @@ final class ManagedAgentsEnvironmentVariableAuthResponse implements BaseModel
      *
      * @param ManagedAgentsInjectionLocationResponse|ManagedAgentsInjectionLocationResponseShape $injectionLocation
      * @param NetworkingShape $networking
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         ManagedAgentsInjectionLocationResponse|array $injectionLocation,
         ManagedAgentsUnrestrictedCredentialNetworkingResponse|array|ManagedAgentsLimitedCredentialNetworkingResponse $networking,
         string $secretName,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['injectionLocation'] = $injectionLocation;
         $self['networking'] = $networking;
         $self['secretName'] = $secretName;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -143,9 +139,9 @@ final class ManagedAgentsEnvironmentVariableAuthResponse implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'environment_variable' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

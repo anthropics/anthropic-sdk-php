@@ -54,11 +54,9 @@ final class BetaDreamInput implements ConverterSource
     ): BetaDreamMemoryStoreInput|BetaDreamSessionsInput {
         return match ($type) {
             Type::MEMORY_STORE, 'memory_store' => BetaDreamMemoryStoreInput::with(
-                type: 'memory_store',
                 memoryStoreID: $memoryStoreID ?? throw new \ArgumentCountError('$memoryStoreID is required'),
             ),
             Type::SESSIONS, 'sessions' => BetaDreamSessionsInput::with(
-                type: 'sessions',
                 sessionIDs: $sessionIDs ?? throw new \ArgumentCountError('$sessionIDs is required'),
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))

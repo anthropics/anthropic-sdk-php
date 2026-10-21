@@ -81,42 +81,35 @@ final class ManagedAgentsEventParams implements ConverterSource
     ): ManagedAgentsUserMessageEventParams|ManagedAgentsUserInterruptEventParams|ManagedAgentsUserToolConfirmationEventParams|ManagedAgentsUserCustomToolResultEventParams|ManagedAgentsUserDefineOutcomeEventParams|ManagedAgentsUserToolResultEventParams|ManagedAgentsSystemMessageEventParams {
         return match ($type) {
             Type::USER_MESSAGE, 'user.message' => ManagedAgentsUserMessageEventParams::with(
-                type: 'user.message',
                 // @phpstan-ignore argument.type
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),
             Type::USER_INTERRUPT, 'user.interrupt' => ManagedAgentsUserInterruptEventParams::with(
-                type: 'user.interrupt',
                 sessionThreadID: $sessionThreadID
             ),
             Type::USER_TOOL_CONFIRMATION, 'user.tool_confirmation' => ManagedAgentsUserToolConfirmationEventParams::with(
-                type: 'user.tool_confirmation',
                 result: $result ?? throw new \ArgumentCountError('$result is required'),
                 toolUseID: $toolUseID ?? throw new \ArgumentCountError('$toolUseID is required'),
                 denyMessage: $denyMessage,
             ),
             Type::USER_CUSTOM_TOOL_RESULT, 'user.custom_tool_result' => ManagedAgentsUserCustomToolResultEventParams::with(
-                type: 'user.custom_tool_result',
                 customToolUseID: $customToolUseID ?? throw new \ArgumentCountError('$customToolUseID is required'),
                 // @phpstan-ignore argument.type
                 content: $content,
                 isError: $isError,
             ),
             Type::USER_DEFINE_OUTCOME, 'user.define_outcome' => ManagedAgentsUserDefineOutcomeEventParams::with(
-                type: 'user.define_outcome',
                 description: $description ?? throw new \ArgumentCountError('$description is required'),
                 rubric: $rubric ?? throw new \ArgumentCountError('$rubric is required'),
                 maxIterations: $maxIterations,
             ),
             Type::USER_TOOL_RESULT, 'user.tool_result' => ManagedAgentsUserToolResultEventParams::with(
-                type: 'user.tool_result',
                 toolUseID: $toolUseID ?? throw new \ArgumentCountError('$toolUseID is required'),
                 // @phpstan-ignore argument.type
                 content: $content,
                 isError: $isError,
             ),
             Type::SYSTEM_MESSAGE, 'system.message' => ManagedAgentsSystemMessageEventParams::with(
-                type: 'system.message',
                 // @phpstan-ignore argument.type
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),

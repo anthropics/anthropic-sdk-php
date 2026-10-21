@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Deployments;
 
 use Anthropic\Beta\Deployments\BetaManagedAgentsMemoryStoreResourceConfig\Access;
-use Anthropic\Beta\Deployments\BetaManagedAgentsMemoryStoreResourceConfig\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A memory store attached to each session created from this deployment.
  *
  * @phpstan-type BetaManagedAgentsMemoryStoreResourceConfigShape = array{
  *   memoryStoreID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'memory_store',
  *   access?: null|Access|value-of<Access>,
  *   instructions?: string|null,
  * }
@@ -26,15 +26,15 @@ final class BetaManagedAgentsMemoryStoreResourceConfig implements BaseModel
     /** @use SdkModel<BetaManagedAgentsMemoryStoreResourceConfigShape> */
     use SdkModel;
 
+    /** @var 'memory_store' $type */
+    #[Required(type: new ConstantOf('memory_store'))]
+    public string $type = 'memory_store';
+
     /**
      * The memory store ID (memstore_...). Must belong to the caller's organization and workspace.
      */
     #[Required('memory_store_id')]
     public string $memoryStoreID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Access mode for the mounted store. Defaults to `read_write`. `read_only` mounts the store as a read-only filesystem.
@@ -55,15 +55,13 @@ final class BetaManagedAgentsMemoryStoreResourceConfig implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsMemoryStoreResourceConfig::with(memoryStoreID: ..., type: ...)
+     * BetaManagedAgentsMemoryStoreResourceConfig::with(memoryStoreID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMemoryStoreResourceConfig())
-     *   ->withMemoryStoreID(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsMemoryStoreResourceConfig())->withMemoryStoreID(...)
      * ```
      */
     public function __construct()
@@ -76,19 +74,16 @@ final class BetaManagedAgentsMemoryStoreResourceConfig implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param Access|value-of<Access>|null $access
      */
     public static function with(
         string $memoryStoreID,
-        Type|string $type,
         Access|string|null $access = null,
         ?string $instructions = null,
     ): self {
         $self = new self;
 
         $self['memoryStoreID'] = $memoryStoreID;
-        $self['type'] = $type;
 
         null !== $access && $self['access'] = $access;
         null !== $instructions && $self['instructions'] = $instructions;
@@ -108,9 +103,9 @@ final class BetaManagedAgentsMemoryStoreResourceConfig implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'memory_store' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

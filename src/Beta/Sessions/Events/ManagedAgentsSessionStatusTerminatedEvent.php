@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionStatusTerminatedEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Indicates the session has terminated, either due to an error or completion.
  *
  * @phpstan-type ManagedAgentsSessionStatusTerminatedEventShape = array{
- *   id: string, processedAt: \DateTimeInterface, type: Type|value-of<Type>
+ *   id: string, processedAt: \DateTimeInterface, type: 'session.status_terminated'
  * }
  */
 final class ManagedAgentsSessionStatusTerminatedEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSessionStatusTerminatedEventShape> */
     use SdkModel;
+
+    /** @var 'session.status_terminated' $type */
+    #[Required(type: new ConstantOf('session.status_terminated'))]
+    public string $type = 'session.status_terminated';
 
     /**
      * Unique identifier for this event.
@@ -33,18 +37,12 @@ final class ManagedAgentsSessionStatusTerminatedEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSessionStatusTerminatedEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsSessionStatusTerminatedEvent::with(
-     *   id: ..., processedAt: ..., type: ...
-     * )
+     * ManagedAgentsSessionStatusTerminatedEvent::with(id: ..., processedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,7 +51,6 @@ final class ManagedAgentsSessionStatusTerminatedEvent implements BaseModel
      * (new ManagedAgentsSessionStatusTerminatedEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -65,19 +62,15 @@ final class ManagedAgentsSessionStatusTerminatedEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
-        \DateTimeInterface $processedAt,
-        Type|string $type
+        \DateTimeInterface $processedAt
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -105,9 +98,9 @@ final class ManagedAgentsSessionStatusTerminatedEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session.status_terminated' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

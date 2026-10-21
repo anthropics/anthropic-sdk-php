@@ -14,7 +14,6 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   displayName: string,
- *   name: string,
  *   type: 'rbac_role',
  *   updatedAt: \DateTimeInterface,
  * }
@@ -53,14 +52,6 @@ final class RBACRole implements BaseModel
     public string $displayName;
 
     /**
-     * @deprecated Use `display_name` instead; `name` always has the same value.
-     *
-     * Deprecated: use `display_name` instead. Name of the RBAC Role; always the same value as `display_name`.
-     */
-    #[Required]
-    public string $name;
-
-    /**
      * RFC 3339 datetime string indicating when the RBAC Role was last updated.
      */
     #[Required('updated_at')]
@@ -71,9 +62,7 @@ final class RBACRole implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * RBACRole::with(
-     *   id: ..., createdAt: ..., displayName: ..., name: ..., updatedAt: ...
-     * )
+     * RBACRole::with(id: ..., createdAt: ..., displayName: ..., updatedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -83,7 +72,6 @@ final class RBACRole implements BaseModel
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)
-     *   ->withName(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -101,7 +89,6 @@ final class RBACRole implements BaseModel
         string $id,
         \DateTimeInterface $createdAt,
         string $displayName,
-        string $name,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -109,7 +96,6 @@ final class RBACRole implements BaseModel
         $self['id'] = $id;
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
-        $self['name'] = $name;
         $self['updatedAt'] = $updatedAt;
 
         return $self;
@@ -144,17 +130,6 @@ final class RBACRole implements BaseModel
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
-
-        return $self;
-    }
-
-    /**
-     * Deprecated: use `display_name` instead. Name of the RBAC Role; always the same value as `display_name`.
-     */
-    public function withName(string $name): self
-    {
-        $self = clone $this;
-        $self['name'] = $name;
 
         return $self;
     }

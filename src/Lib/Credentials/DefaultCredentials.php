@@ -4,24 +4,30 @@ declare(strict_types=1);
 
 namespace Anthropic\Lib\Credentials;
 
+use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Util;
 
 final class DefaultCredentials
 {
     /**
      * Resolve credentials by precedence. Returns null when the existing
-     * X-Api-Key path should be used, or when no credentials source is found.
+     * API key path should be used, or when no credentials source is found.
      *
      * Resolution order:
      *  1. ANTHROPIC_API_KEY set            → null (use existing path)
      *  2. ANTHROPIC_AUTH_TOKEN set          → EnvToken
-     *  3. Profile config on disk            → CredentialsFile
+     *  3. ANTHROPIC_PROFILE set             → CredentialsFile for that profile
      *  4. OIDC env vars all set             → WorkloadIdentityCredentials
-     *  5. Nothing                           → null
+     *  5. Active profile on disk            → CredentialsFile (named by active_config, otherwise `default`)
+     *  6. Nothing                           → null
+     *
+     * ANTHROPIC_CONFIG_DIR says where profiles are read from. It does not select one.
+     *
+     * @throws AnthropicException when ANTHROPIC_PROFILE names a profile that is missing or invalid
      */
     public static function resolve(): ?CredentialResult
     {
-        // 1. API key takes highest precedence — use existing X-Api-Key flow.
+        // 1. ANTHROPIC_API_KEY set — use the existing API key flow.
         $apiKey = Util::getenv('ANTHROPIC_API_KEY');
         if (!is_null($apiKey) && '' !== $apiKey) {
             return null;
@@ -35,10 +41,12 @@ final class DefaultCredentials
             );
         }
 
-        // 3. Profile-based config file.
-        $result = self::tryCredentialsFile();
-        if (!is_null($result)) {
-            return $result;
+        // 3. The profile named by ANTHROPIC_PROFILE.
+        $profile = Util::getenv('ANTHROPIC_PROFILE');
+        if (!is_null($profile) && '' !== $profile) {
+            return (new CredentialsFile(profile: $profile))->resolve() ?? throw new AnthropicException(
+                "ANTHROPIC_PROFILE names the profile `{$profile}`, which is missing or invalid. Check its config and credentials files, or unset ANTHROPIC_PROFILE.",
+            );
         }
 
         // 4. Workload identity from env vars.
@@ -47,35 +55,22 @@ final class DefaultCredentials
             return $result;
         }
 
-        // 5. Nothing found.
-        return null;
+        // 5. The active profile, or nothing.
+        return self::tryActiveProfile();
     }
 
-    private static function tryCredentialsFile(): ?CredentialResult
+    private static function tryActiveProfile(): ?CredentialResult
     {
-        $profile = Util::getenv('ANTHROPIC_PROFILE');
-        $configDir = Util::getenv('ANTHROPIC_CONFIG_DIR');
-        $hasExplicitConfig = (!is_null($profile) && '' !== $profile)
-            || (!is_null($configDir) && '' !== $configDir);
-
-        $credFile = new CredentialsFile(
-            configDir: (!is_null($configDir) && '' !== $configDir) ? $configDir : null,
-            profile: (!is_null($profile) && '' !== $profile) ? $profile : null,
-        );
-
         try {
-            $result = $credFile->resolve();
+            return (new CredentialsFile)->resolve();
         } catch (\Throwable $e) {
-            // If explicit env vars were set, propagate errors.
-            if ($hasExplicitConfig) {
+            $configDir = Util::getenv('ANTHROPIC_CONFIG_DIR');
+            if (!is_null($configDir) && '' !== $configDir) {
                 throw $e;
             }
 
-            // Otherwise, silently fall through to the next tier.
             return null;
         }
-
-        return $result;
     }
 
     private static function tryWorkloadIdentityFromEnv(): ?CredentialResult

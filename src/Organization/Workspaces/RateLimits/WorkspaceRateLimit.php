@@ -44,7 +44,7 @@ final class WorkspaceRateLimit implements BaseModel
     public string $type = 'workspace_rate_limit';
 
     /**
-     * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+     * The rate-limit group this entry's limits apply to.
      *
      * @var GroupVariants $group
      */
@@ -60,7 +60,7 @@ final class WorkspaceRateLimit implements BaseModel
     public array $limits;
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group_type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
      *
      * @var list<string>|null $models
      */
@@ -133,7 +133,7 @@ final class WorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+     * The rate-limit group this entry's limits apply to.
      *
      * @param GroupShape $group
      */
@@ -160,7 +160,7 @@ final class WorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group_type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
      *
      * @param list<string>|null $models
      */

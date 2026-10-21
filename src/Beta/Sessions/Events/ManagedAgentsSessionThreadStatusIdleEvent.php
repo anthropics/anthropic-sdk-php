@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent\StopReason;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadStatusIdleEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A session thread has yielded and is awaiting input. Emitted on the thread's own stream and cross-posted to the primary stream for child threads.
@@ -24,13 +24,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   sessionThreadID: string,
  *   stopDetails: null|ManagedAgentsSessionRefusalStopDetails|ManagedAgentsSessionRefusalStopDetailsShape,
  *   stopReason: StopReasonShape,
- *   type: Type|value-of<Type>,
+ *   type: 'session.thread_status_idle',
  * }
  */
 final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSessionThreadStatusIdleEventShape> */
     use SdkModel;
+
+    /** @var 'session.thread_status_idle' $type */
+    #[Required(type: new ConstantOf('session.thread_status_idle'))]
+    public string $type = 'session.thread_status_idle';
 
     /**
      * Unique identifier for this event.
@@ -66,10 +70,6 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
     #[Required('stop_reason', union: StopReason::class)]
     public ManagedAgentsSessionEndTurn|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached|ManagedAgentsSessionRefusal $stopReason;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSessionThreadStatusIdleEvent()` is missing required properties by the API.
      *
@@ -82,7 +82,6 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
      *   sessionThreadID: ...,
      *   stopDetails: ...,
      *   stopReason: ...,
-     *   type: ...,
      * )
      * ```
      *
@@ -96,7 +95,6 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
      *   ->withSessionThreadID(...)
      *   ->withStopDetails(...)
      *   ->withStopReason(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -111,7 +109,6 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
      *
      * @param ManagedAgentsSessionRefusalStopDetails|ManagedAgentsSessionRefusalStopDetailsShape|null $stopDetails
      * @param StopReasonShape $stopReason
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -120,7 +117,6 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
         string $sessionThreadID,
         ManagedAgentsSessionRefusalStopDetails|array|null $stopDetails,
         ManagedAgentsSessionEndTurn|array|ManagedAgentsSessionRequiresAction|ManagedAgentsSessionRetriesExhausted|ManagedAgentsSessionBudgetReached|ManagedAgentsSessionRefusal $stopReason,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -130,7 +126,6 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
         $self['sessionThreadID'] = $sessionThreadID;
         $self['stopDetails'] = $stopDetails;
         $self['stopReason'] = $stopReason;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -206,9 +201,9 @@ final class ManagedAgentsSessionThreadStatusIdleEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session.thread_status_idle' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

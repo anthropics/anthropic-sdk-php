@@ -70,19 +70,16 @@ final class Resource implements ConverterSource
     ): BetaManagedAgentsGitHubRepositoryResourceParams|BetaManagedAgentsFileResourceParams|BetaManagedAgentsMemoryStoreResourceParam {
         return match ($type) {
             Type::GITHUB_REPOSITORY, 'github_repository' => BetaManagedAgentsGitHubRepositoryResourceParams::with(
-                type: 'github_repository',
                 url: $url ?? throw new \ArgumentCountError('$url is required'),
                 authorizationToken: $authorizationToken,
                 checkout: $checkout,
                 mountPath: $mountPath,
             ),
             Type::FILE, 'file' => BetaManagedAgentsFileResourceParams::with(
-                type: 'file',
                 fileID: $fileID ?? throw new \ArgumentCountError('$fileID is required'),
                 mountPath: $mountPath,
             ),
             Type::MEMORY_STORE, 'memory_store' => BetaManagedAgentsMemoryStoreResourceParam::with(
-                type: 'memory_store',
                 memoryStoreID: $memoryStoreID ?? throw new \ArgumentCountError('$memoryStoreID is required'),
                 access: $access,
                 instructions: $instructions,

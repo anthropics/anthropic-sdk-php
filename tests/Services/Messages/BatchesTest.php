@@ -102,7 +102,6 @@ final class BatchesTest extends TestCase
                                 ],
                             ],
                         ],
-                        'temperature' => 1,
                         'thinking' => ['type' => 'adaptive', 'display' => 'summarized'],
                         'toolChoice' => [
                             'type' => 'auto', 'disableParallelToolUse' => true,
@@ -125,8 +124,6 @@ final class BatchesTest extends TestCase
                                 'type' => 'custom',
                             ],
                         ],
-                        'topK' => 5,
-                        'topP' => 0.7,
                     ],
                 ],
             ],

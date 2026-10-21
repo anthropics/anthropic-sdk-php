@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\MemoryStores\Memories;
 
-use Anthropic\Beta\MemoryStores\Memories\ManagedAgentsMemory\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A text document at a path inside a memory store.
@@ -25,7 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   memoryStoreID: string,
  *   memoryVersionID: string,
  *   path: string,
- *   type: Type|value-of<Type>,
+ *   type: 'memory',
  *   updatedAt: \DateTimeInterface,
  *   content?: string|null,
  * }
@@ -34,6 +34,10 @@ final class ManagedAgentsMemory implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsMemoryShape> */
     use SdkModel;
+
+    /** @var 'memory' $type */
+    #[Required(type: new ConstantOf('memory'))]
+    public string $type = 'memory';
 
     /**
      * The unique ID of the memory (`mem_...`). It stays the same when the memory's path changes.
@@ -83,10 +87,6 @@ final class ManagedAgentsMemory implements BaseModel
     #[Required]
     public string $path;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * When the memory was last changed, in RFC 3339.
      *
@@ -116,7 +116,6 @@ final class ManagedAgentsMemory implements BaseModel
      *   memoryStoreID: ...,
      *   memoryVersionID: ...,
      *   path: ...,
-     *   type: ...,
      *   updatedAt: ...,
      * )
      * ```
@@ -132,7 +131,6 @@ final class ManagedAgentsMemory implements BaseModel
      *   ->withMemoryStoreID(...)
      *   ->withMemoryVersionID(...)
      *   ->withPath(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -145,8 +143,6 @@ final class ManagedAgentsMemory implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -156,7 +152,6 @@ final class ManagedAgentsMemory implements BaseModel
         string $memoryStoreID,
         string $memoryVersionID,
         string $path,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
         ?string $content = null,
     ): self {
@@ -169,7 +164,6 @@ final class ManagedAgentsMemory implements BaseModel
         $self['memoryStoreID'] = $memoryStoreID;
         $self['memoryVersionID'] = $memoryVersionID;
         $self['path'] = $path;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
 
         null !== $content && $self['content'] = $content;
@@ -261,9 +255,9 @@ final class ManagedAgentsMemory implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'memory' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent\Rubric;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Echo of a `user.define_outcome` input event. Carries the server-generated `outcome_id` that subsequent `span.outcome_evaluation_*` events reference.
@@ -23,13 +23,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   outcomeID: string,
  *   processedAt: \DateTimeInterface,
  *   rubric: RubricShape,
- *   type: Type|value-of<Type>,
+ *   type: 'user.define_outcome',
  * }
  */
 final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsUserDefineOutcomeEventShape> */
     use SdkModel;
+
+    /** @var 'user.define_outcome' $type */
+    #[Required(type: new ConstantOf('user.define_outcome'))]
+    public string $type = 'user.define_outcome';
 
     /**
      * Unique identifier for this event.
@@ -69,10 +73,6 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
     #[Required(union: Rubric::class)]
     public ManagedAgentsFileRubric|ManagedAgentsTextRubric $rubric;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsUserDefineOutcomeEvent()` is missing required properties by the API.
      *
@@ -85,7 +85,6 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
      *   outcomeID: ...,
      *   processedAt: ...,
      *   rubric: ...,
-     *   type: ...,
      * )
      * ```
      *
@@ -99,7 +98,6 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
      *   ->withOutcomeID(...)
      *   ->withProcessedAt(...)
      *   ->withRubric(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -113,7 +111,6 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RubricShape $rubric
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -122,7 +119,6 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
         string $outcomeID,
         \DateTimeInterface $processedAt,
         ManagedAgentsFileRubric|array|ManagedAgentsTextRubric $rubric,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -132,7 +128,6 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
         $self['outcomeID'] = $outcomeID;
         $self['processedAt'] = $processedAt;
         $self['rubric'] = $rubric;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -207,9 +202,9 @@ final class ManagedAgentsUserDefineOutcomeEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.define_outcome' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

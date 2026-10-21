@@ -81,23 +81,19 @@ final class Content implements ConverterSource
     ): ManagedAgentsTextBlock|ManagedAgentsImageBlock|ManagedAgentsDocumentBlock|ManagedAgentsSearchResultBlock {
         return match ($type) {
             Type::TEXT, 'text' => ManagedAgentsTextBlock::with(
-                type: 'text',
-                text: $text ?? throw new \ArgumentCountError('$text is required'),
+                text: $text ?? throw new \ArgumentCountError('$text is required')
             ),
             Type::IMAGE, 'image' => ManagedAgentsImageBlock::with(
-                type: 'image',
                 // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
             ),
             Type::DOCUMENT, 'document' => ManagedAgentsDocumentBlock::with(
-                type: 'document',
                 // @phpstan-ignore argument.type
                 source: $source ?? throw new \ArgumentCountError('$source is required'),
                 context: $context,
                 title: $title,
             ),
             Type::SEARCH_RESULT, 'search_result' => ManagedAgentsSearchResultBlock::with(
-                type: 'search_result',
                 citations: $citations ?? throw new \ArgumentCountError('$citations is required'),
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
                 // @phpstan-ignore argument.type

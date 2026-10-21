@@ -7,10 +7,10 @@ namespace Anthropic\Beta\Sessions\Threads;
 use Anthropic\Beta\Agents\BetaManagedAgentsAdvisor;
 use Anthropic\Beta\Agents\BetaManagedAgentsSessionThreadAgent;
 use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Agent;
-use Anthropic\Beta\Sessions\Threads\ManagedAgentsSessionThread\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An execution thread within a `session`. Each session has one primary thread plus zero or more child threads.
@@ -29,7 +29,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   sessionID: string,
  *   stats: null|ManagedAgentsSessionThreadStats|ManagedAgentsSessionThreadStatsShape,
  *   status: ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus>,
- *   type: Type|value-of<Type>,
+ *   type: 'session_thread',
  *   updatedAt: \DateTimeInterface,
  *   usage: null|ManagedAgentsSessionThreadUsage|ManagedAgentsSessionThreadUsageShape,
  *   workflowRunID: string|null,
@@ -39,6 +39,10 @@ final class ManagedAgentsSessionThread implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSessionThreadShape> */
     use SdkModel;
+
+    /** @var 'session_thread' $type */
+    #[Required(type: new ConstantOf('session_thread'))]
+    public string $type = 'session_thread';
 
     /**
      * Unique identifier for this thread.
@@ -92,10 +96,6 @@ final class ManagedAgentsSessionThread implements BaseModel
     #[Required(enum: ManagedAgentsSessionThreadStatus::class)]
     public string $status;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * When the thread was last updated.
      */
@@ -128,7 +128,6 @@ final class ManagedAgentsSessionThread implements BaseModel
      *   sessionID: ...,
      *   stats: ...,
      *   status: ...,
-     *   type: ...,
      *   updatedAt: ...,
      *   usage: ...,
      *   workflowRunID: ...,
@@ -147,7 +146,6 @@ final class ManagedAgentsSessionThread implements BaseModel
      *   ->withSessionID(...)
      *   ->withStats(...)
      *   ->withStatus(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      *   ->withUsage(...)
      *   ->withWorkflowRunID(...)
@@ -166,7 +164,6 @@ final class ManagedAgentsSessionThread implements BaseModel
      * @param AgentShape $agent
      * @param ManagedAgentsSessionThreadStats|ManagedAgentsSessionThreadStatsShape|null $stats
      * @param ManagedAgentsSessionThreadStatus|value-of<ManagedAgentsSessionThreadStatus> $status
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsSessionThreadUsage|ManagedAgentsSessionThreadUsageShape|null $usage
      */
     public static function with(
@@ -178,7 +175,6 @@ final class ManagedAgentsSessionThread implements BaseModel
         string $sessionID,
         ManagedAgentsSessionThreadStats|array|null $stats,
         ManagedAgentsSessionThreadStatus|string $status,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
         ManagedAgentsSessionThreadUsage|array|null $usage,
         ?string $workflowRunID,
@@ -193,7 +189,6 @@ final class ManagedAgentsSessionThread implements BaseModel
         $self['sessionID'] = $sessionID;
         $self['stats'] = $stats;
         $self['status'] = $status;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
         $self['usage'] = $usage;
         $self['workflowRunID'] = $workflowRunID;
@@ -299,9 +294,9 @@ final class ManagedAgentsSessionThread implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session_thread' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

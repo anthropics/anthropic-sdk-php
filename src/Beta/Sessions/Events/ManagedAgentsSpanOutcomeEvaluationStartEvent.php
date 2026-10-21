@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanOutcomeEvaluationStartEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Emitted when an outcome evaluation cycle begins.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   iteration: int,
  *   outcomeID: string,
  *   processedAt: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'span.outcome_evaluation_start',
  * }
  */
 final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSpanOutcomeEvaluationStartEventShape> */
     use SdkModel;
+
+    /** @var 'span.outcome_evaluation_start' $type */
+    #[Required(type: new ConstantOf('span.outcome_evaluation_start'))]
+    public string $type = 'span.outcome_evaluation_start';
 
     /**
      * Unique identifier for this event.
@@ -49,17 +53,13 @@ final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSpanOutcomeEvaluationStartEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * ManagedAgentsSpanOutcomeEvaluationStartEvent::with(
-     *   id: ..., iteration: ..., outcomeID: ..., processedAt: ..., type: ...
+     *   id: ..., iteration: ..., outcomeID: ..., processedAt: ...
      * )
      * ```
      *
@@ -71,7 +71,6 @@ final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
      *   ->withIteration(...)
      *   ->withOutcomeID(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -83,15 +82,12 @@ final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         int $iteration,
         string $outcomeID,
         \DateTimeInterface $processedAt,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -99,7 +95,6 @@ final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
         $self['iteration'] = $iteration;
         $self['outcomeID'] = $outcomeID;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -149,9 +144,9 @@ final class ManagedAgentsSpanOutcomeEvaluationStartEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'span.outcome_evaluation_start' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

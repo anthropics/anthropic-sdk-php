@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Organization\RateLimits;
 
 use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimit\Group;
-use Anthropic\Beta\Organization\RateLimits\OrganizationRateLimit\GroupType;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -19,7 +18,6 @@ use Anthropic\Core\Conversion\ConstantOf;
  * @phpstan-type OrganizationRateLimitShape = array{
  *   id: string,
  *   group: GroupShape,
- *   groupType: GroupType|value-of<GroupType>,
  *   limits: list<OrganizationRateLimitValue|OrganizationRateLimitValueShape>,
  *   models: list<string>|null,
  *   type: 'rate_limit',
@@ -45,22 +43,12 @@ final class OrganizationRateLimit implements BaseModel
     public string $id;
 
     /**
-     * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+     * The rate-limit group this entry's limits apply to.
      *
      * @var GroupVariants $group
      */
     #[Required(union: Group::class)]
     public OrganizationRateLimitModelGroup|OrganizationRateLimitBatchGroup|OrganizationRateLimitTokenCountGroup|OrganizationRateLimitFilesGroup|OrganizationRateLimitSkillsGroup|OrganizationRateLimitWebSearchGroup $group;
-
-    /**
-     * @deprecated Use `group.type` instead. `group_type` is still returned and always equals `group.type`.
-     *
-     * Deprecated: use `group.type` instead. The kind of rate-limit group this entry represents. `model_group` entries apply to a family of models (listed in `models`); other values apply to an API-surface category and have `models` set to `null`. Always equal to `group.type`.
-     *
-     * @var value-of<GroupType> $groupType
-     */
-    #[Required('group_type', enum: GroupType::class)]
-    public string $groupType;
 
     /**
      * The limiter values that apply to this group.
@@ -71,7 +59,7 @@ final class OrganizationRateLimit implements BaseModel
     public array $limits;
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group_type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
      *
      * @var list<string>|null $models
      */
@@ -83,9 +71,7 @@ final class OrganizationRateLimit implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * OrganizationRateLimit::with(
-     *   id: ..., group: ..., groupType: ..., limits: ..., models: ...
-     * )
+     * OrganizationRateLimit::with(id: ..., group: ..., limits: ..., models: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -94,7 +80,6 @@ final class OrganizationRateLimit implements BaseModel
      * (new OrganizationRateLimit())
      *   ->withID(...)
      *   ->withGroup(...)
-     *   ->withGroupType(...)
      *   ->withLimits(...)
      *   ->withModels(...)
      * ```
@@ -110,14 +95,12 @@ final class OrganizationRateLimit implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param GroupShape $group
-     * @param GroupType|value-of<GroupType> $groupType
      * @param list<OrganizationRateLimitValue|OrganizationRateLimitValueShape> $limits
      * @param list<string>|null $models
      */
     public static function with(
         string $id,
         OrganizationRateLimitModelGroup|array|OrganizationRateLimitBatchGroup|OrganizationRateLimitTokenCountGroup|OrganizationRateLimitFilesGroup|OrganizationRateLimitSkillsGroup|OrganizationRateLimitWebSearchGroup $group,
-        GroupType|string $groupType,
         array $limits,
         ?array $models,
     ): self {
@@ -125,7 +108,6 @@ final class OrganizationRateLimit implements BaseModel
 
         $self['id'] = $id;
         $self['group'] = $group;
-        $self['groupType'] = $groupType;
         $self['limits'] = $limits;
         $self['models'] = $models;
 
@@ -144,7 +126,7 @@ final class OrganizationRateLimit implements BaseModel
     }
 
     /**
-     * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+     * The rate-limit group this entry's limits apply to.
      *
      * @param GroupShape $group
      */
@@ -153,19 +135,6 @@ final class OrganizationRateLimit implements BaseModel
     ): self {
         $self = clone $this;
         $self['group'] = $group;
-
-        return $self;
-    }
-
-    /**
-     * Deprecated: use `group.type` instead. The kind of rate-limit group this entry represents. `model_group` entries apply to a family of models (listed in `models`); other values apply to an API-surface category and have `models` set to `null`. Always equal to `group.type`.
-     *
-     * @param GroupType|value-of<GroupType> $groupType
-     */
-    public function withGroupType(GroupType|string $groupType): self
-    {
-        $self = clone $this;
-        $self['groupType'] = $groupType;
 
         return $self;
     }
@@ -184,7 +153,7 @@ final class OrganizationRateLimit implements BaseModel
     }
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group_type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
      *
      * @param list<string>|null $models
      */

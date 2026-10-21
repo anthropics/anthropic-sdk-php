@@ -9,8 +9,10 @@ use Anthropic\Core\Util;
 use Anthropic\ErrorType;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -46,7 +48,84 @@ class ClientOptionsTest extends TestCase
 
         $request = $this->getLastRequest();
 
-        $this->assertSame('my-anthropic-api-key', $request->getHeaderLine('x-api-key'));
+        $this->assertSame('Bearer my-anthropic-api-key', $request->getHeaderLine('Authorization'));
+        $this->assertSame('', $request->getHeaderLine('x-api-key'));
+    }
+
+    public function testWebhookKeyIsReadFromTheEnvSuperglobal(): void
+    {
+        $_ENV['ANTHROPIC_WEBHOOK_SIGNING_KEY'] = 'superglobal-webhook-key';
+
+        try {
+            $client = new Client(apiKey: 'my-anthropic-api-key');
+        } finally {
+            unset($_ENV['ANTHROPIC_WEBHOOK_SIGNING_KEY']);
+        }
+
+        $this->assertSame('superglobal-webhook-key', $client->webhookKey);
+    }
+
+    /** @param \Closure(Client): mixed $call */
+    #[DataProvider('apiKeyHeaderSetByHandProvider')]
+    public function testApiKeyHeaderSetByHand(\Closure $call): void
+    {
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter, 'middleware' => [self::sendXApiKey()]],
+        );
+
+        $call($client);
+
+        $request = $this->getLastRequest();
+
+        $this->assertSame('my-anthropic-api-key', $request->getHeaderLine('X-Api-Key'));
+        $this->assertFalse($request->hasHeader('Authorization'));
+    }
+
+    /** @return iterable<string,array{\Closure(Client): mixed}> */
+    public static function apiKeyHeaderSetByHandProvider(): iterable
+    {
+        yield 'an endpoint with no headers of its own' => [
+            static fn (Client $client) => $client->messages->create(1024, [], 'claude-haiku-4-5'),
+        ];
+
+        yield 'an endpoint that sets a beta header' => [
+            static fn (Client $client) => $client->beta->dreams->retrieve('dream_id'),
+        ];
+    }
+
+    /** @param list<\Closure(RequestInterface, \Closure): ResponseInterface> $middleware */
+    #[DataProvider('apiKeyOnCrossOriginRedirectProvider')]
+    public function testApiKeyNotSentOnCrossOriginRedirect(array $middleware, string $authorization, string $xApiKey): void
+    {
+        $this->transporter->addResponse(
+            Psr17FactoryDiscovery::findResponseFactory()
+                ->createResponse(307)
+                ->withHeader('Location', 'https://elsewhere.example/v1/messages')
+        );
+
+        $client = new Client(
+            apiKey: 'my-anthropic-api-key',
+            requestOptions: ['transporter' => $this->transporter, 'middleware' => $middleware],
+        );
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(2, $requests);
+        $this->assertSame($authorization, $requests[0]->getHeaderLine('Authorization'));
+        $this->assertSame($xApiKey, $requests[0]->getHeaderLine('X-Api-Key'));
+        $this->assertSame('elsewhere.example', $requests[1]->getUri()->getHost());
+        $this->assertFalse($requests[1]->hasHeader('Authorization'));
+        $this->assertFalse($requests[1]->hasHeader('X-Api-Key'));
+    }
+
+    /** @return iterable<string,array{list<\Closure(RequestInterface, \Closure): ResponseInterface>,string,string}> */
+    public static function apiKeyOnCrossOriginRedirectProvider(): iterable
+    {
+        yield 'the key in Authorization' => [[], 'Bearer my-anthropic-api-key', ''];
+
+        yield 'the key moved to X-Api-Key by a middleware' => [[self::sendXApiKey()], '', 'my-anthropic-api-key'];
     }
 
     public function testAuthTokenAuth(): void
@@ -312,4 +391,14 @@ class ClientOptionsTest extends TestCase
         $this->assertSame('claude-opus-4-8', $sent['model'] ?? null);
     }
 
+    /** @return \Closure(RequestInterface, \Closure): ResponseInterface */
+    private static function sendXApiKey(): \Closure
+    {
+        return static function (RequestInterface $request, \Closure $next): ResponseInterface {
+            $response = $next($request->withoutHeader('Authorization')->withHeader('X-Api-Key', 'my-anthropic-api-key'));
+            assert($response instanceof ResponseInterface);
+
+            return $response;
+        };
+    }
 }

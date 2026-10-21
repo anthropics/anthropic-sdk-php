@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\DeploymentRuns;
 
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsVaultNotFoundRunError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A vault referenced by the deployment no longer exists.
  *
  * @phpstan-type BetaManagedAgentsVaultNotFoundRunErrorShape = array{
- *   message: string, type: Type|value-of<Type>
+ *   message: string, type: 'vault_not_found_error'
  * }
  */
 final class BetaManagedAgentsVaultNotFoundRunError implements BaseModel
@@ -21,28 +21,28 @@ final class BetaManagedAgentsVaultNotFoundRunError implements BaseModel
     /** @use SdkModel<BetaManagedAgentsVaultNotFoundRunErrorShape> */
     use SdkModel;
 
+    /** @var 'vault_not_found_error' $type */
+    #[Required(type: new ConstantOf('vault_not_found_error'))]
+    public string $type = 'vault_not_found_error';
+
     /**
      * Human-readable error description.
      */
     #[Required]
     public string $message;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsVaultNotFoundRunError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsVaultNotFoundRunError::with(message: ..., type: ...)
+     * BetaManagedAgentsVaultNotFoundRunError::with(message: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsVaultNotFoundRunError())->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsVaultNotFoundRunError())->withMessage(...)
      * ```
      */
     public function __construct()
@@ -54,15 +54,12 @@ final class BetaManagedAgentsVaultNotFoundRunError implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $message, Type|string $type): self
+    public static function with(string $message): self
     {
         $self = new self;
 
         $self['message'] = $message;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +76,9 @@ final class BetaManagedAgentsVaultNotFoundRunError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'vault_not_found_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

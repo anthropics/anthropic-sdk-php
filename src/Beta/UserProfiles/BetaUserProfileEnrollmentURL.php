@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\UserProfiles;
 
-use Anthropic\Beta\UserProfiles\BetaUserProfileEnrollmentURL\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A URL to give to the entity that a user profile represents, so that the entity can enroll in a program.
  *
  * @phpstan-type BetaUserProfileEnrollmentURLShape = array{
- *   expiresAt: \DateTimeInterface, type: Type|value-of<Type>, url: string
+ *   expiresAt: \DateTimeInterface, type: 'enrollment_url', url: string
  * }
  */
 final class BetaUserProfileEnrollmentURL implements BaseModel
@@ -22,18 +22,18 @@ final class BetaUserProfileEnrollmentURL implements BaseModel
     use SdkModel;
 
     /**
+     * Object type. Always `enrollment_url`.
+     *
+     * @var 'enrollment_url' $type
+     */
+    #[Required(type: new ConstantOf('enrollment_url'))]
+    public string $type = 'enrollment_url';
+
+    /**
      * When this enrollment URL expires, in RFC 3339 format.
      */
     #[Required('expires_at')]
     public \DateTimeInterface $expiresAt;
-
-    /**
-     * Object type. Always `enrollment_url`.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Enrollment URL to send to the end user. Valid until `expires_at`.
@@ -46,16 +46,13 @@ final class BetaUserProfileEnrollmentURL implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaUserProfileEnrollmentURL::with(expiresAt: ..., type: ..., url: ...)
+     * BetaUserProfileEnrollmentURL::with(expiresAt: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaUserProfileEnrollmentURL())
-     *   ->withExpiresAt(...)
-     *   ->withType(...)
-     *   ->withURL(...)
+     * (new BetaUserProfileEnrollmentURL())->withExpiresAt(...)->withURL(...)
      * ```
      */
     public function __construct()
@@ -67,18 +64,14 @@ final class BetaUserProfileEnrollmentURL implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         \DateTimeInterface $expiresAt,
-        Type|string $type,
         string $url
     ): self {
         $self = new self;
 
         $self['expiresAt'] = $expiresAt;
-        $self['type'] = $type;
         $self['url'] = $url;
 
         return $self;
@@ -98,9 +91,9 @@ final class BetaUserProfileEnrollmentURL implements BaseModel
     /**
      * Object type. Always `enrollment_url`.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'enrollment_url' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

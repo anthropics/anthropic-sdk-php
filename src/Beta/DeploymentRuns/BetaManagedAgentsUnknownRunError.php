@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\DeploymentRuns;
 
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsUnknownRunError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An unknown or unexpected error caused the run to fail. A fallback variant; clients that do not recognize a new error type can match on message alone.
  *
  * @phpstan-type BetaManagedAgentsUnknownRunErrorShape = array{
- *   message: string, type: Type|value-of<Type>
+ *   message: string, type: 'unknown_error'
  * }
  */
 final class BetaManagedAgentsUnknownRunError implements BaseModel
@@ -21,28 +21,28 @@ final class BetaManagedAgentsUnknownRunError implements BaseModel
     /** @use SdkModel<BetaManagedAgentsUnknownRunErrorShape> */
     use SdkModel;
 
+    /** @var 'unknown_error' $type */
+    #[Required(type: new ConstantOf('unknown_error'))]
+    public string $type = 'unknown_error';
+
     /**
      * Human-readable error description.
      */
     #[Required]
     public string $message;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsUnknownRunError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsUnknownRunError::with(message: ..., type: ...)
+     * BetaManagedAgentsUnknownRunError::with(message: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsUnknownRunError())->withMessage(...)->withType(...)
+     * (new BetaManagedAgentsUnknownRunError())->withMessage(...)
      * ```
      */
     public function __construct()
@@ -54,15 +54,12 @@ final class BetaManagedAgentsUnknownRunError implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $message, Type|string $type): self
+    public static function with(string $message): self
     {
         $self = new self;
 
         $self['message'] = $message;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +76,9 @@ final class BetaManagedAgentsUnknownRunError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'unknown_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

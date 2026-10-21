@@ -57,6 +57,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
+ * @phpstan-import-type BetaMessageParamVariants from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type ContainerVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\Container
  * @phpstan-import-type FallbackCreditTokenVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\FallbackCreditToken
  * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
@@ -67,7 +68,7 @@ use Anthropic\Messages\Model;
  *
  * @phpstan-type ParamsShape = array{
  *   maxTokens: int,
- *   messages: list<BetaMessageParam|BetaMessageParamShape>,
+ *   messages: list<BetaMessageParamShape>,
  *   model: string|Model|value-of<Model>,
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   compaction?: null|BetaCompactionConfig|BetaCompactionConfigShape,
@@ -86,12 +87,9 @@ use Anthropic\Messages\Model;
  *   stopSequences?: list<string>|null,
  *   stream?: bool|null,
  *   system?: SystemShape|null,
- *   temperature?: float|null,
  *   thinking?: BetaThinkingConfigParamShape|null,
  *   toolChoice?: BetaToolChoiceShape|null,
  *   tools?: list<BetaToolUnionShape>|null,
- *   topK?: int|null,
- *   topP?: float|null,
  * }
  */
 final class Params implements BaseModel
@@ -161,7 +159,7 @@ final class Params implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @var list<BetaMessageParam> $messages
+     * @var list<BetaMessageParamVariants> $messages
      */
     #[Required(list: BetaMessageParam::class)]
     public array $messages;
@@ -334,18 +332,6 @@ final class Params implements BaseModel
     public string|array|null $system;
 
     /**
-     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not support setting temperature. A value of 1.0 will be accepted for backwards compatibility, all other values will be rejected with a 400 error.
-     *
-     * Amount of randomness injected into the response.
-     *
-     * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
-     *
-     * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     */
-    #[Optional]
-    public ?float $temperature;
-
-    /**
      * Configuration for Claude's thinking.
      *
      * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
@@ -434,30 +420,6 @@ final class Params implements BaseModel
     public ?array $tools;
 
     /**
-     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not accept top_k; any value will be rejected with a 400 error.
-     *
-     * Only sample from the top K options for each subsequent token.
-     *
-     * Used to remove "long tail" low probability responses. [Learn more technical details here](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277).
-     *
-     * Recommended for advanced use cases only.
-     */
-    #[Optional('top_k')]
-    public ?int $topK;
-
-    /**
-     * @deprecated Deprecated. Models released after Claude Opus 4.6 do not support setting top_p. A value >= 0.99 will be accepted for backwards compatibility, all other values will be rejected with a 400 error.
-     *
-     * Use nucleus sampling.
-     *
-     * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
-     *
-     * Recommended for advanced use cases only.
-     */
-    #[Optional('top_p')]
-    public ?float $topP;
-
-    /**
      * `new Params()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -481,7 +443,7 @@ final class Params implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BetaMessageParam|BetaMessageParamShape> $messages
+     * @param list<BetaMessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
@@ -523,12 +485,9 @@ final class Params implements BaseModel
         ?array $stopSequences = null,
         ?bool $stream = null,
         string|array|null $system = null,
-        ?float $temperature = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
-        ?int $topK = null,
-        ?float $topP = null,
     ): self {
         $self = new self;
 
@@ -553,12 +512,9 @@ final class Params implements BaseModel
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $stream && $self['stream'] = $stream;
         null !== $system && $self['system'] = $system;
-        null !== $temperature && $self['temperature'] = $temperature;
         null !== $thinking && $self['thinking'] = $thinking;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
         null !== $tools && $self['tools'] = $tools;
-        null !== $topK && $self['topK'] = $topK;
-        null !== $topP && $self['topP'] = $topP;
 
         return $self;
     }
@@ -630,7 +586,7 @@ final class Params implements BaseModel
      *
      * There is a limit of 100,000 messages in a single request.
      *
-     * @param list<BetaMessageParam|BetaMessageParamShape> $messages
+     * @param list<BetaMessageParamShape> $messages
      */
     public function withMessages(array $messages): self
     {
@@ -917,21 +873,6 @@ final class Params implements BaseModel
     }
 
     /**
-     * Amount of randomness injected into the response.
-     *
-     * Defaults to `1.0`. Ranges from `0.0` to `1.0`. Use `temperature` closer to `0.0` for analytical / multiple choice, and closer to `1.0` for creative and generative tasks.
-     *
-     * Note that even with `temperature` of `0.0`, the results will not be fully deterministic.
-     */
-    public function withTemperature(float $temperature): self
-    {
-        $self = clone $this;
-        $self['temperature'] = $temperature;
-
-        return $self;
-    }
-
-    /**
      * Configuration for Claude's thinking.
      *
      * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
@@ -1032,36 +973,6 @@ final class Params implements BaseModel
     {
         $self = clone $this;
         $self['tools'] = $tools;
-
-        return $self;
-    }
-
-    /**
-     * Only sample from the top K options for each subsequent token.
-     *
-     * Used to remove "long tail" low probability responses. [Learn more technical details here](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277).
-     *
-     * Recommended for advanced use cases only.
-     */
-    public function withTopK(int $topK): self
-    {
-        $self = clone $this;
-        $self['topK'] = $topK;
-
-        return $self;
-    }
-
-    /**
-     * Use nucleus sampling.
-     *
-     * In nucleus sampling, we compute the cumulative distribution over all the options for each subsequent token in decreasing probability order and cut it off once it reaches a particular probability specified by `top_p`.
-     *
-     * Recommended for advanced use cases only.
-     */
-    public function withTopP(float $topP): self
-    {
-        $self = clone $this;
-        $self['topP'] = $topP;
 
         return $self;
     }

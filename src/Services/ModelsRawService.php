@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Services;
 
-use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -37,10 +36,7 @@ final class ModelsRawService implements ModelsRawContract
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
      * @param string $modelID model identifier or alias
-     * @param array{
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
-     *   workspaceID?: string,
-     * }|ModelRetrieveParams $params
+     * @param array{workspaceID?: string}|ModelRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ModelInfo>
@@ -63,9 +59,7 @@ final class ModelsRawService implements ModelsRawContract
             path: ['v1/models/%1$s', $modelID],
             headers: Util::array_transform_keys(
                 $parsed,
-                [
-                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
-                ],
+                ['workspaceID' => 'anthropic-workspace-id']
             ),
             options: $options->withApiCall(new ApiCallInfo(
                 name: 'anthropic.models.retrieve',
@@ -88,7 +82,6 @@ final class ModelsRawService implements ModelsRawContract
      *   beforeID?: string,
      *   lifecycle?: list<Lifecycle|value-of<Lifecycle>>,
      *   limit?: int,
-     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
      * }|ModelListParams $params
      * @param RequestOpts|null $requestOptions
@@ -120,9 +113,7 @@ final class ModelsRawService implements ModelsRawContract
             ),
             headers: Util::array_transform_keys(
                 $header_params,
-                [
-                    'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
-                ],
+                ['workspaceID' => 'anthropic-workspace-id']
             ),
             options: $options->withApiCall(new ApiCallInfo(
                 name: 'anthropic.models.list',

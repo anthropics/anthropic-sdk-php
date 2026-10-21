@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionThreadCreatedEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Emitted when a child thread is created. Written to the parent thread's output stream so clients observing the session see child creation.
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   agentName: string,
  *   processedAt: \DateTimeInterface,
  *   sessionThreadID: string,
- *   type: Type|value-of<Type>,
+ *   type: 'session.thread_created',
  *   workflowRunID: string|null,
  * }
  */
@@ -25,6 +25,10 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSessionThreadCreatedEventShape> */
     use SdkModel;
+
+    /** @var 'session.thread_created' $type */
+    #[Required(type: new ConstantOf('session.thread_created'))]
+    public string $type = 'session.thread_created';
 
     /**
      * Unique identifier for this event.
@@ -50,10 +54,6 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
     #[Required('session_thread_id')]
     public string $sessionThreadID;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Identifier of the workflow run that created the thread, or `null` for any other thread.
      */
@@ -70,7 +70,6 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
      *   agentName: ...,
      *   processedAt: ...,
      *   sessionThreadID: ...,
-     *   type: ...,
      *   workflowRunID: ...,
      * )
      * ```
@@ -83,7 +82,6 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
      *   ->withAgentName(...)
      *   ->withProcessedAt(...)
      *   ->withSessionThreadID(...)
-     *   ->withType(...)
      *   ->withWorkflowRunID(...)
      * ```
      */
@@ -96,15 +94,12 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         string $agentName,
         \DateTimeInterface $processedAt,
         string $sessionThreadID,
-        Type|string $type,
         ?string $workflowRunID,
     ): self {
         $self = new self;
@@ -113,7 +108,6 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
         $self['agentName'] = $agentName;
         $self['processedAt'] = $processedAt;
         $self['sessionThreadID'] = $sessionThreadID;
-        $self['type'] = $type;
         $self['workflowRunID'] = $workflowRunID;
 
         return $self;
@@ -164,9 +158,9 @@ final class ManagedAgentsSessionThreadCreatedEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session.thread_created' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

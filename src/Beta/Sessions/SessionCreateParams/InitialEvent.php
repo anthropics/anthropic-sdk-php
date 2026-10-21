@@ -63,11 +63,9 @@ final class InitialEvent implements ConverterSource
     ): ManagedAgentsUserMessageEventParams|ManagedAgentsUserDefineOutcomeEventParams {
         return match ($type) {
             Type::USER_MESSAGE, 'user.message' => ManagedAgentsUserMessageEventParams::with(
-                type: 'user.message',
                 content: $content ?? throw new \ArgumentCountError('$content is required'),
             ),
             Type::USER_DEFINE_OUTCOME, 'user.define_outcome' => ManagedAgentsUserDefineOutcomeEventParams::with(
-                type: 'user.define_outcome',
                 description: $description ?? throw new \ArgumentCountError('$description is required'),
                 rubric: $rubric ?? throw new \ArgumentCountError('$rubric is required'),
                 maxIterations: $maxIterations,

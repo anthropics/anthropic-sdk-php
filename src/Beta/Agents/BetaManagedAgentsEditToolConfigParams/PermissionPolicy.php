@@ -55,10 +55,8 @@ final class PermissionPolicy implements ConverterSource
     ): BetaManagedAgentsAlwaysAllowPolicy|BetaManagedAgentsAlwaysAskPolicy|BetaManagedAgentsAutoPolicy {
         return match ($type) {
             Type::ALWAYS_ALLOW, 'always_allow' => BetaManagedAgentsAlwaysAllowPolicy::with(
-                type: 'always_allow'
             ),
             Type::ALWAYS_ASK, 'always_ask' => BetaManagedAgentsAlwaysAskPolicy::with(
-                type: 'always_ask'
             ),
             Type::AUTO, 'auto' => BetaManagedAgentsAutoPolicy::with(
             ),

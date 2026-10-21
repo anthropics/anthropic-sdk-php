@@ -129,6 +129,7 @@ final class ClientTest extends TestCase
         $this->assertSame('Bearer adc-token', $request->getHeaderLine('Authorization'));
         $this->assertSame('claude.googleapis.com', $request->getUri()->getHost());
         $this->assertSame('', $client->apiKey);
+        $this->assertSame('', $client->authToken);
     }
 
     // ── Credentials precedence ──────────────────────────────────────
@@ -397,7 +398,7 @@ final class ClientTest extends TestCase
 
         $client->messages->create(1024, [], 'claude-haiku-4-5');
 
-        $this->assertSame('2023-06-01', $this->getLastRequest()->getHeaderLine('anthropic-version'));
+        $this->assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2}$/', $this->getLastRequest()->getHeaderLine('anthropic-version'));
     }
 
     // ── skipAuth ────────────────────────────────────────────────────

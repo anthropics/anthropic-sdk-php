@@ -71,7 +71,6 @@ final class BetaManagedAgentsMultiagentParams implements ConverterSource
     ): BetaManagedAgentsMultiagentCoordinatorParams|BetaManagedAgentsMultiagent20261001Params {
         return match ($type) {
             Type::COORDINATOR, 'coordinator' => BetaManagedAgentsMultiagentCoordinatorParams::with(
-                type: 'coordinator',
                 agents: $agents ?? throw new \ArgumentCountError('$agents is required'),
             ),
             Type::MULTIAGENT_20261001, 'multiagent_20261001' => BetaManagedAgentsMultiagent20261001Params::with(

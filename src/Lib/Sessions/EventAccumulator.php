@@ -75,7 +75,6 @@ final class EventAccumulator
                     id: $event->event->id,
                     content: [],
                     processedAt: new \DateTimeImmutable('@0'),
-                    type: 'agent.message',
                 );
             }
 

@@ -44,9 +44,9 @@ use Psr\Http\Message\ResponseInterface;
  *
  * Contract:
  *
- *  - Credentials are visible: the request already carries `X-Api-Key` /
- *    `Authorization` (OAuth and SigV4 are added later, inside `$callNext`).
- *    Redact when logging.
+ *  - Credentials are visible: the request already carries an API key or auth
+ *    token in `Authorization`, or a Foundry API key in `x-api-key` (OAuth and
+ *    SigV4 are added later, inside `$callNext`). Redact when logging.
  *  - A middleware that reads the response body must restore it before
  *    returning: rewind a seekable body, or return
  *    `$response->withBody(...)` with a fresh body. Streaming (SSE) bodies

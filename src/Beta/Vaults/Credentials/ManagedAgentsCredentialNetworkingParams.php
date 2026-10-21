@@ -51,10 +51,8 @@ final class ManagedAgentsCredentialNetworkingParams implements ConverterSource
     ): ManagedAgentsUnrestrictedCredentialNetworkingParams|ManagedAgentsLimitedCredentialNetworkingParams {
         return match ($type) {
             Type::UNRESTRICTED, 'unrestricted' => ManagedAgentsUnrestrictedCredentialNetworkingParams::with(
-                type: 'unrestricted'
             ),
             Type::LIMITED, 'limited' => ManagedAgentsLimitedCredentialNetworkingParams::with(
-                type: 'limited',
                 allowedHosts: $allowedHosts ?? throw new \ArgumentCountError('$allowedHosts is required'),
             ),
             default => throw new \UnhandledMatchError(sprintf('Unhandled match case %s', var_export($type, true)))

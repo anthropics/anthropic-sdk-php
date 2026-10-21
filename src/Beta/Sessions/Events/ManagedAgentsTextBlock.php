@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsTextBlock\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Regular text content.
  *
- * @phpstan-type ManagedAgentsTextBlockShape = array{
- *   text: string, type: Type|value-of<Type>
- * }
+ * @phpstan-type ManagedAgentsTextBlockShape = array{text: string, type: 'text'}
  */
 final class ManagedAgentsTextBlock implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsTextBlockShape> */
     use SdkModel;
+
+    /** @var 'text' $type */
+    #[Required(type: new ConstantOf('text'))]
+    public string $type = 'text';
 
     /**
      * The text content.
@@ -27,22 +29,18 @@ final class ManagedAgentsTextBlock implements BaseModel
     #[Required]
     public string $text;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsTextBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsTextBlock::with(text: ..., type: ...)
+     * ManagedAgentsTextBlock::with(text: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsTextBlock())->withText(...)->withType(...)
+     * (new ManagedAgentsTextBlock())->withText(...)
      * ```
      */
     public function __construct()
@@ -54,15 +52,12 @@ final class ManagedAgentsTextBlock implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $text, Type|string $type): self
+    public static function with(string $text): self
     {
         $self = new self;
 
         $self['text'] = $text;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +74,9 @@ final class ManagedAgentsTextBlock implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'text' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

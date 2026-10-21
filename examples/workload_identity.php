@@ -36,8 +36,9 @@ use Anthropic\Lib\Credentials\WorkloadIdentityCredentials;
 // -------------------------------------------------------------------
 // Option 2: Auto-resolved credentials from environment / config files
 // -------------------------------------------------------------------
-// Checks ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, config profiles, and
-// environment variables in order. Returns null if API key auth should be used.
+// Checks ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN, the profile named by
+// ANTHROPIC_PROFILE, the workload identity environment variables, and the
+// active profile, in that order. Returns null if API key auth should be used.
 //
 // Config profiles live in:
 //   Linux/macOS: ~/.config/anthropic/configs/<profile>.json

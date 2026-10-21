@@ -61,12 +61,11 @@ final class Client extends \Anthropic\Client
             default => 'https://'.$location.'-aiplatform.googleapis.com/v1',
         };
 
-        // Pass '' for apiKey/authToken to suppress ANTHROPIC_API_KEY and
+        // Pass '' for apiKey to suppress ANTHROPIC_API_KEY and
         // ANTHROPIC_AUTH_TOKEN env lookups; Vertex auth is handled entirely
         // by the $authorize closure in backendMiddleware().
         parent::__construct(
             apiKey: '',
-            authToken: '',
             baseUrl: $baseUrl,
             requestOptions: $requestOptions,
             openTelemetry: $openTelemetry,

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Dreams;
 
-use Anthropic\Beta\Dreams\BetaDream\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An asynchronous job that reads a memory store and past sessions, then writes a reorganized version of that memory store.
@@ -40,7 +40,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   outputs: list<BetaDreamOutput|BetaDreamOutputShape>,
  *   sessionID: string|null,
  *   status: BetaDreamStatus|value-of<BetaDreamStatus>,
- *   type: Type|value-of<Type>,
+ *   type: 'dream',
  *   usage: BetaDreamUsage|BetaDreamUsageShape,
  * }
  */
@@ -48,6 +48,10 @@ final class BetaDream implements BaseModel
 {
     /** @use SdkModel<BetaDreamShape> */
     use SdkModel;
+
+    /** @var 'dream' $type */
+    #[Required(type: new ConstantOf('dream'))]
+    public string $type = 'dream';
 
     /**
      * The unique ID of the dream (`drm_...`).
@@ -145,10 +149,6 @@ final class BetaDream implements BaseModel
     #[Required(enum: BetaDreamStatus::class)]
     public string $status;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * The dream's token counts, which stop changing once its `status` is `completed` or `failed`. After a cancel, they can keep changing.
      */
@@ -173,7 +173,6 @@ final class BetaDream implements BaseModel
      *   outputs: ...,
      *   sessionID: ...,
      *   status: ...,
-     *   type: ...,
      *   usage: ...,
      * )
      * ```
@@ -194,7 +193,6 @@ final class BetaDream implements BaseModel
      *   ->withOutputs(...)
      *   ->withSessionID(...)
      *   ->withStatus(...)
-     *   ->withType(...)
      *   ->withUsage(...)
      * ```
      */
@@ -214,7 +212,6 @@ final class BetaDream implements BaseModel
      * @param BetaOutputBehaviorShape $outputBehavior
      * @param list<BetaDreamOutput|BetaDreamOutputShape> $outputs
      * @param BetaDreamStatus|value-of<BetaDreamStatus> $status
-     * @param Type|value-of<Type> $type
      * @param BetaDreamUsage|BetaDreamUsageShape $usage
      */
     public static function with(
@@ -230,7 +227,6 @@ final class BetaDream implements BaseModel
         array $outputs,
         ?string $sessionID,
         BetaDreamStatus|string $status,
-        Type|string $type,
         BetaDreamUsage|array $usage,
     ): self {
         $self = new self;
@@ -247,7 +243,6 @@ final class BetaDream implements BaseModel
         $self['outputs'] = $outputs;
         $self['sessionID'] = $sessionID;
         $self['status'] = $status;
-        $self['type'] = $type;
         $self['usage'] = $usage;
 
         return $self;
@@ -415,9 +410,9 @@ final class BetaDream implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'dream' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

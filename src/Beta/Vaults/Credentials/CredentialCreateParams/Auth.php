@@ -75,19 +75,16 @@ final class Auth implements ConverterSource
     ): ManagedAgentsMCPOAuthCreateParams|ManagedAgentsStaticBearerCreateParams|ManagedAgentsEnvironmentVariableCreateParams {
         return match ($type) {
             Type::MCP_OAUTH, 'mcp_oauth' => ManagedAgentsMCPOAuthCreateParams::with(
-                type: 'mcp_oauth',
                 accessToken: $accessToken ?? throw new \ArgumentCountError('$accessToken is required'),
                 mcpServerURL: $mcpServerURL ?? throw new \ArgumentCountError('$mcpServerURL is required'),
                 expiresAt: $expiresAt,
                 refresh: $refresh,
             ),
             Type::STATIC_BEARER, 'static_bearer' => ManagedAgentsStaticBearerCreateParams::with(
-                type: 'static_bearer',
                 token: $token ?? throw new \ArgumentCountError('$token is required'),
                 mcpServerURL: $mcpServerURL ?? throw new \ArgumentCountError('$mcpServerURL is required'),
             ),
             Type::ENVIRONMENT_VARIABLE, 'environment_variable' => ManagedAgentsEnvironmentVariableCreateParams::with(
-                type: 'environment_variable',
                 networking: $networking ?? throw new \ArgumentCountError('$networking is required'),
                 secretName: $secretName ?? throw new \ArgumentCountError('$secretName is required'),
                 secretValue: $secretValue ?? throw new \ArgumentCountError('$secretValue is required'),

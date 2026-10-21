@@ -155,7 +155,7 @@ final class TracingTest extends TestCase
     {
         $this->transporter->addResponse(self::json(self::MESSAGE, headers: ['request-id' => 'req_123', 'anthropic-organization-id' => 'org_1']));
 
-        $this->client()->messages->create(maxTokens: 16, messages: [['role' => 'user', 'content' => 'Hello']], model: 'claude-test', temperature: 0.5);
+        $this->client()->messages->create(maxTokens: 16, messages: [['role' => 'user', 'content' => 'Hello']], model: 'claude-test');
 
         $span = $this->onlySpan();
         $this->assertSame('anthropic.messages.create', $span->getName());
@@ -169,7 +169,6 @@ final class TracingTest extends TestCase
         $this->assertSame('anthropic', $attributes['gen_ai.provider.name']);
         $this->assertSame('claude-test', $attributes['gen_ai.request.model']);
         $this->assertSame(16, $attributes['gen_ai.request.max_tokens']);
-        $this->assertSame(0.5, $attributes['gen_ai.request.temperature']);
         $this->assertSame('claude-test-20260101', $attributes['gen_ai.response.model']);
         $this->assertSame('msg_1', $attributes['gen_ai.response.id']);
         $this->assertSame(15, $attributes['gen_ai.usage.input_tokens']);
@@ -1842,9 +1841,6 @@ final class TracingTest extends TestCase
             maxTokens: 16,
             messages: $messages,
             model: 'claude-test',
-            temperature: 0.5,
-            topP: 0.9,
-            topK: 5,
             serviceTier: 'auto',
             thinking: ['type' => 'enabled', 'budgetTokens' => 1024],
             outputConfig: ['effort' => 'low', 'format' => ['type' => 'json_schema', 'schema' => ['type' => 'object']]],
@@ -1856,7 +1852,7 @@ final class TracingTest extends TestCase
         foreach ($client->messages->createStream(maxTokens: 16, messages: $messages, model: 'claude-test', requestOptions: [...$conversation, 'extraHeaders' => ['anthropic-beta' => 'beta-b']]) as $event);
         // A raw method sends its parameters as they are given: an integer temperature or `top_p` is a double on the span.
         $this->transporter->addResponse(self::json(self::MESSAGE));
-        $client->messages->raw->create(['maxTokens' => 16, 'messages' => $messages, 'model' => 'claude-test', 'temperature' => 0, 'topP' => 1], $conversation);
+        $client->messages->raw->create(['maxTokens' => 16, 'messages' => $messages, 'model' => 'claude-test', 'temperature' => 0, 'top_p' => 1, 'top_k' => 5], $conversation);
         $this->transporter->addResponse(self::json(['input_tokens' => 12]));
         $client->messages->countTokens(messages: $messages, model: 'claude-test', requestOptions: $conversation);
         // A later page of a list is a call with the options of the first.
@@ -1892,12 +1888,9 @@ final class TracingTest extends TestCase
                 'gen_ai.request.max_tokens' => 16,
                 'gen_ai.request.model' => 'claude-test',
                 'gen_ai.request.reasoning.level' => 'low',
-                'gen_ai.request.temperature' => 0.5,
-                'gen_ai.request.top_k' => 5,
-                'gen_ai.request.top_p' => 0.9,
             ]],
             ['anthropic.messages.create', ['anthropic.beta' => ['beta-b'], ...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test', 'gen_ai.request.stream' => true]],
-            ['anthropic.messages.create', [...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test', 'gen_ai.request.temperature' => 0.0, 'gen_ai.request.top_p' => 1.0]],
+            ['anthropic.messages.create', [...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test', 'gen_ai.request.temperature' => 0.0, 'gen_ai.request.top_k' => 5, 'gen_ai.request.top_p' => 1.0]],
             ['anthropic.messages.count_tokens', [...$everySpan, 'http.request.method' => 'POST', 'http.route' => '/v1/messages/count_tokens', 'gen_ai.request.model' => 'claude-test']],
             ['anthropic.messages.batches.list', [...$everySpan, ...$listBatches]],
             ['anthropic.messages.batches.list', [...$everySpan, ...$listBatches]],
@@ -2424,7 +2417,7 @@ final class TracingTest extends TestCase
         // The call fails, so the span has only what the method recorded from its arguments when it started it.
         $error = ['type' => 'error', 'error' => ['type' => 'rate_limit_error', 'message' => 'slow down']];
         $tools = [['name' => 'SENTINEL_tool', 'description' => 'SENTINEL description', 'input_schema' => ['type' => 'object']]];
-        $params = ['maxTokens' => 16, 'system' => 'SENTINEL system', 'messages' => [['role' => 'user', 'content' => 'SENTINEL message']], 'model' => 'claude-test', 'tools' => $tools, 'metadata' => ['userID' => 'SENTINEL_user'], 'stopSequences' => ['SENTINEL stop'], 'userProfileID' => 'SENTINEL_profile', 'workspaceID' => 'SENTINEL_workspace', 'temperature' => 0.5, 'thinking' => ['type' => 'enabled', 'budgetTokens' => 1024], 'outputConfig' => ['format' => ['type' => 'json_schema', 'schema' => ['type' => 'object', 'description' => 'SENTINEL schema']]]];
+        $params = ['maxTokens' => 16, 'system' => 'SENTINEL system', 'messages' => [['role' => 'user', 'content' => 'SENTINEL message']], 'model' => 'claude-test', 'tools' => $tools, 'metadata' => ['userID' => 'SENTINEL_user'], 'stopSequences' => ['SENTINEL stop'], 'userProfileID' => 'SENTINEL_profile', 'workspaceID' => 'SENTINEL_workspace', 'thinking' => ['type' => 'enabled', 'budgetTokens' => 1024], 'outputConfig' => ['format' => ['type' => 'json_schema', 'schema' => ['type' => 'object', 'description' => 'SENTINEL schema']]]];
         $calls = [
             static fn (Client $client) => $client->messages->create(...$params),
             static fn (Client $client) => $client->beta->messages->create(...$params),
@@ -4249,7 +4242,7 @@ final class TracingTest extends TestCase
             'agent_1',
             ['id' => 'agent_1', 'type' => 'agent'],
             // The model is the Session's, not the one the request overrides the agent's with.
-            BetaManagedAgentsAgentWithOverridesParams::with(id: 'agent_1', type: 'agent_with_overrides', model: ['id' => 'claude-override']),
+            BetaManagedAgentsAgentWithOverridesParams::with(id: 'agent_1', model: ['id' => 'claude-override']),
         ];
         // The four attributes are no content: every content mode has them.
         foreach ([$this->client(), $this->client(['tracerProvider' => $this->tracerProvider, 'traces' => ['contentMode' => 'content']])] as $client) {

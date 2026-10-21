@@ -11,7 +11,6 @@ use Anthropic\Beta\Sessions\Resources\ManagedAgentsGitHubRepositoryResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsMemoryStoreResource;
 use Anthropic\Beta\Sessions\Resources\ManagedAgentsSessionResource;
 use Anthropic\Beta\Sessions\Resources\ResourceAddParams;
-use Anthropic\Beta\Sessions\Resources\ResourceAddParams\Type;
 use Anthropic\Beta\Sessions\Resources\ResourceDeleteParams;
 use Anthropic\Beta\Sessions\Resources\ResourceGetResponse;
 use Anthropic\Beta\Sessions\Resources\ResourceListParams;
@@ -277,7 +276,7 @@ final class ResourcesRawService implements ResourcesRawContract
      * @param string $sessionID Path param
      * @param array{
      *   fileID: string,
-     *   type: Type|value-of<Type>,
+     *   type?: 'file',
      *   mountPath?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

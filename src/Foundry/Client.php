@@ -66,7 +66,7 @@ final class Client extends BaseClient
 
         parent::__construct(
             headers: [
-                'anthropic-version' => '2023-06-01',
+                'anthropic-version' => \Anthropic\Client::ANTHROPIC_API_VERSION,
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
                 'User-Agent' => sprintf('anthropic/PHP %s', VERSION),

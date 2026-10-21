@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError\RetryStatus;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The model is currently overloaded. Emitted after automatic retries are exhausted.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type RetryStatusVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError\RetryStatus
  *
  * @phpstan-type ManagedAgentsModelOverloadedErrorShape = array{
- *   message: string, retryStatus: RetryStatusShape, type: Type|value-of<Type>
+ *   message: string, retryStatus: RetryStatusShape, type: 'model_overloaded_error'
  * }
  */
 final class ManagedAgentsModelOverloadedError implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsModelOverloadedErrorShape> */
     use SdkModel;
+
+    /** @var 'model_overloaded_error' $type */
+    #[Required(type: new ConstantOf('model_overloaded_error'))]
+    public string $type = 'model_overloaded_error';
 
     /**
      * Human-readable error description.
@@ -39,18 +43,12 @@ final class ManagedAgentsModelOverloadedError implements BaseModel
     #[Required('retry_status', union: RetryStatus::class)]
     public ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsModelOverloadedError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsModelOverloadedError::with(
-     *   message: ..., retryStatus: ..., type: ...
-     * )
+     * ManagedAgentsModelOverloadedError::with(message: ..., retryStatus: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -59,7 +57,6 @@ final class ManagedAgentsModelOverloadedError implements BaseModel
      * (new ManagedAgentsModelOverloadedError())
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -73,18 +70,15 @@ final class ManagedAgentsModelOverloadedError implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RetryStatusShape $retryStatus
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $message,
         ManagedAgentsRetryStatusRetrying|array|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['message'] = $message;
         $self['retryStatus'] = $retryStatus;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -115,9 +109,9 @@ final class ManagedAgentsModelOverloadedError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'model_overloaded_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

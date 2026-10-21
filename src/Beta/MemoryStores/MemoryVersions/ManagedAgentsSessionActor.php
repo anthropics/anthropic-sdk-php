@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\MemoryStores\MemoryVersions;
 
-use Anthropic\Beta\MemoryStores\MemoryVersions\ManagedAgentsSessionActor\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An agent acting during a session, for example through the session's mounted filesystem. It names the session itself, not the user or API key that started the session.
  *
  * @phpstan-type ManagedAgentsSessionActorShape = array{
- *   sessionID: string, type: Type|value-of<Type>
+ *   sessionID: string, type: 'session_actor'
  * }
  */
 final class ManagedAgentsSessionActor implements BaseModel
@@ -21,28 +21,28 @@ final class ManagedAgentsSessionActor implements BaseModel
     /** @use SdkModel<ManagedAgentsSessionActorShape> */
     use SdkModel;
 
+    /** @var 'session_actor' $type */
+    #[Required(type: new ConstantOf('session_actor'))]
+    public string $type = 'session_actor';
+
     /**
      * ID of the session (a `sesn_...` value). Look up the session via [Retrieve a session](/en/api/beta/sessions/retrieve) for further provenance.
      */
     #[Required('session_id')]
     public string $sessionID;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSessionActor()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsSessionActor::with(sessionID: ..., type: ...)
+     * ManagedAgentsSessionActor::with(sessionID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsSessionActor())->withSessionID(...)->withType(...)
+     * (new ManagedAgentsSessionActor())->withSessionID(...)
      * ```
      */
     public function __construct()
@@ -54,15 +54,12 @@ final class ManagedAgentsSessionActor implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $sessionID, Type|string $type): self
+    public static function with(string $sessionID): self
     {
         $self = new self;
 
         $self['sessionID'] = $sessionID;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -79,9 +76,9 @@ final class ManagedAgentsSessionActor implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session_actor' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

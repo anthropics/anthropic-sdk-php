@@ -13,7 +13,7 @@ use Psr\Http\Message\RequestInterface;
  * Anthropic AWS gateway client.
  *
  * Connects to the Anthropic AWS gateway at https://aws-external-anthropic.{region}.api.aws
- * with support for x-api-key auth and AWS SigV4 signing.
+ * with support for API key auth and AWS SigV4 signing.
  *
  * The gateway serves user profiles but not their action URLs, so
  * `$userProfiles->actionURLs` and `$beta->userProfiles->actionURLs` throw an
@@ -21,10 +21,10 @@ use Psr\Http\Message\RequestInterface;
  *
  * Auth is resolved by precedence:
  *  0. $skipAuth (no auth — skips all below)
- *  1. $apiKey arg (x-api-key header)
+ *  1. $apiKey arg (Authorization: Bearer header)
  *  2. $awsAccessKey + $awsSecretAccessKey args (SigV4)
  *  3. $awsProfile arg (SigV4 via named profile)
- *  4. ANTHROPIC_AWS_API_KEY env var (x-api-key header)
+ *  4. ANTHROPIC_AWS_API_KEY env var (Authorization: Bearer header)
  *  5. Default AWS credential chain (SigV4)
  *
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -77,12 +77,11 @@ class Client extends \Anthropic\Client
             skipAuth: $skipAuth,
         );
 
-        // Pass '' for apiKey and authToken to suppress ANTHROPIC_API_KEY and
+        // Pass '' for apiKey to suppress ANTHROPIC_API_KEY and
         // ANTHROPIC_AUTH_TOKEN env var lookups. Auth is handled entirely by
         // AwsAuth in this class.
         parent::__construct(
             apiKey: '',
-            authToken: '',
             baseUrl: $this->auth->getBaseUrl(),
             requestOptions: $requestOptions,
             openTelemetry: $openTelemetry,

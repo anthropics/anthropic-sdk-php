@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsBase64ImageSource\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Base64-encoded image data.
  *
  * @phpstan-type ManagedAgentsBase64ImageSourceShape = array{
- *   data: string, mediaType: string, type: Type|value-of<Type>
+ *   data: string, mediaType: string, type: 'base64'
  * }
  */
 final class ManagedAgentsBase64ImageSource implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsBase64ImageSourceShape> */
     use SdkModel;
+
+    /** @var 'base64' $type */
+    #[Required(type: new ConstantOf('base64'))]
+    public string $type = 'base64';
 
     /**
      * Base64-encoded image data.
@@ -33,25 +37,18 @@ final class ManagedAgentsBase64ImageSource implements BaseModel
     #[Required('media_type')]
     public string $mediaType;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsBase64ImageSource()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsBase64ImageSource::with(data: ..., mediaType: ..., type: ...)
+     * ManagedAgentsBase64ImageSource::with(data: ..., mediaType: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsBase64ImageSource())
-     *   ->withData(...)
-     *   ->withMediaType(...)
-     *   ->withType(...)
+     * (new ManagedAgentsBase64ImageSource())->withData(...)->withMediaType(...)
      * ```
      */
     public function __construct()
@@ -63,19 +60,13 @@ final class ManagedAgentsBase64ImageSource implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $data,
-        string $mediaType,
-        Type|string $type
-    ): self {
+    public static function with(string $data, string $mediaType): self
+    {
         $self = new self;
 
         $self['data'] = $data;
         $self['mediaType'] = $mediaType;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -103,9 +94,9 @@ final class ManagedAgentsBase64ImageSource implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'base64' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

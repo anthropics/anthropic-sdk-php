@@ -12,10 +12,13 @@ use Anthropic\Beta\Messages\BetaContextManagementConfig;
 use Anthropic\Beta\Messages\BetaFallbackParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessage;
+use Anthropic\Beta\Messages\BetaMessageParam\Role;
 use Anthropic\Beta\Messages\BetaOutputConfig;
 use Anthropic\Beta\Messages\BetaRequestToolAdditionBlock;
 use Anthropic\Beta\Messages\BetaRequestToolRemovalBlock;
 use Anthropic\Beta\Messages\BetaStopReason;
+use Anthropic\Beta\Messages\BetaSystemMessageParam;
+use Anthropic\Beta\Messages\BetaSystemMessageParam\Content\Block\Type;
 use Anthropic\Beta\Messages\BetaTextBlock;
 use Anthropic\Beta\Messages\BetaToolChangeToolReference;
 use Anthropic\Beta\Messages\BetaToolChoiceTool;
@@ -356,6 +359,41 @@ final class BetaToolRunnerTest extends TestCase
         $this->assertTrue($removedResult['is_error']);
         $this->assertSame($neverDefinedResult['content'], $removedResult['content']);
         $this->assertSame($neverDefinedResult['is_error'], $removedResult['is_error']);
+    }
+
+    #[Test]
+    public function testToolRemovalIsHonoredInEveryFormOfSystemMessage(): void
+    {
+        $unknown = ['type' => 'future_block', 'data' => 'not modelled by this SDK version'];
+        $removal = ['type' => 'tool_removal', 'tool' => ['type' => 'tool_reference', 'name' => 'get_weather']];
+
+        $messages = [
+            'array' => ['role' => 'system', 'content' => [$unknown, $removal]],
+            'array with an enum role' => ['role' => Role::SYSTEM, 'content' => [$unknown, $removal]],
+            'array with an enum block type' => ['role' => 'system', 'content' => [$unknown, ['type' => Type::TOOL_REMOVAL] + $removal]],
+            'model' => BetaSystemMessageParam::fromArray(['content' => [$unknown, $removal]]),
+        ];
+
+        foreach ($messages as $label => $message) {
+            $this->transporter->addResponse($this->toolUseResponse('get_weather', ['location' => 'SF']));
+            $this->transporter->addResponse($this->textResponse('Cannot help.'));
+
+            $called = false;
+            $tool = $this->makeWeatherTool(function () use (&$called): void {
+                $called = true;
+            });
+
+            $runner = $this->client->beta->messages->toolRunner(
+                maxTokens: 1024,
+                messages: [['role' => 'user', 'content' => 'Weather?']],
+                model: 'claude-opus-4-6',
+                tools: [$tool],
+            );
+            $runner->pushMessages($message);
+            foreach ($runner as $_);
+
+            $this->assertFalse($called, "Tool removed by a system message ({$label}) must not be executed");
+        }
     }
 
     #[Test]
@@ -1178,7 +1216,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Hello']],
             model: 'claude-opus-4-6',
             maxIterations: 5,
-            extraParams: ['temperature' => 0.7],
+            extraParams: ['inferenceGeo' => 'us'],
         );
 
         $params = $runner->getParams();
@@ -1189,7 +1227,7 @@ final class BetaToolRunnerTest extends TestCase
         $this->assertSame(1024, $params['maxTokens']);
         $this->assertSame('claude-opus-4-6', $params['model']);
         $this->assertSame(5, $params['maxIterations']);
-        $this->assertSame(0.7, $params['temperature']);
+        $this->assertSame('us', $params['inferenceGeo']);
         $this->assertSame('Hello', $messages[0]['content']);
     }
 
@@ -2153,13 +2191,13 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather?']],
             model: 'claude-opus-4-6',
             tools: [$this->makeWeatherTool()],
-            extraParams: ['temperature' => 0.5, 'system' => 'You are a weather bot.'],
+            extraParams: ['inferenceGeo' => 'us', 'system' => 'You are a weather bot.'],
         ) as $_);
 
         foreach ($this->transporter->getRequests() as $i => $request) {
             /** @var array<string, mixed> $body */
             $body = json_decode((string) $request->getBody(), associative: true);
-            $this->assertSame(0.5, $body['temperature'], "Request #{$i} missing temperature");
+            $this->assertSame('us', $body['inference_geo'], "Request #{$i} missing inference_geo");
             $this->assertSame('You are a weather bot.', $body['system'], "Request #{$i} missing system");
         }
     }

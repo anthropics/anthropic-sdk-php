@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\DeploymentRuns;
 
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsMemoryStoreArchivedRunError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A memory store referenced by the deployment is archived.
  *
  * @phpstan-type BetaManagedAgentsMemoryStoreArchivedRunErrorShape = array{
- *   message: string, type: Type|value-of<Type>
+ *   message: string, type: 'memory_store_archived_error'
  * }
  */
 final class BetaManagedAgentsMemoryStoreArchivedRunError implements BaseModel
@@ -21,30 +21,28 @@ final class BetaManagedAgentsMemoryStoreArchivedRunError implements BaseModel
     /** @use SdkModel<BetaManagedAgentsMemoryStoreArchivedRunErrorShape> */
     use SdkModel;
 
+    /** @var 'memory_store_archived_error' $type */
+    #[Required(type: new ConstantOf('memory_store_archived_error'))]
+    public string $type = 'memory_store_archived_error';
+
     /**
      * Human-readable error description.
      */
     #[Required]
     public string $message;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsMemoryStoreArchivedRunError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsMemoryStoreArchivedRunError::with(message: ..., type: ...)
+     * BetaManagedAgentsMemoryStoreArchivedRunError::with(message: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMemoryStoreArchivedRunError())
-     *   ->withMessage(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsMemoryStoreArchivedRunError())->withMessage(...)
      * ```
      */
     public function __construct()
@@ -56,15 +54,12 @@ final class BetaManagedAgentsMemoryStoreArchivedRunError implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $message, Type|string $type): self
+    public static function with(string $message): self
     {
         $self = new self;
 
         $self['message'] = $message;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -81,9 +76,9 @@ final class BetaManagedAgentsMemoryStoreArchivedRunError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'memory_store_archived_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

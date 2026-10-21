@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Sessions\BetaManagedAgentsSessionUsageEvent\Type;
 use Anthropic\Beta\Sessions\Events\ManagedAgentsSessionUsageSnapshot;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Periodic snapshot of the session's cumulative usage and tracked list cost.
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaManagedAgentsSessionUsageEventShape = array{
  *   id: string,
  *   processedAt: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'session.usage',
  *   usage: ManagedAgentsSessionUsageSnapshot|ManagedAgentsSessionUsageSnapshotShape,
  *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  * }
@@ -29,6 +29,10 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsSessionUsageEventShape> */
     use SdkModel;
+
+    /** @var 'session.usage' $type */
+    #[Required(type: new ConstantOf('session.usage'))]
+    public string $type = 'session.usage';
 
     /**
      * Unique identifier for this event.
@@ -41,10 +45,6 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The session's cumulative usage at the snapshot time.
@@ -63,9 +63,7 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsSessionUsageEvent::with(
-     *   id: ..., processedAt: ..., type: ..., usage: ...
-     * )
+     * BetaManagedAgentsSessionUsageEvent::with(id: ..., processedAt: ..., usage: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -74,7 +72,6 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
      * (new BetaManagedAgentsSessionUsageEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      *   ->withUsage(...)
      * ```
      */
@@ -88,14 +85,12 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsSessionUsageSnapshot|ManagedAgentsSessionUsageSnapshotShape $usage
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      */
     public static function with(
         string $id,
         \DateTimeInterface $processedAt,
-        Type|string $type,
         ManagedAgentsSessionUsageSnapshot|array $usage,
         BetaManagedAgentsBudgetLimit|array|null $budget = null,
     ): self {
@@ -103,7 +98,6 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
 
         $self['id'] = $id;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
         $self['usage'] = $usage;
 
         null !== $budget && $self['budget'] = $budget;
@@ -134,9 +128,9 @@ final class BetaManagedAgentsSessionUsageEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session.usage' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

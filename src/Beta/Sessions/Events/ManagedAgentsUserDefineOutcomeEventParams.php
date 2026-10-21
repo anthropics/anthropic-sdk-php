@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEventParams\Rubric;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserDefineOutcomeEventParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Parameters for defining an outcome the agent should work toward. The agent begins work on receipt.
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ManagedAgentsUserDefineOutcomeEventParamsShape = array{
  *   description: string,
  *   rubric: RubricShape,
- *   type: Type|value-of<Type>,
+ *   type: 'user.define_outcome',
  *   maxIterations?: int|null,
  * }
  */
@@ -28,6 +28,10 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsUserDefineOutcomeEventParamsShape> */
     use SdkModel;
+
+    /** @var 'user.define_outcome' $type */
+    #[Required(type: new ConstantOf('user.define_outcome'))]
+    public string $type = 'user.define_outcome';
 
     /**
      * What the agent should produce. This is the task specification.
@@ -43,10 +47,6 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
     #[Required(union: Rubric::class)]
     public ManagedAgentsFileRubricParams|ManagedAgentsTextRubricParams $rubric;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Eval→revision cycles before giving up. Default 3, max 20.
      */
@@ -58,9 +58,7 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsUserDefineOutcomeEventParams::with(
-     *   description: ..., rubric: ..., type: ...
-     * )
+     * ManagedAgentsUserDefineOutcomeEventParams::with(description: ..., rubric: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -69,7 +67,6 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
      * (new ManagedAgentsUserDefineOutcomeEventParams())
      *   ->withDescription(...)
      *   ->withRubric(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -83,19 +80,16 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RubricShape $rubric
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $description,
         ManagedAgentsFileRubricParams|array|ManagedAgentsTextRubricParams $rubric,
-        Type|string $type,
         ?int $maxIterations = null,
     ): self {
         $self = new self;
 
         $self['description'] = $description;
         $self['rubric'] = $rubric;
-        $self['type'] = $type;
 
         null !== $maxIterations && $self['maxIterations'] = $maxIterations;
 
@@ -128,9 +122,9 @@ final class ManagedAgentsUserDefineOutcomeEventParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.define_outcome' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

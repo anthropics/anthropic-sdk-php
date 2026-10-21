@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageReceivedEvent\Content;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsAgentThreadMessageReceivedEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Delivery event written to the target thread's input stream when an agent-to-agent message arrives.
@@ -22,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<ContentShape>,
  *   fromSessionThreadID: string,
  *   processedAt: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'agent.thread_message_received',
  *   fromAgentName?: string|null,
  * }
  */
@@ -30,6 +30,10 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsAgentThreadMessageReceivedEventShape> */
     use SdkModel;
+
+    /** @var 'agent.thread_message_received' $type */
+    #[Required(type: new ConstantOf('agent.thread_message_received'))]
+    public string $type = 'agent.thread_message_received';
 
     /**
      * Unique identifier for this event.
@@ -57,10 +61,6 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Name of the callable agent this message came from. Absent when received from the primary agent.
      */
@@ -73,7 +73,7 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsAgentThreadMessageReceivedEvent::with(
-     *   id: ..., content: ..., fromSessionThreadID: ..., processedAt: ..., type: ...
+     *   id: ..., content: ..., fromSessionThreadID: ..., processedAt: ...
      * )
      * ```
      *
@@ -85,7 +85,6 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
      *   ->withContent(...)
      *   ->withFromSessionThreadID(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -99,14 +98,12 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ContentShape> $content
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         array $content,
         string $fromSessionThreadID,
         \DateTimeInterface $processedAt,
-        Type|string $type,
         ?string $fromAgentName = null,
     ): self {
         $self = new self;
@@ -115,7 +112,6 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
         $self['content'] = $content;
         $self['fromSessionThreadID'] = $fromSessionThreadID;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         null !== $fromAgentName && $self['fromAgentName'] = $fromAgentName;
 
@@ -169,9 +165,9 @@ final class ManagedAgentsAgentThreadMessageReceivedEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent.thread_message_received' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

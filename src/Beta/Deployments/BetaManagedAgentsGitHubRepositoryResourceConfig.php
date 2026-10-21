@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Deployments;
 
 use Anthropic\Beta\Deployments\BetaManagedAgentsGitHubRepositoryResourceConfig\Checkout;
-use Anthropic\Beta\Deployments\BetaManagedAgentsGitHubRepositoryResourceConfig\Type;
 use Anthropic\Beta\Sessions\BetaManagedAgentsBranchCheckout;
 use Anthropic\Beta\Sessions\BetaManagedAgentsCommitCheckout;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A GitHub repository mounted into each session's container. The authorization token is write-only and never returned.
@@ -20,7 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type CheckoutVariants from \Anthropic\Beta\Deployments\BetaManagedAgentsGitHubRepositoryResourceConfig\Checkout
  *
  * @phpstan-type BetaManagedAgentsGitHubRepositoryResourceConfigShape = array{
- *   type: Type|value-of<Type>,
+ *   type: 'github_repository',
  *   url: string,
  *   checkout?: CheckoutShape|null,
  *   mountPath?: string|null,
@@ -31,9 +31,9 @@ final class BetaManagedAgentsGitHubRepositoryResourceConfig implements BaseModel
     /** @use SdkModel<BetaManagedAgentsGitHubRepositoryResourceConfigShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'github_repository' $type */
+    #[Required(type: new ConstantOf('github_repository'))]
+    public string $type = 'github_repository';
 
     /**
      * Github URL of the repository.
@@ -60,15 +60,13 @@ final class BetaManagedAgentsGitHubRepositoryResourceConfig implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsGitHubRepositoryResourceConfig::with(type: ..., url: ...)
+     * BetaManagedAgentsGitHubRepositoryResourceConfig::with(url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsGitHubRepositoryResourceConfig())
-     *   ->withType(...)
-     *   ->withURL(...)
+     * (new BetaManagedAgentsGitHubRepositoryResourceConfig())->withURL(...)
      * ```
      */
     public function __construct()
@@ -81,18 +79,15 @@ final class BetaManagedAgentsGitHubRepositoryResourceConfig implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param CheckoutShape|null $checkout
      */
     public static function with(
-        Type|string $type,
         string $url,
         BetaManagedAgentsBranchCheckout|array|BetaManagedAgentsCommitCheckout|null $checkout = null,
         ?string $mountPath = null,
     ): self {
         $self = new self;
 
-        $self['type'] = $type;
         $self['url'] = $url;
 
         null !== $checkout && $self['checkout'] = $checkout;
@@ -102,9 +97,9 @@ final class BetaManagedAgentsGitHubRepositoryResourceConfig implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'github_repository' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

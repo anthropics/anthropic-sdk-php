@@ -15,7 +15,7 @@ use Anthropic\Organization\RateLimits\OrganizationRateLimitTokenCountGroup;
 use Anthropic\Organization\RateLimits\OrganizationRateLimitWebSearchGroup;
 
 /**
- * The rate-limit group this entry's limits apply to. Its `type` equals `group_type`.
+ * The rate-limit group this entry's limits apply to.
  *
  * @phpstan-import-type OrganizationRateLimitModelGroupShape from \Anthropic\Organization\RateLimits\OrganizationRateLimitModelGroup
  * @phpstan-import-type OrganizationRateLimitBatchGroupShape from \Anthropic\Organization\RateLimits\OrganizationRateLimitBatchGroup

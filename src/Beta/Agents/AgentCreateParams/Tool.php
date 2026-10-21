@@ -74,14 +74,12 @@ final class Tool implements ConverterSource
     ): BetaManagedAgentsAgentToolset20260401Params|BetaManagedAgentsMCPToolsetParams|BetaManagedAgentsCustomToolParams {
         return match ($type) {
             Type::AGENT_TOOLSET_20260401, 'agent_toolset_20260401' => BetaManagedAgentsAgentToolset20260401Params::with(
-                type: 'agent_toolset_20260401',
                 // @phpstan-ignore argument.type
                 configs: $configs,
                 // @phpstan-ignore argument.type
                 defaultConfig: $defaultConfig,
             ),
             Type::MCP_TOOLSET, 'mcp_toolset' => BetaManagedAgentsMCPToolsetParams::with(
-                type: 'mcp_toolset',
                 mcpServerName: $mcpServerName ?? throw new \ArgumentCountError('$mcpServerName is required'),
                 // @phpstan-ignore argument.type
                 configs: $configs,
@@ -89,7 +87,6 @@ final class Tool implements ConverterSource
                 defaultConfig: $defaultConfig,
             ),
             Type::CUSTOM, 'custom' => BetaManagedAgentsCustomToolParams::with(
-                type: 'custom',
                 description: $description ?? throw new \ArgumentCountError('$description is required'),
                 inputSchema: $inputSchema ?? throw new \ArgumentCountError('$inputSchema is required'),
                 name: $name ?? throw new \ArgumentCountError('$name is required'),

@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUserInterruptEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * An interrupt event that pauses agent execution and returns control to the user.
  *
  * @phpstan-type ManagedAgentsUserInterruptEventShape = array{
  *   id: string,
- *   type: Type|value-of<Type>,
+ *   type: 'user.interrupt',
  *   processedAt?: \DateTimeInterface|null,
  *   sessionThreadID?: string|null,
  * }
@@ -25,15 +25,15 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
     /** @use SdkModel<ManagedAgentsUserInterruptEventShape> */
     use SdkModel;
 
+    /** @var 'user.interrupt' $type */
+    #[Required(type: new ConstantOf('user.interrupt'))]
+    public string $type = 'user.interrupt';
+
     /**
      * Unique identifier for this event.
      */
     #[Required]
     public string $id;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Timestamp when the interrupt was processed.
@@ -52,13 +52,13 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsUserInterruptEvent::with(id: ..., type: ...)
+     * ManagedAgentsUserInterruptEvent::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsUserInterruptEvent())->withID(...)->withType(...)
+     * (new ManagedAgentsUserInterruptEvent())->withID(...)
      * ```
      */
     public function __construct()
@@ -70,19 +70,15 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
-        Type|string $type,
         ?\DateTimeInterface $processedAt = null,
         ?string $sessionThreadID = null,
     ): self {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         null !== $processedAt && $self['processedAt'] = $processedAt;
         null !== $sessionThreadID && $self['sessionThreadID'] = $sessionThreadID;
@@ -102,9 +98,9 @@ final class ManagedAgentsUserInterruptEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'user.interrupt' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

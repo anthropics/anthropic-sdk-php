@@ -19,7 +19,6 @@ use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageCreateParams\Speed;
-use Anthropic\Messages\MessageParam;
 use Anthropic\Messages\MessageTokensCount;
 use Anthropic\Messages\Metadata;
 use Anthropic\Messages\Model;
@@ -69,7 +68,7 @@ final class MessagesRawService implements MessagesRawContract
      *
      * @param array{
      *   maxTokens: int,
-     *   messages: list<MessageParam|MessageParamShape>,
+     *   messages: list<MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   container?: MessageCreateParamsContainerShape|null,
@@ -81,12 +80,9 @@ final class MessagesRawService implements MessagesRawContract
      *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
-     *   temperature?: float,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,
      *   tools?: list<ToolUnionShape>,
-     *   topK?: int,
-     *   topP?: float,
      *   userProfileID?: string,
      *   workspaceID?: string,
      * }|MessageCreateParams $params
@@ -140,7 +136,7 @@ final class MessagesRawService implements MessagesRawContract
      *
      * @param array{
      *   maxTokens: int,
-     *   messages: list<MessageParam|MessageParamShape>,
+     *   messages: list<MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   container?: MessageCreateParamsContainerShape|null,
@@ -152,12 +148,9 @@ final class MessagesRawService implements MessagesRawContract
      *   speed?: Speed|value-of<Speed>|null,
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
-     *   temperature?: float,
      *   thinking?: ThinkingConfigParamShape,
      *   toolChoice?: ToolChoiceShape,
      *   tools?: list<ToolUnionShape>,
-     *   topK?: int,
-     *   topP?: float,
      *   userProfileID?: string,
      *   workspaceID?: string,
      * }|MessageCreateParams $params
@@ -221,7 +214,7 @@ final class MessagesRawService implements MessagesRawContract
      * Learn more about token counting in our [user guide](https://platform.claude.com/docs/en/build-with-claude/token-counting)
      *
      * @param array{
-     *   messages: list<MessageParam|MessageParamShape>,
+     *   messages: list<MessageParamShape>,
      *   model: string|Model|value-of<Model>,
      *   cacheControl?: CacheControlEphemeral|CacheControlEphemeralShape|null,
      *   outputConfig?: OutputConfig|OutputConfigShape,

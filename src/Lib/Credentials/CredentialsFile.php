@@ -10,6 +10,7 @@ final class CredentialsFile
 {
     private const DEFAULT_CONFIG_DIR_PARTS = ['.config', 'anthropic'];
     private const ACTIVE_CONFIG_FILE = 'active_config';
+    private const DEFAULT_PROFILE = 'default';
     private const CONFIGS_DIR = 'configs';
     private const CREDENTIALS_DIR = 'credentials';
 
@@ -27,10 +28,6 @@ final class CredentialsFile
     {
         $configDir = $this->resolveConfigDir();
         $profile = $this->resolveProfile($configDir);
-
-        if (null === $profile) {
-            return null;
-        }
 
         self::validateProfileName($profile);
 
@@ -226,7 +223,7 @@ final class CredentialsFile
         return $home.DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, self::DEFAULT_CONFIG_DIR_PARTS);
     }
 
-    private function resolveProfile(string $configDir): ?string
+    private function resolveProfile(string $configDir): string
     {
         if (null !== $this->profile) {
             return $this->profile;
@@ -238,14 +235,9 @@ final class CredentialsFile
         }
 
         $activeConfigPath = $configDir.DIRECTORY_SEPARATOR.self::ACTIVE_CONFIG_FILE;
-        $content = @file_get_contents($activeConfigPath);
-        if (false === $content) {
-            return null;
-        }
+        $profile = trim((string) @file_get_contents($activeConfigPath));
 
-        $profile = trim($content);
-
-        return '' !== $profile ? $profile : null;
+        return '' !== $profile ? $profile : self::DEFAULT_PROFILE;
     }
 
     private static function validateProfileName(string $profile): void

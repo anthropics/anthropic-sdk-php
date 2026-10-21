@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Sessions\BetaManagedAgentsSessionUpdatedEvent\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Emitted when an UpdateSession request changed at least one field. Carries only the fields that changed; absent fields were not part of the update. The new configuration applies from the next turn.
@@ -19,7 +19,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaManagedAgentsSessionUpdatedEventShape = array{
  *   id: string,
  *   processedAt: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'session.updated',
  *   agent?: null|BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape,
  *   budget?: null|BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape,
  *   metadata?: array<string,string>|null,
@@ -30,6 +30,10 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsSessionUpdatedEventShape> */
     use SdkModel;
+
+    /** @var 'session.updated' $type */
+    #[Required(type: new ConstantOf('session.updated'))]
+    public string $type = 'session.updated';
 
     /**
      * Unique identifier for this event.
@@ -42,10 +46,6 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
      */
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The session's effective agent configuration after the update. Present only when the update changed `agent` (tools or mcp_servers); when present it is the full materialised snapshot, not a diff.
@@ -78,16 +78,13 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsSessionUpdatedEvent::with(id: ..., processedAt: ..., type: ...)
+     * BetaManagedAgentsSessionUpdatedEvent::with(id: ..., processedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsSessionUpdatedEvent())
-     *   ->withID(...)
-     *   ->withProcessedAt(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsSessionUpdatedEvent())->withID(...)->withProcessedAt(...)
      * ```
      */
     public function __construct()
@@ -100,7 +97,6 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param BetaManagedAgentsSessionAgent|BetaManagedAgentsSessionAgentShape|null $agent
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget
      * @param array<string,string>|null $metadata
@@ -108,7 +104,6 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     public static function with(
         string $id,
         \DateTimeInterface $processedAt,
-        Type|string $type,
         BetaManagedAgentsSessionAgent|array|null $agent = null,
         BetaManagedAgentsBudgetLimit|array|null $budget = null,
         ?array $metadata = null,
@@ -118,7 +113,6 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
 
         $self['id'] = $id;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         null !== $agent && $self['agent'] = $agent;
         null !== $budget && $self['budget'] = $budget;
@@ -151,9 +145,9 @@ final class BetaManagedAgentsSessionUpdatedEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session.updated' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

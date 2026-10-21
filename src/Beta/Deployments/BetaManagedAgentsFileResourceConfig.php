@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsFileResourceConfig\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A file mounted into each session's container.
  *
  * @phpstan-type BetaManagedAgentsFileResourceConfigShape = array{
- *   fileID: string, type: Type|value-of<Type>, mountPath?: string|null
+ *   fileID: string, type: 'file', mountPath?: string|null
  * }
  */
 final class BetaManagedAgentsFileResourceConfig implements BaseModel
@@ -22,15 +22,15 @@ final class BetaManagedAgentsFileResourceConfig implements BaseModel
     /** @use SdkModel<BetaManagedAgentsFileResourceConfigShape> */
     use SdkModel;
 
+    /** @var 'file' $type */
+    #[Required(type: new ConstantOf('file'))]
+    public string $type = 'file';
+
     /**
      * ID of a previously uploaded file.
      */
     #[Required('file_id')]
     public string $fileID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * Mount path in the container. Defaults to `/mnt/session/uploads/<file_id>`.
@@ -43,13 +43,13 @@ final class BetaManagedAgentsFileResourceConfig implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsFileResourceConfig::with(fileID: ..., type: ...)
+     * BetaManagedAgentsFileResourceConfig::with(fileID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsFileResourceConfig())->withFileID(...)->withType(...)
+     * (new BetaManagedAgentsFileResourceConfig())->withFileID(...)
      * ```
      */
     public function __construct()
@@ -61,18 +61,12 @@ final class BetaManagedAgentsFileResourceConfig implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $fileID,
-        Type|string $type,
-        ?string $mountPath = null
-    ): self {
+    public static function with(string $fileID, ?string $mountPath = null): self
+    {
         $self = new self;
 
         $self['fileID'] = $fileID;
-        $self['type'] = $type;
 
         null !== $mountPath && $self['mountPath'] = $mountPath;
 
@@ -91,9 +85,9 @@ final class BetaManagedAgentsFileResourceConfig implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'file' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

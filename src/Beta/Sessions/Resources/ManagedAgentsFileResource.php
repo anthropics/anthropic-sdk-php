@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Resources;
 
-use Anthropic\Beta\Sessions\Resources\ManagedAgentsFileResource\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-type ManagedAgentsFileResourceShape = array{
@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   fileID: string,
  *   mountPath: string,
- *   type: Type|value-of<Type>,
+ *   type: 'file',
  *   updatedAt: \DateTimeInterface,
  * }
  */
@@ -23,6 +23,10 @@ final class ManagedAgentsFileResource implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsFileResourceShape> */
     use SdkModel;
+
+    /** @var 'file' $type */
+    #[Required(type: new ConstantOf('file'))]
+    public string $type = 'file';
 
     #[Required]
     public string $id;
@@ -39,10 +43,6 @@ final class ManagedAgentsFileResource implements BaseModel
     #[Required('mount_path')]
     public string $mountPath;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * A timestamp in RFC 3339 format.
      */
@@ -55,12 +55,7 @@ final class ManagedAgentsFileResource implements BaseModel
      * To enforce required parameters use
      * ```
      * ManagedAgentsFileResource::with(
-     *   id: ...,
-     *   createdAt: ...,
-     *   fileID: ...,
-     *   mountPath: ...,
-     *   type: ...,
-     *   updatedAt: ...,
+     *   id: ..., createdAt: ..., fileID: ..., mountPath: ..., updatedAt: ...
      * )
      * ```
      *
@@ -72,7 +67,6 @@ final class ManagedAgentsFileResource implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withFileID(...)
      *   ->withMountPath(...)
-     *   ->withType(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -85,15 +79,12 @@ final class ManagedAgentsFileResource implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         \DateTimeInterface $createdAt,
         string $fileID,
         string $mountPath,
-        Type|string $type,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -102,7 +93,6 @@ final class ManagedAgentsFileResource implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['fileID'] = $fileID;
         $self['mountPath'] = $mountPath;
-        $self['type'] = $type;
         $self['updatedAt'] = $updatedAt;
 
         return $self;
@@ -144,9 +134,9 @@ final class ManagedAgentsFileResource implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'file' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

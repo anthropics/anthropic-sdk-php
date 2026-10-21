@@ -6,10 +6,10 @@ namespace Anthropic\Beta\DeploymentRuns;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsAgentReference;
 use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsDeploymentRun\Error;
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsDeploymentRun\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A persistent, append-only record of a single deployment execution. Records session creation success or failure — no session lifecycle tracking.
@@ -28,13 +28,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   error: ErrorShape|null,
  *   sessionID: string|null,
  *   triggerContext: BetaManagedAgentsTriggerContextShape,
- *   type: Type|value-of<Type>,
+ *   type: 'deployment_run',
  * }
  */
 final class BetaManagedAgentsDeploymentRun implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsDeploymentRunShape> */
     use SdkModel;
+
+    /** @var 'deployment_run' $type */
+    #[Required(type: new ConstantOf('deployment_run'))]
+    public string $type = 'deployment_run';
 
     /**
      * Unique identifier for this run (`drun_...`).
@@ -82,10 +86,6 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     #[Required('trigger_context', union: BetaManagedAgentsTriggerContext::class)]
     public BetaManagedAgentsScheduleTriggerContext|BetaManagedAgentsManualTriggerContext $triggerContext;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsDeploymentRun()` is missing required properties by the API.
      *
@@ -99,7 +99,6 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
      *   error: ...,
      *   sessionID: ...,
      *   triggerContext: ...,
-     *   type: ...,
      * )
      * ```
      *
@@ -114,7 +113,6 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
      *   ->withError(...)
      *   ->withSessionID(...)
      *   ->withTriggerContext(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -130,7 +128,6 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
      * @param BetaManagedAgentsAgentReference|BetaManagedAgentsAgentReferenceShape $agent
      * @param ErrorShape|null $error
      * @param BetaManagedAgentsTriggerContextShape $triggerContext
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -140,7 +137,6 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
         BetaManagedAgentsEnvironmentArchivedRunError|array|BetaManagedAgentsAgentArchivedRunError|BetaManagedAgentsEnvironmentNotFoundRunError|BetaManagedAgentsVaultNotFoundRunError|BetaManagedAgentsVaultArchivedRunError|BetaManagedAgentsFileNotFoundRunError|BetaManagedAgentsMemoryStoreArchivedRunError|BetaManagedAgentsSkillNotFoundRunError|BetaManagedAgentsSessionResourceNotFoundRunError|BetaManagedAgentsWorkspaceArchivedRunError|BetaManagedAgentsOrganizationDisabledRunError|BetaManagedAgentsSessionRateLimitedRunError|BetaManagedAgentsSessionCreationRejectedRunError|BetaManagedAgentsUnknownRunError|BetaManagedAgentsSelfHostedResourcesUnsupportedRunError|BetaManagedAgentsMCPEgressBlockedRunError|null $error,
         ?string $sessionID,
         BetaManagedAgentsScheduleTriggerContext|array|BetaManagedAgentsManualTriggerContext $triggerContext,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -151,7 +147,6 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
         $self['error'] = $error;
         $self['sessionID'] = $sessionID;
         $self['triggerContext'] = $triggerContext;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -243,9 +238,9 @@ final class BetaManagedAgentsDeploymentRun implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'deployment_run' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

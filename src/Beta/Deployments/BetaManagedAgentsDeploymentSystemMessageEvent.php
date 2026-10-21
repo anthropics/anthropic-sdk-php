@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsDeploymentSystemMessageEvent\Type;
 use Anthropic\Beta\Sessions\BetaManagedAgentsSystemContentBlock;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Privileged context for the accompanying turn and all subsequent turns, appended to the session's system context as a `role: "system"` turn rather than replacing the top-level system prompt.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type BetaManagedAgentsDeploymentSystemMessageEventShape = array{
  *   content: list<BetaManagedAgentsSystemContentBlock|BetaManagedAgentsSystemContentBlockShape>,
- *   type: Type|value-of<Type>,
+ *   type: 'system.message',
  * }
  */
 final class BetaManagedAgentsDeploymentSystemMessageEvent implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsDeploymentSystemMessageEventShape> */
     use SdkModel;
+
+    /** @var 'system.message' $type */
+    #[Required(type: new ConstantOf('system.message'))]
+    public string $type = 'system.message';
 
     /**
      * System content blocks to append. Text-only.
@@ -33,24 +37,18 @@ final class BetaManagedAgentsDeploymentSystemMessageEvent implements BaseModel
     #[Required(list: BetaManagedAgentsSystemContentBlock::class)]
     public array $content;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsDeploymentSystemMessageEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsDeploymentSystemMessageEvent::with(content: ..., type: ...)
+     * BetaManagedAgentsDeploymentSystemMessageEvent::with(content: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsDeploymentSystemMessageEvent())
-     *   ->withContent(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsDeploymentSystemMessageEvent())->withContent(...)
      * ```
      */
     public function __construct()
@@ -64,14 +62,12 @@ final class BetaManagedAgentsDeploymentSystemMessageEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<BetaManagedAgentsSystemContentBlock|BetaManagedAgentsSystemContentBlockShape> $content
-     * @param Type|value-of<Type> $type
      */
-    public static function with(array $content, Type|string $type): self
+    public static function with(array $content): self
     {
         $self = new self;
 
         $self['content'] = $content;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -90,9 +86,9 @@ final class BetaManagedAgentsDeploymentSystemMessageEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'system.message' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

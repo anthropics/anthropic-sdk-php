@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions;
 
-use Anthropic\Beta\Sessions\BetaManagedAgentsAgentParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Specification for an Agent. Provide a specific `version` or use the short-form `agent="agent_id"` for the most recent version.
  *
  * @phpstan-type BetaManagedAgentsAgentParamsShape = array{
- *   id: string, type: Type|value-of<Type>, version?: int|null
+ *   id: string, type: 'agent', version?: int|null
  * }
  */
 final class BetaManagedAgentsAgentParams implements BaseModel
@@ -22,15 +22,15 @@ final class BetaManagedAgentsAgentParams implements BaseModel
     /** @use SdkModel<BetaManagedAgentsAgentParamsShape> */
     use SdkModel;
 
+    /** @var 'agent' $type */
+    #[Required(type: new ConstantOf('agent'))]
+    public string $type = 'agent';
+
     /**
      * The `agent` ID.
      */
     #[Required]
     public string $id;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * The specific `agent` version to use. Omit to use the latest version. Must be at least 1 if specified.
@@ -43,13 +43,13 @@ final class BetaManagedAgentsAgentParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsAgentParams::with(id: ..., type: ...)
+     * BetaManagedAgentsAgentParams::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsAgentParams())->withID(...)->withType(...)
+     * (new BetaManagedAgentsAgentParams())->withID(...)
      * ```
      */
     public function __construct()
@@ -61,18 +61,12 @@ final class BetaManagedAgentsAgentParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $id,
-        Type|string $type,
-        ?int $version = null
-    ): self {
+    public static function with(string $id, ?int $version = null): self
+    {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         null !== $version && $self['version'] = $version;
 
@@ -91,9 +85,9 @@ final class BetaManagedAgentsAgentParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'agent' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

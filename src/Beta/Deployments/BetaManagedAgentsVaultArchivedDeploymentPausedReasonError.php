@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Beta\Deployments\BetaManagedAgentsVaultArchivedDeploymentPausedReasonError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A vault referenced by the deployment is archived.
  *
  * @phpstan-type BetaManagedAgentsVaultArchivedDeploymentPausedReasonErrorShape = array{
- *   type: Type|value-of<Type>
+ *   type: 'vault_archived_error'
  * }
  */
 final class BetaManagedAgentsVaultArchivedDeploymentPausedReasonError implements BaseModel
@@ -21,24 +21,10 @@ final class BetaManagedAgentsVaultArchivedDeploymentPausedReasonError implements
     /** @use SdkModel<BetaManagedAgentsVaultArchivedDeploymentPausedReasonErrorShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'vault_archived_error' $type */
+    #[Required(type: new ConstantOf('vault_archived_error'))]
+    public string $type = 'vault_archived_error';
 
-    /**
-     * `new BetaManagedAgentsVaultArchivedDeploymentPausedReasonError()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsVaultArchivedDeploymentPausedReasonError::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsVaultArchivedDeploymentPausedReasonError())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +34,16 @@ final class BetaManagedAgentsVaultArchivedDeploymentPausedReasonError implements
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'vault_archived_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

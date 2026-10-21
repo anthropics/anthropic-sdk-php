@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Resources;
 
-use Anthropic\Beta\Sessions\Resources\ManagedAgentsDeleteSessionResource\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Confirmation of resource deletion.
  *
  * @phpstan-type ManagedAgentsDeleteSessionResourceShape = array{
- *   id: string, type: Type|value-of<Type>
+ *   id: string, type: 'session_resource_deleted'
  * }
  */
 final class ManagedAgentsDeleteSessionResource implements BaseModel
@@ -21,25 +21,25 @@ final class ManagedAgentsDeleteSessionResource implements BaseModel
     /** @use SdkModel<ManagedAgentsDeleteSessionResourceShape> */
     use SdkModel;
 
+    /** @var 'session_resource_deleted' $type */
+    #[Required(type: new ConstantOf('session_resource_deleted'))]
+    public string $type = 'session_resource_deleted';
+
     #[Required]
     public string $id;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * `new ManagedAgentsDeleteSessionResource()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsDeleteSessionResource::with(id: ..., type: ...)
+     * ManagedAgentsDeleteSessionResource::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsDeleteSessionResource())->withID(...)->withType(...)
+     * (new ManagedAgentsDeleteSessionResource())->withID(...)
      * ```
      */
     public function __construct()
@@ -51,15 +51,12 @@ final class ManagedAgentsDeleteSessionResource implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(string $id, Type|string $type): self
+    public static function with(string $id): self
     {
         $self = new self;
 
         $self['id'] = $id;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -73,9 +70,9 @@ final class ManagedAgentsDeleteSessionResource implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'session_resource_deleted' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

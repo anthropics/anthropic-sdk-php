@@ -4,41 +4,25 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusTerminal\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The session encountered a terminal error and will transition to `terminated` state.
  *
- * @phpstan-type ManagedAgentsRetryStatusTerminalShape = array{
- *   type: Type|value-of<Type>
- * }
+ * @phpstan-type ManagedAgentsRetryStatusTerminalShape = array{type: 'terminal'}
  */
 final class ManagedAgentsRetryStatusTerminal implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsRetryStatusTerminalShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'terminal' $type */
+    #[Required(type: new ConstantOf('terminal'))]
+    public string $type = 'terminal';
 
-    /**
-     * `new ManagedAgentsRetryStatusTerminal()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * ManagedAgentsRetryStatusTerminal::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new ManagedAgentsRetryStatusTerminal())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +32,16 @@ final class ManagedAgentsRetryStatusTerminal implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'terminal' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

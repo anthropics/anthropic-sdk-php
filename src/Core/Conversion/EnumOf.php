@@ -40,7 +40,7 @@ final class EnumOf implements Converter
     {
         $this->tally($value, state: $state);
 
-        return $value;
+        return $value instanceof \BackedEnum ? $value->value : $value;
     }
 
     public function dump(mixed $value, DumpState $state): mixed

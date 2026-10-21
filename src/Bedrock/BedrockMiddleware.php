@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Bedrock;
 
+use Anthropic\Client;
 use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\RequestTransformer;
 use Anthropic\Core\Util;
@@ -23,8 +24,6 @@ use Psr\Http\Message\StreamInterface;
 /** @internal */
 final class BedrockMiddleware implements Middleware
 {
-    private const VERSION = 'bedrock-2023-05-31';
-
     /**
      * @param \Closure(RequestInterface): RequestInterface $authorize
      */
@@ -42,6 +41,7 @@ final class BedrockMiddleware implements Middleware
 
     private function rewriteRequest(RequestInterface $request): RequestInterface
     {
+        $request = $request->withoutHeader('anthropic-version');
         $path = $request->getUri()->getPath();
 
         if (str_ends_with($path, '/v1/messages') || str_ends_with($path, '/v1/messages/count_tokens')) {
@@ -52,9 +52,8 @@ final class BedrockMiddleware implements Middleware
             if ('' !== ($betas = $r->getHeader('anthropic-beta')) && null === $r->getBodyParam('anthropic_beta')) {
                 $r->setBodyParam('anthropic_beta', array_map('trim', explode(',', $betas)));
             }
-            $r->setBodyParamDefault('anthropic_version', self::VERSION)
+            $r->setBodyParamDefault('anthropic_version', Client::ANTHROPIC_API_VERSION)
                 ->setHeader('X-Amzn-Bedrock-Accept', 'application/json')
-                ->dropHeader('anthropic-version')
                 ->dropHeader('anthropic-beta')
                 ->dropHeader('anthropic-user-profile-id')
                 ->dropHeader('anthropic-workspace-id')
@@ -78,10 +77,6 @@ final class BedrockMiddleware implements Middleware
             $action = (bool) $r->takeBodyParam('stream') ? 'invoke-with-response-stream' : 'invoke';
 
             return $r->setPath("{$prefix}/model/{$model}/{$action}")->build();
-        }
-
-        if (str_ends_with($path, '/v1/complete')) {
-            return $request;
         }
 
         if (false !== ($i = strpos($path, '/v1/'))) {

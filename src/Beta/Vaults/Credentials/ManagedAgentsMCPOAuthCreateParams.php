@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthCreateParams\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Parameters for creating an MCP OAuth credential.
@@ -18,7 +18,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ManagedAgentsMCPOAuthCreateParamsShape = array{
  *   accessToken: string,
  *   mcpServerURL: string,
- *   type: Type|value-of<Type>,
+ *   type: 'mcp_oauth',
  *   expiresAt?: \DateTimeInterface|null,
  *   refresh?: null|ManagedAgentsMCPOAuthRefreshParams|ManagedAgentsMCPOAuthRefreshParamsShape,
  * }
@@ -27,6 +27,10 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsMCPOAuthCreateParamsShape> */
     use SdkModel;
+
+    /** @var 'mcp_oauth' $type */
+    #[Required(type: new ConstantOf('mcp_oauth'))]
+    public string $type = 'mcp_oauth';
 
     /**
      * The OAuth access token to send to the MCP server.
@@ -39,10 +43,6 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
      */
     #[Required('mcp_server_url')]
     public string $mcpServerURL;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * When `access_token` expires, in RFC 3339.
@@ -63,9 +63,7 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsMCPOAuthCreateParams::with(
-     *   accessToken: ..., mcpServerURL: ..., type: ...
-     * )
+     * ManagedAgentsMCPOAuthCreateParams::with(accessToken: ..., mcpServerURL: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -74,7 +72,6 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
      * (new ManagedAgentsMCPOAuthCreateParams())
      *   ->withAccessToken(...)
      *   ->withMCPServerURL(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -87,13 +84,11 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsMCPOAuthRefreshParams|ManagedAgentsMCPOAuthRefreshParamsShape|null $refresh
      */
     public static function with(
         string $accessToken,
         string $mcpServerURL,
-        Type|string $type,
         ?\DateTimeInterface $expiresAt = null,
         ManagedAgentsMCPOAuthRefreshParams|array|null $refresh = null,
     ): self {
@@ -101,7 +96,6 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
 
         $self['accessToken'] = $accessToken;
         $self['mcpServerURL'] = $mcpServerURL;
-        $self['type'] = $type;
 
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $refresh && $self['refresh'] = $refresh;
@@ -132,9 +126,9 @@ final class ManagedAgentsMCPOAuthCreateParams implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'mcp_oauth' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

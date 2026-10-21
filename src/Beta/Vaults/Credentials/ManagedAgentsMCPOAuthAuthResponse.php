@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsMCPOAuthAuthResponse\Type;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * OAuth credential details for an MCP server.
@@ -17,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *
  * @phpstan-type ManagedAgentsMCPOAuthAuthResponseShape = array{
  *   mcpServerURL: string,
- *   type: Type|value-of<Type>,
+ *   type: 'mcp_oauth',
  *   expiresAt?: \DateTimeInterface|null,
  *   refresh?: null|ManagedAgentsMCPOAuthRefreshResponse|ManagedAgentsMCPOAuthRefreshResponseShape,
  * }
@@ -27,15 +27,15 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
     /** @use SdkModel<ManagedAgentsMCPOAuthAuthResponseShape> */
     use SdkModel;
 
+    /** @var 'mcp_oauth' $type */
+    #[Required(type: new ConstantOf('mcp_oauth'))]
+    public string $type = 'mcp_oauth';
+
     /**
      * URL of the MCP server this credential authenticates against.
      */
     #[Required('mcp_server_url')]
     public string $mcpServerURL;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     /**
      * When the credential's access token expires, in RFC 3339. Absent if the expiry isn't known.
@@ -54,13 +54,13 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsMCPOAuthAuthResponse::with(mcpServerURL: ..., type: ...)
+     * ManagedAgentsMCPOAuthAuthResponse::with(mcpServerURL: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsMCPOAuthAuthResponse())->withMCPServerURL(...)->withType(...)
+     * (new ManagedAgentsMCPOAuthAuthResponse())->withMCPServerURL(...)
      * ```
      */
     public function __construct()
@@ -73,19 +73,16 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsMCPOAuthRefreshResponse|ManagedAgentsMCPOAuthRefreshResponseShape|null $refresh
      */
     public static function with(
         string $mcpServerURL,
-        Type|string $type,
         ?\DateTimeInterface $expiresAt = null,
         ManagedAgentsMCPOAuthRefreshResponse|array|null $refresh = null,
     ): self {
         $self = new self;
 
         $self['mcpServerURL'] = $mcpServerURL;
-        $self['type'] = $type;
 
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $refresh && $self['refresh'] = $refresh;
@@ -105,9 +102,9 @@ final class ManagedAgentsMCPOAuthAuthResponse implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'mcp_oauth' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

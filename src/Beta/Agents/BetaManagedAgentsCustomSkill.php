@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsCustomSkill\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A resolved user-created custom skill.
  *
  * @phpstan-type BetaManagedAgentsCustomSkillShape = array{
- *   skillID: string, type: Type|value-of<Type>, version: string
+ *   skillID: string, type: 'custom', version: string
  * }
  */
 final class BetaManagedAgentsCustomSkill implements BaseModel
@@ -21,12 +21,12 @@ final class BetaManagedAgentsCustomSkill implements BaseModel
     /** @use SdkModel<BetaManagedAgentsCustomSkillShape> */
     use SdkModel;
 
+    /** @var 'custom' $type */
+    #[Required(type: new ConstantOf('custom'))]
+    public string $type = 'custom';
+
     #[Required('skill_id')]
     public string $skillID;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     #[Required]
     public string $version;
@@ -36,16 +36,13 @@ final class BetaManagedAgentsCustomSkill implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsCustomSkill::with(skillID: ..., type: ..., version: ...)
+     * BetaManagedAgentsCustomSkill::with(skillID: ..., version: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsCustomSkill())
-     *   ->withSkillID(...)
-     *   ->withType(...)
-     *   ->withVersion(...)
+     * (new BetaManagedAgentsCustomSkill())->withSkillID(...)->withVersion(...)
      * ```
      */
     public function __construct()
@@ -57,18 +54,12 @@ final class BetaManagedAgentsCustomSkill implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        string $skillID,
-        Type|string $type,
-        string $version
-    ): self {
+    public static function with(string $skillID, string $version): self
+    {
         $self = new self;
 
         $self['skillID'] = $skillID;
-        $self['type'] = $type;
         $self['version'] = $version;
 
         return $self;
@@ -83,9 +74,9 @@ final class BetaManagedAgentsCustomSkill implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'custom' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

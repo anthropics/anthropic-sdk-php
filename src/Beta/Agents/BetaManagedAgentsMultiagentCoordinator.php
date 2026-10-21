@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Agents;
 
 use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinator\Agent;
-use Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinator\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Resolved coordinator topology with a concrete agent roster.
@@ -17,13 +17,17 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AgentVariants from \Anthropic\Beta\Agents\BetaManagedAgentsMultiagentCoordinator\Agent
  *
  * @phpstan-type BetaManagedAgentsMultiagentCoordinatorShape = array{
- *   agents: list<AgentShape>, type: Type|value-of<Type>
+ *   agents: list<AgentShape>, type: 'coordinator'
  * }
  */
 final class BetaManagedAgentsMultiagentCoordinator implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsMultiagentCoordinatorShape> */
     use SdkModel;
+
+    /** @var 'coordinator' $type */
+    #[Required(type: new ConstantOf('coordinator'))]
+    public string $type = 'coordinator';
 
     /**
      * Agents the coordinator may spawn as session threads, each resolved to a specific version.
@@ -33,22 +37,18 @@ final class BetaManagedAgentsMultiagentCoordinator implements BaseModel
     #[Required(list: Agent::class)]
     public array $agents;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsMultiagentCoordinator()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsMultiagentCoordinator::with(agents: ..., type: ...)
+     * BetaManagedAgentsMultiagentCoordinator::with(agents: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsMultiagentCoordinator())->withAgents(...)->withType(...)
+     * (new BetaManagedAgentsMultiagentCoordinator())->withAgents(...)
      * ```
      */
     public function __construct()
@@ -62,14 +62,12 @@ final class BetaManagedAgentsMultiagentCoordinator implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AgentShape> $agents
-     * @param Type|value-of<Type> $type
      */
-    public static function with(array $agents, Type|string $type): self
+    public static function with(array $agents): self
     {
         $self = new self;
 
         $self['agents'] = $agents;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -88,9 +86,9 @@ final class BetaManagedAgentsMultiagentCoordinator implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'coordinator' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

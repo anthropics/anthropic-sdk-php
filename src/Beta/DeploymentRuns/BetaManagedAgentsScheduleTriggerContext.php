@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\DeploymentRuns;
 
-use Anthropic\Beta\DeploymentRuns\BetaManagedAgentsScheduleTriggerContext\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The run was fired by the deployment's cron schedule.
  *
  * @phpstan-type BetaManagedAgentsScheduleTriggerContextShape = array{
- *   scheduledAt: \DateTimeInterface, type: Type|value-of<Type>
+ *   scheduledAt: \DateTimeInterface, type: 'schedule'
  * }
  */
 final class BetaManagedAgentsScheduleTriggerContext implements BaseModel
@@ -21,30 +21,28 @@ final class BetaManagedAgentsScheduleTriggerContext implements BaseModel
     /** @use SdkModel<BetaManagedAgentsScheduleTriggerContextShape> */
     use SdkModel;
 
+    /** @var 'schedule' $type */
+    #[Required(type: new ConstantOf('schedule'))]
+    public string $type = 'schedule';
+
     /**
      * The UTC instant at which the cron expression matched in the configured timezone, before jitter is applied. At most one run is recorded per (`deployment_id`, `scheduled_at`) pair.
      */
     #[Required('scheduled_at')]
     public \DateTimeInterface $scheduledAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new BetaManagedAgentsScheduleTriggerContext()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BetaManagedAgentsScheduleTriggerContext::with(scheduledAt: ..., type: ...)
+     * BetaManagedAgentsScheduleTriggerContext::with(scheduledAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BetaManagedAgentsScheduleTriggerContext())
-     *   ->withScheduledAt(...)
-     *   ->withType(...)
+     * (new BetaManagedAgentsScheduleTriggerContext())->withScheduledAt(...)
      * ```
      */
     public function __construct()
@@ -56,17 +54,12 @@ final class BetaManagedAgentsScheduleTriggerContext implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(
-        \DateTimeInterface $scheduledAt,
-        Type|string $type
-    ): self {
+    public static function with(\DateTimeInterface $scheduledAt): self
+    {
         $self = new self;
 
         $self['scheduledAt'] = $scheduledAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -83,9 +76,9 @@ final class BetaManagedAgentsScheduleTriggerContext implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'schedule' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

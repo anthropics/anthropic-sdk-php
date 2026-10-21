@@ -52,12 +52,10 @@ final class BetaManagedAgentsSkillParams implements ConverterSource
     ): BetaManagedAgentsAnthropicSkillParams|BetaManagedAgentsCustomSkillParams {
         return match ($type) {
             Type::ANTHROPIC, 'anthropic' => BetaManagedAgentsAnthropicSkillParams::with(
-                type: 'anthropic',
                 skillID: $skillID,
                 version: $version
             ),
             Type::CUSTOM, 'custom' => BetaManagedAgentsCustomSkillParams::with(
-                type: 'custom',
                 skillID: $skillID,
                 version: $version
             ),

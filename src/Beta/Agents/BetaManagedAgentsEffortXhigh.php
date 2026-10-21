@@ -4,41 +4,25 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Agents;
 
-use Anthropic\Beta\Agents\BetaManagedAgentsEffortXhigh\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Extra-high effort. Not all models accept this level.
  *
- * @phpstan-type BetaManagedAgentsEffortXhighShape = array{
- *   type: Type|value-of<Type>
- * }
+ * @phpstan-type BetaManagedAgentsEffortXhighShape = array{type: 'xhigh'}
  */
 final class BetaManagedAgentsEffortXhigh implements BaseModel
 {
     /** @use SdkModel<BetaManagedAgentsEffortXhighShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'xhigh' $type */
+    #[Required(type: new ConstantOf('xhigh'))]
+    public string $type = 'xhigh';
 
-    /**
-     * `new BetaManagedAgentsEffortXhigh()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaManagedAgentsEffortXhigh::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaManagedAgentsEffortXhigh())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +32,16 @@ final class BetaManagedAgentsEffortXhigh implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'xhigh' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

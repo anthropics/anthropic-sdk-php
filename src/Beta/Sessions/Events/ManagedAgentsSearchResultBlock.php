@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSearchResultBlock\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * A block containing a web search result.
@@ -20,13 +20,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   content: list<ManagedAgentsSearchResultContent|ManagedAgentsSearchResultContentShape>,
  *   source: string,
  *   title: string,
- *   type: Type|value-of<Type>,
+ *   type: 'search_result',
  * }
  */
 final class ManagedAgentsSearchResultBlock implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSearchResultBlockShape> */
     use SdkModel;
+
+    /** @var 'search_result' $type */
+    #[Required(type: new ConstantOf('search_result'))]
+    public string $type = 'search_result';
 
     /**
      * Citation settings for this search result.
@@ -54,17 +58,13 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
     #[Required]
     public string $title;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSearchResultBlock()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * ManagedAgentsSearchResultBlock::with(
-     *   citations: ..., content: ..., source: ..., title: ..., type: ...
+     *   citations: ..., content: ..., source: ..., title: ...
      * )
      * ```
      *
@@ -76,7 +76,6 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
      *   ->withContent(...)
      *   ->withSource(...)
      *   ->withTitle(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -91,14 +90,12 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
      *
      * @param ManagedAgentsSearchResultCitations|ManagedAgentsSearchResultCitationsShape $citations
      * @param list<ManagedAgentsSearchResultContent|ManagedAgentsSearchResultContentShape> $content
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         ManagedAgentsSearchResultCitations|array $citations,
         array $content,
         string $source,
         string $title,
-        Type|string $type,
     ): self {
         $self = new self;
 
@@ -106,7 +103,6 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
         $self['content'] = $content;
         $self['source'] = $source;
         $self['title'] = $title;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -161,9 +157,9 @@ final class ManagedAgentsSearchResultBlock implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'search_result' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanModelRequestStartEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Emitted when a model request is initiated by the agent.
  *
  * @phpstan-type ManagedAgentsSpanModelRequestStartEventShape = array{
- *   id: string, processedAt: \DateTimeInterface, type: Type|value-of<Type>
+ *   id: string, processedAt: \DateTimeInterface, type: 'span.model_request_start'
  * }
  */
 final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSpanModelRequestStartEventShape> */
     use SdkModel;
+
+    /** @var 'span.model_request_start' $type */
+    #[Required(type: new ConstantOf('span.model_request_start'))]
+    public string $type = 'span.model_request_start';
 
     /**
      * Unique identifier for this event.
@@ -33,18 +37,12 @@ final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
     #[Required('processed_at')]
     public \DateTimeInterface $processedAt;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsSpanModelRequestStartEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsSpanModelRequestStartEvent::with(
-     *   id: ..., processedAt: ..., type: ...
-     * )
+     * ManagedAgentsSpanModelRequestStartEvent::with(id: ..., processedAt: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -53,7 +51,6 @@ final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
      * (new ManagedAgentsSpanModelRequestStartEvent())
      *   ->withID(...)
      *   ->withProcessedAt(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -65,19 +62,15 @@ final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
-        \DateTimeInterface $processedAt,
-        Type|string $type
+        \DateTimeInterface $processedAt
     ): self {
         $self = new self;
 
         $self['id'] = $id;
         $self['processedAt'] = $processedAt;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -105,9 +98,9 @@ final class ManagedAgentsSpanModelRequestStartEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'span.model_request_start' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

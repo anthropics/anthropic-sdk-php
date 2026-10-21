@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Sessions\Events;
 
 use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError\RetryStatus;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Authentication to an MCP server failed.
@@ -20,13 +20,17 @@ use Anthropic\Core\Contracts\BaseModel;
  *   mcpServerName: string,
  *   message: string,
  *   retryStatus: RetryStatusShape,
- *   type: Type|value-of<Type>,
+ *   type: 'mcp_authentication_failed_error',
  * }
  */
 final class ManagedAgentsMCPAuthenticationFailedError implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsMCPAuthenticationFailedErrorShape> */
     use SdkModel;
+
+    /** @var 'mcp_authentication_failed_error' $type */
+    #[Required(type: new ConstantOf('mcp_authentication_failed_error'))]
+    public string $type = 'mcp_authentication_failed_error';
 
     /**
      * Name of the MCP server that failed authentication.
@@ -48,17 +52,13 @@ final class ManagedAgentsMCPAuthenticationFailedError implements BaseModel
     #[Required('retry_status', union: RetryStatus::class)]
     public ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsMCPAuthenticationFailedError()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * ManagedAgentsMCPAuthenticationFailedError::with(
-     *   mcpServerName: ..., message: ..., retryStatus: ..., type: ...
+     *   mcpServerName: ..., message: ..., retryStatus: ...
      * )
      * ```
      *
@@ -69,7 +69,6 @@ final class ManagedAgentsMCPAuthenticationFailedError implements BaseModel
      *   ->withMCPServerName(...)
      *   ->withMessage(...)
      *   ->withRetryStatus(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -83,20 +82,17 @@ final class ManagedAgentsMCPAuthenticationFailedError implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RetryStatusShape $retryStatus
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $mcpServerName,
         string $message,
         ManagedAgentsRetryStatusRetrying|array|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal $retryStatus,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['mcpServerName'] = $mcpServerName;
         $self['message'] = $message;
         $self['retryStatus'] = $retryStatus;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -138,9 +134,9 @@ final class ManagedAgentsMCPAuthenticationFailedError implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'mcp_authentication_failed_error' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

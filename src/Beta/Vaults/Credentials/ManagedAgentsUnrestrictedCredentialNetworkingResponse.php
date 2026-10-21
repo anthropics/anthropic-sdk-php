@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsUnrestrictedCredentialNetworkingResponse\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The secret is substituted on any host the session's Environment network policy permits egress to.
  *
  * @phpstan-type ManagedAgentsUnrestrictedCredentialNetworkingResponseShape = array{
- *   type: Type|value-of<Type>
+ *   type: 'unrestricted'
  * }
  */
 final class ManagedAgentsUnrestrictedCredentialNetworkingResponse implements BaseModel
@@ -21,24 +21,10 @@ final class ManagedAgentsUnrestrictedCredentialNetworkingResponse implements Bas
     /** @use SdkModel<ManagedAgentsUnrestrictedCredentialNetworkingResponseShape> */
     use SdkModel;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
+    /** @var 'unrestricted' $type */
+    #[Required(type: new ConstantOf('unrestricted'))]
+    public string $type = 'unrestricted';
 
-    /**
-     * `new ManagedAgentsUnrestrictedCredentialNetworkingResponse()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * ManagedAgentsUnrestrictedCredentialNetworkingResponse::with(type: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new ManagedAgentsUnrestrictedCredentialNetworkingResponse())->withType(...)
-     * ```
-     */
     public function __construct()
     {
         $this->initialize();
@@ -48,22 +34,16 @@ final class ManagedAgentsUnrestrictedCredentialNetworkingResponse implements Bas
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Type|value-of<Type> $type
      */
-    public static function with(Type|string $type): self
+    public static function with(): self
     {
-        $self = new self;
-
-        $self['type'] = $type;
-
-        return $self;
+        return new self;
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'unrestricted' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

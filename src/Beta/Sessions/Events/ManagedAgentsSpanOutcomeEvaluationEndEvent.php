@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsSpanOutcomeEvaluationEndEvent\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * Emitted when an outcome evaluation cycle completes. Carries the verdict and aggregate token usage. A verdict of `needs_revision` means another evaluation cycle follows; `satisfied`, `max_iterations_reached`, `failed`, or `interrupted` are terminal — no further evaluation cycles follow.
@@ -22,7 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   outcomeID: string,
  *   processedAt: \DateTimeInterface,
  *   result: string,
- *   type: Type|value-of<Type>,
+ *   type: 'span.outcome_evaluation_end',
  *   usage: ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape,
  * }
  */
@@ -30,6 +30,10 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsSpanOutcomeEvaluationEndEventShape> */
     use SdkModel;
+
+    /** @var 'span.outcome_evaluation_end' $type */
+    #[Required(type: new ConstantOf('span.outcome_evaluation_end'))]
+    public string $type = 'span.outcome_evaluation_end';
 
     /**
      * Unique identifier for this event.
@@ -73,10 +77,6 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
     #[Required]
     public string $result;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Aggregate token usage for this evaluation cycle. Sums across all grader model requests within the cycle.
      */
@@ -96,7 +96,6 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
      *   outcomeID: ...,
      *   processedAt: ...,
      *   result: ...,
-     *   type: ...,
      *   usage: ...,
      * )
      * ```
@@ -112,7 +111,6 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
      *   ->withOutcomeID(...)
      *   ->withProcessedAt(...)
      *   ->withResult(...)
-     *   ->withType(...)
      *   ->withUsage(...)
      * ```
      */
@@ -126,7 +124,6 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type|value-of<Type> $type
      * @param ManagedAgentsSpanModelUsage|ManagedAgentsSpanModelUsageShape $usage
      */
     public static function with(
@@ -137,7 +134,6 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
         string $outcomeID,
         \DateTimeInterface $processedAt,
         string $result,
-        Type|string $type,
         ManagedAgentsSpanModelUsage|array $usage,
     ): self {
         $self = new self;
@@ -149,7 +145,6 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
         $self['outcomeID'] = $outcomeID;
         $self['processedAt'] = $processedAt;
         $self['result'] = $result;
-        $self['type'] = $type;
         $self['usage'] = $usage;
 
         return $self;
@@ -234,9 +229,9 @@ final class ManagedAgentsSpanOutcomeEvaluationEndEvent implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'span.outcome_evaluation_end' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

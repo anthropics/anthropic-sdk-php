@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Vaults\Credentials;
 
-use Anthropic\Beta\Vaults\Credentials\ManagedAgentsLimitedCredentialNetworkingResponse\Type;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * The secret is substituted only on requests to the listed hosts.
  *
  * @phpstan-type ManagedAgentsLimitedCredentialNetworkingResponseShape = array{
- *   allowedHosts: list<string>, type: Type|value-of<Type>
+ *   allowedHosts: list<string>, type: 'limited'
  * }
  */
 final class ManagedAgentsLimitedCredentialNetworkingResponse implements BaseModel
 {
     /** @use SdkModel<ManagedAgentsLimitedCredentialNetworkingResponseShape> */
     use SdkModel;
+
+    /** @var 'limited' $type */
+    #[Required(type: new ConstantOf('limited'))]
+    public string $type = 'limited';
 
     /**
      * The destination hosts of the outbound requests that the credential's secret is substituted into.
@@ -31,26 +35,18 @@ final class ManagedAgentsLimitedCredentialNetworkingResponse implements BaseMode
     #[Required('allowed_hosts', list: 'string')]
     public array $allowedHosts;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * `new ManagedAgentsLimitedCredentialNetworkingResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ManagedAgentsLimitedCredentialNetworkingResponse::with(
-     *   allowedHosts: ..., type: ...
-     * )
+     * ManagedAgentsLimitedCredentialNetworkingResponse::with(allowedHosts: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ManagedAgentsLimitedCredentialNetworkingResponse())
-     *   ->withAllowedHosts(...)
-     *   ->withType(...)
+     * (new ManagedAgentsLimitedCredentialNetworkingResponse())->withAllowedHosts(...)
      * ```
      */
     public function __construct()
@@ -64,14 +60,12 @@ final class ManagedAgentsLimitedCredentialNetworkingResponse implements BaseMode
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $allowedHosts
-     * @param Type|value-of<Type> $type
      */
-    public static function with(array $allowedHosts, Type|string $type): self
+    public static function with(array $allowedHosts): self
     {
         $self = new self;
 
         $self['allowedHosts'] = $allowedHosts;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -92,9 +86,9 @@ final class ManagedAgentsLimitedCredentialNetworkingResponse implements BaseMode
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'limited' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;
