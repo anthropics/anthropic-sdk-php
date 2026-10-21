@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.0.0...v1.1.0) (2026-10-21)
+
+### Features
+
+* **api:** add enforcement status, actions and filter to user profiles
+
 ## [1.0.0](https://github.com/anthropics/anthropic-sdk-php/compare/v0.61.0...v1.0.0) (2026-10-21)
 
 ### ⚠ BREAKING CHANGES

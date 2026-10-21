@@ -17,6 +17,7 @@ use Anthropic\UserProfiles\UserProfile;
 use Anthropic\UserProfiles\UserProfileAccessType;
 use Anthropic\UserProfiles\UserProfileCreateParams;
 use Anthropic\UserProfiles\UserProfileDeleteParams;
+use Anthropic\UserProfiles\UserProfileEnforcementStatus;
 use Anthropic\UserProfiles\UserProfileExternalUserDetailsParams;
 use Anthropic\UserProfiles\UserProfileListOrder;
 use Anthropic\UserProfiles\UserProfileListOrderBy;
@@ -182,6 +183,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
      * List User Profiles
      *
      * @param array{
+     *   enforcementStatus?: list<UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>>,
      *   limit?: int,
      *   order?: UserProfileListOrder|value-of<UserProfileListOrder>,
      *   orderBy?: UserProfileListOrderBy|value-of<UserProfileListOrderBy>,
@@ -202,7 +204,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['limit', 'order', 'orderBy', 'page']);
+        $query_params = array_flip(
+            ['enforcementStatus', 'limit', 'order', 'orderBy', 'page']
+        );
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
@@ -213,7 +217,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
             path: 'v1/user_profiles',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
-                ['orderBy' => 'order_by']
+                ['enforcementStatus' => 'enforcement_status', 'orderBy' => 'order_by'],
             ),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -222,7 +226,7 @@ final class UserProfilesRawService implements UserProfilesRawContract
             options: $options->withApiCall(new ApiCallInfo(
                 name: 'anthropic.user_profiles.list',
                 route: '/v1/user_profiles',
-                query: ['limit', 'order', 'order_by', 'page'],
+                query: ['enforcement_status', 'limit', 'order', 'order_by', 'page'],
             )),
             convert: UserProfile::class,
             page: PageCursor::class,
