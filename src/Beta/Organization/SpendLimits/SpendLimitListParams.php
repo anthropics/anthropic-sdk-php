@@ -14,10 +14,12 @@ use Anthropic\Core\Contracts\BaseModel;
 /**
  * List the organization's spend limits.
  *
- * Limits are grouped by scope type, in the order `organization`, `seat_tier`,
- * `rbac_group`, `organization_service`, `user`; within a type they come in a
- * fixed order that is not creation order. Supported for Claude Enterprise
- * organizations only, not for Claude Console organizations.
+ * A Claude Console organization's limits, including any read-only `usage_tier`
+ * limit, come newest first. Listing them is in an early access preview. To
+ * request access, contact your Anthropic account team. A Claude Enterprise
+ * organization's limits are grouped by scope type, in the order `organization`,
+ * `seat_tier`, `rbac_group`, `organization_service`, `user`; within a type they
+ * come in a fixed order that is not creation order.
  *
  * @see Anthropic\Services\Beta\Organization\SpendLimitsService::list()
  *
@@ -25,6 +27,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   limit?: int|null,
  *   page?: string|null,
  *   scopeType?: list<ScopeType|value-of<ScopeType>>|null,
+ *   workspaceID?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
@@ -47,12 +50,18 @@ final class SpendLimitListParams implements BaseModel
     public ?string $page;
 
     /**
-     * Return only limits with these scope types. Omit for all.
+     * Return only limits with these scope types. Omit for all. A scope type that doesn't apply to the organization gets a 400 error.
      *
      * @var list<value-of<ScopeType>>|null $scopeType
      */
     #[Optional(list: ScopeType::class, nullable: true)]
     public ?array $scopeType;
+
+    /**
+     * Return only the limits whose `scope.workspace_id` is this workspace (`wrkspc_...`). Claude Console organizations only; other organizations get a 400 error.
+     */
+    #[Optional(nullable: true)]
+    public ?string $workspaceID;
 
     /**
      * This endpoint is in beta: requests must send `spend-limit-reads-2026-09-26` in this header.
@@ -79,6 +88,7 @@ final class SpendLimitListParams implements BaseModel
         ?int $limit = null,
         ?string $page = null,
         ?array $scopeType = null,
+        ?string $workspaceID = null,
         ?array $betas = null,
     ): self {
         $self = new self;
@@ -86,6 +96,7 @@ final class SpendLimitListParams implements BaseModel
         null !== $limit && $self['limit'] = $limit;
         null !== $page && $self['page'] = $page;
         null !== $scopeType && $self['scopeType'] = $scopeType;
+        null !== $workspaceID && $self['workspaceID'] = $workspaceID;
         null !== $betas && $self['betas'] = $betas;
 
         return $self;
@@ -114,7 +125,7 @@ final class SpendLimitListParams implements BaseModel
     }
 
     /**
-     * Return only limits with these scope types. Omit for all.
+     * Return only limits with these scope types. Omit for all. A scope type that doesn't apply to the organization gets a 400 error.
      *
      * @param list<ScopeType|value-of<ScopeType>>|null $scopeType
      */
@@ -122,6 +133,17 @@ final class SpendLimitListParams implements BaseModel
     {
         $self = clone $this;
         $self['scopeType'] = $scopeType;
+
+        return $self;
+    }
+
+    /**
+     * Return only the limits whose `scope.workspace_id` is this workspace (`wrkspc_...`). Claude Console organizations only; other organizations get a 400 error.
+     */
+    public function withWorkspaceID(?string $workspaceID): self
+    {
+        $self = clone $this;
+        $self['workspaceID'] = $workspaceID;
 
         return $self;
     }

@@ -66,15 +66,18 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * List the organization's spend limits.
      *
-     * Limits are grouped by scope type, in the order `organization`, `seat_tier`,
-     * `rbac_group`, `organization_service`, `user`; within a type they come in a
-     * fixed order that is not creation order. Supported for Claude Enterprise
-     * organizations only, not for Claude Console organizations.
+     * A Claude Console organization's limits, including any read-only `usage_tier`
+     * limit, come newest first. Listing them is in an early access preview. To
+     * request access, contact your Anthropic account team. A Claude Enterprise
+     * organization's limits are grouped by scope type, in the order `organization`,
+     * `seat_tier`, `rbac_group`, `organization_service`, `user`; within a type they
+     * come in a fixed order that is not creation order.
      *
      * @param array{
      *   limit?: int,
      *   page?: string|null,
      *   scopeType?: list<ScopeType|value-of<ScopeType>>|null,
+     *   workspaceID?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|SpendLimitListParams $params
      * @param RequestOpts|null $requestOptions
@@ -91,7 +94,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
             $params,
             $requestOptions,
         );
-        $query_params = array_flip(['limit', 'page', 'scopeType']);
+        $query_params = array_flip(['limit', 'page', 'scopeType', 'workspaceID']);
 
         /** @var array<string,string> */
         $header_params = array_diff_key($parsed, $query_params);
@@ -102,7 +105,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
             path: 'v1/organizations/spend_limits?beta=true',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
-                ['scopeType' => 'scope_type'],
+                ['scopeType' => 'scope_type', 'workspaceID' => 'workspace_id'],
             ),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -116,7 +119,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
             )->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.spend_limits.list',
                 route: '/v1/organizations/spend_limits',
-                query: ['limit', 'page', 'scope_type'],
+                query: ['limit', 'page', 'scope_type', 'workspace_id'],
             )),
             convert: SpendLimit::class,
             page: PageCursor::class,
