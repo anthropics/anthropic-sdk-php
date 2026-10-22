@@ -38,6 +38,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
  * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaMessageThreadParamShape from \Anthropic\Beta\Messages\BetaMessageThreadParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaMessageParamVariants from \Anthropic\Beta\Messages\BetaMessageParam
@@ -46,6 +47,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
  * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaMessageThreadParamVariants from \Anthropic\Beta\Messages\BetaMessageThreadParam
  * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  *
@@ -70,6 +72,7 @@ use Anthropic\Messages\Model;
  *   stopSequences?: list<string>|null,
  *   system?: SystemShape|null,
  *   thinking?: BetaThinkingConfigParamShape|null,
+ *   thread?: BetaMessageThreadParamShape|null,
  *   toolChoice?: BetaToolChoiceShape|null,
  *   tools?: list<BetaToolUnionShape>|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
@@ -322,6 +325,14 @@ final class MessageCreateParams implements BaseModel
     public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking;
 
     /**
+     * Server-held conversation state (a Thread). `{"type": "create"}` asks the server to hold this conversation's state under the response's `id`; `{"type": "continue", "previous_message_id": ...}` resumes from a previous response so only the new turn's messages are sent. The response shape is unchanged.
+     *
+     * @var BetaMessageThreadParamVariants|null $thread
+     */
+    #[Optional(union: BetaMessageThreadParam::class, nullable: true)]
+    public BetaThreadCreateParams|BetaThreadContinueParams|null $thread;
+
+    /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      *
      * @var BetaToolChoiceVariants|null $toolChoice
@@ -464,6 +475,7 @@ final class MessageCreateParams implements BaseModel
      * @param list<string>|null $stopSequences
      * @param SystemShape|null $system
      * @param BetaThinkingConfigParamShape|null $thinking
+     * @param BetaMessageThreadParamShape|null $thread
      * @param BetaToolChoiceShape|null $toolChoice
      * @param list<BetaToolUnionShape>|null $tools
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
@@ -489,6 +501,7 @@ final class MessageCreateParams implements BaseModel
         ?array $stopSequences = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThreadCreateParams|array|BetaThreadContinueParams|null $thread = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,
@@ -518,6 +531,7 @@ final class MessageCreateParams implements BaseModel
         null !== $stopSequences && $self['stopSequences'] = $stopSequences;
         null !== $system && $self['system'] = $system;
         null !== $thinking && $self['thinking'] = $thinking;
+        null !== $thread && $self['thread'] = $thread;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
         null !== $tools && $self['tools'] = $tools;
         null !== $betas && $self['betas'] = $betas;
@@ -881,6 +895,20 @@ final class MessageCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;
+
+        return $self;
+    }
+
+    /**
+     * Server-held conversation state (a Thread). `{"type": "create"}` asks the server to hold this conversation's state under the response's `id`; `{"type": "continue", "previous_message_id": ...}` resumes from a previous response so only the new turn's messages are sent. The response shape is unchanged.
+     *
+     * @param BetaMessageThreadParamShape|null $thread
+     */
+    public function withThread(
+        BetaThreadCreateParams|array|BetaThreadContinueParams|null $thread
+    ): self {
+        $self = clone $this;
+        $self['thread'] = $thread;
 
         return $self;
     }

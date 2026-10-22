@@ -54,6 +54,7 @@ use Anthropic\SSEStream;
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
  * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaMessageThreadParamShape from \Anthropic\Beta\Messages\BetaMessageThreadParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -98,6 +99,7 @@ final class MessagesRawService implements MessagesRawContract
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
      *   thinking?: BetaThinkingConfigParamShape,
+     *   thread?: BetaMessageThreadParamShape|null,
      *   toolChoice?: BetaToolChoiceShape,
      *   tools?: list<BetaToolUnionShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -174,6 +176,7 @@ final class MessagesRawService implements MessagesRawContract
      *   stopSequences?: list<string>,
      *   system?: SystemShape,
      *   thinking?: BetaThinkingConfigParamShape,
+     *   thread?: BetaMessageThreadParamShape|null,
      *   toolChoice?: BetaToolChoiceShape,
      *   tools?: list<BetaToolUnionShape>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

@@ -16,6 +16,7 @@ use Anthropic\Beta\Messages\BetaFallbackCreditTokenParam;
 use Anthropic\Beta\Messages\BetaFallbacksParam;
 use Anthropic\Beta\Messages\BetaJSONOutputFormat;
 use Anthropic\Beta\Messages\BetaMessageParam;
+use Anthropic\Beta\Messages\BetaMessageThreadParam;
 use Anthropic\Beta\Messages\BetaMetadata;
 use Anthropic\Beta\Messages\BetaOutputConfig;
 use Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition;
@@ -24,6 +25,8 @@ use Anthropic\Beta\Messages\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigParam;
+use Anthropic\Beta\Messages\BetaThreadContinueParams;
+use Anthropic\Beta\Messages\BetaThreadCreateParams;
 use Anthropic\Beta\Messages\BetaToolChoice;
 use Anthropic\Beta\Messages\BetaToolChoiceAny;
 use Anthropic\Beta\Messages\BetaToolChoiceAuto;
@@ -55,6 +58,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
  * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaMessageThreadParamShape from \Anthropic\Beta\Messages\BetaMessageThreadParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type BetaMessageParamVariants from \Anthropic\Beta\Messages\BetaMessageParam
@@ -63,6 +67,7 @@ use Anthropic\Messages\Model;
  * @phpstan-import-type BetaFallbacksParamVariants from \Anthropic\Beta\Messages\BetaFallbacksParam
  * @phpstan-import-type SystemVariants from \Anthropic\Beta\Messages\Batches\BatchCreateParams\Request\Params\System
  * @phpstan-import-type BetaThinkingConfigParamVariants from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaMessageThreadParamVariants from \Anthropic\Beta\Messages\BetaMessageThreadParam
  * @phpstan-import-type BetaToolChoiceVariants from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionVariants from \Anthropic\Beta\Messages\BetaToolUnion
  *
@@ -88,6 +93,7 @@ use Anthropic\Messages\Model;
  *   stream?: bool|null,
  *   system?: SystemShape|null,
  *   thinking?: BetaThinkingConfigParamShape|null,
+ *   thread?: BetaMessageThreadParamShape|null,
  *   toolChoice?: BetaToolChoiceShape|null,
  *   tools?: list<BetaToolUnionShape>|null,
  * }
@@ -344,6 +350,14 @@ final class Params implements BaseModel
     public BetaThinkingConfigEnabled|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking;
 
     /**
+     * Server-held conversation state (a Thread). `{"type": "create"}` asks the server to hold this conversation's state under the response's `id`; `{"type": "continue", "previous_message_id": ...}` resumes from a previous response so only the new turn's messages are sent. The response shape is unchanged.
+     *
+     * @var BetaMessageThreadParamVariants|null $thread
+     */
+    #[Optional(union: BetaMessageThreadParam::class, nullable: true)]
+    public BetaThreadCreateParams|BetaThreadContinueParams|null $thread;
+
+    /**
      * How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      *
      * @var BetaToolChoiceVariants|null $toolChoice
@@ -461,6 +475,7 @@ final class Params implements BaseModel
      * @param list<string>|null $stopSequences
      * @param SystemShape|null $system
      * @param BetaThinkingConfigParamShape|null $thinking
+     * @param BetaMessageThreadParamShape|null $thread
      * @param BetaToolChoiceShape|null $toolChoice
      * @param list<BetaToolUnionShape>|null $tools
      */
@@ -486,6 +501,7 @@ final class Params implements BaseModel
         ?bool $stream = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThreadCreateParams|array|BetaThreadContinueParams|null $thread = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
     ): self {
@@ -513,6 +529,7 @@ final class Params implements BaseModel
         null !== $stream && $self['stream'] = $stream;
         null !== $system && $self['system'] = $system;
         null !== $thinking && $self['thinking'] = $thinking;
+        null !== $thread && $self['thread'] = $thread;
         null !== $toolChoice && $self['toolChoice'] = $toolChoice;
         null !== $tools && $self['tools'] = $tools;
 
@@ -886,6 +903,20 @@ final class Params implements BaseModel
     ): self {
         $self = clone $this;
         $self['thinking'] = $thinking;
+
+        return $self;
+    }
+
+    /**
+     * Server-held conversation state (a Thread). `{"type": "create"}` asks the server to hold this conversation's state under the response's `id`; `{"type": "continue", "previous_message_id": ...}` resumes from a previous response so only the new turn's messages are sent. The response shape is unchanged.
+     *
+     * @param BetaMessageThreadParamShape|null $thread
+     */
+    public function withThread(
+        BetaThreadCreateParams|array|BetaThreadContinueParams|null $thread
+    ): self {
+        $self = clone $this;
+        $self['thread'] = $thread;
 
         return $self;
     }

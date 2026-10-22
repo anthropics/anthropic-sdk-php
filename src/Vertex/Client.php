@@ -73,6 +73,14 @@ final class Client extends \Anthropic\Client
     }
 
     /**
+     * @internal
+     */
+    public function supportsMessageThreads(): bool
+    {
+        return false;
+    }
+
+    /**
      * @param non-empty-string|null $region Google Cloud region, e.g. `us-east5` or `global`; required
      * @param non-empty-string|null $projectId
      * @param non-empty-string|null $baseUrl

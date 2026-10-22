@@ -208,6 +208,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather in Paris?']],
             model: 'claude-opus-4-6',
             tools: [$this->makeWeatherTool()],
+            thread: false,
         ) as $_);
 
         $body = $this->requestBody(1);
@@ -529,6 +530,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather?']],
             model: 'claude-opus-4-6',
             tools: [$tool],
+            thread: false,
         );
 
         $retired = false;
@@ -573,6 +575,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather?']],
             model: 'claude-opus-4-6',
             tools: [$tool],
+            thread: false,
         );
 
         $retired = false;
@@ -630,6 +633,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather?']],
             model: 'claude-opus-4-6',
             tools: [$tool],
+            thread: false,
         );
 
         foreach ($runner as $message) {
@@ -676,6 +680,7 @@ final class BetaToolRunnerTest extends TestCase
             ],
             model: 'claude-opus-4-6',
             tools: [$tool],
+            thread: false,
         );
 
         foreach ($runner as $message) {
@@ -719,6 +724,7 @@ final class BetaToolRunnerTest extends TestCase
         $this->runWithToolChanges(
             tools: [$getTime],
             script: ['msg_toolu_time' => fn (BetaToolRunner $runner) => $runner->addTools($getWeather)],
+            thread: false,
         );
 
         $this->assertSame(['get_time', 'get_weather'], $calls);
@@ -918,6 +924,7 @@ final class BetaToolRunnerTest extends TestCase
                 $runner->removeTools($getWeather);
                 $runner->addTools($getTime);
             }],
+            thread: false,
         );
 
         $this->assertSame(['get_time'], $calls);
@@ -952,6 +959,7 @@ final class BetaToolRunnerTest extends TestCase
                 $runner->removeTools($getWeather);
                 $runner->addTools($getTime);
             }],
+            thread: false,
         );
 
         $this->assertSame(['get_time'], $calls);
@@ -1043,6 +1051,7 @@ final class BetaToolRunnerTest extends TestCase
         $this->runWithToolChanges(
             tools: [$getTime],
             script: ['msg_toolu_time' => fn (BetaToolRunner $runner) => $runner->addTools(self::WEB_SEARCH)],
+            thread: false,
         );
 
         $this->assertSame(self::toolChangesMessage(self::addition(self::WEB_SEARCH)), $this->lastSentMessage(1));
@@ -1264,6 +1273,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather?']],
             model: 'claude-opus-4-6',
             tools: [$this->makeWeatherTool()],
+            thread: false,
         );
 
         foreach ($runner as $message) {
@@ -1361,6 +1371,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather in SF?']],
             model: 'claude-opus-4-6',
             tools: [$this->makeWeatherTool(), ['name' => 'web_search', 'type' => 'web_search_20250305']],
+            thread: false,
         )->runUntilDone();
 
         $this->assertSame('end_turn', $final->stopReason);
@@ -1411,6 +1422,7 @@ final class BetaToolRunnerTest extends TestCase
             messages: [['role' => 'user', 'content' => 'Weather in SF?']],
             model: 'claude-opus-4-6',
             tools: [$tool],
+            thread: false,
         ) as $message) {
             $messages[] = $message;
         }
@@ -1484,6 +1496,7 @@ final class BetaToolRunnerTest extends TestCase
                 'betas' => ['compact-2026-09-04'],
                 'contextManagement' => ['edits' => [['type' => 'clear_tool_uses_20250919']]],
             ],
+            thread: false,
         );
 
         $yielded = [];
@@ -1577,7 +1590,7 @@ final class BetaToolRunnerTest extends TestCase
         $this->transporter->addResponse($this->compactedResponse());
         $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
 
-        $runner = $this->compactRunner();
+        $runner = $this->compactRunner(thread: false);
         foreach ($runner as $message) {
             if ('pause_turn' === $message->stopReason) {
                 $runner->compactBeforeNextTurn();
@@ -1701,6 +1714,7 @@ final class BetaToolRunnerTest extends TestCase
 
         $runner = $this->compactRunner(
             extraParams: ['betas' => ['compact-2026-09-04'], 'system' => 'Be brief.'] + $extraParams,
+            thread: false,
         );
         $runner->compactBeforeNextTurn();
         $runner->runUntilDone();
@@ -1809,7 +1823,7 @@ final class BetaToolRunnerTest extends TestCase
         $this->transporter->addResponse($this->compactedResponse($content, $stopReason));
         $this->transporter->addResponse($this->textResponse('Sunny in SF.'));
 
-        $runner = $this->compactRunner();
+        $runner = $this->compactRunner(thread: false);
 
         $warnings = $this->captureWarnings(function () use ($runner): void {
             $yielded = 0;
@@ -2036,6 +2050,7 @@ final class BetaToolRunnerTest extends TestCase
                 $runner->removeTools($getWeather);
                 $runner->compactBeforeNextTurn();
             }],
+            thread: false,
         );
 
         $this->assertSame(['type' => 'summarize'], $this->requestBody(1)['compaction']);
@@ -2192,6 +2207,7 @@ final class BetaToolRunnerTest extends TestCase
             model: 'claude-opus-4-6',
             tools: [$this->makeWeatherTool()],
             extraParams: ['inferenceGeo' => 'us', 'system' => 'You are a weather bot.'],
+            thread: false,
         ) as $_);
 
         foreach ($this->transporter->getRequests() as $i => $request) {
@@ -2218,6 +2234,7 @@ final class BetaToolRunnerTest extends TestCase
                 model: 'claude-opus-4-6',
                 tools: [$this->makeWeatherTool()],
                 extraParams: ['requestOptions' => $requestOptions],
+                thread: false,
             ) as $_);
 
             $request = $this->transporter->getLastRequest();
@@ -2244,6 +2261,7 @@ final class BetaToolRunnerTest extends TestCase
                 model: 'claude-opus-4-6',
                 tools: [$this->makeWeatherTool()],
                 extraParams: ['requestOptions' => $requestOptions],
+                thread: false,
             ) as $_);
 
             $request = $this->transporter->getLastRequest();
@@ -2344,6 +2362,40 @@ final class BetaToolRunnerTest extends TestCase
             ['id' => 'container_123', 'skills' => [['skill_id' => 'pdf', 'type' => 'anthropic', 'version' => 'latest']]],
             $this->requestBody(1)['container'],
         );
+    }
+
+    /**
+     * @param array<string, mixed> $extraParams
+     */
+    #[Test]
+    #[DataProvider('containersWithoutAThread')]
+    public function testServerContainerForwardedWithoutAThreadUnlessPinned(array $extraParams, string $expected): void
+    {
+        $this->transporter->addResponse(
+            $this->toolUseResponse('get_weather', ['location' => 'SF'], container: self::CONTAINER)
+        );
+        $this->transporter->addResponse($this->textResponse('Sunny.'));
+
+        $this->client->beta->messages->toolRunner(
+            maxTokens: 1024,
+            messages: [['role' => 'user', 'content' => 'Weather?']],
+            model: 'claude-opus-4-6',
+            tools: [$this->makeWeatherTool()],
+            extraParams: $extraParams,
+            thread: false,
+        )->runUntilDone();
+
+        $this->assertSame($expected, $this->requestBody(1)['container']);
+    }
+
+    /**
+     * @return iterable<string, array{array<string, mixed>, string}>
+     */
+    public static function containersWithoutAThread(): iterable
+    {
+        yield 'none pinned' => [[], 'container_123'];
+
+        yield 'one pinned' => [['container' => 'container_mine'], 'container_mine'];
     }
 
     // -------------------------------------------------------------------------
@@ -2481,8 +2533,9 @@ final class BetaToolRunnerTest extends TestCase
 
     /**
      * @param array<string, mixed> $extraParams
+     * @param array<string, mixed>|false|null $thread `false` for a runner that sends the whole history with every request
      */
-    private function compactRunner(?int $maxIterations = null, array $extraParams = []): BetaToolRunner
+    private function compactRunner(?int $maxIterations = null, array $extraParams = [], array|false|null $thread = null): BetaToolRunner
     {
         return $this->client->beta->messages->toolRunner(
             maxTokens: 1024,
@@ -2491,6 +2544,7 @@ final class BetaToolRunnerTest extends TestCase
             tools: [$this->makeWeatherTool()],
             maxIterations: $maxIterations,
             extraParams: $extraParams,
+            thread: $thread,
         );
     }
 
@@ -2594,6 +2648,7 @@ final class BetaToolRunnerTest extends TestCase
      * @param array<string, \Closure(BetaToolRunner): void> $script
      * @param (\Closure(BetaToolRunner): void)|null $beforeFirstRequest
      * @param list<array<string, mixed>> $messages
+     * @param array<string, mixed>|false|null $thread `false` for a runner that sends the whole history with every request
      */
     private function runWithToolChanges(
         array $tools,
@@ -2601,6 +2656,7 @@ final class BetaToolRunnerTest extends TestCase
         ?\Closure $beforeFirstRequest = null,
         ?int $maxIterations = null,
         array $messages = [self::INITIAL_MESSAGE],
+        array|false|null $thread = null,
     ): void {
         $runner = $this->client->beta->messages->toolRunner(
             maxTokens: 1024,
@@ -2608,6 +2664,7 @@ final class BetaToolRunnerTest extends TestCase
             model: 'claude-opus-4-6',
             tools: $tools,
             maxIterations: $maxIterations,
+            thread: $thread,
         );
 
         if (null !== $beforeFirstRequest) {

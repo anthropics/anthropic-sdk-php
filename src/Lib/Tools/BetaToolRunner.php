@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Lib\Tools;
 
 use Anthropic\Beta\Messages\BetaCompactionConfig;
-use Anthropic\Beta\Messages\BetaContainerParams;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageParam;
 use Anthropic\Beta\Messages\BetaStopReason;
@@ -14,6 +13,8 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion;
 use Anthropic\Lib\Helpers\StainlessHelperHeader;
+use Anthropic\Lib\Threads\BetaMessageThread;
+use Anthropic\Lib\Threads\UnsupportedRequestBehavior;
 use Anthropic\Lib\Tracing\Tracing;
 use Anthropic\Messages\Model;
 use Anthropic\RequestOptions;
@@ -26,6 +27,12 @@ use OpenTelemetry\Context\Context;
  * BetaToolRunner is an iterable that yields each BetaMessage produced during
  * the tool execution loop. The loop continues until the model stops requesting
  * tools or max_iterations is reached.
+ *
+ * The runner keeps the conversation in a message thread, so each request after the
+ * first carries only the messages that are new, and `system` and `tools` are fixed
+ * once the first request was answered. Pass `thread: false` to send the whole
+ * history with every request instead, as the runner always does on the Amazon
+ * Bedrock and Vertex AI clients.
  *
  * @phpstan-import-type BetaMessageParamVariants from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
@@ -82,10 +89,16 @@ final class BetaToolRunner implements \IteratorAggregate
     /** @var array<string, BetaRunnableTool> Runnable tools the history had removed when the compaction request was sent */
     private array $removedByHistory = [];
 
+    /** When set, it holds the history and the request fields, and the runner's own are not sent. */
+    private ?BetaMessageThread $thread = null;
+
     /**
      * @param list<BetaRunnableTool|BetaToolUnionShape> $tools Mix of runnable tools and plain tool definitions
      * @param list<array<string, mixed>> $messages Initial messages
      * @param array<string, mixed> $extraParams Additional params forwarded to every messages.create() call
+     * @param array<string, mixed>|false|null $thread `false` sends the whole history with every request, without a message thread
+     *
+     * @throws \InvalidArgumentException if `$thread` is an array or `$extraParams` holds a `thread`, because the runner sets `thread` for each request itself
      */
     public function __construct(
         private Client $client,
@@ -95,12 +108,37 @@ final class BetaToolRunner implements \IteratorAggregate
         array $tools = [],
         private ?int $maxIterations = null,
         private array $extraParams = [],
+        array|false|null $thread = null,
     ) {
         self::rejectCompactionParam($extraParams);
+        self::rejectThreadParam(is_array($thread) ? ['thread' => $thread] : $extraParams);
         $this->model = $model instanceof Model ? $model->value : $model;
         $this->messages = $messages;
         $this->tools = $tools;
         $this->processTools($tools);
+
+        if (false !== $thread && $client->supportsMessageThreads()) {
+            $this->thread = new BetaMessageThread(
+                $client,
+                array_diff_key($this->getParams(), ['maxIterations' => true]),
+                unsupportedRequestBehavior: UnsupportedRequestBehavior::CONTINUE_UNTHREADED,
+            );
+        }
+    }
+
+    /**
+     * @internal use `BetaMessageThread::toolRunner()`
+     */
+    public static function overThread(Client $client, BetaMessageThread $thread, ?int $maxIterations = null): self
+    {
+        $params = $thread->params();
+        self::rejectCompactionParam($params);
+
+        // @phpstan-ignore argument.type
+        $runner = new self($client, 0, [], '', $params['tools'] ?? [], $maxIterations, thread: false);
+        $runner->thread = $thread;
+
+        return $runner;
     }
 
     /**
@@ -148,7 +186,12 @@ final class BetaToolRunner implements \IteratorAggregate
      * history manually; the runner will skip auto-appending the current assistant
      * message for that turn.
      *
+     * On a message thread `system` and `tools` cannot change during a run. To change
+     * one, create the runner with `thread: false`.
+     *
      * @param array<string, mixed>|callable(array<string, mixed>): array<string, mixed> $paramsOrMutator
+     *
+     * @throws \InvalidArgumentException if the params hold a `thread`, because the runner sets `thread` for each request itself
      */
     public function setMessagesParams(array|callable $paramsOrMutator): void
     {
@@ -157,11 +200,19 @@ final class BetaToolRunner implements \IteratorAggregate
             : $paramsOrMutator($this->getParams());
 
         self::rejectCompactionParam($new);
-        if ($this->compacting && is_array($new['messages'] ?? null) && $new['messages'] !== $this->messages) {
+        self::rejectThreadParam($new);
+        if ($this->compacting && is_array($new['messages'] ?? null) && $new['messages'] !== $this->history()) {
             throw new \LogicException(self::MESSAGES_LOCKED);
         }
         if (null !== $this->pendingCompaction || $this->compacting) {
             self::assertNoCompactionEdit($new['contextManagement'] ?? null);
+        }
+
+        // @phpstan-ignore argument.type
+        $this->thread?->update(array_diff_key($new, ['maxIterations' => true, 'messages' => true]));
+        if (is_array($new['messages'] ?? null)) {
+            // @phpstan-ignore argument.type
+            $this->thread?->setMessages(array_values($new['messages']));
         }
 
         if (is_int($new['maxTokens'] ?? null)) {
@@ -221,6 +272,8 @@ final class BetaToolRunner implements \IteratorAggregate
         if ($this->compacting) {
             throw new \LogicException(self::MESSAGES_LOCKED);
         }
+
+        $this->thread?->append(...array_values($messages));
 
         /** @var list<array<string, mixed>> $normalized */
         $normalized = array_map(
@@ -303,7 +356,7 @@ final class BetaToolRunner implements \IteratorAggregate
             return;
         }
 
-        self::assertNoCompactionEdit($this->extraParams['contextManagement'] ?? null);
+        self::assertNoCompactionEdit($this->getParams()['contextManagement'] ?? null);
         $this->pendingCompaction = $compaction ?? ['type' => 'summarize'];
     }
 
@@ -316,6 +369,13 @@ final class BetaToolRunner implements \IteratorAggregate
      */
     public function getParams(): array
     {
+        if (null !== $this->thread) {
+            return array_filter(
+                [...array_diff_key($this->thread->params(), ['unsupportedRequestBehavior' => true]), 'maxIterations' => $this->maxIterations],
+                fn ($v) => null !== $v,
+            );
+        }
+
         return array_filter(
             array_merge(
                 [
@@ -358,6 +418,7 @@ final class BetaToolRunner implements \IteratorAggregate
 
             // The API cannot compact a conversation that ends mid-turn, so a paused turn is resumed first.
             if (null !== $this->pendingCompaction && !$turnPaused) {
+                $summarized = count($this->history());
                 $compacted = $this->requestCompaction($this->pendingCompaction);
                 $this->compacting = true;
 
@@ -367,7 +428,7 @@ final class BetaToolRunner implements \IteratorAggregate
                     $this->compacting = false;
                 }
 
-                $this->registerCompactionResponse($compacted);
+                $this->registerCompactionResponse($compacted, $summarized);
 
                 continue;
             }
@@ -376,32 +437,34 @@ final class BetaToolRunner implements \IteratorAggregate
             ++$iterationCount;
 
             // @phpstan-ignore argument.type
-            $message = $this->client->beta->messages->create(...$this->requestParams());
+            $message = $this->thread?->send(requestOptions: $this->requestOptionsWithHelperHeader()) ?? $this->client->beta->messages->create(...$this->requestParams());
 
             yield $message;
 
             $nextStep = self::determineNextStepFromStopReason($message->stopReason);
             $turnPaused = self::STEP_RESUME === $nextStep;
 
+            // The thread holds the reply already, so the run goes on for as long as there is something to send.
+            $thread = $this->thread;
+            if (null !== $thread) {
+                // The caller can hold the thread, and can have set `compaction` on it while handling the reply.
+                self::rejectCompactionParam($thread->params());
+                $answered = self::STEP_RUN_TOOLS === $nextStep && $this->answerOnThread($thread);
+                // @phpstan-ignore booleanOr.rightAlwaysFalse
+                if ($answered || $turnPaused || $this->mutated) {
+                    continue;
+                }
+                $finalMessage = $message;
+
+                break;
+            }
+
             // If the caller mutated params during this yield, skip auto-appending
             // the assistant message — they are managing history manually this turn.
             // @phpstan-ignore booleanNot.alwaysTrue
             if (!$this->mutated) {
                 $this->messages[] = ['role' => 'assistant', 'content' => $message->content];
-
-                // Container-bound server tools reject a follow-up request that omits the container the
-                // previous turn ran in, so carry its id forward unless the caller pinned one themselves.
-                $containerID = ($message->container ?? null)?->id;
-                if (null !== $containerID) {
-                    $container = $this->extraParams['container'] ?? null;
-                    if (null === $container) {
-                        $this->extraParams['container'] = $containerID;
-                    } elseif ($container instanceof BetaContainerParams && null === $container->id) {
-                        $this->extraParams['container'] = $container->withID($containerID);
-                    } elseif (is_array($container) && !isset($container['id'])) {
-                        $this->extraParams['container'] = ['id' => $containerID] + $container;
-                    }
-                }
+                $this->extraParams = BetaMessageThread::withContainerOf($this->extraParams, $message);
 
                 if (self::STEP_STOP === $nextStep) {
                     $finalMessage = $message;
@@ -427,6 +490,7 @@ final class BetaToolRunner implements \IteratorAggregate
 
         $compaction = null === $finalMessage ? null : $this->pendingCompactionAfter($finalMessage);
         if (null !== $compaction) {
+            $summarized = count($this->history());
             $compacted = $this->requestCompaction($compaction);
             $this->compacting = true;
 
@@ -436,8 +500,47 @@ final class BetaToolRunner implements \IteratorAggregate
                 $this->compacting = false;
             }
 
-            $this->registerCompactionResponse($compacted);
+            $this->registerCompactionResponse($compacted, $summarized);
         }
+    }
+
+    /**
+     * Runs the tool calls of the last assistant message and stages the results directly after
+     * it, ahead of the messages that the caller added since.
+     *
+     * @return bool whether there was a tool call to run
+     *
+     * @throws \LogicException if the thread would refuse the request that carries the results
+     */
+    private function answerOnThread(BetaMessageThread $thread): bool
+    {
+        $thread->assertNextTurnCanBeSent();
+
+        $messages = $thread->messages();
+        $next = count($messages);
+        while ($next > 0 && 'assistant' !== ($messages[$next - 1]['role'] ?? null)) {
+            --$next;
+        }
+        $assistantMessage = $messages[$next - 1] ?? null;
+        $toolResults = is_array($assistantMessage) ? $this->buildToolResults($assistantMessage) : null;
+        if (null === $toolResults) {
+            return false;
+        }
+
+        // Read again, because a tool can append to the thread while it runs.
+        $messages = $thread->messages();
+        array_splice($messages, $next, 0, [['role' => 'user', 'content' => $toolResults]]);
+        $thread->setMessages($messages);
+
+        return true;
+    }
+
+    /**
+     * @return list<array<string, mixed>|BaseModel>
+     */
+    private function history(): array
+    {
+        return $this->thread?->messages() ?? $this->messages;
     }
 
     /**
@@ -476,6 +579,20 @@ final class BetaToolRunner implements \IteratorAggregate
         }
     }
 
+    /**
+     * @param array<array-key, mixed> $params
+     */
+    private static function rejectThreadParam(array $params): void
+    {
+        if (null !== ($params['thread'] ?? null)) {
+            throw new \InvalidArgumentException(
+                '`thread` cannot be set on a tool runner: the runner sets it for each request itself. '
+                .'To run without a message thread, pass `thread: false` to toolRunner(). '
+                .'To run tools on a thread of your own, create it with `$client->beta->messages->thread(...)` and call its toolRunner().'
+            );
+        }
+    }
+
     private static function assertNoCompactionEdit(mixed $contextManagement): void
     {
         // The compaction request is sent without `contextManagement`, so the API cannot reject this
@@ -508,15 +625,41 @@ final class BetaToolRunner implements \IteratorAggregate
     private function requestCompaction(BetaCompactionConfig|array $compaction): BetaMessage
     {
         // Checked again here because `contextManagement` can be a model the caller still holds and edits in place.
-        self::assertNoCompactionEdit($this->extraParams['contextManagement'] ?? null);
+        self::assertNoCompactionEdit($this->getParams()['contextManagement'] ?? null);
         $this->pendingCompaction = null;
         $this->removedByHistory = array_diff_key($this->runnableToolsByName, $this->availableToolNames());
+
+        if (null !== $this->thread) {
+            return $this->requestCompactionOnThread($this->thread, $compaction);
+        }
 
         $params = self::withoutCompactionIncompatibleParams($this->requestParams());
         $params['compaction'] = $compaction;
 
         // @phpstan-ignore argument.type
         return $this->client->beta->messages->create(...$params);
+    }
+
+    /**
+     * Sends the request on a fork, because the summary replaces the history that the thread holds.
+     *
+     * @param BetaCompactionConfig|BetaCompactionConfigShape $compaction
+     */
+    private function requestCompactionOnThread(BetaMessageThread $thread, BetaCompactionConfig|array $compaction): BetaMessage
+    {
+        $params = array_diff_key($this->getParams(), ['maxIterations' => true]);
+        $fork = $thread->fork();
+        $compacted = $fork->send(
+            params: ['compaction' => $compaction] + self::withoutCompactionIncompatibleParams($params) + array_fill_keys(array_keys($params), null),
+            requestOptions: $this->requestOptionsWithHelperHeader(),
+        );
+
+        // The API refused the fork a thread, and would refuse one for the history that the compaction leaves too.
+        if (!$fork->isThreading()) {
+            $thread->stopThreading();
+        }
+
+        return $compacted;
     }
 
     /**
@@ -570,7 +713,10 @@ final class BetaToolRunner implements \IteratorAggregate
         return $value;
     }
 
-    private function registerCompactionResponse(BetaMessage $message): void
+    /**
+     * @param int $summarized how many messages the history held when the compaction request was sent
+     */
+    private function registerCompactionResponse(BetaMessage $message, int $summarized): void
     {
         foreach ($message->content as $block) {
             // By type, not class: a block type this SDK version does not model is parsed into another block's class.
@@ -588,7 +734,15 @@ final class BetaToolRunner implements \IteratorAggregate
             $this->runnableToolsByName = array_diff_key($this->runnableToolsByName, $this->removedByHistory);
 
             // The response has to be sent back as it came, first, replacing the messages it summarizes.
-            $this->messages = [['role' => 'assistant', 'content' => $message->content]];
+            $response = ['role' => 'assistant', 'content' => $message->content];
+            // Messages appended since the request was sent are not in the summary, so they follow it.
+            // A copy of the response among them is left out, like a reply that is appended again.
+            $appended = array_filter(array_slice($this->history(), $summarized), static fn ($other) => !BetaMessageThread::sameMessage($other, $response));
+            $this->thread?->setMessages([$response, ...$appended]);
+
+            /** @var list<array<string, mixed>> $messages */
+            $messages = [$response, ...array_map(self::toArray(...), $appended)];
+            $this->messages = $messages;
 
             return;
         }
@@ -635,6 +789,7 @@ final class BetaToolRunner implements \IteratorAggregate
 
         // Not pushMessages(): that marks the history as caller-edited, so the runner would not append this turn.
         $this->messages[] = ['role' => 'system', 'content' => $this->pendingToolChanges];
+        $this->thread?->append(['role' => 'system', 'content' => $this->pendingToolChanges]);
         $this->pendingToolChanges = [];
     }
 
@@ -649,12 +804,14 @@ final class BetaToolRunner implements \IteratorAggregate
      */
     private function iterateUnderToolRunnerSpan(\Generator $steps): \Generator
     {
+        $params = $this->getParams();
+        $model = $params['model'] ?? null;
         // A consumed runner throws before its loop starts, so it has no tool runner span.
         $toolRunnerSpan = $this->consumed ? null : Tracing::startToolRunnerSpan(
             $this->client,
-            $this->model,
+            $model instanceof Model ? $model->value : (is_string($model) ? $model : ''),
             $this->conversationId(),
-            Tracing::setsJsonOutputFormat(['output_config' => $this->extraParams['outputConfig'] ?? null, 'output_format' => $this->extraParams['outputFormat'] ?? null]),
+            Tracing::setsJsonOutputFormat(['output_config' => $params['outputConfig'] ?? null, 'output_format' => $params['outputFormat'] ?? null]),
         );
         // The application may resume the loop from another trace. Every step runs in the context the loop started
         // in, with the tool runner span current.
@@ -716,15 +873,18 @@ final class BetaToolRunner implements \IteratorAggregate
     }
 
     /**
-     * The `requestOptions` the application passed among the extra params, if any.
+     * The `requestOptions` the application passed among the extra params, if any. On a message thread they follow
+     * the thread's own, because the request options of a turn replace the thread's.
      *
      * @return RequestOptions|array<mixed>|null
      */
     private function requestOptions(): RequestOptions|array|null
     {
         $options = $this->extraParams['requestOptions'] ?? null;
+        $options = $options instanceof RequestOptions || is_array($options) ? $options : null;
 
-        return $options instanceof RequestOptions || is_array($options) ? $options : null;
+        // @phpstan-ignore argument.type
+        return null === $this->thread ? $options : RequestOptions::parse($this->thread->requestOptions(), $options);
     }
 
     /**
@@ -842,7 +1002,7 @@ final class BetaToolRunner implements \IteratorAggregate
     {
         $available = array_fill_keys(array_keys($this->runnableToolsByName), true);
 
-        foreach ([...$this->messages, ['role' => 'system', 'content' => $this->pendingToolChanges]] as $message) {
+        foreach ([...$this->history(), ['role' => 'system', 'content' => $this->pendingToolChanges]] as $message) {
             $message = Conversion::dump(BetaMessageParam::class, value: $message);
             if (!is_array($message)) {
                 continue;

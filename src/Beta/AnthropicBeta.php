@@ -109,4 +109,6 @@ enum AnthropicBeta: string
     case TELEMETRY_DESTINATIONS_2026_08_11 = 'telemetry-destinations-2026-08-11';
 
     case WEBHOOKS_2026_10_07 = 'webhooks-2026-10-07';
+
+    case MESSAGE_THREADS_2026_08_12 = 'message-threads-2026-08-12';
 }

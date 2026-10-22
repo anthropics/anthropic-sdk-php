@@ -142,6 +142,32 @@ echo $article->title;
 ```
 
 See [examples/messages_structured_output.php](examples/messages_structured_output.php) for more examples including constraints, nested models, and streaming.
+
+### Message threads
+
+A message thread (beta) keeps the conversation on the server, so each request sends only the new messages instead of the whole history. `$client->beta->messages->thread(...)` takes what `create()` takes and sends nothing until the first turn.
+
+```php
+<?php
+
+$thread = $client->beta->messages->thread(
+  maxTokens: 1024,
+  model: 'claude-opus-5-5',
+  system: 'You are a helpful assistant.',
+);
+
+$reply = $thread->send(['role' => 'user', 'content' => 'Hello, Claude']);
+$reply = $thread->send(['role' => 'user', 'content' => 'Tell me more.']);
+```
+
+`$thread->toolRunner()` runs the tool loop over this thread.
+
+See [examples/beta/message_threads.php](examples/beta/message_threads.php).
+
+#### Tool runner
+
+The tool runner keeps its conversation in a message thread by default. Pass `thread: false` to send the whole history with every request. `system` and `tools` cannot change during a run unless you pass `thread: false`.
+
 ### Pagination
 
 List methods in the Anthropic API are paginated.

@@ -200,6 +200,16 @@ class Client extends BaseClient
         $this->credentialResult?->close();
     }
 
+    /**
+     * Whether the API behind this client keeps message threads.
+     *
+     * @internal
+     */
+    public function supportsMessageThreads(): bool
+    {
+        return true;
+    }
+
     /** @return array<string,string> */
     protected function authHeaders(): array
     {
