@@ -11,6 +11,7 @@
 ### Chores
 
 * **api:** document the api key header on the environments list endpoint
+* **docs:** clarify plugin content scan and validation descriptions
 * **docs:** clarify plugin served_version_pinned and updated_at
 * **docs:** rate limit model lists vary by organization and workspace
 * **internal:** rename the version manifest to .version-manifest.json
