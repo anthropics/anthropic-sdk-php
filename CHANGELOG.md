@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/anthropics/anthropic-sdk-php/compare/v1.1.0...v1.1.1) (2026-10-22)
+
+### Chores
+
+* **api:** document the api key header on the environments list endpoint
+* **internal:** rename the version manifest to .version-manifest.json
+
 ## [1.1.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.0.0...v1.1.0) (2026-10-21)
 
 ### Features
