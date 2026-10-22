@@ -2,6 +2,11 @@
 
 ## [1.1.1](https://github.com/anthropics/anthropic-sdk-php/compare/v1.1.0...v1.1.1) (2026-10-22)
 
+### Bug Fixes
+
+* **foundry,bedrock:** send workspaceID as the anthropic-workspace-id header on Messages
+
+
 ### Chores
 
 * **api:** document the api key header on the environments list endpoint

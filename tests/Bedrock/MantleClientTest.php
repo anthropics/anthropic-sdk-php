@@ -5,6 +5,8 @@ namespace Tests\Bedrock;
 use Anthropic\Bedrock\MantleClient;
 use Anthropic\Client;
 use Anthropic\Core\Util;
+use Anthropic\Messages\MessageCountTokensParams;
+use Anthropic\Messages\MessageCreateParams;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -429,7 +431,7 @@ class MantleClientTest extends TestCase
     }
 
     /**
-     * @param \Closure(MantleClient, string|null, string|null): mixed $call
+     * @param \Closure(MantleClient, string|null, string|null, string|null=): mixed $call
      */
     #[DataProvider('messagesCalls')]
     public function testUserProfileIdIsSentInRequestBodyAndNotAsHeader(\Closure $call, string $contentType): void
@@ -447,7 +449,7 @@ class MantleClientTest extends TestCase
     }
 
     /**
-     * @param \Closure(MantleClient, string|null, string|null): mixed $call
+     * @param \Closure(MantleClient, string|null, string|null, string|null=): mixed $call
      */
     #[DataProvider('messagesCalls')]
     public function testUserProfileIdFromExtraBodyParamsWins(\Closure $call, string $contentType): void
@@ -462,7 +464,7 @@ class MantleClientTest extends TestCase
     }
 
     /**
-     * @param \Closure(MantleClient, string|null, string|null): mixed $call
+     * @param \Closure(MantleClient, string|null, string|null, string|null=): mixed $call
      */
     #[DataProvider('messagesCalls')]
     public function testUserProfileIdIsOmittedFromRequestBodyWhenNotGiven(\Closure $call, string $contentType): void
@@ -477,49 +479,109 @@ class MantleClientTest extends TestCase
     }
 
     /**
-     * Each call takes the client, the `userProfileID` argument and a `user_profile_id` to pass in `extraBodyParams`.
+     * @param \Closure(MantleClient, string|null, string|null, string|null=): mixed $call
+     */
+    #[DataProvider('messagesCalls')]
+    public function testWorkspaceIdIsSentAsHeaderAndNotInBody(\Closure $call, string $contentType): void
+    {
+        $this->respondWith($contentType);
+
+        $call($this->makeClient(), null, null, 'wrkspc_123');
+
+        $this->assertSame('wrkspc_123', $this->getLastRequest()->getHeaderLine('anthropic-workspace-id'));
+        $this->assertArrayNotHasKey('workspaceID', $this->getLastRequestBody());
+    }
+
+    /**
+     * @param \Closure(MantleClient, string|null, string|null, string|null=): mixed $call
+     */
+    #[DataProvider('messagesCalls')]
+    public function testWorkspaceIdHeaderIsOmittedWhenNotGiven(\Closure $call, string $contentType): void
+    {
+        $this->respondWith($contentType);
+
+        $call($this->makeClient(), null, null);
+
+        $this->assertFalse($this->getLastRequest()->hasHeader('anthropic-workspace-id'));
+    }
+
+    /**
+     * Each call takes the client, the `userProfileID` argument, a `user_profile_id` to pass in `extraBodyParams` and the `workspaceID` argument.
      *
-     * @return iterable<string, array{\Closure(MantleClient, string|null, string|null): mixed, string}>
+     * @return iterable<string, array{\Closure(MantleClient, string|null, string|null, string|null=): mixed, string}>
      */
     public static function messagesCalls(): iterable
     {
-        $params = static fn (?string $userProfileID): array => [
+        $params = static fn (?string $userProfileID, ?string $workspaceID): array => [
             'maxTokens' => 1024,
             'messages' => [],
             'model' => 'claude-haiku-4-5',
             ...(null === $userProfileID ? [] : ['userProfileID' => $userProfileID]),
+            ...(null === $workspaceID ? [] : ['workspaceID' => $workspaceID]),
         ];
         $options = static fn (?string $extra): ?array => null === $extra ? null : ['extraBodyParams' => ['user_profile_id' => $extra]];
 
         yield 'create' => [
-            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->create(1024, [], 'claude-haiku-4-5', userProfileID: $userProfileID, requestOptions: $options($extra)),
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra, ?string $workspaceID = null) => $client->messages->create(1024, [], 'claude-haiku-4-5', userProfileID: $userProfileID, workspaceID: $workspaceID, requestOptions: $options($extra)),
             'application/json',
         ];
 
         yield 'createStream' => [
-            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->createStream(1024, [], 'claude-haiku-4-5', userProfileID: $userProfileID, requestOptions: $options($extra)),
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra, ?string $workspaceID = null) => $client->messages->createStream(1024, [], 'claude-haiku-4-5', userProfileID: $userProfileID, workspaceID: $workspaceID, requestOptions: $options($extra)),
             'text/event-stream',
         ];
 
         yield 'raw create' => [
-            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->raw->create($params($userProfileID), $options($extra)),
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra, ?string $workspaceID = null) => $client->messages->raw->create($params($userProfileID, $workspaceID), $options($extra)),
             'application/json',
         ];
 
         yield 'raw createStream' => [
-            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->raw->createStream($params($userProfileID), $options($extra)),
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra, ?string $workspaceID = null) => $client->messages->raw->createStream($params($userProfileID, $workspaceID), $options($extra)),
             'text/event-stream',
         ];
 
         yield 'countTokens' => [
-            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->countTokens([], 'claude-haiku-4-5', userProfileID: $userProfileID, requestOptions: $options($extra)),
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra, ?string $workspaceID = null) => $client->messages->countTokens([], 'claude-haiku-4-5', userProfileID: $userProfileID, workspaceID: $workspaceID, requestOptions: $options($extra)),
             'application/json',
         ];
 
         yield 'raw countTokens' => [
-            static fn (MantleClient $client, ?string $userProfileID, ?string $extra) => $client->messages->raw->countTokens(array_diff_key($params($userProfileID), ['maxTokens' => true]), $options($extra)),
+            static fn (MantleClient $client, ?string $userProfileID, ?string $extra, ?string $workspaceID = null) => $client->messages->raw->countTokens(array_diff_key($params($userProfileID, $workspaceID), ['maxTokens' => true]), $options($extra)),
             'application/json',
         ];
+    }
+
+    /**
+     * @param \Closure(Client|MantleClient): mixed $call
+     */
+    #[DataProvider('rawCallsWithEveryParam')]
+    public function testSendsNoBodyFieldTheFirstPartyServiceKeepsOutOfTheBody(\Closure $call): void
+    {
+        $call(new Client(
+            apiKey: 'test-key',
+            baseUrl: 'https://api.example.test',
+            requestOptions: ['transporter' => $this->transporter],
+        ));
+        $firstParty = $this->getLastRequestBody();
+
+        $call($this->makeClient());
+
+        $this->assertSame(
+            ['user_profile_id'],
+            array_values(array_diff(array_keys($this->getLastRequestBody()), array_keys($firstParty))),
+            'A header param reached the request body: add it to HEADER_PARAMS in Anthropic\Bedrock\Services\MantleMessagesRawService.',
+        );
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client|MantleClient): mixed}>
+     */
+    public static function rawCallsWithEveryParam(): iterable
+    {
+        yield 'create' => [static fn (Client|MantleClient $client) => $client->messages->raw->create(self::everyParam(MessageCreateParams::class))];
+
+        yield 'countTokens' => [static fn (Client|MantleClient $client) => $client->messages->raw->countTokens(self::everyParam(MessageCountTokensParams::class))];
     }
 
     // ── Helpers ─────────────────────────────────────────────────────
@@ -541,6 +603,30 @@ class MantleClientTest extends TestCase
                 ->withHeader('Content-Type', $contentType)
                 ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream('application/json' === $contentType ? '{}' : ''))
         );
+    }
+
+    /**
+     * @param class-string $paramsClass
+     *
+     * @return array<string,mixed>
+     */
+    private static function everyParam(string $paramsClass): array
+    {
+        return array_fill_keys(array_map(
+            static fn (\ReflectionProperty $property): string => $property->getName(),
+            (new \ReflectionClass($paramsClass))->getProperties(\ReflectionProperty::IS_PUBLIC),
+        ), 'x');
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    private function getLastRequestBody(): array
+    {
+        $body = json_decode((string) $this->getLastRequest()->getBody(), associative: true);
+        $this->assertIsArray($body);
+
+        return $body;
     }
 
     private function getLastRequest(): RequestInterface

@@ -120,6 +120,7 @@ final class MessagesService implements MessagesContract
                 'toolChoice' => $toolChoice,
                 'tools' => $tools,
                 'userProfileID' => $userProfileID,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -188,6 +189,7 @@ final class MessagesService implements MessagesContract
                 'toolChoice' => $toolChoice,
                 'tools' => $tools,
                 'userProfileID' => $userProfileID,
+                'workspaceID' => $workspaceID,
             ],
         );
 
@@ -237,6 +239,7 @@ final class MessagesService implements MessagesContract
                 'toolChoice' => $toolChoice,
                 'tools' => $tools,
                 'userProfileID' => $userProfileID,
+                'workspaceID' => $workspaceID,
             ],
         );
 
