@@ -60,7 +60,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     public array $limits;
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`. The list covers the models this workspace has access to, so it can differ between workspaces.
      *
      * @var list<string>|null $models
      */
@@ -160,7 +160,7 @@ final class BetaWorkspaceRateLimit implements BaseModel
     }
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`. The list covers the models this workspace has access to, so it can differ between workspaces.
      *
      * @param list<string>|null $models
      */
