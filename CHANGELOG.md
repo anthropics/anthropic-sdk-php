@@ -4,6 +4,7 @@
 
 ### Bug Fixes
 
+* **client:** stop including model data in unknown property errors
 * **foundry,bedrock:** send workspaceID as the anthropic-workspace-id header on Messages
 
 

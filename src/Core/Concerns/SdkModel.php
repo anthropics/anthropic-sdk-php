@@ -97,7 +97,7 @@ trait SdkModel
     public function __get(string $key): mixed
     {
         if (!array_key_exists($key, array: self::$converter->properties)) {
-            throw new \RuntimeException("Property '{$key}' does not exist in {$this}::class");
+            throw new \RuntimeException("Property '{$key}' does not exist in ".static::class);
         }
 
         // The unset property was overridden by a value with an incongruent type.

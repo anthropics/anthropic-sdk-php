@@ -401,6 +401,17 @@ class ModelTest extends TestCase
     }
 
     #[Test]
+    public function testUnknownPropertyThrowsNamingTheClass(): void
+    {
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage("Property 'nope' does not exist in ".Dog::class);
+        // @phpstan-ignore-next-line property.notFound, expr.resultUnused
+        $model->nope;
+    }
+
+    #[Test]
     public function testEnumCaseReadsBackAsItsValue(): void
     {
         $stored = 'small';
