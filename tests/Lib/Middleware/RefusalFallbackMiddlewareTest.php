@@ -1051,9 +1051,8 @@ class RefusalFallbackMiddlewareTest extends TestCase
         );
         foreach ($stream as $event);
 
-        // the claim hash canonicalizes with an rstrip on mint AND redeem, and
-        // the API 400s a final assistant message ending in whitespace — the
-        // echoed partial must go out trimmed
+        // The echoed partial's final text block is rstripped, because the API
+        // answers 400 to a final assistant message that ends in whitespace.
         $requests = $this->transporter->getRequests();
         $this->assertCount(2, $requests);
         $messages = self::bodyOf($requests[1])['messages'];

@@ -59,9 +59,8 @@ use Psr\Http\Message\StreamInterface;
 final class RefusalFallbackMiddleware implements Middleware
 {
     /**
-     * Entry keys that merge into a retry leg: the server applies chain
-     * entries through FALLBACK_V2_INFERENCE_PARAM_OVERRIDES, and the client
-     * chain mirrors it. Non-allowlisted entry keys are dropped, not sent.
+     * Entry keys that merge into a retry leg. Non-allowlisted entry keys are
+     * dropped, not sent.
      */
     private const ENTRY_OVERRIDE_ALLOWLIST = [
         'model' => true,
@@ -1178,10 +1177,8 @@ final class RefusalFallbackMiddleware implements Middleware
                     $finalized[] = self::finalizeBlock($raw);
                 }
 
-                // The echoed partial's final text block is rstripped: the server's
-                // claim hash canonicalizes with a trailing-whitespace strip on both
-                // mint and redeem, and the API 400s a final assistant message that
-                // ends in whitespace — the trimmed echo still redeems.
+                // The echoed partial's final text block is rstripped, because the API
+                // answers 400 to a final assistant message that ends in whitespace.
                 if ([] !== $finalized) {
                     $last = $finalized[count($finalized) - 1];
                     if ('text' === ($last['type'] ?? null) && is_string($last['text'] ?? null)) {
