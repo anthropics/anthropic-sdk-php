@@ -412,6 +412,23 @@ class ModelTest extends TestCase
     }
 
     #[Test]
+    public function testUnsetKeyReadsAsNullWithoutNotice(): void
+    {
+        $model = new Dog(name: 'Bob', ageYears: 12, owner: null);
+        set_error_handler(static function (int $level, string $message): never {
+            throw new \ErrorException($message, severity: $level);
+        });
+
+        try {
+            $friends = $model['friends'];
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertNull($friends);
+    }
+
+    #[Test]
     public function testEnumCaseReadsBackAsItsValue(): void
     {
         $stored = 'small';

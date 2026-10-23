@@ -158,8 +158,9 @@ trait SdkModel
 
         // @phpstan-ignore-next-line function.alreadyNarrowedType
         if (!$this->offsetExists($offset)) {
-            // @phpstan-ignore-next-line return.type
-            return null;
+            $null = null;
+
+            return $null;
         }
 
         if (array_key_exists($offset, array: $this->_data)) {
