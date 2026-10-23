@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * **client:** stop raising a notice when reading an unset key from a model
+* **google-cloud:** send user profiles requests to the organization endpoint
 
 
 ### Chores

@@ -27,8 +27,8 @@ use Psr\Http\Message\RequestInterface;
  *
  * Location is resolved by precedence: $location arg > ANTHROPIC_GOOGLE_CLOUD_LOCATION
  * > 'global'. The derived base URL includes the project, location, and workspace ID.
- * Organization-level routes go to the project's organization endpoint and need no
- * workspace ID.
+ * Organization-level routes (`v1/organizations/*` and `v1/user_profiles`) go to the
+ * project's organization endpoint and need no workspace ID.
  *
  * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -36,7 +36,7 @@ use Psr\Http\Message\RequestInterface;
  */
 final class Client extends \Anthropic\Client
 {
-    private const ORGANIZATION_PATH_PREFIX = '/v1/organizations/';
+    private const ORGANIZATION_PATH_PATTERN = '#^v1/(?:organizations/|user_profiles(?:[/?]|$))#D';
 
     private ?GoogleAuth $auth = null;
 
@@ -158,7 +158,7 @@ final class Client extends \Anthropic\Client
         if (null !== $this->organizationBaseUrl && !preg_match('#^[A-Za-z][A-Za-z0-9+.-]*://#', $parsedPath)) {
             $relativePath = ltrim($parsedPath, '/');
 
-            if (str_starts_with("/{$relativePath}", self::ORGANIZATION_PATH_PREFIX)) {
+            if (preg_match(self::ORGANIZATION_PATH_PATTERN, $relativePath)) {
                 $path = "{$this->organizationBaseUrl}/{$relativePath}";
             } elseif (null === $this->workspaceId) {
                 throw new \InvalidArgumentException(

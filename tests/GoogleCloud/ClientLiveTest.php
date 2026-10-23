@@ -5,6 +5,7 @@ namespace Tests\GoogleCloud;
 use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\GoogleCloud\Client;
 use Anthropic\Messages\Model;
+use Anthropic\PageCursor;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -72,6 +73,14 @@ final class ClientLiveTest extends TestCase
         $workspace = $this->makeClient()->organization->workspaces->retrieve($workspaceId);
 
         $this->assertSame($workspaceId, $workspace->id);
+    }
+
+    public function testUserProfilesRoute(): void
+    {
+        $page = $this->makeClient()->userProfiles->list(limit: 1);
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(PageCursor::class, $page);
     }
 
     public function testManagedAgentsRoutes(): void
