@@ -196,7 +196,7 @@ final class BetaAnalyticsCostGroup implements BaseModel
     public ?string $userProfileID;
 
     /**
-     * Workspace the usage occurred in, as a tagged workspace ID, including the organization's default workspace. Populated only when `workspace_id` is in `group_by[]`; null for Claude Enterprise usage. Usage a linked platform made on this organization's account is in none of its workspaces and carries the placeholder workspace ID `wrkspc_011111111111111111111111`, which `workspace_ids[]` also accepts.
+     * Workspace the usage occurred in, as a tagged workspace ID, including the organization's default workspace. Populated only when `workspace_id` is in `group_by[]`; null for Claude Enterprise usage.
      */
     #[Required('workspace_id')]
     public ?string $workspaceID;
@@ -575,7 +575,7 @@ final class BetaAnalyticsCostGroup implements BaseModel
     }
 
     /**
-     * Workspace the usage occurred in, as a tagged workspace ID, including the organization's default workspace. Populated only when `workspace_id` is in `group_by[]`; null for Claude Enterprise usage. Usage a linked platform made on this organization's account is in none of its workspaces and carries the placeholder workspace ID `wrkspc_011111111111111111111111`, which `workspace_ids[]` also accepts.
+     * Workspace the usage occurred in, as a tagged workspace ID, including the organization's default workspace. Populated only when `workspace_id` is in `group_by[]`; null for Claude Enterprise usage.
      */
     public function withWorkspaceID(?string $workspaceID): self
     {

@@ -44,7 +44,7 @@ final class UsageTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->analytics->usage->list(
-            startingAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z')
+            startingAt: new \DateTimeImmutable('2026-09-01T00:00:00Z')
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +60,7 @@ final class UsageTest extends TestCase
     public function testListWithOptionalParams(): void
     {
         $page = $this->client->beta->organization->analytics->usage->list(
-            startingAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+            startingAt: new \DateTimeImmutable('2026-09-01T00:00:00Z'),
             actorIDs: ['user_01WCz1FkmYMm4gnmykNKUu3Q'],
             actorTypes: [AnalyticsActorType::SERVICE_ACCOUNT_ACTOR],
             agentIDs: ['agent_01VHd3EAGJ6PLkP9LM7DDu3f'],
@@ -69,7 +69,7 @@ final class UsageTest extends TestCase
             claudeTagUserIDs: ['U0123ABCDEF'],
             contextWindows: [AnalyticsContextWindow::FROM_0_TO_200K],
             deploymentIDs: ['depl_01JFC6ihzZHtAuyHsaENdJhY'],
-            endingAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+            endingAt: new \DateTimeImmutable('2026-10-01T00:00:00Z'),
             environmentIDs: ['env_017oTjuGedHtjhJauVC5xGJD'],
             excludeDeletedUsers: true,
             groupBy: [BetaAnalyticsUsageGroupBy::ACTOR],
