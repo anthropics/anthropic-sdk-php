@@ -9,8 +9,8 @@
 /.gitignore                    export-ignore
 /.php-cs-fixer.dist.php        export-ignore
 /.phpactor.json                export-ignore
-/.release-please-manifest.json export-ignore
 /.stats.yml                    export-ignore
+/.version-manifest.json        export-ignore
 /phpstan.dist.neon             export-ignore
 /phpunit.xml.dist              export-ignore
 /release-please-config.json    export-ignore

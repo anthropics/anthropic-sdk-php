@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.2.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.1.0...v1.2.0) (2026-10-23)
+
+### Features
+
+* **api:** add support for message threads
+* **api:** add usage and cost reports by dimension, mark older reports legacy
+
+
+### Bug Fixes
+
+* **client:** stop including model data in unknown property errors
+* **foundry,bedrock:** send workspaceID as the anthropic-workspace-id header on Messages
+* **tools:** restore the released tool runner behavior when the caller changes its messages or params while handling a reply
+
+
+### Chores
+
+* **api:** document the api key header on the environments list endpoint
+* **docs:** clarify plugin content scan and validation descriptions
+* **docs:** clarify plugin served_version_pinned and updated_at
+* **docs:** fix usage and cost report examples and ending_at docs
+* **docs:** rate limit model lists vary by organization and workspace
+* **internal:** rename the version manifest to .version-manifest.json
+
 ## [1.1.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.0.0...v1.1.0) (2026-10-21)
 
 ### Features

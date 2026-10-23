@@ -59,7 +59,7 @@ final class OrganizationRateLimit implements BaseModel
     public array $limits;
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`. The list covers the models your organization has access to, so it can differ between organizations.
      *
      * @var list<string>|null $models
      */
@@ -153,7 +153,7 @@ final class OrganizationRateLimit implements BaseModel
     }
 
     /**
-     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`.
+     * Model names this entry's limits apply to, including aliases. `null` when `group.type` is not `"model_group"`. The list covers the models your organization has access to, so it can differ between organizations.
      *
      * @param list<string>|null $models
      */

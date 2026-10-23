@@ -27,6 +27,8 @@ final class StainlessHelperHeader
 
     public const FALLBACK_REFUSAL_MIDDLEWARE = 'fallback-refusal-middleware';
 
+    public const MESSAGE_THREAD = 'message-thread';
+
     /**
      * The {@see HEADER} value to set after appending `$value` to whatever is
      * already present in `$headers` — existing tags keep their position, the

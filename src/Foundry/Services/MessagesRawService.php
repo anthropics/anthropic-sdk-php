@@ -32,7 +32,10 @@ use Anthropic\SSEStream;
  */
 final class MessagesRawService implements MessagesRawContract
 {
-    private const HEADER_PARAMS = ['userProfileID' => 'anthropic-user-profile-id'];
+    private const HEADER_PARAMS = [
+        'userProfileID' => 'anthropic-user-profile-id',
+        'workspaceID' => 'anthropic-workspace-id',
+    ];
 
     /**
      * @internal

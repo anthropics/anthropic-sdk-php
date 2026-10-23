@@ -87,6 +87,14 @@ final class Client extends \Anthropic\Client
     }
 
     /**
+     * @internal
+     */
+    public function supportsMessageThreads(): bool
+    {
+        return false;
+    }
+
+    /**
      * @param non-empty-string|null $region
      * @param non-empty-string|null $baseUrl
      * @param RequestOpts|null $requestOptions

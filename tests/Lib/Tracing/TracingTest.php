@@ -1897,7 +1897,7 @@ final class TracingTest extends TestCase
             // The tool runner sends no request of its own, so its span names no server, method or route.
             ['anthropic.messages.tool_runner', ['gen_ai.conversation.id' => 'conv_1', 'gen_ai.provider.name' => 'anthropic', 'gen_ai.operation.name' => 'invoke_agent', 'gen_ai.output.type' => 'json', 'gen_ai.request.model' => 'claude-test']],
             // The request the tool runner makes.
-            ['anthropic.messages.create', [...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.output.type' => 'json', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test']],
+            ['anthropic.messages.create', ['anthropic.beta' => ['message-threads-2026-08-12'], ...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.output.type' => 'json', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test']],
             ['anthropic.sessions.create', ['anthropic.session.environment.id' => 'env_1', ...$everySpan, 'http.request.method' => 'POST', 'http.route' => '/v1/sessions', 'gen_ai.agent.id' => 'agent_1']],
             ['anthropic.messages.batches.create', ['anthropic.message.batch.request_count' => 2, ...$everySpan, 'http.request.method' => 'POST', 'http.route' => '/v1/messages/batches']],
             ['anthropic.sessions.threads.events.list', ['anthropic.session.id' => 'sesn_1', 'anthropic.session.thread.id' => 'sthr_1', ...$everySpan, 'http.request.method' => 'GET', 'http.route' => '/v1/sessions/{session_id}/threads/{thread_id}/events']],

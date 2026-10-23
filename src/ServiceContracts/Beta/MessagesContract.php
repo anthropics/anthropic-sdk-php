@@ -27,6 +27,8 @@ use Anthropic\Beta\Messages\BetaThinkingConfigAdaptive;
 use Anthropic\Beta\Messages\BetaThinkingConfigBetweenTools;
 use Anthropic\Beta\Messages\BetaThinkingConfigDisabled;
 use Anthropic\Beta\Messages\BetaThinkingConfigEnabled;
+use Anthropic\Beta\Messages\BetaThreadContinueParams;
+use Anthropic\Beta\Messages\BetaThreadCreateParams;
 use Anthropic\Beta\Messages\BetaToolChoiceAny;
 use Anthropic\Beta\Messages\BetaToolChoiceAuto;
 use Anthropic\Beta\Messages\BetaToolChoiceNone;
@@ -34,7 +36,10 @@ use Anthropic\Beta\Messages\BetaToolChoiceTool;
 use Anthropic\Beta\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Beta\Messages\MessageCreateParams\Speed;
 use Anthropic\Core\Contracts\BaseStream;
+use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Lib\Threads\BetaMessageThread;
+use Anthropic\Lib\Threads\UnsupportedRequestBehavior;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
 use Anthropic\Messages\Model;
@@ -55,6 +60,7 @@ use Anthropic\RequestOptions;
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
  * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
+ * @phpstan-import-type BetaMessageThreadParamShape from \Anthropic\Beta\Messages\BetaMessageThreadParam
  * @phpstan-import-type BetaToolChoiceShape from \Anthropic\Beta\Messages\BetaToolChoice
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -180,6 +186,7 @@ interface MessagesContract
      * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
      * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
+     * @param BetaMessageThreadParamShape|null $thread Body param: Server-held conversation state (a Thread). `{"type": "create"}` asks the server to hold this conversation's state under the response's `id`; `{"type": "continue", "previous_message_id": ...}` resumes from a previous response so only the new turn's messages are sent. The response shape is unchanged.
      * @param BetaToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<BetaToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
@@ -272,6 +279,7 @@ interface MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThreadCreateParams|array|BetaThreadContinueParams|null $thread = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,
@@ -397,6 +405,7 @@ interface MessagesContract
      * With `{"type": "adaptive"}`, Claude decides when and how much to think. With `{"type": "enabled"}` (manual extended thinking), you set a `budget_tokens` of at least 1,024. Thinking tokens count toward your `max_tokens` limit.
      *
      * Which `type` values are accepted, and what happens when you omit `thinking`, depend on the model. See [thinking](https://platform.claude.com/docs/en/build-with-claude/thinking#configuring-thinking) for each model's behavior.
+     * @param BetaMessageThreadParamShape|null $thread Body param: Server-held conversation state (a Thread). `{"type": "create"}` asks the server to hold this conversation's state under the response's `id`; `{"type": "continue", "previous_message_id": ...}` resumes from a previous response so only the new turn's messages are sent. The response shape is unchanged.
      * @param BetaToolChoiceShape $toolChoice Body param: How the model should use the provided tools. The model can use a specific tool, any available tool, decide by itself, or not use tools at all.
      * @param list<BetaToolUnionShape> $tools Body param: Definitions of tools that the model may use.
      *
@@ -491,6 +500,7 @@ interface MessagesContract
         ?array $stopSequences = null,
         string|array|null $system = null,
         BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaThreadCreateParams|array|BetaThreadContinueParams|null $thread = null,
         BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
         ?array $tools = null,
         ?array $betas = null,
@@ -670,6 +680,68 @@ interface MessagesContract
     /**
      * @api
      *
+     * Create a message thread, a conversation that the API keeps between requests. It sends no
+     * request, and takes the parameters of create() except `thread`.
+     *
+     * @param list<BetaMessageParamShape> $messages staged for the first turn
+     * @param string|Model|value-of<Model> $model
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
+     * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
+     * @param ContainerShape|null $container
+     * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
+     * @param BetaDiagnosticsParam|BetaDiagnosticsParamShape|null $diagnostics
+     * @param FallbackCreditTokenShape|null $fallbackCreditToken
+     * @param BetaFallbacksParamShape|null $fallbacks
+     * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers
+     * @param BetaMetadata|BetaMetadataShape $metadata
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig
+     * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
+     * @param ServiceTier|value-of<ServiceTier> $serviceTier
+     * @param Speed|value-of<Speed>|null $speed
+     * @param list<string> $stopSequences
+     * @param SystemShape $system
+     * @param BetaThinkingConfigParamShape $thinking
+     * @param BetaToolChoiceShape $toolChoice
+     * @param list<BetaRunnableTool|BetaToolUnionShape> $tools a `BetaRunnableTool` is sent as its definition
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
+     * @param UnsupportedRequestBehavior|value-of<UnsupportedRequestBehavior> $unsupportedRequestBehavior
+     * @param RequestOpts|null $requestOptions request options for every turn
+     *
+     * @throws AnthropicException if the client is for a platform that has no message threads
+     */
+    public function thread(
+        int $maxTokens,
+        Model|string $model,
+        ?array $messages = null,
+        BetaCacheControlEphemeral|array|null $cacheControl = null,
+        BetaCompactionConfig|array|null $compaction = null,
+        string|BetaContainerParams|array|null $container = null,
+        BetaContextManagementConfig|array|null $contextManagement = null,
+        BetaDiagnosticsParam|array|null $diagnostics = null,
+        string|BetaFallbackCreditTokenParam|array|null $fallbackCreditToken = null,
+        string|array|null $fallbacks = null,
+        ?string $inferenceGeo = null,
+        ?array $mcpServers = null,
+        BetaMetadata|array|null $metadata = null,
+        BetaOutputConfig|array|null $outputConfig = null,
+        BetaJSONOutputFormat|array|null $outputFormat = null,
+        ServiceTier|string|null $serviceTier = null,
+        Speed|string|null $speed = null,
+        ?array $stopSequences = null,
+        string|array|null $system = null,
+        BetaThinkingConfigEnabled|array|BetaThinkingConfigDisabled|BetaThinkingConfigBetweenTools|BetaThinkingConfigAdaptive|null $thinking = null,
+        BetaToolChoiceAuto|array|BetaToolChoiceAny|BetaToolChoiceTool|BetaToolChoiceNone|null $toolChoice = null,
+        ?array $tools = null,
+        ?array $betas = null,
+        ?string $userProfileID = null,
+        ?string $workspaceID = null,
+        UnsupportedRequestBehavior|string $unsupportedRequestBehavior = UnsupportedRequestBehavior::ERROR,
+        RequestOptions|array|null $requestOptions = null,
+    ): BetaMessageThread;
+
+    /**
+     * @api
+     *
      * Create a tool runner that automatically handles the tool execution loop.
      *
      * @param int $maxTokens body param: The maximum number of tokens to generate before stopping
@@ -678,6 +750,9 @@ interface MessagesContract
      * @param list<BetaRunnableTool|BetaToolUnionShape> $tools tools available to the model
      * @param int|null $maxIterations maximum number of API calls before stopping the loop
      * @param array<string, mixed> $extraParams additional parameters forwarded to each create() call
+     * @param array<string, mixed>|false|null $thread The runner keeps the conversation in a message thread, so each request after the first carries only the messages that are new. `false` sends the whole history with every request instead.
+     *
+     * @throws \InvalidArgumentException if `$thread` is an array or `$extraParams` holds a `thread`, because the runner sets `thread` for each request itself
      */
     public function toolRunner(
         int $maxTokens,
@@ -686,5 +761,6 @@ interface MessagesContract
         array $tools = [],
         ?int $maxIterations = null,
         array $extraParams = [],
+        array|false|null $thread = null,
     ): BetaToolRunner;
 }

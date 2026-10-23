@@ -23,7 +23,7 @@ final class PluginContentScan implements BaseModel
     use SdkModel;
 
     /**
-     * The scan's verdict; set only when `status` is `completed`.
+     * The scan's verdict; set only when `status` is `completed`. A `warn` can mean a `fail` that was allowed in claude.ai.
      *
      * @var value-of<Assessment>|null $assessment
      */
@@ -37,7 +37,7 @@ final class PluginContentScan implements BaseModel
     public ?string $reason;
 
     /**
-     * `processing` while a scan runs, `completed` when it ran to completion, `errored` when it could not run or its outcome cannot be read.
+     * `processing` while a scan runs, `completed` when it ran to completion, `errored` when it could not run. Once a scan of the version has completed, `content_scan` describes the newest completed scan, even while a later scan runs. While the scan outcome cannot be read, `status` is `errored` instead.
      *
      * @var value-of<Status> $status
      */
@@ -86,7 +86,7 @@ final class PluginContentScan implements BaseModel
     }
 
     /**
-     * The scan's verdict; set only when `status` is `completed`.
+     * The scan's verdict; set only when `status` is `completed`. A `warn` can mean a `fail` that was allowed in claude.ai.
      *
      * @param Assessment|value-of<Assessment>|null $assessment
      */
@@ -110,7 +110,7 @@ final class PluginContentScan implements BaseModel
     }
 
     /**
-     * `processing` while a scan runs, `completed` when it ran to completion, `errored` when it could not run or its outcome cannot be read.
+     * `processing` while a scan runs, `completed` when it ran to completion, `errored` when it could not run. Once a scan of the version has completed, `content_scan` describes the newest completed scan, even while a later scan runs. While the scan outcome cannot be read, `status` is `errored` instead.
      *
      * @param Status|value-of<Status> $status
      */

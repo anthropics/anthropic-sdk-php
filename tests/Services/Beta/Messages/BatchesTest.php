@@ -145,6 +145,7 @@ final class BatchesTest extends TestCase
                             ],
                             'display' => 'summarized',
                         ],
+                        'thread' => ['type' => 'create'],
                         'toolChoice' => [
                             'type' => 'auto', 'disableParallelToolUse' => true,
                         ],

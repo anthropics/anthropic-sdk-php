@@ -32,6 +32,8 @@ use Anthropic\SSEStream;
  */
 final class MantleMessagesRawService implements MessagesRawContract
 {
+    private const HEADER_PARAMS = ['workspaceID' => 'anthropic-workspace-id'];
+
     private const BODY_PARAMS = ['userProfileID' => 'user_profile_id'];
 
     /**
@@ -64,7 +66,11 @@ final class MantleMessagesRawService implements MessagesRawContract
         $response = $this->client->request(
             method: 'post',
             path: 'v1/messages',
-            body: (object) Util::array_transform_keys($parsed, self::BODY_PARAMS),
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, self::HEADER_PARAMS),
+                self::HEADER_PARAMS,
+            ),
+            body: (object) Util::array_transform_keys(array_diff_key($parsed, self::HEADER_PARAMS), self::BODY_PARAMS),
             options: $options->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
@@ -104,8 +110,14 @@ final class MantleMessagesRawService implements MessagesRawContract
         return $this->client->request(
             method: 'post',
             path: 'v1/messages',
-            headers: ['Accept' => 'text/event-stream'],
-            body: (object) Util::array_transform_keys($parsed, self::BODY_PARAMS),
+            headers: Util::array_transform_keys(
+                [
+                    'Accept' => 'text/event-stream',
+                    ...array_intersect_key($parsed, self::HEADER_PARAMS),
+                ],
+                self::HEADER_PARAMS,
+            ),
+            body: (object) Util::array_transform_keys(array_diff_key($parsed, self::HEADER_PARAMS), self::BODY_PARAMS),
             options: $options->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
@@ -139,7 +151,11 @@ final class MantleMessagesRawService implements MessagesRawContract
         $response = $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens',
-            body: (object) Util::array_transform_keys($parsed, self::BODY_PARAMS),
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, self::HEADER_PARAMS),
+                self::HEADER_PARAMS,
+            ),
+            body: (object) Util::array_transform_keys(array_diff_key($parsed, self::HEADER_PARAMS), self::BODY_PARAMS),
             options: $options->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
