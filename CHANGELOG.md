@@ -11,6 +11,7 @@
 
 * **client:** stop sending query params hardcoded in endpoint paths
 * **docs:** reword work queue, skill and external key descriptions
+* **docs:** update descriptions of the per-user usage and cost reports
 * **internal:** carry endpoint path query params to the request layer
 * **internal:** check the repository by owner and public name in workflows
 * **internal:** read the beta route qualifier instead of the beta=true query
@@ -20,6 +21,7 @@
 ### Documentation
 
 * **google-cloud:** update the product name
+* update the README and the example request
 
 ## [1.2.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.1.0...v1.2.0) (2026-10-23)
 
