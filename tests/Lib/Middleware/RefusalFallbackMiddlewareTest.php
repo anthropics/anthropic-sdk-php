@@ -17,6 +17,7 @@ use Anthropic\Core\Util;
 use Anthropic\Lib\Helpers\StainlessHelperHeader;
 use Anthropic\Lib\Middleware\BetaFallbackState;
 use Anthropic\Lib\Middleware\RefusalFallbackMiddleware;
+use Anthropic\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -1139,6 +1140,39 @@ class RefusalFallbackMiddlewareTest extends TestCase
         ], $sent);
     }
 
+    public function testHandlesARequestWithTheBetaQualifier(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+        $this->transporter->addResponse(self::message(model: self::FALLBACK));
+
+        $this->client()->request(
+            'POST',
+            'v1/messages',
+            body: ['model' => self::PRIMARY, 'max_tokens' => 1024, 'messages' => [['role' => 'user', 'content' => 'hi']]],
+            options: RequestOptions::parse()->withQualifiers(['beta' => 'true']),
+        );
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(2, $requests);
+        $this->assertSame('', $requests[0]->getUri()->getQuery());
+        $this->assertSame(self::FALLBACK, self::bodyOf($requests[1])['model']);
+    }
+
+    public function testSkipsARequestWithTheBetaQueryAndNoBetaQualifier(): void
+    {
+        $this->transporter->addResponse(self::refusal(model: self::PRIMARY, token: 'tok_1'));
+
+        $this->client()->request(
+            'POST',
+            'v1/messages?beta=true',
+            body: ['model' => self::PRIMARY, 'max_tokens' => 1024, 'messages' => [['role' => 'user', 'content' => 'hi']]],
+        );
+
+        $requests = $this->transporter->getRequests();
+        $this->assertCount(1, $requests);
+        $this->assertStringNotContainsString(self::CREDIT_BETA, $requests[0]->getHeaderLine('anthropic-beta'));
+    }
+
     public function testSkipsRequestsItDoesNotApplyTo(): void
     {
         $this->transporter->addResponse(self::json(['data' => [], 'has_more' => false, 'first_id' => null, 'last_id' => null]));
@@ -1211,7 +1245,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
     {
         $factory = Psr17FactoryDiscovery::findStreamFactory();
         $request = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('POST', 'https://api.anthropic.com/v1/messages?beta=true')
+            ->createRequest('POST', 'https://api.anthropic.com/v1/messages')
             ->withHeader('Content-Type', 'application/json')
             ->withBody($factory->createStream($body))
         ;
@@ -1221,7 +1255,7 @@ class RefusalFallbackMiddlewareTest extends TestCase
             $sent[] = (string) $r->getBody();
 
             return array_shift($responses) ?? throw new \RuntimeException('no response queued');
-        });
+        }, RequestOptions::parse()->withQualifiers(['beta' => 'true']));
         (string) $response->getBody();
 
         return $sent;

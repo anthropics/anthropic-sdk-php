@@ -8,6 +8,7 @@ use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Lib\Middleware\BetaFallbackState;
 use Anthropic\Lib\Middleware\RefusalFallbackMiddleware;
+use Anthropic\RequestOptions;
 use Http\Client\Exception\NetworkException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use OpenTelemetry\API\Trace\Span;
@@ -585,7 +586,7 @@ class RefusalFallbackStreamingTest extends TestCase
         $middleware = new RefusalFallbackMiddleware([]);
 
         $request = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('POST', 'http://127.0.0.1:4010/v1/messages?beta=true')
+            ->createRequest('POST', 'http://127.0.0.1:4010/v1/messages')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(self::json([...self::PARAMS, 'stream' => true])))
         ;
         $response = self::sseResponse(self::streamA());
@@ -597,7 +598,7 @@ class RefusalFallbackStreamingTest extends TestCase
             return $response;
         };
 
-        $out = $middleware->handle($request, $callNext);
+        $out = $middleware->handle($request, $callNext, RequestOptions::parse()->withQualifiers(['beta' => 'true']));
 
         // With nothing to hop to, the response isn't even wrapped — no per-event
         // decode/re-encode overhead, and no error: this is the steady state of an

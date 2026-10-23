@@ -143,6 +143,9 @@ final class RefusalFallbackMiddleware implements Middleware
     }
 
     /**
+     * Code that calls `handle()` itself has to pass `$options` on: the
+     * middleware ignores a request without them.
+     *
      * @param \Closure(RequestInterface): ResponseInterface $sendRequest
      */
     public function handle(
@@ -161,8 +164,7 @@ final class RefusalFallbackMiddleware implements Middleware
             return $sendRequest($request);
         }
 
-        parse_str($request->getUri()->getQuery(), $query);
-        if ('true' !== ($query['beta'] ?? null)) {
+        if ('true' !== ($options?->qualifiers()['beta'] ?? null)) {
             // Refusals minted by the non-beta surface carry no
             // fallback_credit_token; the middleware handles only
             // beta.messages requests and stands down on everything else.
