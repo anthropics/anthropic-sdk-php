@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Messages\SkillParams\Type;
 
 /**
- * Specification for a skill to be loaded in a container (request model).
+ * Specification for a skill to be loaded in a container.
  *
  * @phpstan-type SkillParamsShape = array{
  *   skillID: string, type: Type|value-of<Type>, version?: string|null
