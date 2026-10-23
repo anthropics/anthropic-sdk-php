@@ -111,4 +111,6 @@ enum AnthropicBeta: string
     case WEBHOOKS_2026_10_07 = 'webhooks-2026-10-07';
 
     case MESSAGE_THREADS_2026_08_12 = 'message-threads-2026-08-12';
+
+    case ANALYTICS_USAGE_COST_2026_08_24 = 'analytics-usage-cost-2026-08-24';
 }

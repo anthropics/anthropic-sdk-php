@@ -1,10 +1,11 @@
 # Changelog
 
-## [1.2.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.1.0...v1.2.0) (2026-10-22)
+## [1.2.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.1.0...v1.2.0) (2026-10-23)
 
 ### Features
 
 * **api:** add support for message threads
+* **api:** add usage and cost reports by dimension, mark older reports legacy
 
 
 ### Bug Fixes

@@ -42,15 +42,11 @@ final class UserCostReportService implements UserCostReportContract
     /**
      * @api
      *
-     * Get per-user cost in USD across a date range.
+     * [Legacy] Get per-user cost in USD across a date range.
      *
-     * Returns one row per user, ranked by spend. Use this to see which users
-     * account for the most cost. Only cost attributable to a seat user is
-     * included; for organization-wide totals including direct API-key and
-     * automation traffic, use the bucketed
-     * `/v1/organizations/analytics/cost_report` endpoint. Available to
-     * organizations on a Claude Enterprise plan. Requires an API key with the
-     * `read:analytics` scope.
+     * Returns cost per user, ranked by spend; `group_by[]` or `bucket_width` splits a user across several rows. Use this to see which users account for the most cost. Only cost attributed to a user account is included; cost with no user attributed to it, such as requests attributed only to an API key, is left out. Available to organizations on a Claude Enterprise plan. Requires an API key with the `read:analytics` scope.
+     *
+     * This endpoint is one of the legacy Claude Enterprise usage and cost reports. For new integrations, use [`GET /v1/organizations/analytics/cost`](/docs/en/api/beta/organization/analytics/cost/list) in the Usage and Cost Analytics API instead. To move an existing integration, see [Migrate from the Claude Enterprise usage and cost reports](/docs/en/manage-claude/usage-cost-analytics-api#migrate-from-enterprise-analytics-reports).
      *
      * @param \DateTimeInterface $startingAt Start of range, inclusive. RFC 3339 tz-aware. Must be within the last 365 days and no earlier than 2026-01-01T00:00:00Z.
      * @param BucketWidth|value-of<BucketWidth>|null $bucketWidth Time-bucket granularity. When set, each row's `starting_at` and `ending_at` are populated and one actor may span several rows (one per time bucket with usage). The time bucket counts toward `limit`, so one page can return multiple rows for the same actor. `ending_at` is required when `bucket_width` is set, and with `bucket_width="1m"` the range may span at most 24 hours. When omitted, each row aggregates the full `[starting_at, ending_at)` range.
