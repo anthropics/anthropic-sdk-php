@@ -442,7 +442,7 @@ final class ClientTest extends TestCase
         $client->beta->organization->retrieve();
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me?beta=true', (string) $request->getUri());
+        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me', (string) $request->getUri());
         $this->assertSame('', $request->getHeaderLine('Authorization'));
 
         $this->expectException(\InvalidArgumentException::class);
@@ -479,7 +479,7 @@ final class ClientTest extends TestCase
         $client->beta->organization->retrieve();
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me?beta=true', (string) $request->getUri());
+        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me', (string) $request->getUri());
         $this->assertSame('Bearer adc-token', $request->getHeaderLine('Authorization'));
     }
 
@@ -548,7 +548,7 @@ final class ClientTest extends TestCase
         $client->beta->organization->retrieve();
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me?beta=true', (string) $request->getUri());
+        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me', (string) $request->getUri());
         $this->assertSame('Bearer tok', $request->getHeaderLine('Authorization'));
     }
 
@@ -619,7 +619,7 @@ final class ClientTest extends TestCase
 
         $this->assertSame(
             [
-                'https://custom.example.com/v1/organizations/me?beta=true',
+                'https://custom.example.com/v1/organizations/me',
                 'https://custom.example.com/v1/messages',
             ],
             $this->requestedUrls()
@@ -640,7 +640,7 @@ final class ClientTest extends TestCase
 
         $this->assertSame(
             [
-                'https://env.example.com/v1/organizations/me?beta=true',
+                'https://env.example.com/v1/organizations/me',
                 'https://env.example.com/v1/messages',
             ],
             $this->requestedUrls()
@@ -663,7 +663,7 @@ final class ClientTest extends TestCase
 
         $this->assertSame(
             [
-                'https://custom.example.com/v1/organizations/me?beta=true',
+                'https://custom.example.com/v1/organizations/me',
                 'https://custom.example.com/v1/messages',
             ],
             $this->requestedUrls()
@@ -705,7 +705,7 @@ final class ClientTest extends TestCase
         $request = $this->getLastRequest();
 
         $this->assertSame(
-            'https://claude.googleapis.com/v1/projects/creds-proj/locations/us-east5/claudeOrganization/invoke/v1/organizations/me?beta=true',
+            'https://claude.googleapis.com/v1/projects/creds-proj/locations/us-east5/claudeOrganization/invoke/v1/organizations/me',
             (string) $request->getUri()
         );
         $this->assertSame('Bearer adc-token', $request->getHeaderLine('Authorization'));
