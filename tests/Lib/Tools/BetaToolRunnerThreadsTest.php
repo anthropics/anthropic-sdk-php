@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Lib\Tools;
 
+use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\BadRequestException;
 use Anthropic\Lib\Threads\BetaMessageThread;
@@ -219,36 +220,152 @@ final class BetaToolRunnerThreadsTest extends TestCase
     // Messages and params that the caller changes
     // -------------------------------------------------------------------------
 
+    /**
+     * @param array<string, mixed> $reply the first reply
+     * @param \Closure(BetaToolRunner, BetaMessage): void $change what the caller does while handling the first reply
+     * @param list<array<string, mixed>> $sent the conversation that the second request asks the model to go on from
+     * @param bool $keepsTheReply whether `$sent` goes on from the first request and its reply
+     * @param list<string> $ran
+     */
     #[Test]
-    public function testAMessageAddedWhileHandlingAReplyGoesOutAfterTheToolResults(): void
-    {
-        $this->respond(self::calls('msg_1', 'toolu_1'), self::calls('msg_2', 'toolu_2'), self::says('msg_3', 'Sunny.'));
-        $thread = $this->newThread(messages: [self::ASK], tools: [$this->tool()]);
+    #[DataProvider('changesToTheHistory')]
+    public function testAHistoryThatTheCallerChangesIsSentAsTheCallerLeavesIt(
+        array $reply,
+        \Closure $change,
+        array $sent,
+        bool $keepsTheReply,
+        array $ran,
+        ?false $thread,
+    ): void {
+        $this->respond(self::json(200, $reply), self::says('msg_2', 'Sunny.'));
 
-        $runner = $thread->toolRunner();
+        $runner = $this->runner(thread: $thread);
         foreach ($runner as $message) {
             if ('msg_1' === $message->id) {
-                $runner->pushMessages(self::MORE);
-            } elseif ('msg_2' === $message->id) {
+                $change($runner, $message);
+            }
+        }
+
+        $this->assertSame($ran, $this->ran);
+        $this->assertCount(2, $this->transporter->getRequests());
+        $this->assertSent(1, $sent, $keepsTheReply ? 'msg_1' : null, $thread);
+        $this->assertSame([...$sent, self::text('Sunny.')], $this->wire($runner->getParams()['messages']));
+    }
+
+    /**
+     * @return iterable<string, array{array<string, mixed>, \Closure(BetaToolRunner, BetaMessage): void, list<array<string, mixed>>, bool, list<string>, false|null}>
+     */
+    public static function changesToTheHistory(): iterable
+    {
+        $mine = ['role' => 'user', 'content' => [['type' => 'tool_result', 'tool_use_id' => 'toolu_1', 'content' => 'mine', 'cache_control' => ['type' => 'ephemeral']]]];
+        $denial = ['role' => 'user', 'content' => [['type' => 'tool_result', 'tool_use_id' => 'toolu_1', 'content' => 'The user denied this call.', 'is_error' => true]]];
+        $block = static fn (string $id) => ['type' => 'tool_use', 'id' => $id, 'input' => ['call' => $id], 'name' => 'get_weather'];
+        $call = ['role' => 'assistant', 'content' => [$block('toolu_1')]];
+        $twoCalls = ['role' => 'assistant', 'content' => [$block('toolu_1'), $block('toolu_2')]];
+        $callAfterText = ['role' => 'assistant', 'content' => [['type' => 'text', 'text' => 'Checking.'], $block('toolu_1')]];
+        $asksForCall = self::message('msg_1', $call['content'], 'tool_use');
+        $final = self::message('msg_1', [['type' => 'text', 'text' => 'Sunny.']], 'end_turn');
+        $copy = static fn (BetaMessage $reply) => ['role' => 'assistant', 'content' => $reply->content];
+
+        $cases = [
+            'the reply and a result of the caller' => [$asksForCall, static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->pushMessages($copy($reply), $mine), [self::ASK, $call, $mine], true, []],
+            'the reply and a result of the caller, one at a time' => [
+                $asksForCall,
+                static function (BetaToolRunner $runner, BetaMessage $reply) use ($copy, $mine): void {
+                    $runner->pushMessages($copy($reply));
+                    $runner->pushMessages($mine);
+                },
+                [self::ASK, $call, $mine],
+                true,
+                [],
+            ],
+            'other params, then the reply and a result' => [
+                $asksForCall,
+                static function (BetaToolRunner $runner, BetaMessage $reply) use ($copy, $mine): void {
+                    $runner->setMessagesParams(['maxTokens' => 128]);
+                    $runner->pushMessages($copy($reply), $mine);
+                },
+                [self::ASK, $call, $mine],
+                true,
+                [],
+            ],
+            'the reply and a denial' => [$asksForCall, static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->pushMessages($copy($reply), $denial), [self::ASK, $call, $denial], true, []],
+            'the reply alone' => [$asksForCall, static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->pushMessages($copy($reply)), [self::ASK, $call, self::results('toolu_1')], true, ['toolu_1']],
+            'an edited reply and a result' => [self::message('msg_1', $callAfterText['content'], 'tool_use'), static fn (BetaToolRunner $runner) => $runner->pushMessages($call, $mine), [self::ASK, $call, $mine], false, []],
+            'a result alone' => [$asksForCall, static fn (BetaToolRunner $runner) => $runner->pushMessages($mine), [self::ASK, $mine], false, []],
+            'the reply and a result for one of its two calls' => [self::message('msg_1', $twoCalls['content'], 'tool_use'), static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->pushMessages($copy($reply), $mine), [self::ASK, $twoCalls, $mine], true, []],
+            'a user message after a tool call' => [$asksForCall, static fn (BetaToolRunner $runner) => $runner->pushMessages(self::MORE), [self::ASK, self::MORE], false, []],
+            'a user message after the final reply' => [$final, static fn (BetaToolRunner $runner) => $runner->pushMessages(self::MORE), [self::ASK, self::MORE], false, []],
+            'the final reply and a user message' => [
+                $final,
+                static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->pushMessages($copy($reply), self::MORE),
+                [self::ASK, self::text('Sunny.'), self::MORE],
+                true,
+                [],
+            ],
+            'a tool removal ahead of the reply' => [
+                $asksForCall,
+                static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->pushMessages(self::WEATHER_REMOVED, $copy($reply)),
+                [self::ASK, self::WEATHER_REMOVED, $call, ['role' => 'user', 'content' => [['type' => 'tool_result', 'tool_use_id' => 'toolu_1', 'content' => "Error: Tool 'get_weather' not found", 'is_error' => true]]]],
+                false,
+                [],
+            ],
+            'the whole history in the params' => [
+                $asksForCall,
+                static fn (BetaToolRunner $runner) => $runner->setMessagesParams(['messages' => [self::ASK, $call, $mine]]),
+                [self::ASK, $call, $mine],
+                true,
+                [],
+            ],
+            'the whole history from a mutator' => [
+                $asksForCall,
+                static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->setMessagesParams(static fn (array $params) => ['messages' => [...(array) $params['messages'], $copy($reply), $mine]] + $params),
+                [self::ASK, $call, $mine],
+                true,
+                [],
+            ],
+            'another history that ends with the reply' => [
+                $asksForCall,
+                static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->setMessagesParams(['messages' => [self::MORE, $copy($reply)]]),
+                [self::MORE, $call, self::results('toolu_1')],
+                false,
+                ['toolu_1'],
+            ],
+            'another history that holds the reply' => [
+                $asksForCall,
+                static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->setMessagesParams(['messages' => [self::MORE, $copy($reply), self::ASK]]),
+                [self::MORE, $call, self::ASK],
+                false,
+                [],
+            ],
+        ];
+
+        foreach ($cases as $name => $case) {
+            yield $name => [...$case, null];
+
+            yield "{$name}, thread: false" => [...$case, false];
+        }
+
+        yield 'the reply as it arrived and a result' => [$asksForCall, static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->pushMessages($reply, $mine), [self::ASK, $call, $mine], true, [], null];
+    }
+
+    #[Test]
+    public function testAMessageAppendedToTheThreadWhileHandlingAReplyGoesOutAfterTheToolResults(): void
+    {
+        $this->respond(self::calls('msg_1', 'toolu_1'), self::says('msg_2', 'Sunny.'));
+        $thread = $this->newThread(messages: [self::ASK], tools: [$this->tool()]);
+
+        foreach ($thread->toolRunner() as $message) {
+            if ('msg_1' === $message->id) {
                 $thread->append(self::MORE);
             }
         }
 
+        $this->assertSame(['toolu_1'], $this->ran);
         $this->assertSame([self::results('toolu_1'), self::MORE], $this->body(1)['messages']);
         $this->assertSame(self::continues('msg_1'), $this->body(1)['thread']);
-        $this->assertSame([self::results('toolu_2'), self::MORE], $this->body(2)['messages']);
-        $this->assertSame(self::continues('msg_2'), $this->body(2)['thread']);
         $this->assertSame(
-            [
-                self::ASK,
-                self::toolUse('toolu_1'),
-                self::results('toolu_1'),
-                self::MORE,
-                self::toolUse('toolu_2'),
-                self::results('toolu_2'),
-                self::MORE,
-                self::text('Sunny.'),
-            ],
+            [self::ASK, self::toolUse('toolu_1'), self::results('toolu_1'), self::MORE, self::text('Sunny.')],
             $this->wire($thread->messages()),
         );
     }
@@ -287,10 +404,10 @@ final class BetaToolRunnerThreadsTest extends TestCase
             self::says('msg_3', 'Sunny.'),
         );
 
-        $runner = $this->runner();
-        foreach ($runner as $message) {
+        $thread = $this->newThread(messages: [self::ASK], tools: [$this->tool()], unsupportedRequestBehavior: 'continue_unthreaded');
+        foreach ($thread->toolRunner() as $message) {
             if ('tool_use' === $message->stopReason) {
-                $runner->pushMessages(self::MORE);
+                $thread->append(self::MORE);
             }
         }
 
@@ -325,50 +442,174 @@ final class BetaToolRunnerThreadsTest extends TestCase
     }
 
     #[Test]
-    public function testAHistoryRewrittenToKeepTheReplyAnswersIt(): void
+    #[DataProvider('modes')]
+    public function testParamsSetInPartKeepTheRestAndAskForTheReplyAgain(?false $thread): void
     {
         $this->respond(self::calls('msg_1', 'toolu_1'), self::says('msg_2', 'Sunny.'));
 
-        $runner = $this->runner();
-        foreach ($runner as $message) {
-            if ('msg_1' === $message->id) {
-                $runner->setMessagesParams(['messages' => [self::MORE, $message, self::ASK]]);
-            }
-        }
-
-        $this->assertSame(['toolu_1'], $this->ran);
-        $this->assertSame(self::CREATE, $this->body(1)['thread']);
-        $this->assertSame([self::MORE, self::toolUse('toolu_1'), self::results('toolu_1'), self::ASK], $this->body(1)['messages']);
-        $this->assertSame(
-            [self::MORE, self::toolUse('toolu_1'), self::results('toolu_1'), self::ASK, self::text('Sunny.')],
-            $this->wire($runner->getParams()['messages']),
-        );
-    }
-
-    #[Test]
-    public function testParamsSetInPartKeepTheRest(): void
-    {
-        $this->respond(self::calls('msg_1', 'toolu_1'), self::says('msg_2', 'Sunny.'));
-
-        $runner = $this->runner(extraParams: ['stopSequences' => ['END'], 'serviceTier' => 'auto']);
+        $runner = $this->runner(extraParams: ['stopSequences' => ['END'], 'serviceTier' => 'auto'], thread: $thread);
         foreach ($runner as $message) {
             if ('msg_1' === $message->id) {
                 $runner->setMessagesParams(['maxTokens' => 128, 'serviceTier' => null]);
             }
         }
 
+        $this->assertSame([], $this->ran);
+        $this->assertCount(2, $this->transporter->getRequests());
         $this->assertSame(
             [
                 'max_tokens' => 128,
-                'messages' => [self::results('toolu_1')],
+                'messages' => [self::ASK],
                 'model' => 'claude-opus-4-6',
                 'stop_sequences' => ['END'],
-                'thread' => self::continues('msg_1'),
+                ...(false === $thread ? [] : ['thread' => self::CREATE]),
+                'tools' => [self::TOOL],
             ],
             $this->body(1),
         );
         $this->assertSame(128, $runner->getParams()['maxTokens']);
         $this->assertArrayNotHasKey('serviceTier', $runner->getParams());
+        $this->assertSame([self::ASK, self::text('Sunny.')], $this->wire($runner->getParams()['messages']));
+    }
+
+    #[Test]
+    #[DataProvider('waysToRaiseMaxTokens')]
+    public function testAReplyThatWasCutOffIsAskedForAgainWithMoreTokens(bool $withAMutator, ?false $thread): void
+    {
+        $this->respond(
+            self::calls('msg_1', 'toolu_1'),
+            self::says('msg_2', 'Sun', 'max_tokens'),
+            self::says('msg_3', 'Sunny.'),
+        );
+
+        $runner = $this->runner(thread: $thread);
+        foreach ($runner as $message) {
+            if ('max_tokens' === $message->stopReason) {
+                $runner->setMessagesParams($withAMutator ? static fn (array $params) => ['maxTokens' => 128] + $params : ['maxTokens' => 128]);
+            }
+        }
+
+        $asked = [self::ASK, self::toolUse('toolu_1'), self::results('toolu_1')];
+        $this->assertSame(['toolu_1'], $this->ran);
+        $this->assertCount(3, $this->transporter->getRequests());
+        $this->assertSent(1, $asked, 'msg_1', $thread);
+        $this->assertSent(2, $asked, null, $thread);
+        $this->assertSame([64, 128], [$this->body(1)['max_tokens'], $this->body(2)['max_tokens']]);
+        $this->assertSame([...$asked, self::text('Sunny.')], $this->wire($runner->getParams()['messages']));
+    }
+
+    /**
+     * @return iterable<string, array{bool, false|null}>
+     */
+    public static function waysToRaiseMaxTokens(): iterable
+    {
+        foreach (self::modes() as $mode => [$thread]) {
+            yield "params, {$mode}" => [false, $thread];
+
+            yield "a mutator, {$mode}" => [true, $thread];
+        }
+    }
+
+    #[Test]
+    #[DataProvider('modes')]
+    public function testParamsSetWhileHandlingTheFinalReplyAskForItAgain(?false $thread): void
+    {
+        $this->respond(self::says('msg_1', 'Sunny.'), self::says('msg_2', 'Rainy.'));
+
+        $runner = $this->runner(thread: $thread);
+        foreach ($runner as $message) {
+            if ('msg_1' === $message->id) {
+                $runner->setMessagesParams(['stopSequences' => ['END']]);
+            }
+        }
+
+        $this->assertCount(2, $this->transporter->getRequests());
+        $this->assertSent(1, [self::ASK], null, $thread);
+        $this->assertSame(['END'], $this->body(1)['stop_sequences']);
+        $this->assertSame([self::ASK, self::text('Rainy.')], $this->wire($runner->getParams()['messages']));
+    }
+
+    #[Test]
+    #[DataProvider('modes')]
+    public function testAMessagePushedWhileARequestIsSentAsksForTheReplyAgain(?false $thread): void
+    {
+        $this->respond(self::calls('msg_1', 'toolu_1'), self::says('msg_2', 'Sunny.'));
+
+        /** @var BetaToolRunner|null $runner */
+        $runner = null;
+        $pushed = false;
+        $push = static function (RequestInterface $request, callable $next) use (&$runner, &$pushed) {
+            if (!$pushed) {
+                $pushed = true;
+                $runner?->pushMessages(self::MORE);
+            }
+
+            return $next($request);
+        };
+        $runner = $this->runner(extraParams: ['requestOptions' => ['middleware' => [$push]]], thread: $thread);
+        $runner->runUntilDone();
+
+        $this->assertSame([], $this->ran);
+        $this->assertCount(2, $this->transporter->getRequests());
+        $this->assertSent(0, [self::ASK], null, $thread);
+        $this->assertSent(1, [self::ASK, self::MORE], null, $thread);
+    }
+
+    #[Test]
+    #[DataProvider('modes')]
+    public function testAHistorySetWhileARequestIsSentGoesOutNext(?false $thread): void
+    {
+        $this->respond(self::calls('msg_1', 'toolu_1'), self::says('msg_2', 'Sunny.'));
+
+        /** @var BetaToolRunner|null $runner */
+        $runner = null;
+        $set = false;
+        $push = static function (RequestInterface $request, callable $next) use (&$runner, &$set) {
+            if (!$set) {
+                $set = true;
+                $runner?->setMessagesParams(['messages' => [self::MORE]]);
+            }
+
+            return $next($request);
+        };
+        $runner = $this->runner(extraParams: ['requestOptions' => ['middleware' => [$push]]], thread: $thread);
+        $runner->runUntilDone();
+
+        $this->assertSent(1, [self::MORE], null, $thread);
+    }
+
+    #[Test]
+    #[DataProvider('modes')]
+    public function testTheParamsLeaveOutTheReplyThatIsBeingHandled(?false $thread): void
+    {
+        $this->respond(self::calls('msg_1', 'toolu_1'), self::says('msg_2', 'Sunny.'), self::calls('msg_1', 'toolu_1'));
+
+        $seen = [];
+        $runner = $this->runner(thread: $thread);
+        foreach ($runner as $message) {
+            $seen[] = $this->wire($runner->getParams()['messages']);
+        }
+        $asked = [self::ASK, self::toolUse('toolu_1'), self::results('toolu_1')];
+
+        $this->assertSame([[self::ASK], $asked], $seen);
+        $this->assertSame([...$asked, self::text('Sunny.')], $this->wire($runner->getParams()['messages']));
+
+        $left = $this->runner(thread: $thread);
+        foreach ($left as $_) {
+            break;
+        }
+
+        $this->assertSame([self::ASK], $this->wire($left->getParams()['messages']));
+    }
+
+    /**
+     * @return iterable<string, array{false|null}> the `thread` argument of toolRunner()
+     */
+    public static function modes(): iterable
+    {
+        yield 'default settings' => [null];
+
+        yield 'thread: false' => [false];
     }
 
     /**
@@ -400,6 +641,68 @@ final class BetaToolRunnerThreadsTest extends TestCase
         yield 'system' => ['system', ['system' => 'Be brief.']];
 
         yield 'tools' => ['tools', ['tools' => []]];
+    }
+
+    /**
+     * @param \Closure(BetaToolRunner, BetaMessage): void $change what the caller does while handling the first reply
+     */
+    #[Test]
+    #[DataProvider('changesToSystemAndToolsAndTheHistory')]
+    public function testSystemAndToolsCannotChangeWhateverBecomesOfTheHistoryUnlessThreadIsFalse(\Closure $change, ?false $thread): void
+    {
+        $this->respond(self::calls('msg_1', 'toolu_1'), self::says('msg_2', 'Sunny.'));
+        $runner = $this->runner(thread: $thread);
+        $run = static function () use ($runner, $change): void {
+            foreach ($runner as $message) {
+                if ('msg_1' === $message->id) {
+                    $change($runner, $message);
+                }
+            }
+        };
+
+        if (false === $thread) {
+            $run();
+
+            $this->assertCount(2, $this->transporter->getRequests());
+            $this->assertSame(['Be brief.', null], [$this->body(1)['system'], $this->body(1)['tools'] ?? null]);
+
+            return;
+        }
+
+        $e = $this->assertThrows(\LogicException::class, $run);
+
+        $this->assertStringStartsWith('Cannot change `system` and `tools` on a thread:', $e->getMessage());
+        $this->assertCount(1, $this->transporter->getRequests());
+        $this->assertSame([], $this->ran);
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(BetaToolRunner, BetaMessage): void, false|null}>
+     */
+    public static function changesToSystemAndToolsAndTheHistory(): iterable
+    {
+        $changed = ['system' => 'Be brief.', 'tools' => []];
+
+        $cases = [
+            'no history' => static fn (BetaToolRunner $runner) => $runner->setMessagesParams($changed),
+            'the history from a mutator' => static fn (BetaToolRunner $runner) => $runner->setMessagesParams(static fn (array $params) => $changed + $params),
+            'a history that keeps the reply' => static fn (BetaToolRunner $runner, BetaMessage $reply) => $runner->setMessagesParams($changed + ['messages' => [self::ASK, $reply]]),
+            'a rewritten history' => static fn (BetaToolRunner $runner) => $runner->setMessagesParams($changed + ['messages' => [self::MORE]]),
+            'a message pushed afterwards' => static function (BetaToolRunner $runner) use ($changed): void {
+                $runner->setMessagesParams($changed);
+                $runner->pushMessages(self::MORE);
+            },
+            'a message pushed before' => static function (BetaToolRunner $runner) use ($changed): void {
+                $runner->pushMessages(self::MORE);
+                $runner->setMessagesParams($changed);
+            },
+        ];
+
+        foreach ($cases as $name => $change) {
+            yield $name => [$change, null];
+
+            yield "{$name}, thread: false" => [$change, false];
+        }
     }
 
     #[Test]
@@ -493,25 +796,6 @@ final class BetaToolRunnerThreadsTest extends TestCase
             $this->body(0),
         );
         $this->assertToolChangesContinueTheThread(1);
-    }
-
-    #[Test]
-    public function testAMessageAddedAfterTheFinalReplyIsAnotherTurn(): void
-    {
-        $this->respond(self::says('msg_1', 'Sunny.'), self::says('msg_2', 'Rainy.'));
-
-        $runner = $this->runner();
-        $replies = [];
-        foreach ($runner as $message) {
-            $replies[] = $message->id;
-            if ('msg_1' === $message->id) {
-                $runner->pushMessages(self::MORE);
-            }
-        }
-
-        $this->assertSame(['msg_1', 'msg_2'], $replies);
-        $this->assertSame([self::MORE], $this->body(1)['messages']);
-        $this->assertSame(self::continues('msg_1'), $this->body(1)['thread']);
     }
 
     // -------------------------------------------------------------------------
@@ -1144,6 +1428,25 @@ final class BetaToolRunnerThreadsTest extends TestCase
             maxIterations: $maxIterations,
             extraParams: $extraParams,
             thread: $thread,
+        );
+    }
+
+    /**
+     * Asserts that the request asks the model to go on from `$conversation`: whole, or with only what follows the
+     * reply `$continues` where the API holds the conversation up to it.
+     *
+     * @param list<array<string, mixed>> $conversation
+     */
+    private function assertSent(int $index, array $conversation, ?string $continues, ?false $thread): void
+    {
+        if (false !== $thread && null !== $continues) {
+            $replies = array_keys(array_column($conversation, 'role'), 'assistant', true);
+            $conversation = array_slice($conversation, (int) end($replies) + 1);
+        }
+
+        $this->assertSame(
+            [$conversation, false === $thread ? null : (null === $continues ? self::CREATE : self::continues($continues))],
+            [$this->body($index)['messages'], $this->body($index)['thread'] ?? null],
         );
     }
 

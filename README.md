@@ -166,7 +166,9 @@ See [examples/beta/message_threads.php](examples/beta/message_threads.php).
 
 #### Tool runner
 
-The tool runner keeps its conversation in a message thread by default. Pass `thread: false` to send the whole history with every request. `system` and `tools` cannot change during a run unless you pass `thread: false`.
+The tool runner sends only the new messages by default too. Pass `thread: false` to send the whole history with every request. `system` and `tools` cannot change during a run unless you pass `thread: false`.
+
+Apart from that, `setMessagesParams()` and `pushMessages()` work the same either way. After a call made while you handle a reply, the runner does not add that reply to the history, and it sends your history unchanged. A history that does not go on from that reply is sent whole.
 
 ### Pagination
 

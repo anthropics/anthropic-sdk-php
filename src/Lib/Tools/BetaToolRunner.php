@@ -30,9 +30,10 @@ use OpenTelemetry\Context\Context;
  *
  * The runner keeps the conversation in a message thread, so each request after the
  * first carries only the messages that are new, and `system` and `tools` are fixed
- * once the first request was answered. Pass `thread: false` to send the whole
- * history with every request instead, as the runner always does on the Amazon
- * Bedrock and Vertex AI clients.
+ * once the first request was answered. A history that setMessagesParams() or
+ * pushMessages() leaves without the last reply is sent whole. Pass `thread: false` to
+ * send the whole history with every request instead, as the runner always does on the
+ * Amazon Bedrock and Vertex AI clients.
  *
  * @phpstan-import-type BetaMessageParamVariants from \Anthropic\Beta\Messages\BetaMessageParam
  * @phpstan-import-type BetaToolUnionShape from \Anthropic\Beta\Messages\BetaToolUnion
@@ -91,6 +92,9 @@ final class BetaToolRunner implements \IteratorAggregate
 
     /** When set, it holds the history and the request fields, and the runner's own are not sent. */
     private ?BetaMessageThread $thread = null;
+
+    /** @var list<array<string, mixed>|BaseModel>|null The caller's history, which leaves out the reply. Set while the thread sends a request and the caller handles its reply. */
+    private ?array $messagesWithoutReply = null;
 
     /**
      * @param list<BetaRunnableTool|BetaToolUnionShape> $tools Mix of runnable tools and plain tool definitions
@@ -211,8 +215,13 @@ final class BetaToolRunner implements \IteratorAggregate
         // @phpstan-ignore argument.type
         $this->thread?->update(array_diff_key($new, ['maxIterations' => true, 'messages' => true]));
         if (is_array($new['messages'] ?? null)) {
-            // @phpstan-ignore argument.type
-            $this->thread?->setMessages(array_values($new['messages']));
+            if (null === $this->messagesWithoutReply) {
+                // @phpstan-ignore argument.type
+                $this->thread?->setMessages(array_values($new['messages']));
+            } else {
+                // @phpstan-ignore assign.propertyType
+                $this->messagesWithoutReply = array_values($new['messages']);
+            }
         }
 
         if (is_int($new['maxTokens'] ?? null)) {
@@ -273,7 +282,11 @@ final class BetaToolRunner implements \IteratorAggregate
             throw new \LogicException(self::MESSAGES_LOCKED);
         }
 
-        $this->thread?->append(...array_values($messages));
+        if (null === $this->messagesWithoutReply) {
+            $this->thread?->append(...array_values($messages));
+        } else {
+            array_push($this->messagesWithoutReply, ...array_values($messages));
+        }
 
         /** @var list<array<string, mixed>> $normalized */
         $normalized = array_map(
@@ -371,7 +384,7 @@ final class BetaToolRunner implements \IteratorAggregate
     {
         if (null !== $this->thread) {
             return array_filter(
-                [...array_diff_key($this->thread->params(), ['unsupportedRequestBehavior' => true]), 'maxIterations' => $this->maxIterations],
+                [...array_diff_key($this->thread->params(), ['unsupportedRequestBehavior' => true]), 'messages' => $this->history(), 'maxIterations' => $this->maxIterations],
                 fn ($v) => null !== $v,
             );
         }
@@ -436,22 +449,24 @@ final class BetaToolRunner implements \IteratorAggregate
             $this->mutated = false;
             ++$iterationCount;
 
+            $this->messagesWithoutReply = $this->thread?->messages();
             // @phpstan-ignore argument.type
             $message = $this->thread?->send(requestOptions: $this->requestOptionsWithHelperHeader()) ?? $this->client->beta->messages->create(...$this->requestParams());
 
             yield $message;
 
+            $callerMessages = $this->history();
+            $this->messagesWithoutReply = null;
             $nextStep = self::determineNextStepFromStopReason($message->stopReason);
             $turnPaused = self::STEP_RESUME === $nextStep;
 
+            // The caller can hold the thread, and can have set `compaction` on it while handling the reply.
+            self::rejectCompactionParam($this->thread?->params() ?? []);
+
             // The thread holds the reply already, so the run goes on for as long as there is something to send.
-            $thread = $this->thread;
-            if (null !== $thread) {
-                // The caller can hold the thread, and can have set `compaction` on it while handling the reply.
-                self::rejectCompactionParam($thread->params());
-                $answered = self::STEP_RUN_TOOLS === $nextStep && $this->answerOnThread($thread);
-                // @phpstan-ignore booleanOr.rightAlwaysFalse
-                if ($answered || $turnPaused || $this->mutated) {
+            // @phpstan-ignore booleanNot.alwaysTrue
+            if (null !== $this->thread && !$this->mutated) {
+                if ((self::STEP_RUN_TOOLS === $nextStep && $this->answerOnThread($this->thread)) || $turnPaused) {
                     continue;
                 }
                 $finalMessage = $message;
@@ -477,10 +492,19 @@ final class BetaToolRunner implements \IteratorAggregate
                 }
             }
 
-            $toolResults = $this->buildToolResults($this->messages[array_key_last($this->messages)]);
+            // Checked first: a history that drops the reply starts a new thread, which would take another `system` or `tools`.
+            $this->thread?->assertNextTurnCanBeSent();
+            $this->thread?->setMessages($callerMessages);
+
+            $history = $this->history();
+
+            /** @var array<string, mixed>|false $lastMessage */
+            $lastMessage = self::toArray(end($history));
+            $toolResults = false === $lastMessage ? null : $this->buildToolResults($lastMessage);
 
             if (null !== $toolResults) {
                 $this->messages[] = ['role' => 'user', 'content' => $toolResults];
+                $this->thread?->append(['role' => 'user', 'content' => $toolResults]);
             } elseif (!$this->mutated) {
                 $finalMessage = $message;
 
@@ -540,7 +564,7 @@ final class BetaToolRunner implements \IteratorAggregate
      */
     private function history(): array
     {
-        return $this->thread?->messages() ?? $this->messages;
+        return $this->messagesWithoutReply ?? $this->thread?->messages() ?? $this->messages;
     }
 
     /**

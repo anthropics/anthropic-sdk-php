@@ -12,6 +12,7 @@
 
 * **client:** stop including model data in unknown property errors
 * **foundry,bedrock:** send workspaceID as the anthropic-workspace-id header on Messages
+* **tools:** restore the released tool runner behavior when the caller changes its messages or params while handling a reply
 
 
 ### Chores
