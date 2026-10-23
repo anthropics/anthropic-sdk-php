@@ -81,7 +81,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.workspaces.list',
                 route: '/v1/organizations/federation_rules/{federation_rule_id}/workspaces',
                 query: ['limit', 'page'],
@@ -147,7 +149,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.workspaces.add',
                 route: '/v1/organizations/federation_rules/{federation_rule_id}/workspaces',
                 attributes: [
@@ -208,7 +212,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.workspaces.remove',
                 route: '/v1/organizations/federation_rules/{federation_rule_id}/workspaces/{workspace_id}',
                 attributes: [

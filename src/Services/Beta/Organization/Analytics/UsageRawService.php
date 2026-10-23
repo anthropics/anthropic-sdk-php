@@ -174,7 +174,7 @@ final class UsageRawService implements UsageRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.usage.list',
                 route: '/v1/organizations/analytics/usage',
                 query: [

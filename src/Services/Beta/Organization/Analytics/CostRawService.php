@@ -174,7 +174,7 @@ final class CostRawService implements CostRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.cost.list',
                 route: '/v1/organizations/analytics/cost',
                 query: [

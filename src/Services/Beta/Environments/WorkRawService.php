@@ -82,7 +82,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.retrieve',
                 route: '/v1/environments/{environment_id}/work/{work_id}',
                 attributes: [
@@ -146,7 +146,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.update',
                 route: '/v1/environments/{environment_id}/work/{work_id}',
                 attributes: [
@@ -203,7 +203,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.list',
                 route: '/v1/environments/{environment_id}/work',
                 query: ['limit', 'page'],
@@ -257,7 +257,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.ack',
                 route: '/v1/environments/{environment_id}/work/{work_id}/ack',
                 attributes: [
@@ -327,7 +327,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.heartbeat',
                 route: '/v1/environments/{environment_id}/work/{work_id}/heartbeat',
                 query: ['desired_ttl_seconds', 'expected_last_heartbeat'],
@@ -395,7 +395,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.poll',
                 route: '/v1/environments/{environment_id}/work/poll',
                 query: ['block_ms', 'reclaim_older_than_ms'],
@@ -443,7 +443,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.stats',
                 route: '/v1/environments/{environment_id}/work/stats',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -504,7 +504,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.stop',
                 route: '/v1/environments/{environment_id}/work/{work_id}/stop',
                 attributes: [

@@ -78,7 +78,9 @@ final class UsersRawService implements UsersRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.users.list',
                 route: '/v1/organizations/analytics/users',
                 query: [

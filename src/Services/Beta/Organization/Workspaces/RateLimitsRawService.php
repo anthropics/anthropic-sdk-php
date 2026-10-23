@@ -77,7 +77,9 @@ final class RateLimitsRawService implements RateLimitsRawContract
                 $rateLimitID,
             ],
             body: (object) array_diff_key($parsed, array_flip(['workspaceID'])),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.rate_limits.update',
                 route: '/v1/organizations/workspaces/{workspace_id}/rate_limits/{rate_limit_id}',
                 attributes: [
@@ -139,7 +141,9 @@ final class RateLimitsRawService implements RateLimitsRawContract
                     'groupType' => 'group_type', 'includeInherited' => 'include_inherited',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.rate_limits.list',
                 route: '/v1/organizations/workspaces/{workspace_id}/rate_limits',
                 query: ['group_type', 'include_inherited', 'limit', 'page'],

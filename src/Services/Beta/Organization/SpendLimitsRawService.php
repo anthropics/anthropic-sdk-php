@@ -52,7 +52,9 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/spend_limits/%1$s?beta=true', $spendLimitID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.spend_limits.retrieve',
                 route: '/v1/organizations/spend_limits/{spend_limit_id}',
                 attributes: ['anthropic.organization.spend_limit.id' => $spendLimitID],
@@ -116,7 +118,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
                     'extraHeaders' => ['anthropic-beta' => 'spend-limit-reads-2026-09-26'],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.spend_limits.list',
                 route: '/v1/organizations/spend_limits',
                 query: ['limit', 'page', 'scope_type', 'workspace_id'],
@@ -153,7 +155,9 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/spend_limits/%1$s?beta=true', $spendLimitID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.spend_limits.delete',
                 route: '/v1/organizations/spend_limits/{spend_limit_id}',
                 attributes: ['anthropic.organization.spend_limit.id' => $spendLimitID],
@@ -209,7 +213,9 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.spend_limits.set',
                 route: '/v1/organizations/spend_limits',
                 createdId: 'anthropic.organization.spend_limit.id',

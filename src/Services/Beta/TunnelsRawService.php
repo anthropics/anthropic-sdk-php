@@ -78,7 +78,7 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.create',
                 route: '/v1/tunnels',
                 createdId: 'anthropic.tunnel.id',
@@ -128,7 +128,7 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.retrieve',
                 route: '/v1/tunnels/{tunnel_id}',
                 attributes: ['anthropic.tunnel.id' => $tunnelID],
@@ -187,7 +187,7 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.list',
                 route: '/v1/tunnels',
                 query: ['include_archived', 'limit', 'page'],
@@ -238,7 +238,7 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.archive',
                 route: '/v1/tunnels/{tunnel_id}/archive',
                 attributes: ['anthropic.tunnel.id' => $tunnelID],
@@ -288,7 +288,7 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.reveal_token',
                 route: '/v1/tunnels/{tunnel_id}/reveal_token',
                 attributes: ['anthropic.tunnel.id' => $tunnelID],
@@ -344,7 +344,7 @@ final class TunnelsRawService implements TunnelsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.rotate_token',
                 route: '/v1/tunnels/{tunnel_id}/rotate_token',
                 attributes: ['anthropic.tunnel.id' => $tunnelID],

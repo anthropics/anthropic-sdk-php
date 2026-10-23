@@ -93,7 +93,7 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.create',
                 route: '/v1/sessions',
                 attributes: [
@@ -144,7 +144,7 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.retrieve',
                 route: '/v1/sessions/{session_id}',
                 attributes: ['anthropic.session.id' => $sessionID],
@@ -202,7 +202,7 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.update',
                 route: '/v1/sessions/{session_id}',
                 attributes: ['anthropic.session.id' => $sessionID],
@@ -295,7 +295,7 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.list',
                 route: '/v1/sessions',
                 query: [
@@ -357,7 +357,7 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.delete',
                 route: '/v1/sessions/{session_id}',
                 attributes: ['anthropic.session.id' => $sessionID],
@@ -404,7 +404,7 @@ final class SessionsRawService implements SessionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.archive',
                 route: '/v1/sessions/{session_id}/archive',
                 attributes: ['anthropic.session.id' => $sessionID],

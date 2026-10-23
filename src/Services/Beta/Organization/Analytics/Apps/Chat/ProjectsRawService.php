@@ -78,7 +78,9 @@ final class ProjectsRawService implements ProjectsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.apps.chat.projects.list',
                 route: '/v1/organizations/analytics/apps/chat/projects',
                 query: [

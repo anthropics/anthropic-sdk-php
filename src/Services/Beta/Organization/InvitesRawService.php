@@ -60,7 +60,9 @@ final class InvitesRawService implements InvitesRawContract
             method: 'post',
             path: 'v1/organizations/invites?beta=true',
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.invites.create',
                 route: '/v1/organizations/invites',
                 createdId: 'anthropic.organization.invite.id',
@@ -89,7 +91,9 @@ final class InvitesRawService implements InvitesRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/invites/%1$s?beta=true', $inviteID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.invites.retrieve',
                 route: '/v1/organizations/invites/{invite_id}',
                 attributes: ['anthropic.organization.invite.id' => $inviteID],
@@ -134,7 +138,9 @@ final class InvitesRawService implements InvitesRawContract
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.invites.list',
                 route: '/v1/organizations/invites',
                 query: ['after_id', 'before_id', 'email', 'limit', 'roles', 'statuses'],
@@ -164,7 +170,9 @@ final class InvitesRawService implements InvitesRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/invites/%1$s?beta=true', $inviteID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.invites.delete',
                 route: '/v1/organizations/invites/{invite_id}',
                 attributes: ['anthropic.organization.invite.id' => $inviteID],

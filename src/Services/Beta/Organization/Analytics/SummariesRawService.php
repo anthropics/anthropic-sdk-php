@@ -72,7 +72,9 @@ final class SummariesRawService implements SummariesRawContract
                 $parsed,
                 ['startingDate' => 'starting_date', 'endingDate' => 'ending_date'],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.summaries.list',
                 route: '/v1/organizations/analytics/summaries',
                 query: ['ending_date', 'filter', 'limit', 'page', 'starting_date'],

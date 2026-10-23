@@ -85,7 +85,7 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.dreams.create',
                 route: '/v1/dreams',
                 createdId: 'anthropic.dream.id',
@@ -137,7 +137,7 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.dreams.retrieve',
                 route: '/v1/dreams/{dream_id}',
                 attributes: ['anthropic.dream.id' => $dreamID],
@@ -214,7 +214,7 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.dreams.list',
                 route: '/v1/dreams',
                 query: [
@@ -274,7 +274,7 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.dreams.archive',
                 route: '/v1/dreams/{dream_id}/archive',
                 attributes: ['anthropic.dream.id' => $dreamID],
@@ -326,7 +326,7 @@ final class DreamsRawService implements DreamsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'dreaming-2026-04-21']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.dreams.cancel',
                 route: '/v1/dreams/{dream_id}/cancel',
                 attributes: ['anthropic.dream.id' => $dreamID],

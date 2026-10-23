@@ -60,7 +60,9 @@ final class MembersRawService implements MembersRawContract
                 'v1/organizations/rbac_groups/%1$s/members?beta=true', $rbacGroupID,
             ],
             query: $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_groups.members.list',
                 route: '/v1/organizations/rbac_groups/{rbac_group_id}/members',
                 query: ['limit', 'page'],
@@ -103,7 +105,9 @@ final class MembersRawService implements MembersRawContract
                 'v1/organizations/rbac_groups/%1$s/members?beta=true', $rbacGroupID,
             ],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_groups.members.add',
                 route: '/v1/organizations/rbac_groups/{rbac_group_id}/members',
                 attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
@@ -148,7 +152,9 @@ final class MembersRawService implements MembersRawContract
                 $rbacGroupID,
                 $userID,
             ],
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_groups.members.remove',
                 route: '/v1/organizations/rbac_groups/{rbac_group_id}/members/{user_id}',
                 attributes: [

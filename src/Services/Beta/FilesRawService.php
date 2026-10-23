@@ -79,7 +79,9 @@ final class FilesRawService implements FilesRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.files.list',
                 route: '/v1/files',
                 query: ['ids', 'limit', 'page', 'scope_id'],
@@ -125,7 +127,9 @@ final class FilesRawService implements FilesRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.files.delete',
                 route: '/v1/files/{file_id}',
                 attributes: ['anthropic.file.id' => $fileID],
@@ -170,7 +174,9 @@ final class FilesRawService implements FilesRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.files.download',
                 route: '/v1/files/{file_id}/content',
                 attributes: ['anthropic.file.id' => $fileID],
@@ -215,7 +221,9 @@ final class FilesRawService implements FilesRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.files.retrieve_metadata',
                 route: '/v1/files/{file_id}',
                 attributes: ['anthropic.file.id' => $fileID],
@@ -271,7 +279,9 @@ final class FilesRawService implements FilesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.files.upload',
                 route: '/v1/files',
                 createdId: 'anthropic.file.id',

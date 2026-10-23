@@ -57,7 +57,9 @@ final class PermissionsRawService implements PermissionsRawContract
                 'v1/organizations/rbac_roles/%1$s/permissions?beta=true', $rbacRoleID,
             ],
             query: $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_roles.permissions.list',
                 route: '/v1/organizations/rbac_roles/{rbac_role_id}/permissions',
                 query: ['limit', 'page'],

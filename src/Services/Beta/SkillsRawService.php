@@ -79,7 +79,9 @@ final class SkillsRawService implements SkillsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.create',
                 route: '/v1/skills',
                 createdId: 'anthropic.skill.id',
@@ -126,7 +128,9 @@ final class SkillsRawService implements SkillsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.retrieve',
                 route: '/v1/skills/{skill_id}',
                 attributes: ['anthropic.skill.id' => $skillID],
@@ -177,7 +181,9 @@ final class SkillsRawService implements SkillsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.list',
                 route: '/v1/skills',
                 query: ['limit', 'page', 'source'],
@@ -225,7 +231,9 @@ final class SkillsRawService implements SkillsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.delete',
                 route: '/v1/skills/{skill_id}',
                 attributes: ['anthropic.skill.id' => $skillID],

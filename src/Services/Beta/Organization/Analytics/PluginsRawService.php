@@ -84,7 +84,9 @@ final class PluginsRawService implements PluginsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.plugins.list',
                 route: '/v1/organizations/analytics/plugins',
                 query: [

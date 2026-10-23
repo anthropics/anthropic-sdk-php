@@ -127,7 +127,7 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.events.list',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}/events',
                 query: ['limit', 'page'],
@@ -192,7 +192,7 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.events.stream',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}/stream',
                 query: ['event_deltas'],

@@ -88,7 +88,7 @@ final class SharesRawService implements SharesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.shares.list',
                 route: '/v1/organizations/plugins/{plugin_id}/shares',
                 query: ['limit', 'organization_id', 'page', 'target_type'],

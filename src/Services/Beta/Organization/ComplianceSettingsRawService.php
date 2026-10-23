@@ -48,7 +48,9 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
         return $this->client->request(
             method: 'get',
             path: 'v1/organizations/compliance_settings?beta=true',
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.compliance_settings.retrieve',
                 route: '/v1/organizations/compliance_settings',
             )),
@@ -97,7 +99,9 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
             method: 'post',
             path: 'v1/organizations/compliance_settings?beta=true',
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.compliance_settings.update',
                 route: '/v1/organizations/compliance_settings',
             )),

@@ -83,7 +83,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.create',
                 route: '/v1/environments',
                 createdId: 'anthropic.environment.id',
@@ -130,7 +130,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.retrieve',
                 route: '/v1/environments/{environment_id}',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -188,7 +188,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.update',
                 route: '/v1/environments/{environment_id}',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -245,7 +245,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.list',
                 route: '/v1/environments',
                 query: ['include_archived', 'limit', 'page'],
@@ -293,7 +293,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.delete',
                 route: '/v1/environments/{environment_id}',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -340,7 +340,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.archive',
                 route: '/v1/environments/{environment_id}/archive',
                 attributes: ['anthropic.environment.id' => $environmentID],

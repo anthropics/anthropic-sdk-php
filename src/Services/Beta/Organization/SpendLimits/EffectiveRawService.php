@@ -64,7 +64,9 @@ final class EffectiveRawService implements EffectiveRawContract
             method: 'get',
             path: 'v1/organizations/spend_limits/effective?beta=true',
             query: Util::array_transform_keys($parsed, ['userIDs' => 'user_ids']),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.spend_limits.effective.list',
                 route: '/v1/organizations/spend_limits/effective',
                 query: ['limit', 'page', 'period', 'user_ids'],

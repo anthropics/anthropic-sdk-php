@@ -103,7 +103,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.create',
                 route: '/v1/organizations/plugins/{plugin_id}/versions',
                 attributes: ['anthropic.organization.plugin.id' => $pluginID],
@@ -169,7 +169,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.retrieve',
                 route: '/v1/organizations/plugins/{plugin_id}/versions/{version}',
                 query: ['organization_id'],
@@ -236,7 +236,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.list',
                 route: '/v1/organizations/plugins/{plugin_id}/versions',
                 query: ['limit', 'organization_id', 'page'],
@@ -319,7 +319,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.download',
                 route: '/v1/organizations/plugins/{plugin_id}/versions/{version}/content',
                 query: ['organization_id'],

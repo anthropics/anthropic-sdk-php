@@ -95,7 +95,9 @@ final class UsageReportRawService implements UsageReportRawContract
                     'userIDs' => 'user_ids',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.usage_report.list',
                 route: '/v1/organizations/analytics/usage_report',
                 query: [

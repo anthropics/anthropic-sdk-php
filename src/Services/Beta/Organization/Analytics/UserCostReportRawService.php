@@ -102,7 +102,9 @@ final class UserCostReportRawService implements UserCostReportRawContract
                     'userIDs' => 'user_ids',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.user_cost_report.list',
                 route: '/v1/organizations/analytics/user_cost_report',
                 query: [

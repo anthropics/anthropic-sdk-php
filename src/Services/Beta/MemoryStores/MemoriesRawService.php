@@ -86,7 +86,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.create',
                 route: '/v1/memory_stores/{memory_store_id}/memories',
                 query: ['view'],
@@ -149,7 +149,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.retrieve',
                 route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
                 query: ['view'],
@@ -222,7 +222,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.update',
                 route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
                 query: ['view'],
@@ -289,7 +289,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.list',
                 route: '/v1/memory_stores/{memory_store_id}/memories',
                 query: ['depth', 'limit', 'page', 'path_prefix', 'view'],
@@ -356,7 +356,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.delete',
                 route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
                 query: ['expected_content_sha256'],

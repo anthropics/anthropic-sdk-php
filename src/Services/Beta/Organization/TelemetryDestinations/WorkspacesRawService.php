@@ -84,7 +84,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.telemetry_destinations.workspaces.list',
                 route: '/v1/organizations/telemetry_destinations/{destination_id}/workspaces',
                 query: ['limit', 'page'],
@@ -150,7 +150,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.telemetry_destinations.workspaces.add',
                 route: '/v1/organizations/telemetry_destinations/{destination_id}/workspaces/{workspace_id}',
                 attributes: [
@@ -215,7 +215,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.telemetry_destinations.workspaces.remove',
                 route: '/v1/organizations/telemetry_destinations/{destination_id}/workspaces/{workspace_id}',
                 attributes: [

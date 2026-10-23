@@ -66,7 +66,9 @@ final class RateLimitsRawService implements RateLimitsRawContract
             method: 'get',
             path: 'v1/organizations/rate_limits?beta=true',
             query: Util::array_transform_keys($parsed, ['groupType' => 'group_type']),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rate_limits.list',
                 route: '/v1/organizations/rate_limits',
                 query: ['group_type', 'limit', 'model', 'page'],

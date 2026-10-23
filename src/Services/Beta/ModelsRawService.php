@@ -67,7 +67,9 @@ final class ModelsRawService implements ModelsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.models.retrieve',
                 route: '/v1/models/{model_id}',
                 attributes: ['anthropic.model.id' => $modelID],
@@ -124,7 +126,9 @@ final class ModelsRawService implements ModelsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.models.list',
                 route: '/v1/models',
                 query: ['after_id', 'before_id', 'lifecycle', 'limit'],

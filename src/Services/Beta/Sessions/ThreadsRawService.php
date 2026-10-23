@@ -72,7 +72,7 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.retrieve',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}',
                 attributes: [
@@ -131,7 +131,7 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.list',
                 route: '/v1/sessions/{session_id}/threads',
                 query: ['limit', 'page', 'statuses'],
@@ -186,7 +186,7 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.archive',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}/archive',
                 attributes: [

@@ -82,7 +82,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.service_accounts.retrieve',
                 route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
                 attributes: [
@@ -149,7 +151,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 array_diff_key($parsed, array_flip(array_keys($header_params))),
                 array_flip(['workspaceID']),
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.service_accounts.update',
                 route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
                 attributes: [
@@ -213,7 +217,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.service_accounts.list',
                 route: '/v1/organizations/workspaces/{workspace_id}/service_accounts',
                 query: ['limit', 'page'],
@@ -278,7 +284,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.service_accounts.add',
                 route: '/v1/organizations/workspaces/{workspace_id}/service_accounts',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],
@@ -338,7 +346,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.service_accounts.remove',
                 route: '/v1/organizations/workspaces/{workspace_id}/service_accounts/{service_account_id}',
                 attributes: [

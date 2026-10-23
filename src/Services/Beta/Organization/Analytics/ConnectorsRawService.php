@@ -81,7 +81,9 @@ final class ConnectorsRawService implements ConnectorsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.connectors.list',
                 route: '/v1/organizations/analytics/connectors',
                 query: [

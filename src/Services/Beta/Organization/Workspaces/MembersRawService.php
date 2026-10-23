@@ -66,7 +66,9 @@ final class MembersRawService implements MembersRawContract
                 $workspaceID,
                 $userID,
             ],
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.retrieve',
                 route: '/v1/organizations/workspaces/{workspace_id}/members/{user_id}',
                 attributes: [
@@ -114,7 +116,9 @@ final class MembersRawService implements MembersRawContract
                 $userID,
             ],
             body: (object) array_diff_key($parsed, array_flip(['workspaceID'])),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.update',
                 route: '/v1/organizations/workspaces/{workspace_id}/members/{user_id}',
                 attributes: [
@@ -161,7 +165,9 @@ final class MembersRawService implements MembersRawContract
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.list',
                 route: '/v1/organizations/workspaces/{workspace_id}/members',
                 query: ['after_id', 'before_id', 'limit'],
@@ -204,7 +210,9 @@ final class MembersRawService implements MembersRawContract
                 'v1/organizations/workspaces/%1$s/members?beta=true', $workspaceID,
             ],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.add',
                 route: '/v1/organizations/workspaces/{workspace_id}/members',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],
@@ -247,7 +255,9 @@ final class MembersRawService implements MembersRawContract
                 $workspaceID,
                 $userID,
             ],
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.remove',
                 route: '/v1/organizations/workspaces/{workspace_id}/members/{user_id}',
                 attributes: [

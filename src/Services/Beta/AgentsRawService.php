@@ -92,7 +92,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.create',
                 route: '/v1/agents',
                 createdId: 'gen_ai.agent.id',
@@ -146,7 +146,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.retrieve',
                 route: '/v1/agents/{agent_id}',
                 query: ['version'],
@@ -211,7 +211,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.update',
                 route: '/v1/agents/{agent_id}',
                 attributes: ['gen_ai.agent.id' => $agentID],
@@ -276,7 +276,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.list',
                 route: '/v1/agents',
                 query: [
@@ -331,7 +331,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.archive',
                 route: '/v1/agents/{agent_id}/archive',
                 attributes: ['gen_ai.agent.id' => $agentID],

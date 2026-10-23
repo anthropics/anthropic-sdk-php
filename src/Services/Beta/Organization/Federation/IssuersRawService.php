@@ -86,7 +86,9 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.issuers.create',
                 route: '/v1/organizations/federation_issuers',
                 createdId: 'anthropic.organization.federation_issuer.id',
@@ -133,7 +135,9 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.issuers.retrieve',
                 route: '/v1/organizations/federation_issuers/{federation_issuer_id}',
                 attributes: [
@@ -200,7 +204,9 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.issuers.update',
                 route: '/v1/organizations/federation_issuers/{federation_issuer_id}',
                 attributes: [
@@ -257,7 +263,9 @@ final class IssuersRawService implements IssuersRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.issuers.list',
                 route: '/v1/organizations/federation_issuers',
                 query: ['include_archived', 'limit', 'page'],
@@ -310,7 +318,9 @@ final class IssuersRawService implements IssuersRawContract
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.issuers.archive',
                 route: '/v1/organizations/federation_issuers/{federation_issuer_id}/archive',
                 attributes: [

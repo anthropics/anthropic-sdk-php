@@ -48,7 +48,9 @@ final class APIKeysRawService implements APIKeysRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/api_keys/%1$s?beta=true', $apiKeyID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.api_keys.retrieve',
                 route: '/v1/organizations/api_keys/{api_key_id}',
                 attributes: ['anthropic.organization.api_key.id' => $apiKeyID],
@@ -87,7 +89,9 @@ final class APIKeysRawService implements APIKeysRawContract
             method: 'post',
             path: ['v1/organizations/api_keys/%1$s?beta=true', $apiKeyID],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.api_keys.update',
                 route: '/v1/organizations/api_keys/{api_key_id}',
                 attributes: ['anthropic.organization.api_key.id' => $apiKeyID],
@@ -137,7 +141,9 @@ final class APIKeysRawService implements APIKeysRawContract
                     'workspaceID' => 'workspace_id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.api_keys.list',
                 route: '/v1/organizations/api_keys',
                 query: [

@@ -65,7 +65,9 @@ final class ArtifactsRawService implements ArtifactsRawContract
             method: 'get',
             path: 'v1/organizations/analytics/artifacts?beta=true',
             query: Util::array_transform_keys($parsed, ['groupBy' => 'group_by']),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.artifacts.list',
                 route: '/v1/organizations/analytics/artifacts',
                 query: ['date', 'filter', 'group_by', 'limit', 'page'],

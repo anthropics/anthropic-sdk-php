@@ -89,7 +89,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.create',
                 route: '/v1/messages/batches',
                 attributes: ['anthropic.message.batch.request_count' => is_array($requests) ? count($requests) : null],
@@ -140,7 +140,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.retrieve',
                 route: '/v1/messages/batches/{message_batch_id}',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],
@@ -199,7 +199,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.list',
                 route: '/v1/messages/batches',
                 query: ['after_id', 'before_id', 'limit'],
@@ -252,7 +252,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.delete',
                 route: '/v1/messages/batches/{message_batch_id}',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],
@@ -304,7 +304,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.cancel',
                 route: '/v1/messages/batches/{message_batch_id}/cancel',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],
@@ -350,7 +350,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.results',
                 route: '/v1/messages/batches/{message_batch_id}/results',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],

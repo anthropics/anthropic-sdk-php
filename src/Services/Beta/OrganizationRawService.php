@@ -41,7 +41,9 @@ final class OrganizationRawService implements OrganizationRawContract
         return $this->client->request(
             method: 'get',
             path: 'v1/organizations/me?beta=true',
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.retrieve',
                 route: '/v1/organizations/me',
             )),

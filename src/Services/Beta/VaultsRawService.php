@@ -77,7 +77,7 @@ final class VaultsRawService implements VaultsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.create',
                 route: '/v1/vaults',
                 createdId: 'anthropic.vault.id',
@@ -125,7 +125,7 @@ final class VaultsRawService implements VaultsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.retrieve',
                 route: '/v1/vaults/{vault_id}',
                 attributes: ['anthropic.vault.id' => $vaultID],
@@ -180,7 +180,7 @@ final class VaultsRawService implements VaultsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.update',
                 route: '/v1/vaults/{vault_id}',
                 attributes: ['anthropic.vault.id' => $vaultID],
@@ -237,7 +237,7 @@ final class VaultsRawService implements VaultsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.list',
                 route: '/v1/vaults',
                 query: ['include_archived', 'limit', 'page'],
@@ -286,7 +286,7 @@ final class VaultsRawService implements VaultsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.delete',
                 route: '/v1/vaults/{vault_id}',
                 attributes: ['anthropic.vault.id' => $vaultID],
@@ -334,7 +334,7 @@ final class VaultsRawService implements VaultsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.archive',
                 route: '/v1/vaults/{vault_id}/archive',
                 attributes: ['anthropic.vault.id' => $vaultID],

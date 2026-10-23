@@ -83,7 +83,9 @@ final class VersionsRawService implements VersionsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.create',
                 route: '/v1/skills/{skill_id}/versions',
                 attributes: ['anthropic.skill.id' => $skillID],
@@ -134,7 +136,9 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.retrieve',
                 route: '/v1/skills/{skill_id}/versions/{version}',
                 attributes: [
@@ -191,7 +195,9 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.list',
                 route: '/v1/skills/{skill_id}/versions',
                 query: ['limit', 'page'],
@@ -243,7 +249,9 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.delete',
                 route: '/v1/skills/{skill_id}/versions/{version}',
                 attributes: [
@@ -298,7 +306,9 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.download',
                 route: '/v1/skills/{skill_id}/versions/{version}/content',
                 attributes: [

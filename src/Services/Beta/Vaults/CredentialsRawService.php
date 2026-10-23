@@ -84,7 +84,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.create',
                 route: '/v1/vaults/{vault_id}/credentials',
                 attributes: ['anthropic.vault.id' => $vaultID],
@@ -138,7 +138,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.retrieve',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
                 attributes: [
@@ -202,7 +202,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.update',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
                 attributes: [
@@ -264,7 +264,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.list',
                 route: '/v1/vaults/{vault_id}/credentials',
                 query: ['include_archived', 'limit', 'page'],
@@ -319,7 +319,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.delete',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
                 attributes: [
@@ -377,7 +377,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.archive',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}/archive',
                 attributes: [
@@ -435,7 +435,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.mcp_oauth_validate',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}/mcp_oauth_validate',
                 attributes: [

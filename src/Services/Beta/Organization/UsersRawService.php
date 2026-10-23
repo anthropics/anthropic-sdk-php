@@ -49,7 +49,9 @@ final class UsersRawService implements UsersRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/users/%1$s?beta=true', $userID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.users.retrieve',
                 route: '/v1/organizations/users/{user_id}',
                 attributes: ['anthropic.organization.user.id' => $userID],
@@ -86,7 +88,9 @@ final class UsersRawService implements UsersRawContract
             method: 'post',
             path: ['v1/organizations/users/%1$s?beta=true', $userID],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.users.update',
                 route: '/v1/organizations/users/{user_id}',
                 attributes: ['anthropic.organization.user.id' => $userID],
@@ -130,7 +134,9 @@ final class UsersRawService implements UsersRawContract
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.users.list',
                 route: '/v1/organizations/users',
                 query: ['after_id', 'before_id', 'email', 'limit', 'roles'],
@@ -160,7 +166,9 @@ final class UsersRawService implements UsersRawContract
         return $this->client->request(
             method: 'delete',
             path: ['v1/organizations/users/%1$s?beta=true', $userID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.users.remove',
                 route: '/v1/organizations/users/{user_id}',
                 attributes: ['anthropic.organization.user.id' => $userID],

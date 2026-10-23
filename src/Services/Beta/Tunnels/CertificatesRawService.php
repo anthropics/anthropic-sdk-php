@@ -77,7 +77,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.create',
                 route: '/v1/tunnels/{tunnel_id}/certificates',
                 attributes: ['anthropic.tunnel.id' => $tunnelID],
@@ -133,7 +133,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.retrieve',
                 route: '/v1/tunnels/{tunnel_id}/certificates/{certificate_id}',
                 attributes: [
@@ -197,7 +197,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.list',
                 route: '/v1/tunnels/{tunnel_id}/certificates',
                 query: ['include_archived', 'limit', 'page'],
@@ -256,7 +256,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.archive',
                 route: '/v1/tunnels/{tunnel_id}/certificates/{certificate_id}/archive',
                 attributes: [

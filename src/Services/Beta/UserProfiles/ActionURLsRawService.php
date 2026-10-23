@@ -73,7 +73,7 @@ final class ActionURLsRawService implements ActionURLsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.user_profiles.action_urls.create',
                 route: '/v1/user_profiles/{user_profile_id}/action_urls',
                 attributes: ['anthropic.user_profile.id' => $userProfileID],

@@ -74,7 +74,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.create',
                 route: '/v1/organizations/workspaces',
                 createdId: 'anthropic.organization.workspace.id',
@@ -103,7 +105,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/workspaces/%1$s?beta=true', $workspaceID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.retrieve',
                 route: '/v1/organizations/workspaces/{workspace_id}',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],
@@ -145,7 +149,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
             method: 'post',
             path: ['v1/organizations/workspaces/%1$s?beta=true', $workspaceID],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.update',
                 route: '/v1/organizations/workspaces/{workspace_id}',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],
@@ -194,7 +200,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     'includeDefault' => 'include_default',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.list',
                 route: '/v1/organizations/workspaces',
                 query: [
@@ -231,7 +239,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
             path: [
                 'v1/organizations/workspaces/%1$s/archive?beta=true', $workspaceID,
             ],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.archive',
                 route: '/v1/organizations/workspaces/{workspace_id}/archive',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],

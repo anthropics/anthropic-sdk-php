@@ -47,7 +47,9 @@ final class RBACRolesRawService implements RBACRolesRawContract
         return $this->client->request(
             method: 'get',
             path: ['v1/organizations/rbac_roles/%1$s?beta=true', $rbacRoleID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_roles.retrieve',
                 route: '/v1/organizations/rbac_roles/{rbac_role_id}',
                 attributes: ['anthropic.organization.rbac_role.id' => $rbacRoleID],
@@ -84,7 +86,9 @@ final class RBACRolesRawService implements RBACRolesRawContract
             method: 'get',
             path: 'v1/organizations/rbac_roles?beta=true',
             query: $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_roles.list',
                 route: '/v1/organizations/rbac_roles',
                 query: ['limit', 'page'],

@@ -68,7 +68,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.deployment_runs.retrieve',
                 route: '/v1/deployment_runs/{deployment_run_id}',
                 attributes: ['anthropic.deployment_run.id' => $deploymentRunID],
@@ -151,7 +151,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.deployment_runs.list',
                 route: '/v1/deployment_runs',
                 query: [

@@ -89,7 +89,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.create',
                 route: '/v1/organizations/webhooks',
                 createdId: 'anthropic.organization.webhook.id',
@@ -136,7 +136,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.retrieve',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],
@@ -193,7 +193,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.update',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],
@@ -253,7 +253,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.list',
                 route: '/v1/organizations/webhooks',
                 query: ['after_id', 'before_id', 'limit', 'order'],
@@ -301,7 +301,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.delete',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],
@@ -352,7 +352,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.regenerate_signing_secret',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}/regenerate_signing_secret',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],
