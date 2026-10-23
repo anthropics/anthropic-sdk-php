@@ -42,7 +42,7 @@ trait MocksThreadRequests
             true,
         ];
 
-        yield 'Claude Platform on Google Cloud' => [
+        yield 'Claude Models on Google Cloud (Anthropic managed)' => [
             static fn (MockClient $transporter) => new \Anthropic\GoogleCloud\Client(project: 'p', workspaceId: 'ws', tokenProvider: static fn () => 'token', requestOptions: ['transporter' => $transporter]),
             true,
         ];

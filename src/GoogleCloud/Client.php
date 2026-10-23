@@ -10,7 +10,7 @@ use Google\Auth\FetchAuthTokenInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Client for Claude Platform on Google Cloud.
+ * Client for Claude Models on Google Cloud (Anthropic managed).
  *
  * Connects to the Anthropic Google Cloud gateway and exposes the full base
  * client surface ({@see \Anthropic\Client}) authenticated with a Google

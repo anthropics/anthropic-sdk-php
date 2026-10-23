@@ -6,6 +6,11 @@
 
 * **internal:** carry endpoint path query params to the request layer
 
+
+### Documentation
+
+* **google-cloud:** update the product name
+
 ## [1.2.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.1.0...v1.2.0) (2026-10-23)
 
 ### Features
