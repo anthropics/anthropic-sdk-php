@@ -41,6 +41,7 @@ final class RulesTest extends TestCase
                 'serviceAccountID' => 'svac_01SDCCSbTxrXDpWc1phhtcfK',
                 'type' => 'service_account',
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -71,6 +72,7 @@ final class RulesTest extends TestCase
             tokenLifetimeSeconds: 60,
             workspaceID: 'workspace_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -81,7 +83,8 @@ final class RulesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->federation->rules->retrieve(
-            'federation_rule_id'
+            'federation_rule_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -92,7 +95,8 @@ final class RulesTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->federation->rules->update(
-            'federation_rule_id'
+            'federation_rule_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -102,7 +106,9 @@ final class RulesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->federation->rules->list();
+        $page = $this->client->beta->organization->federation->rules->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -117,7 +123,8 @@ final class RulesTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->organization->federation->rules->archive(
-            'federation_rule_id'
+            'federation_rule_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

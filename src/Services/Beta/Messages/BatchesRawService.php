@@ -77,7 +77,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/messages/batches?beta=true',
+            path: 'v1/messages/batches',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -130,7 +130,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -185,7 +185,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/messages/batches?beta=true',
+            path: 'v1/messages/batches',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['afterID' => 'after_id', 'beforeID' => 'before_id'],
@@ -242,7 +242,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -294,7 +294,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s/cancel', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -340,7 +340,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s/results', $messageBatchID],
             headers: Util::array_transform_keys(
                 ['Accept' => 'application/x-jsonl', ...$parsed],
                 [

@@ -38,6 +38,7 @@ final class VersionsTest extends TestCase
             files: [
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -54,6 +55,7 @@ final class VersionsTest extends TestCase
             ],
             releaseNotes: 'release_notes',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -65,7 +67,8 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->organization->plugins->versions->retrieve(
             'version',
-            pluginID: 'plugin_id'
+            pluginID: 'plugin_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -80,6 +83,7 @@ final class VersionsTest extends TestCase
             pluginID: 'plugin_id',
             organizationID: 'organization_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -90,7 +94,8 @@ final class VersionsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->plugins->versions->list(
-            'plugin_id'
+            'plugin_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -107,7 +112,8 @@ final class VersionsTest extends TestCase
     {
         $result = $this->client->beta->organization->plugins->versions->download(
             'version',
-            pluginID: 'plugin_id'
+            pluginID: 'plugin_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -122,6 +128,7 @@ final class VersionsTest extends TestCase
             pluginID: 'plugin_id',
             organizationID: 'organization_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -32,7 +32,8 @@ final class DeploymentRunsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->deploymentRuns->retrieve(
-            'deployment_run_id'
+            'deployment_run_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -42,7 +43,9 @@ final class DeploymentRunsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->deploymentRuns->list();
+        $page = $this->client->beta->deploymentRuns->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);

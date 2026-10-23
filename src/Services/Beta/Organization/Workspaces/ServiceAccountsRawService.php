@@ -74,7 +74,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/workspaces/%1$s/service_accounts/%2$s?beta=true',
+                'v1/organizations/workspaces/%1$s/service_accounts/%2$s',
                 $workspaceID,
                 $serviceAccountID,
             ],
@@ -139,7 +139,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/workspaces/%1$s/service_accounts/%2$s?beta=true',
+                'v1/organizations/workspaces/%1$s/service_accounts/%2$s',
                 $workspaceID,
                 $serviceAccountID,
             ],
@@ -208,10 +208,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/workspaces/%1$s/service_accounts?beta=true',
-                $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/service_accounts', $workspaceID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -272,10 +269,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/workspaces/%1$s/service_accounts?beta=true',
-                $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/service_accounts', $workspaceID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -338,7 +332,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         return $this->client->request(
             method: 'delete',
             path: [
-                'v1/organizations/workspaces/%1$s/service_accounts/%2$s?beta=true',
+                'v1/organizations/workspaces/%1$s/service_accounts/%2$s',
                 $workspaceID,
                 $serviceAccountID,
             ],

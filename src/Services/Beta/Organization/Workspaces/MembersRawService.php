@@ -62,9 +62,7 @@ final class MembersRawService implements MembersRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/workspaces/%1$s/members/%2$s?beta=true',
-                $workspaceID,
-                $userID,
+                'v1/organizations/workspaces/%1$s/members/%2$s', $workspaceID, $userID,
             ],
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -111,9 +109,7 @@ final class MembersRawService implements MembersRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/workspaces/%1$s/members/%2$s?beta=true',
-                $workspaceID,
-                $userID,
+                'v1/organizations/workspaces/%1$s/members/%2$s', $workspaceID, $userID,
             ],
             body: (object) array_diff_key($parsed, array_flip(['workspaceID'])),
             options: $options->withQualifiers([
@@ -158,9 +154,7 @@ final class MembersRawService implements MembersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/workspaces/%1$s/members?beta=true', $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/members', $workspaceID],
             query: Util::array_transform_keys(
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
@@ -206,9 +200,7 @@ final class MembersRawService implements MembersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/workspaces/%1$s/members?beta=true', $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/members', $workspaceID],
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -251,9 +243,7 @@ final class MembersRawService implements MembersRawContract
         return $this->client->request(
             method: 'delete',
             path: [
-                'v1/organizations/workspaces/%1$s/members/%2$s?beta=true',
-                $workspaceID,
-                $userID,
+                'v1/organizations/workspaces/%1$s/members/%2$s', $workspaceID, $userID,
             ],
             options: $options->withQualifiers([
                 'beta' => 'true',

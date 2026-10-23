@@ -78,7 +78,7 @@ final class CostReportRawService implements CostReportRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/cost_report?beta=true',
+            path: 'v1/organizations/analytics/cost_report',
             query: Util::array_transform_keys(
                 $parsed,
                 [

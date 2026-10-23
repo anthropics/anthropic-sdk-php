@@ -66,7 +66,7 @@ final class TunnelsRawService implements TunnelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/tunnels?beta=true',
+            path: 'v1/tunnels',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -118,7 +118,7 @@ final class TunnelsRawService implements TunnelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/tunnels/%1$s?beta=true', $tunnelID],
+            path: ['v1/tunnels/%1$s', $tunnelID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -173,7 +173,7 @@ final class TunnelsRawService implements TunnelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/tunnels?beta=true',
+            path: 'v1/tunnels',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -228,7 +228,7 @@ final class TunnelsRawService implements TunnelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/tunnels/%1$s/archive?beta=true', $tunnelID],
+            path: ['v1/tunnels/%1$s/archive', $tunnelID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -278,7 +278,7 @@ final class TunnelsRawService implements TunnelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/tunnels/%1$s/reveal_token?beta=true', $tunnelID],
+            path: ['v1/tunnels/%1$s/reveal_token', $tunnelID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -332,7 +332,7 @@ final class TunnelsRawService implements TunnelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/tunnels/%1$s/rotate_token?beta=true', $tunnelID],
+            path: ['v1/tunnels/%1$s/rotate_token', $tunnelID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,

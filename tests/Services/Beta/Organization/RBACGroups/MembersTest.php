@@ -33,7 +33,8 @@ final class MembersTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->rbacGroups->members->list(
-            'rbac_group_id'
+            'rbac_group_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -50,7 +51,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->rbacGroups->members->add(
             'rbac_group_id',
-            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q'
+            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -62,7 +64,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->rbacGroups->members->add(
             'rbac_group_id',
-            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q'
+            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -74,7 +77,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->rbacGroups->members->remove(
             'user_id',
-            rbacGroupID: 'rbac_group_id'
+            rbacGroupID: 'rbac_group_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -86,7 +90,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->rbacGroups->members->remove(
             'user_id',
-            rbacGroupID: 'rbac_group_id'
+            rbacGroupID: 'rbac_group_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -39,7 +39,7 @@ final class ProjectsTest extends TestCase
             ->apps
             ->chat
             ->projects
-            ->list()
+            ->list(requestOptions: ['extraQueryParams' => ['beta' => 'true']])
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -65,7 +65,7 @@ final class VaultsRawService implements VaultsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/vaults?beta=true',
+            path: 'v1/vaults',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -115,7 +115,7 @@ final class VaultsRawService implements VaultsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/vaults/%1$s?beta=true', $vaultID],
+            path: ['v1/vaults/%1$s', $vaultID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -168,7 +168,7 @@ final class VaultsRawService implements VaultsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/vaults/%1$s?beta=true', $vaultID],
+            path: ['v1/vaults/%1$s', $vaultID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -223,7 +223,7 @@ final class VaultsRawService implements VaultsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/vaults?beta=true',
+            path: 'v1/vaults',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -276,7 +276,7 @@ final class VaultsRawService implements VaultsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/vaults/%1$s?beta=true', $vaultID],
+            path: ['v1/vaults/%1$s', $vaultID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -324,7 +324,7 @@ final class VaultsRawService implements VaultsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/vaults/%1$s/archive?beta=true', $vaultID],
+            path: ['v1/vaults/%1$s/archive', $vaultID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [

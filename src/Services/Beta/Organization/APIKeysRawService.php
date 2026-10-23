@@ -47,7 +47,7 @@ final class APIKeysRawService implements APIKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/api_keys/%1$s?beta=true', $apiKeyID],
+            path: ['v1/organizations/api_keys/%1$s', $apiKeyID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -87,7 +87,7 @@ final class APIKeysRawService implements APIKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/api_keys/%1$s?beta=true', $apiKeyID],
+            path: ['v1/organizations/api_keys/%1$s', $apiKeyID],
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -131,7 +131,7 @@ final class APIKeysRawService implements APIKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/api_keys?beta=true',
+            path: 'v1/organizations/api_keys',
             query: Util::array_transform_keys(
                 $parsed,
                 [

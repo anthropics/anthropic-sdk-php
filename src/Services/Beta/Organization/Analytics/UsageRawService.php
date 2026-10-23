@@ -135,7 +135,7 @@ final class UsageRawService implements UsageRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/usage?beta=true',
+            path: 'v1/organizations/analytics/usage',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [

@@ -114,9 +114,7 @@ final class EventsRawService implements EventsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/sessions/%1$s/threads/%2$s/events?beta=true', $sessionID, $threadID,
-            ],
+            path: ['v1/sessions/%1$s/threads/%2$s/events', $sessionID, $threadID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -176,9 +174,7 @@ final class EventsRawService implements EventsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/sessions/%1$s/threads/%2$s/stream?beta=true', $sessionID, $threadID,
-            ],
+            path: ['v1/sessions/%1$s/threads/%2$s/stream', $sessionID, $threadID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['eventDeltas' => 'event_deltas'],

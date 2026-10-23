@@ -74,7 +74,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/telemetry_destinations?beta=true',
+            path: 'v1/organizations/telemetry_destinations',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -129,9 +129,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/telemetry_destinations/%1$s?beta=true', $destinationID,
-            ],
+            path: ['v1/organizations/telemetry_destinations/%1$s', $destinationID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -195,9 +193,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/telemetry_destinations/%1$s?beta=true', $destinationID,
-            ],
+            path: ['v1/organizations/telemetry_destinations/%1$s', $destinationID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -259,7 +255,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/telemetry_destinations?beta=true',
+            path: 'v1/organizations/telemetry_destinations',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['workspaceIDs' => 'workspace_ids'],
@@ -317,9 +313,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: [
-                'v1/organizations/telemetry_destinations/%1$s?beta=true', $destinationID,
-            ],
+            path: ['v1/organizations/telemetry_destinations/%1$s', $destinationID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -371,8 +365,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/telemetry_destinations/%1$s/test?beta=true',
-                $destinationID,
+                'v1/organizations/telemetry_destinations/%1$s/test', $destinationID,
             ],
             headers: Util::array_transform_keys(
                 $parsed,

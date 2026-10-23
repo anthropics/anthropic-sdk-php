@@ -35,7 +35,8 @@ final class SpendLimitsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->spendLimits->retrieve(
-            'spend_limit_id'
+            'spend_limit_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -45,7 +46,9 @@ final class SpendLimitsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->spendLimits->list();
+        $page = $this->client->beta->organization->spendLimits->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -60,7 +63,8 @@ final class SpendLimitsTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->organization->spendLimits->delete(
-            'spend_limit_id'
+            'spend_limit_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -73,6 +77,7 @@ final class SpendLimitsTest extends TestCase
         $result = $this->client->beta->organization->spendLimits->set(
             amount: '50000',
             scope: ['type' => 'user', 'userID' => 'user_01WCz1FkmYMm4gnmykNKUu3Q'],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -87,6 +92,7 @@ final class SpendLimitsTest extends TestCase
             scope: ['type' => 'user', 'userID' => 'user_01WCz1FkmYMm4gnmykNKUu3Q'],
             period: SpendLimitPeriod::MONTHLY,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

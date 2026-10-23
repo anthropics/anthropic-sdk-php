@@ -54,7 +54,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/rbac_groups?beta=true',
+            path: 'v1/organizations/rbac_groups',
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -88,7 +88,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/rbac_groups/%1$s?beta=true', $rbacGroupID],
+            path: ['v1/organizations/rbac_groups/%1$s', $rbacGroupID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -128,7 +128,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/rbac_groups/%1$s?beta=true', $rbacGroupID],
+            path: ['v1/organizations/rbac_groups/%1$s', $rbacGroupID],
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -167,7 +167,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/rbac_groups?beta=true',
+            path: 'v1/organizations/rbac_groups',
             query: $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -202,7 +202,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/organizations/rbac_groups/%1$s?beta=true', $rbacGroupID],
+            path: ['v1/organizations/rbac_groups/%1$s', $rbacGroupID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(

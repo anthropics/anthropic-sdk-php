@@ -70,9 +70,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/environments/%1$s/work/%2$s?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -132,9 +130,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/environments/%1$s/work/%2$s?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -194,7 +190,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/environments/%1$s/work?beta=true', $environmentID],
+            path: ['v1/environments/%1$s/work', $environmentID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -247,9 +243,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/environments/%1$s/work/%2$s/ack?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s/ack', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -309,9 +303,7 @@ final class WorkRawService implements WorkRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/environments/%1$s/work/%2$s/heartbeat?beta=true',
-                $environmentID,
-                $workID,
+                'v1/environments/%1$s/work/%2$s/heartbeat', $environmentID, $workID,
             ],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
@@ -377,7 +369,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/environments/%1$s/work/poll?beta=true', $environmentID],
+            path: ['v1/environments/%1$s/work/poll', $environmentID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -433,7 +425,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/environments/%1$s/work/stats?beta=true', $environmentID],
+            path: ['v1/environments/%1$s/work/stats', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -490,9 +482,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/environments/%1$s/work/%2$s/stop?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s/stop', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,

@@ -37,7 +37,8 @@ final class TelemetryDestinationsTest extends TestCase
     {
         $result = $this->client->beta->organization->telemetryDestinations->create(
             endpointURL: 'x',
-            workspaces: ['type' => 'all']
+            workspaces: ['type' => 'all'],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -59,6 +60,7 @@ final class TelemetryDestinationsTest extends TestCase
                 'maxContentBytes' => 0,
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -73,7 +75,10 @@ final class TelemetryDestinationsTest extends TestCase
             ->beta
             ->organization
             ->telemetryDestinations
-            ->retrieve('destination_id')
+            ->retrieve(
+                'destination_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -84,7 +89,8 @@ final class TelemetryDestinationsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->telemetryDestinations->update(
-            'destination_id'
+            'destination_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -94,7 +100,9 @@ final class TelemetryDestinationsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->telemetryDestinations->list();
+        $page = $this->client->beta->organization->telemetryDestinations->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -109,7 +117,8 @@ final class TelemetryDestinationsTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->organization->telemetryDestinations->delete(
-            'destination_id'
+            'destination_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -120,7 +129,8 @@ final class TelemetryDestinationsTest extends TestCase
     public function testTest(): void
     {
         $result = $this->client->beta->organization->telemetryDestinations->test(
-            'destination_id'
+            'destination_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

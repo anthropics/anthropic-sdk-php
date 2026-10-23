@@ -83,7 +83,7 @@ final class UserUsageReportRawService implements UserUsageReportRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/user_usage_report?beta=true',
+            path: 'v1/organizations/analytics/user_usage_report',
             query: Util::array_transform_keys(
                 $parsed,
                 [

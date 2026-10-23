@@ -32,7 +32,10 @@ final class UsersTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->organization->users->retrieve('user_id');
+        $result = $this->client->beta->organization->users->retrieve(
+            'user_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(OrganizationUser::class, $result);
@@ -43,7 +46,8 @@ final class UsersTest extends TestCase
     {
         $result = $this->client->beta->organization->users->update(
             'user_id',
-            role: 'user'
+            role: 'user',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -55,7 +59,8 @@ final class UsersTest extends TestCase
     {
         $result = $this->client->beta->organization->users->update(
             'user_id',
-            role: 'user'
+            role: 'user',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -65,7 +70,9 @@ final class UsersTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->users->list();
+        $page = $this->client->beta->organization->users->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);
@@ -79,7 +86,10 @@ final class UsersTest extends TestCase
     #[Test]
     public function testRemove(): void
     {
-        $result = $this->client->beta->organization->users->remove('user_id');
+        $result = $this->client->beta->organization->users->remove(
+            'user_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UserRemoveResponse::class, $result);

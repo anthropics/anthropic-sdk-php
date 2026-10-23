@@ -35,6 +35,7 @@ final class DreamsTest extends TestCase
         $result = $this->client->beta->dreams->create(
             inputs: [['memoryStoreID' => 'x', 'type' => 'memory_store']],
             model: 'string',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -51,6 +52,7 @@ final class DreamsTest extends TestCase
             outputBehavior: ['type' => 'create_new'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +62,10 @@ final class DreamsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->dreams->retrieve('dream_id');
+        $result = $this->client->beta->dreams->retrieve(
+            'dream_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaDream::class, $result);
@@ -69,7 +74,9 @@ final class DreamsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->dreams->list();
+        $page = $this->client->beta->dreams->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -83,7 +90,10 @@ final class DreamsTest extends TestCase
     #[Test]
     public function testArchive(): void
     {
-        $result = $this->client->beta->dreams->archive('dream_id');
+        $result = $this->client->beta->dreams->archive(
+            'dream_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaDream::class, $result);
@@ -92,7 +102,10 @@ final class DreamsTest extends TestCase
     #[Test]
     public function testCancel(): void
     {
-        $result = $this->client->beta->dreams->cancel('dream_id');
+        $result = $this->client->beta->dreams->cancel(
+            'dream_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaDream::class, $result);

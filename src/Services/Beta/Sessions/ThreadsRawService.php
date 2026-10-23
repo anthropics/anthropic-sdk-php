@@ -62,7 +62,7 @@ final class ThreadsRawService implements ThreadsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s/threads/%2$s?beta=true', $sessionID, $threadID],
+            path: ['v1/sessions/%1$s/threads/%2$s', $sessionID, $threadID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -120,7 +120,7 @@ final class ThreadsRawService implements ThreadsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s/threads?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/threads', $sessionID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -174,9 +174,7 @@ final class ThreadsRawService implements ThreadsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/sessions/%1$s/threads/%2$s/archive?beta=true', $sessionID, $threadID,
-            ],
+            path: ['v1/sessions/%1$s/threads/%2$s/archive', $sessionID, $threadID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [

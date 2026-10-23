@@ -35,7 +35,8 @@ final class PluginMarketplacesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->pluginMarketplaces->retrieve(
-            'marketplace_id'
+            'marketplace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,7 +48,8 @@ final class PluginMarketplacesTest extends TestCase
     {
         $result = $this->client->beta->organization->pluginMarketplaces->update(
             'marketplace_id',
-            defaultInstallationPreference: 'available'
+            defaultInstallationPreference: 'available',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -61,6 +63,7 @@ final class PluginMarketplacesTest extends TestCase
             'marketplace_id',
             defaultInstallationPreference: 'available',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -70,7 +73,9 @@ final class PluginMarketplacesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->pluginMarketplaces->list();
+        $page = $this->client->beta->organization->pluginMarketplaces->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -91,6 +96,7 @@ final class PluginMarketplacesTest extends TestCase
             ->pluginMarketplaces
             ->validateArchive(
                 archive: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -109,6 +115,7 @@ final class PluginMarketplacesTest extends TestCase
             ->validateArchive(
                 archive: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -125,7 +132,8 @@ final class PluginMarketplacesTest extends TestCase
             ->organization
             ->pluginMarketplaces
             ->validateRepository(
-                repositoryURL: 'https://github.com/example-org/example-marketplace'
+                repositoryURL: 'https://github.com/example-org/example-marketplace',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -145,6 +153,7 @@ final class PluginMarketplacesTest extends TestCase
                 repositoryURL: 'https://github.com/example-org/example-marketplace',
                 ref: 'main',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 

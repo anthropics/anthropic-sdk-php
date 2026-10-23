@@ -32,7 +32,9 @@ final class TunnelsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->beta->tunnels->create();
+        $result = $this->client->beta->tunnels->create(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaTunnel::class, $result);
@@ -41,7 +43,10 @@ final class TunnelsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->tunnels->retrieve('tunnel_id');
+        $result = $this->client->beta->tunnels->retrieve(
+            'tunnel_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaTunnel::class, $result);
@@ -50,7 +55,9 @@ final class TunnelsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->tunnels->list();
+        $page = $this->client->beta->tunnels->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -64,7 +71,10 @@ final class TunnelsTest extends TestCase
     #[Test]
     public function testArchive(): void
     {
-        $result = $this->client->beta->tunnels->archive('tunnel_id');
+        $result = $this->client->beta->tunnels->archive(
+            'tunnel_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaTunnel::class, $result);
@@ -73,7 +83,10 @@ final class TunnelsTest extends TestCase
     #[Test]
     public function testRevealToken(): void
     {
-        $result = $this->client->beta->tunnels->revealToken('tunnel_id');
+        $result = $this->client->beta->tunnels->revealToken(
+            'tunnel_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaTunnelToken::class, $result);
@@ -82,7 +95,10 @@ final class TunnelsTest extends TestCase
     #[Test]
     public function testRotateToken(): void
     {
-        $result = $this->client->beta->tunnels->rotateToken('tunnel_id');
+        $result = $this->client->beta->tunnels->rotateToken(
+            'tunnel_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaTunnelToken::class, $result);

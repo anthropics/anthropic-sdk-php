@@ -58,7 +58,7 @@ final class InvitesRawService implements InvitesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/invites?beta=true',
+            path: 'v1/organizations/invites',
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -90,7 +90,7 @@ final class InvitesRawService implements InvitesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/invites/%1$s?beta=true', $inviteID],
+            path: ['v1/organizations/invites/%1$s', $inviteID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -133,7 +133,7 @@ final class InvitesRawService implements InvitesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/invites?beta=true',
+            path: 'v1/organizations/invites',
             query: Util::array_transform_keys(
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
@@ -169,7 +169,7 @@ final class InvitesRawService implements InvitesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/organizations/invites/%1$s?beta=true', $inviteID],
+            path: ['v1/organizations/invites/%1$s', $inviteID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(

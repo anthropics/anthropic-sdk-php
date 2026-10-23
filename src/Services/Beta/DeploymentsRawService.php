@@ -85,7 +85,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/deployments?beta=true',
+            path: 'v1/deployments',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -135,7 +135,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/deployments/%1$s?beta=true', $deploymentID],
+            path: ['v1/deployments/%1$s', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -196,7 +196,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/deployments/%1$s?beta=true', $deploymentID],
+            path: ['v1/deployments/%1$s', $deploymentID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -265,7 +265,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/deployments?beta=true',
+            path: 'v1/deployments',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -331,7 +331,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/deployments/%1$s/archive?beta=true', $deploymentID],
+            path: ['v1/deployments/%1$s/archive', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -379,7 +379,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/deployments/%1$s/pause?beta=true', $deploymentID],
+            path: ['v1/deployments/%1$s/pause', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -427,7 +427,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/deployments/%1$s/run?beta=true', $deploymentID],
+            path: ['v1/deployments/%1$s/run', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -475,7 +475,7 @@ final class DeploymentsRawService implements DeploymentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/deployments/%1$s/unpause?beta=true', $deploymentID],
+            path: ['v1/deployments/%1$s/unpause', $deploymentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [

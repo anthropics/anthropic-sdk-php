@@ -77,7 +77,7 @@ final class IssuersRawService implements IssuersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/federation_issuers?beta=true',
+            path: 'v1/organizations/federation_issuers',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -127,10 +127,7 @@ final class IssuersRawService implements IssuersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/federation_issuers/%1$s?beta=true',
-                $federationIssuerID,
-            ],
+            path: ['v1/organizations/federation_issuers/%1$s', $federationIssuerID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -192,10 +189,7 @@ final class IssuersRawService implements IssuersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/federation_issuers/%1$s?beta=true',
-                $federationIssuerID,
-            ],
+            path: ['v1/organizations/federation_issuers/%1$s', $federationIssuerID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -254,7 +248,7 @@ final class IssuersRawService implements IssuersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/federation_issuers?beta=true',
+            path: 'v1/organizations/federation_issuers',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -311,8 +305,7 @@ final class IssuersRawService implements IssuersRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/federation_issuers/%1$s/archive?beta=true',
-                $federationIssuerID,
+                'v1/organizations/federation_issuers/%1$s/archive', $federationIssuerID,
             ],
             headers: Util::array_transform_keys(
                 $parsed,

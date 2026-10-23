@@ -32,7 +32,8 @@ final class SharesTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->plugins->shares->list(
-            'plugin_id'
+            'plugin_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

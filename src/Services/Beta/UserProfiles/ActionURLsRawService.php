@@ -61,7 +61,7 @@ final class ActionURLsRawService implements ActionURLsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/user_profiles/%1$s/action_urls?beta=true', $userProfileID],
+            path: ['v1/user_profiles/%1$s/action_urls', $userProfileID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,

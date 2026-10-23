@@ -36,6 +36,7 @@ final class ResourcesTest extends TestCase
         $result = $this->client->beta->sessions->resources->retrieve(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -50,6 +51,7 @@ final class ResourcesTest extends TestCase
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -63,6 +65,7 @@ final class ResourcesTest extends TestCase
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             authorizationToken: 'ghp_exampletoken',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -78,6 +81,7 @@ final class ResourcesTest extends TestCase
             authorizationToken: 'ghp_exampletoken',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -88,7 +92,8 @@ final class ResourcesTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->sessions->resources->list(
-            'sesn_011CZkZAtmR3yMPDzynEDxu7'
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -106,6 +111,7 @@ final class ResourcesTest extends TestCase
         $result = $this->client->beta->sessions->resources->delete(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -120,6 +126,7 @@ final class ResourcesTest extends TestCase
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -131,7 +138,8 @@ final class ResourcesTest extends TestCase
     {
         $result = $this->client->beta->sessions->resources->add(
             'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            fileID: 'file_011CNha8iCJcU1wXNR6q4V8w'
+            fileID: 'file_011CNha8iCJcU1wXNR6q4V8w',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -148,6 +156,7 @@ final class ResourcesTest extends TestCase
             mountPath: '/uploads/receipt.pdf',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

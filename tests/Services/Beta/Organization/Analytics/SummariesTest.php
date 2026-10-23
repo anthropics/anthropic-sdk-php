@@ -32,7 +32,8 @@ final class SummariesTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->analytics->summaries->list(
-            startingDate: '2019-12-27'
+            startingDate: '2019-12-27',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -53,6 +54,7 @@ final class SummariesTest extends TestCase
             filter: ['string'],
             limit: 1,
             page: 'page',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

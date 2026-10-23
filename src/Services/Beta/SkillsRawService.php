@@ -64,7 +64,7 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/skills?beta=true',
+            path: 'v1/skills',
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
@@ -121,7 +121,7 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/skills/%1$s?beta=true', $skillID],
+            path: ['v1/skills/%1$s', $skillID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -173,7 +173,7 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/skills?beta=true',
+            path: 'v1/skills',
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -224,7 +224,7 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/skills/%1$s?beta=true', $skillID],
+            path: ['v1/skills/%1$s', $skillID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [

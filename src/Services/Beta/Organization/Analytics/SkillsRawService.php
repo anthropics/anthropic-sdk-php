@@ -69,7 +69,7 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/skills?beta=true',
+            path: 'v1/organizations/analytics/skills',
             query: Util::array_transform_keys(
                 $parsed,
                 [

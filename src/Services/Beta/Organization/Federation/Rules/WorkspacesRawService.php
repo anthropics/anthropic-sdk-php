@@ -73,8 +73,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/federation_rules/%1$s/workspaces?beta=true',
-                $federationRuleID,
+                'v1/organizations/federation_rules/%1$s/workspaces', $federationRuleID,
             ],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
@@ -138,8 +137,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/federation_rules/%1$s/workspaces?beta=true',
-                $federationRuleID,
+                'v1/organizations/federation_rules/%1$s/workspaces', $federationRuleID,
             ],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
@@ -204,7 +202,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'delete',
             path: [
-                'v1/organizations/federation_rules/%1$s/workspaces/%2$s?beta=true',
+                'v1/organizations/federation_rules/%1$s/workspaces/%2$s',
                 $federationRuleID,
                 $workspaceID,
             ],

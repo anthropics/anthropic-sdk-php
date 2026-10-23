@@ -38,6 +38,7 @@ final class RateLimitsTest extends TestCase
             limits: [
                 ['type' => BetaWorkspaceRateLimitType::FAST_ITPMCA, 'value' => 0],
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -53,6 +54,7 @@ final class RateLimitsTest extends TestCase
             limits: [
                 ['type' => BetaWorkspaceRateLimitType::FAST_ITPMCA, 'value' => 0],
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -63,7 +65,8 @@ final class RateLimitsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->workspaces->rateLimits->list(
-            'workspace_id'
+            'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

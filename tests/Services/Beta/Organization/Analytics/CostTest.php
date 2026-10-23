@@ -44,7 +44,8 @@ final class CostTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->analytics->cost->list(
-            startingAt: new \DateTimeImmutable('2026-09-01T00:00:00Z')
+            startingAt: new \DateTimeImmutable('2026-09-01T00:00:00Z'),
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -89,6 +90,7 @@ final class CostTest extends TestCase
             userProfileIDs: ['uprof_01M33NeYUQK2WV9PpYcsPHLi'],
             workspaceIDs: ['wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

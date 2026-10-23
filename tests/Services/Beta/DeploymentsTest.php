@@ -46,6 +46,7 @@ final class DeploymentsTest extends TestCase
                 ],
             ],
             name: 'x',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -88,6 +89,7 @@ final class DeploymentsTest extends TestCase
             vaultIDs: ['string'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -98,7 +100,8 @@ final class DeploymentsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->deployments->retrieve(
-            'depl_011CZkZcDH3vPqd7xnEfwTai'
+            'depl_011CZkZcDH3vPqd7xnEfwTai',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -109,7 +112,8 @@ final class DeploymentsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->deployments->update(
-            'depl_011CZkZcDH3vPqd7xnEfwTai'
+            'depl_011CZkZcDH3vPqd7xnEfwTai',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -119,7 +123,9 @@ final class DeploymentsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->deployments->list();
+        $page = $this->client->beta->deployments->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -134,7 +140,8 @@ final class DeploymentsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->deployments->archive(
-            'depl_011CZkZcDH3vPqd7xnEfwTai'
+            'depl_011CZkZcDH3vPqd7xnEfwTai',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -145,7 +152,8 @@ final class DeploymentsTest extends TestCase
     public function testPause(): void
     {
         $result = $this->client->beta->deployments->pause(
-            'depl_011CZkZcDH3vPqd7xnEfwTai'
+            'depl_011CZkZcDH3vPqd7xnEfwTai',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -156,7 +164,8 @@ final class DeploymentsTest extends TestCase
     public function testRun(): void
     {
         $result = $this->client->beta->deployments->run(
-            'depl_011CZkZcDH3vPqd7xnEfwTai'
+            'depl_011CZkZcDH3vPqd7xnEfwTai',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -167,7 +176,8 @@ final class DeploymentsTest extends TestCase
     public function testUnpause(): void
     {
         $result = $this->client->beta->deployments->unpause(
-            'depl_011CZkZcDH3vPqd7xnEfwTai'
+            'depl_011CZkZcDH3vPqd7xnEfwTai',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

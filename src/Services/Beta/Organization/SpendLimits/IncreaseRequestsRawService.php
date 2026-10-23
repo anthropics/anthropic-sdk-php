@@ -54,7 +54,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/spend_limit_increase_requests/%1$s?beta=true',
+                'v1/organizations/spend_limit_increase_requests/%1$s',
                 $spendLimitIncreaseRequestID,
             ],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
@@ -102,7 +102,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/spend_limit_increase_requests?beta=true',
+            path: 'v1/organizations/spend_limit_increase_requests',
             query: Util::array_transform_keys($parsed, ['actorIDs' => 'actor_ids']),
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -152,7 +152,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/spend_limit_increase_requests/%1$s/approve?beta=true',
+                'v1/organizations/spend_limit_increase_requests/%1$s/approve',
                 $spendLimitIncreaseRequestID,
             ],
             body: (object) $parsed,
@@ -199,7 +199,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/spend_limit_increase_requests/%1$s/deny?beta=true',
+                'v1/organizations/spend_limit_increase_requests/%1$s/deny',
                 $spendLimitIncreaseRequestID,
             ],
             body: (object) $parsed,

@@ -48,7 +48,7 @@ final class UsersRawService implements UsersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/users/%1$s?beta=true', $userID],
+            path: ['v1/organizations/users/%1$s', $userID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -86,7 +86,7 @@ final class UsersRawService implements UsersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/users/%1$s?beta=true', $userID],
+            path: ['v1/organizations/users/%1$s', $userID],
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -129,7 +129,7 @@ final class UsersRawService implements UsersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/users?beta=true',
+            path: 'v1/organizations/users',
             query: Util::array_transform_keys(
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
@@ -165,7 +165,7 @@ final class UsersRawService implements UsersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/organizations/users/%1$s?beta=true', $userID],
+            path: ['v1/organizations/users/%1$s', $userID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(

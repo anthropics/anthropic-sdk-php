@@ -58,7 +58,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/deployment_runs/%1$s?beta=true', $deploymentRunID],
+            path: ['v1/deployment_runs/%1$s', $deploymentRunID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -129,7 +129,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/deployment_runs?beta=true',
+            path: 'v1/deployment_runs',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [

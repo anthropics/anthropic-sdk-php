@@ -60,7 +60,7 @@ final class ModelsRawService implements ModelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/models/%1$s?beta=true', $modelID],
+            path: ['v1/models/%1$s', $modelID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -115,7 +115,7 @@ final class ModelsRawService implements ModelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/models?beta=true',
+            path: 'v1/models',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['afterID' => 'after_id', 'beforeID' => 'before_id'],

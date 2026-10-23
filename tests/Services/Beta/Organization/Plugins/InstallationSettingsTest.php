@@ -39,7 +39,10 @@ final class InstallationSettingsTest extends TestCase
             ->organization
             ->plugins
             ->installationSettings
-            ->list('plugin_id')
+            ->list(
+                'plugin_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +63,11 @@ final class InstallationSettingsTest extends TestCase
             ->organization
             ->plugins
             ->installationSettings
-            ->remove('target', pluginID: 'plugin_id')
+            ->remove(
+                'target',
+                pluginID: 'plugin_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -83,6 +90,7 @@ final class InstallationSettingsTest extends TestCase
                 'target',
                 pluginID: 'plugin_id',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -105,7 +113,8 @@ final class InstallationSettingsTest extends TestCase
             ->set(
                 'target',
                 pluginID: 'plugin_id',
-                installationPreference: 'required'
+                installationPreference: 'required',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -127,6 +136,7 @@ final class InstallationSettingsTest extends TestCase
                 pluginID: 'plugin_id',
                 installationPreference: 'required',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 

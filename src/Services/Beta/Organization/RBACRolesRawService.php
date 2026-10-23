@@ -46,7 +46,7 @@ final class RBACRolesRawService implements RBACRolesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/rbac_roles/%1$s?beta=true', $rbacRoleID],
+            path: ['v1/organizations/rbac_roles/%1$s', $rbacRoleID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -84,7 +84,7 @@ final class RBACRolesRawService implements RBACRolesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/rbac_roles?beta=true',
+            path: 'v1/organizations/rbac_roles',
             query: $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',

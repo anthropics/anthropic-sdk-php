@@ -56,9 +56,7 @@ final class MembersRawService implements MembersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/rbac_groups/%1$s/members?beta=true', $rbacGroupID,
-            ],
+            path: ['v1/organizations/rbac_groups/%1$s/members', $rbacGroupID],
             query: $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -101,9 +99,7 @@ final class MembersRawService implements MembersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/rbac_groups/%1$s/members?beta=true', $rbacGroupID,
-            ],
+            path: ['v1/organizations/rbac_groups/%1$s/members', $rbacGroupID],
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -148,9 +144,7 @@ final class MembersRawService implements MembersRawContract
         return $this->client->request(
             method: 'delete',
             path: [
-                'v1/organizations/rbac_groups/%1$s/members/%2$s?beta=true',
-                $rbacGroupID,
-                $userID,
+                'v1/organizations/rbac_groups/%1$s/members/%2$s', $rbacGroupID, $userID,
             ],
             options: $options->withQualifiers([
                 'beta' => 'true',

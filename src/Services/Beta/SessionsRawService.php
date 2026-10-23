@@ -81,7 +81,7 @@ final class SessionsRawService implements SessionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/sessions?beta=true',
+            path: 'v1/sessions',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -134,7 +134,7 @@ final class SessionsRawService implements SessionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s', $sessionID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -190,7 +190,7 @@ final class SessionsRawService implements SessionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/sessions/%1$s?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s', $sessionID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -271,7 +271,7 @@ final class SessionsRawService implements SessionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/sessions?beta=true',
+            path: 'v1/sessions',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -347,7 +347,7 @@ final class SessionsRawService implements SessionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/sessions/%1$s?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s', $sessionID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -394,7 +394,7 @@ final class SessionsRawService implements SessionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/sessions/%1$s/archive?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/archive', $sessionID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [

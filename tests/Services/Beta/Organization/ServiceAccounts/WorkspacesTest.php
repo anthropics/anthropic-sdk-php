@@ -40,7 +40,10 @@ final class WorkspacesTest extends TestCase
             ->organization
             ->serviceAccounts
             ->workspaces
-            ->list('service_account_id')
+            ->list(
+                'service_account_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -65,6 +68,7 @@ final class WorkspacesTest extends TestCase
                 'service_account_id',
                 workspaceID: 'workspace_id',
                 workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -86,6 +90,7 @@ final class WorkspacesTest extends TestCase
                 workspaceID: 'workspace_id',
                 workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -102,7 +107,11 @@ final class WorkspacesTest extends TestCase
             ->organization
             ->serviceAccounts
             ->workspaces
-            ->remove('workspace_id', serviceAccountID: 'service_account_id')
+            ->remove(
+                'workspace_id',
+                serviceAccountID: 'service_account_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -122,6 +131,7 @@ final class WorkspacesTest extends TestCase
                 'workspace_id',
                 serviceAccountID: 'service_account_id',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 

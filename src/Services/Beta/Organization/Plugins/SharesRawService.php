@@ -76,7 +76,7 @@ final class SharesRawService implements SharesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/plugins/%1$s/shares?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s/shares', $pluginID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['organizationID' => 'organization_id', 'targetType' => 'target_type'],

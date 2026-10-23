@@ -33,7 +33,8 @@ final class ServiceAccountsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->organization->serviceAccounts->create(
-            name: 'ci-deploy-bot'
+            name: 'ci-deploy-bot',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -48,6 +49,7 @@ final class ServiceAccountsTest extends TestCase
             description: 'description',
             organizationRole: 'admin',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -58,7 +60,8 @@ final class ServiceAccountsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->serviceAccounts->retrieve(
-            'service_account_id'
+            'service_account_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -69,7 +72,8 @@ final class ServiceAccountsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->serviceAccounts->update(
-            'service_account_id'
+            'service_account_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -79,7 +83,9 @@ final class ServiceAccountsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->serviceAccounts->list();
+        $page = $this->client->beta->organization->serviceAccounts->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -94,7 +100,8 @@ final class ServiceAccountsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->organization->serviceAccounts->archive(
-            'service_account_id'
+            'service_account_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

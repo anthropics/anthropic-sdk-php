@@ -69,7 +69,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/memory_stores/%1$s/memory_versions/%2$s?beta=true',
+                'v1/memory_stores/%1$s/memory_versions/%2$s',
                 $memoryStoreID,
                 $memoryVersionID,
             ],
@@ -152,7 +152,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/memory_stores/%1$s/memory_versions?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s/memory_versions', $memoryStoreID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -228,7 +228,7 @@ final class MemoryVersionsRawService implements MemoryVersionsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/memory_stores/%1$s/memory_versions/%2$s/redact?beta=true',
+                'v1/memory_stores/%1$s/memory_versions/%2$s/redact',
                 $memoryStoreID,
                 $memoryVersionID,
             ],

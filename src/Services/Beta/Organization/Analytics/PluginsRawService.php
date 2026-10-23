@@ -74,7 +74,7 @@ final class PluginsRawService implements PluginsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/plugins?beta=true',
+            path: 'v1/organizations/analytics/plugins',
             query: Util::array_transform_keys(
                 $parsed,
                 [

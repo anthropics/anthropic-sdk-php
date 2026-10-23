@@ -47,7 +47,7 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/compliance_settings?beta=true',
+            path: 'v1/organizations/compliance_settings',
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -97,7 +97,7 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/compliance_settings?beta=true',
+            path: 'v1/organizations/compliance_settings',
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',

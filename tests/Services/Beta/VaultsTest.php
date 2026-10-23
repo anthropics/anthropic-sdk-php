@@ -33,7 +33,10 @@ final class VaultsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->beta->vaults->create(displayName: 'Example vault');
+        $result = $this->client->beta->vaults->create(
+            displayName: 'Example vault',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsVault::class, $result);
@@ -47,6 +50,7 @@ final class VaultsTest extends TestCase
             metadata: ['environment' => 'production'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -57,7 +61,8 @@ final class VaultsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->vaults->retrieve(
-            'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -68,7 +73,8 @@ final class VaultsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->vaults->update(
-            'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -78,7 +84,9 @@ final class VaultsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->vaults->list();
+        $page = $this->client->beta->vaults->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -93,7 +101,8 @@ final class VaultsTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->vaults->delete(
-            'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -104,7 +113,8 @@ final class VaultsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->vaults->archive(
-            'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

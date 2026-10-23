@@ -34,7 +34,8 @@ final class InvitesTest extends TestCase
     {
         $result = $this->client->beta->organization->invites->create(
             email: 'user@emaildomain.com',
-            role: 'user'
+            role: 'user',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -47,7 +48,8 @@ final class InvitesTest extends TestCase
         $result = $this->client->beta->organization->invites->create(
             email: 'user@emaildomain.com',
             role: 'user',
-            rbacGroupIDs: ['string']
+            rbacGroupIDs: ['string'],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -57,7 +59,10 @@ final class InvitesTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->organization->invites->retrieve('invite_id');
+        $result = $this->client->beta->organization->invites->retrieve(
+            'invite_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(OrganizationInvite::class, $result);
@@ -66,7 +71,9 @@ final class InvitesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->invites->list();
+        $page = $this->client->beta->organization->invites->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);
@@ -80,7 +87,10 @@ final class InvitesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->organization->invites->delete('invite_id');
+        $result = $this->client->beta->organization->invites->delete(
+            'invite_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(InviteDeleteResponse::class, $result);

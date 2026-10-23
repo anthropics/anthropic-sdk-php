@@ -62,7 +62,7 @@ final class EffectiveRawService implements EffectiveRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/spend_limits/effective?beta=true',
+            path: 'v1/organizations/spend_limits/effective',
             query: Util::array_transform_keys($parsed, ['userIDs' => 'user_ids']),
             options: $options->withQualifiers([
                 'beta' => 'true',

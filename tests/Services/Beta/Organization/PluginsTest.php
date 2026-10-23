@@ -38,6 +38,7 @@ final class PluginsTest extends TestCase
             files: [
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -54,6 +55,7 @@ final class PluginsTest extends TestCase
             marketplaceID: 'marketplace_id',
             releaseNotes: 'release_notes',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -63,7 +65,10 @@ final class PluginsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->organization->plugins->retrieve('plugin_id');
+        $result = $this->client->beta->organization->plugins->retrieve(
+            'plugin_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Plugin::class, $result);
@@ -74,7 +79,8 @@ final class PluginsTest extends TestCase
     {
         $result = $this->client->beta->organization->plugins->update(
             'plugin_id',
-            servedVersionID: 'pluginver_01KaZmQpRsTuVwXyZ2b4c6d8'
+            servedVersionID: 'pluginver_01KaZmQpRsTuVwXyZ2b4c6d8',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -88,6 +94,7 @@ final class PluginsTest extends TestCase
             'plugin_id',
             servedVersionID: 'pluginver_01KaZmQpRsTuVwXyZ2b4c6d8',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -97,7 +104,9 @@ final class PluginsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->plugins->list();
+        $page = $this->client->beta->organization->plugins->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -111,7 +120,10 @@ final class PluginsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->organization->plugins->delete('plugin_id');
+        $result = $this->client->beta->organization->plugins->delete(
+            'plugin_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DeletedPlugin::class, $result);

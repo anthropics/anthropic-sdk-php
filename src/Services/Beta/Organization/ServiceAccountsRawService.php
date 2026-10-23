@@ -72,7 +72,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/service_accounts?beta=true',
+            path: 'v1/organizations/service_accounts',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -122,9 +122,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/service_accounts/%1$s?beta=true', $serviceAccountID,
-            ],
+            path: ['v1/organizations/service_accounts/%1$s', $serviceAccountID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -180,9 +178,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/service_accounts/%1$s?beta=true', $serviceAccountID,
-            ],
+            path: ['v1/organizations/service_accounts/%1$s', $serviceAccountID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -243,7 +239,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/service_accounts?beta=true',
+            path: 'v1/organizations/service_accounts',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -300,8 +296,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/service_accounts/%1$s/archive?beta=true',
-                $serviceAccountID,
+                'v1/organizations/service_accounts/%1$s/archive', $serviceAccountID,
             ],
             headers: Util::array_transform_keys(
                 $parsed,

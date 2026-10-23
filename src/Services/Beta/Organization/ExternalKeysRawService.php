@@ -60,7 +60,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/external_keys?beta=true',
+            path: 'v1/organizations/external_keys',
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -92,7 +92,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/external_keys/%1$s?beta=true', $externalKeyID],
+            path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -140,7 +140,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/external_keys/%1$s?beta=true', $externalKeyID],
+            path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
             body: (object) $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -182,7 +182,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/external_keys?beta=true',
+            path: 'v1/organizations/external_keys',
             query: $parsed,
             options: $options->withQualifiers([
                 'beta' => 'true',
@@ -217,7 +217,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/organizations/external_keys/%1$s?beta=true', $externalKeyID],
+            path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
@@ -255,9 +255,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/external_keys/%1$s/validate?beta=true', $externalKeyID,
-            ],
+            path: ['v1/organizations/external_keys/%1$s/validate', $externalKeyID],
             options: RequestOptions::parse($requestOptions)->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(

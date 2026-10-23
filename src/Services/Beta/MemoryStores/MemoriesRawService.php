@@ -73,7 +73,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/memory_stores/%1$s/memories?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s/memories', $memoryStoreID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
@@ -134,11 +134,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/memory_stores/%1$s/memories/%2$s?beta=true',
-                $memoryStoreID,
-                $memoryID,
-            ],
+            path: ['v1/memory_stores/%1$s/memories/%2$s', $memoryStoreID, $memoryID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -202,11 +198,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/memory_stores/%1$s/memories/%2$s?beta=true',
-                $memoryStoreID,
-                $memoryID,
-            ],
+            path: ['v1/memory_stores/%1$s/memories/%2$s', $memoryStoreID, $memoryID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
@@ -275,7 +267,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/memory_stores/%1$s/memories?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s/memories', $memoryStoreID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['pathPrefix' => 'path_prefix'],
@@ -338,11 +330,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: [
-                'v1/memory_stores/%1$s/memories/%2$s?beta=true',
-                $memoryStoreID,
-                $memoryID,
-            ],
+            path: ['v1/memory_stores/%1$s/memories/%2$s', $memoryStoreID, $memoryID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['expectedContentSha256' => 'expected_content_sha256'],

@@ -64,7 +64,7 @@ final class RateLimitsRawService implements RateLimitsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/rate_limits?beta=true',
+            path: 'v1/organizations/rate_limits',
             query: Util::array_transform_keys($parsed, ['groupType' => 'group_type']),
             options: $options->withQualifiers([
                 'beta' => 'true',

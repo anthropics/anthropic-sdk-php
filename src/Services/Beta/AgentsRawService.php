@@ -80,7 +80,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/agents?beta=true',
+            path: 'v1/agents',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -135,7 +135,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/agents/%1$s?beta=true', $agentID],
+            path: ['v1/agents/%1$s', $agentID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -199,7 +199,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/agents/%1$s?beta=true', $agentID],
+            path: ['v1/agents/%1$s', $agentID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -258,7 +258,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/agents?beta=true',
+            path: 'v1/agents',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -321,7 +321,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/agents/%1$s/archive?beta=true', $agentID],
+            path: ['v1/agents/%1$s/archive', $agentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [

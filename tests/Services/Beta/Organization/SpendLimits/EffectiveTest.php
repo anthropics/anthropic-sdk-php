@@ -31,7 +31,9 @@ final class EffectiveTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->spendLimits->effective->list();
+        $page = $this->client->beta->organization->spendLimits->effective->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);

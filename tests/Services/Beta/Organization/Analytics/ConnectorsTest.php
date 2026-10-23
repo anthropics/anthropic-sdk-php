@@ -31,7 +31,9 @@ final class ConnectorsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->analytics->connectors->list();
+        $page = $this->client->beta->organization->analytics->connectors->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);

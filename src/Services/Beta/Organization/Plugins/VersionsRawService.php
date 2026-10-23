@@ -85,7 +85,7 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/plugins/%1$s/versions?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s/versions', $pluginID],
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
@@ -154,9 +154,7 @@ final class VersionsRawService implements VersionsRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/plugins/%1$s/versions/%2$s?beta=true',
-                $pluginID,
-                $version,
+                'v1/organizations/plugins/%1$s/versions/%2$s', $pluginID, $version,
             ],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
@@ -224,7 +222,7 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/plugins/%1$s/versions?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s/versions', $pluginID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['organizationID' => 'organization_id'],
@@ -304,7 +302,7 @@ final class VersionsRawService implements VersionsRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/plugins/%1$s/versions/%2$s/content?beta=true',
+                'v1/organizations/plugins/%1$s/versions/%2$s/content',
                 $pluginID,
                 $version,
             ],

@@ -41,6 +41,7 @@ final class CredentialsTest extends TestCase
                 'mcpServerURL' => 'https://example-server.modelcontextprotocol.io/sse',
                 'type' => 'static_bearer',
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -61,6 +62,7 @@ final class CredentialsTest extends TestCase
             metadata: ['environment' => 'production'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -72,7 +74,8 @@ final class CredentialsTest extends TestCase
     {
         $result = $this->client->beta->vaults->credentials->retrieve(
             'vcrd_011CZkZEMt8gZan2iYPQfSkw',
-            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -87,6 +90,7 @@ final class CredentialsTest extends TestCase
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -98,7 +102,8 @@ final class CredentialsTest extends TestCase
     {
         $result = $this->client->beta->vaults->credentials->update(
             'vcrd_011CZkZEMt8gZan2iYPQfSkw',
-            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -127,6 +132,7 @@ final class CredentialsTest extends TestCase
             metadata: ['environment' => 'production'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -137,7 +143,8 @@ final class CredentialsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->vaults->credentials->list(
-            'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -154,7 +161,8 @@ final class CredentialsTest extends TestCase
     {
         $result = $this->client->beta->vaults->credentials->delete(
             'vcrd_011CZkZEMt8gZan2iYPQfSkw',
-            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -169,6 +177,7 @@ final class CredentialsTest extends TestCase
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -180,7 +189,8 @@ final class CredentialsTest extends TestCase
     {
         $result = $this->client->beta->vaults->credentials->archive(
             'vcrd_011CZkZEMt8gZan2iYPQfSkw',
-            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -195,6 +205,7 @@ final class CredentialsTest extends TestCase
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -206,7 +217,8 @@ final class CredentialsTest extends TestCase
     {
         $result = $this->client->beta->vaults->credentials->mcpOAuthValidate(
             'vcrd_011CZkZEMt8gZan2iYPQfSkw',
-            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv'
+            vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -221,6 +233,7 @@ final class CredentialsTest extends TestCase
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -71,7 +71,7 @@ final class ConnectorsRawService implements ConnectorsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/connectors?beta=true',
+            path: 'v1/organizations/analytics/connectors',
             query: Util::array_transform_keys(
                 $parsed,
                 [

@@ -68,7 +68,7 @@ final class ProjectsRawService implements ProjectsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/apps/chat/projects?beta=true',
+            path: 'v1/organizations/analytics/apps/chat/projects',
             query: Util::array_transform_keys(
                 $parsed,
                 [

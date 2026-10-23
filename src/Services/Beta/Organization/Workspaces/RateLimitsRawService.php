@@ -72,7 +72,7 @@ final class RateLimitsRawService implements RateLimitsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/workspaces/%1$s/rate_limits/%2$s?beta=true',
+                'v1/organizations/workspaces/%1$s/rate_limits/%2$s',
                 $workspaceID,
                 $rateLimitID,
             ],
@@ -132,9 +132,7 @@ final class RateLimitsRawService implements RateLimitsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/workspaces/%1$s/rate_limits?beta=true', $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/rate_limits', $workspaceID],
             query: Util::array_transform_keys(
                 $parsed,
                 [

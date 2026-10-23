@@ -67,7 +67,7 @@ final class SummariesRawService implements SummariesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/summaries?beta=true',
+            path: 'v1/organizations/analytics/summaries',
             query: Util::array_transform_keys(
                 $parsed,
                 ['startingDate' => 'starting_date', 'endingDate' => 'ending_date'],

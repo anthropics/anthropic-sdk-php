@@ -33,7 +33,10 @@ final class MemoryStoresTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->beta->memoryStores->create(name: 'x');
+        $result = $this->client->beta->memoryStores->create(
+            name: 'x',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsMemoryStore::class, $result);
@@ -48,6 +51,7 @@ final class MemoryStoresTest extends TestCase
             metadata: ['foo' => 'string'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -57,7 +61,10 @@ final class MemoryStoresTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->memoryStores->retrieve('memory_store_id');
+        $result = $this->client->beta->memoryStores->retrieve(
+            'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsMemoryStore::class, $result);
@@ -66,7 +73,10 @@ final class MemoryStoresTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->beta->memoryStores->update('memory_store_id');
+        $result = $this->client->beta->memoryStores->update(
+            'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsMemoryStore::class, $result);
@@ -75,7 +85,9 @@ final class MemoryStoresTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->memoryStores->list();
+        $page = $this->client->beta->memoryStores->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -89,7 +101,10 @@ final class MemoryStoresTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->memoryStores->delete('memory_store_id');
+        $result = $this->client->beta->memoryStores->delete(
+            'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(
@@ -101,7 +116,10 @@ final class MemoryStoresTest extends TestCase
     #[Test]
     public function testArchive(): void
     {
-        $result = $this->client->beta->memoryStores->archive('memory_store_id');
+        $result = $this->client->beta->memoryStores->archive(
+            'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaManagedAgentsMemoryStore::class, $result);

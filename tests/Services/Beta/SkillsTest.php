@@ -38,6 +38,7 @@ final class SkillsTest extends TestCase
             files: [
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -54,6 +55,7 @@ final class SkillsTest extends TestCase
             displayName: 'display_name',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -63,7 +65,10 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->skills->retrieve('skill_id');
+        $result = $this->client->beta->skills->retrieve(
+            'skill_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaSkill::class, $result);
@@ -72,7 +77,9 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->skills->list();
+        $page = $this->client->beta->skills->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -86,7 +93,10 @@ final class SkillsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->skills->delete('skill_id');
+        $result = $this->client->beta->skills->delete(
+            'skill_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaDeletedSkill::class, $result);

@@ -35,7 +35,8 @@ final class AgentsTest extends TestCase
     {
         $result = $this->client->beta->agents->create(
             model: BetaManagedAgentsModel::CLAUDE_OPUS_5_5,
-            name: 'My First Agent'
+            name: 'My First Agent',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -82,6 +83,7 @@ final class AgentsTest extends TestCase
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -92,7 +94,8 @@ final class AgentsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->agents->retrieve(
-            'agent_011CZkYpogX7uDKUyvBTophP'
+            'agent_011CZkYpogX7uDKUyvBTophP',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -103,7 +106,8 @@ final class AgentsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->agents->update(
-            'agent_011CZkYpogX7uDKUyvBTophP'
+            'agent_011CZkYpogX7uDKUyvBTophP',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -113,7 +117,9 @@ final class AgentsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->agents->list();
+        $page = $this->client->beta->agents->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -128,7 +134,8 @@ final class AgentsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->agents->archive(
-            'agent_011CZkYpogX7uDKUyvBTophP'
+            'agent_011CZkYpogX7uDKUyvBTophP',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
