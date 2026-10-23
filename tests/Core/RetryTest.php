@@ -24,16 +24,27 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Records retry sleeps instead of sleeping and exposes the retry delay computation.
+ * Records retry sleeps instead of sleeping, records the qualifiers in the options of each retried
+ * attempt, and exposes the retry delay computation.
  */
 class RetryTestClient extends BaseClient
 {
     /** @var list<float> */
     public array $sleeps = [];
 
+    /** @var list<array<string,string>|null> */
+    public array $qualifiers = [];
+
     public function delay(int $retryCount, ?ResponseInterface $rsp): float
     {
         return $this->retryDelay($this->options, retryCount: $retryCount, rsp: $rsp);
+    }
+
+    protected function retryDelay(RequestOptions $opts, int $retryCount, ?ResponseInterface $rsp): float
+    {
+        $this->qualifiers[] = $opts->qualifiers();
+
+        return parent::retryDelay($opts, retryCount: $retryCount, rsp: $rsp);
     }
 
     protected function sleep(float $seconds): void
@@ -83,6 +94,19 @@ class RetryTest extends TestCase
             $this->assertSame('1', $requests[1]->getHeaderLine('x-stainless-retry-count'));
         }
         $this->assertSame([1.5], $client->sleeps);
+    }
+
+    #[Test]
+    public function testEveryAttemptHasTheQualifiers(): void
+    {
+        [$client, $transporter] = $this->buildClient();
+        $transporter->addResponse($this->response(503));
+        $transporter->addResponse($this->response(503));
+        $transporter->addResponse($this->response(200));
+
+        $client->request('GET', '/', options: RequestOptions::parse()->withQualifiers(['variant' => 'b']));
+
+        $this->assertSame([['variant' => 'b'], ['variant' => 'b']], $client->qualifiers);
     }
 
     #[Test]

@@ -36,7 +36,8 @@ final class UserUsageReportTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->analytics->userUsageReport->list(
-            startingAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z')
+            startingAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -71,6 +72,7 @@ final class UserUsageReportTest extends TestCase
             slackChannelIDs: ['C0123ABCDEF'],
             speeds: ['fast'],
             userIDs: ['user_01AbCdEfGhIjKlMnOpQrSt'],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

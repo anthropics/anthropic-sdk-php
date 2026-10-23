@@ -442,7 +442,7 @@ final class ClientTest extends TestCase
         $client->beta->organization->retrieve();
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me?beta=true', (string) $request->getUri());
+        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me', (string) $request->getUri());
         $this->assertSame('', $request->getHeaderLine('Authorization'));
 
         $this->expectException(\InvalidArgumentException::class);
@@ -479,7 +479,7 @@ final class ClientTest extends TestCase
         $client->beta->organization->retrieve();
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me?beta=true', (string) $request->getUri());
+        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me', (string) $request->getUri());
         $this->assertSame('Bearer adc-token', $request->getHeaderLine('Authorization'));
     }
 
@@ -536,6 +536,102 @@ final class ClientTest extends TestCase
         );
     }
 
+    public function testUserProfilesRouteUsesOrganizationBaseUrl(): void
+    {
+        $client = $this->makeClient();
+
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+
+        $client->userProfiles->create();
+        $client->userProfiles->list();
+        $client->beta->userProfiles->create();
+        $client->beta->userProfiles->list();
+
+        $this->assertSame(
+            [
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles',
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles',
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles',
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles',
+            ],
+            $this->requestedUrls()
+        );
+        $this->assertSame('Bearer adc-token', $this->getLastRequest()->getHeaderLine('Authorization'));
+        $this->assertSame('', $this->getLastRequest()->getHeaderLine('anthropic-workspace-id'));
+    }
+
+    public function testUserProfilesRouteWithPathParameter(): void
+    {
+        $client = $this->makeClient();
+
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+
+        $client->userProfiles->retrieve('uprof_1');
+        $client->beta->userProfiles->retrieve('uprof_1');
+        $client->beta->userProfiles->createEnrollmentURL('uprof_1');
+
+        $this->assertSame(
+            [
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles/uprof_1',
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles/uprof_1',
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles/uprof_1/enrollment_url',
+            ],
+            $this->requestedUrls()
+        );
+    }
+
+    public function testOnlyUserProfilesPathUsesOrganizationBaseUrl(): void
+    {
+        $client = $this->makeClient();
+
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+
+        $client->request('get', '/v1/user_profiles');
+        $client->request('get', 'v1/user_profiles_other');
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+
+        $this->assertSame(
+            [
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles',
+                'https://claude.googleapis.com/v1/projects/proj/locations/us-east5/workspaces/ws/invoke/v1/user_profiles_other',
+                'https://claude.googleapis.com/v1/projects/proj/locations/us-east5/workspaces/ws/invoke/v1/messages',
+            ],
+            $this->requestedUrls()
+        );
+    }
+
+    public function testUserProfilesRouteDoesNotRequireWorkspaceId(): void
+    {
+        $client = new Client(
+            project: 'proj',
+            location: 'us-east5',
+            tokenProvider: fn () => 'tok',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+
+        $client->userProfiles->list();
+        $client->beta->userProfiles->retrieve('uprof_1');
+
+        $this->assertSame(
+            [
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles',
+                self::ORGANIZATION_BASE_URL.'/v1/user_profiles/uprof_1',
+            ],
+            $this->requestedUrls()
+        );
+        $this->assertSame('Bearer tok', $this->getLastRequest()->getHeaderLine('Authorization'));
+    }
+
     public function testOrganizationRouteDoesNotRequireWorkspaceId(): void
     {
         $client = new Client(
@@ -548,7 +644,7 @@ final class ClientTest extends TestCase
         $client->beta->organization->retrieve();
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me?beta=true', (string) $request->getUri());
+        $this->assertSame(self::ORGANIZATION_BASE_URL.'/v1/organizations/me', (string) $request->getUri());
         $this->assertSame('Bearer tok', $request->getHeaderLine('Authorization'));
     }
 
@@ -613,13 +709,16 @@ final class ClientTest extends TestCase
 
         $this->transporter->addResponse($this->jsonResponse());
         $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
 
         $client->beta->organization->retrieve();
+        $client->beta->userProfiles->list();
         $client->messages->create(1024, [], 'claude-haiku-4-5');
 
         $this->assertSame(
             [
-                'https://custom.example.com/v1/organizations/me?beta=true',
+                'https://custom.example.com/v1/organizations/me',
+                'https://custom.example.com/v1/user_profiles',
                 'https://custom.example.com/v1/messages',
             ],
             $this->requestedUrls()
@@ -640,7 +739,7 @@ final class ClientTest extends TestCase
 
         $this->assertSame(
             [
-                'https://env.example.com/v1/organizations/me?beta=true',
+                'https://env.example.com/v1/organizations/me',
                 'https://env.example.com/v1/messages',
             ],
             $this->requestedUrls()
@@ -663,7 +762,7 @@ final class ClientTest extends TestCase
 
         $this->assertSame(
             [
-                'https://custom.example.com/v1/organizations/me?beta=true',
+                'https://custom.example.com/v1/organizations/me',
                 'https://custom.example.com/v1/messages',
             ],
             $this->requestedUrls()
@@ -705,7 +804,7 @@ final class ClientTest extends TestCase
         $request = $this->getLastRequest();
 
         $this->assertSame(
-            'https://claude.googleapis.com/v1/projects/creds-proj/locations/us-east5/claudeOrganization/invoke/v1/organizations/me?beta=true',
+            'https://claude.googleapis.com/v1/projects/creds-proj/locations/us-east5/claudeOrganization/invoke/v1/organizations/me',
             (string) $request->getUri()
         );
         $this->assertSame('Bearer adc-token', $request->getHeaderLine('Authorization'));

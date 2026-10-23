@@ -72,7 +72,7 @@ final class CredentialsRawService implements CredentialsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/vaults/%1$s/credentials?beta=true', $vaultID],
+            path: ['v1/vaults/%1$s/credentials', $vaultID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -84,7 +84,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.create',
                 route: '/v1/vaults/{vault_id}/credentials',
                 attributes: ['anthropic.vault.id' => $vaultID],
@@ -126,9 +126,7 @@ final class CredentialsRawService implements CredentialsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/vaults/%1$s/credentials/%2$s?beta=true', $vaultID, $credentialID,
-            ],
+            path: ['v1/vaults/%1$s/credentials/%2$s', $vaultID, $credentialID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -138,7 +136,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.retrieve',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
                 attributes: [
@@ -188,9 +186,7 @@ final class CredentialsRawService implements CredentialsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/vaults/%1$s/credentials/%2$s?beta=true', $vaultID, $credentialID,
-            ],
+            path: ['v1/vaults/%1$s/credentials/%2$s', $vaultID, $credentialID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -202,7 +198,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.update',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
                 attributes: [
@@ -250,7 +246,7 @@ final class CredentialsRawService implements CredentialsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/vaults/%1$s/credentials?beta=true', $vaultID],
+            path: ['v1/vaults/%1$s/credentials', $vaultID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -264,7 +260,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.list',
                 route: '/v1/vaults/{vault_id}/credentials',
                 query: ['include_archived', 'limit', 'page'],
@@ -307,9 +303,7 @@ final class CredentialsRawService implements CredentialsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: [
-                'v1/vaults/%1$s/credentials/%2$s?beta=true', $vaultID, $credentialID,
-            ],
+            path: ['v1/vaults/%1$s/credentials/%2$s', $vaultID, $credentialID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -319,7 +313,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.delete',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}',
                 attributes: [
@@ -364,9 +358,7 @@ final class CredentialsRawService implements CredentialsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/vaults/%1$s/credentials/%2$s/archive?beta=true',
-                $vaultID,
-                $credentialID,
+                'v1/vaults/%1$s/credentials/%2$s/archive', $vaultID, $credentialID,
             ],
             headers: Util::array_transform_keys(
                 $parsed,
@@ -377,7 +369,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.archive',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}/archive',
                 attributes: [
@@ -422,7 +414,7 @@ final class CredentialsRawService implements CredentialsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/vaults/%1$s/credentials/%2$s/mcp_oauth_validate?beta=true',
+                'v1/vaults/%1$s/credentials/%2$s/mcp_oauth_validate',
                 $vaultID,
                 $credentialID,
             ],
@@ -435,7 +427,7 @@ final class CredentialsRawService implements CredentialsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.vaults.credentials.mcp_oauth_validate',
                 route: '/v1/vaults/{vault_id}/credentials/{credential_id}/mcp_oauth_validate',
                 attributes: [

@@ -71,7 +71,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/environments?beta=true',
+            path: 'v1/environments',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -83,7 +83,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.create',
                 route: '/v1/environments',
                 createdId: 'anthropic.environment.id',
@@ -120,7 +120,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/environments/%1$s?beta=true', $environmentID],
+            path: ['v1/environments/%1$s', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -130,7 +130,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.retrieve',
                 route: '/v1/environments/{environment_id}',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -176,7 +176,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/environments/%1$s?beta=true', $environmentID],
+            path: ['v1/environments/%1$s', $environmentID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -188,7 +188,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.update',
                 route: '/v1/environments/{environment_id}',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -231,7 +231,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/environments?beta=true',
+            path: 'v1/environments',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -245,7 +245,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.list',
                 route: '/v1/environments',
                 query: ['include_archived', 'limit', 'page'],
@@ -283,7 +283,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/environments/%1$s?beta=true', $environmentID],
+            path: ['v1/environments/%1$s', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -293,7 +293,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.delete',
                 route: '/v1/environments/{environment_id}',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -330,7 +330,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/environments/%1$s/archive?beta=true', $environmentID],
+            path: ['v1/environments/%1$s/archive', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -340,7 +340,7 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.archive',
                 route: '/v1/environments/{environment_id}/archive',
                 attributes: ['anthropic.environment.id' => $environmentID],

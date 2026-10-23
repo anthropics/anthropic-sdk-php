@@ -37,7 +37,8 @@ final class MemoriesTest extends TestCase
         $result = $this->client->beta->memoryStores->memories->create(
             'memory_store_id',
             content: 'content',
-            path: 'xx'
+            path: 'xx',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -54,6 +55,7 @@ final class MemoriesTest extends TestCase
             view: ManagedAgentsMemoryView::BASIC,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -65,7 +67,8 @@ final class MemoriesTest extends TestCase
     {
         $result = $this->client->beta->memoryStores->memories->retrieve(
             'memory_id',
-            memoryStoreID: 'memory_store_id'
+            memoryStoreID: 'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -81,6 +84,7 @@ final class MemoriesTest extends TestCase
             view: ManagedAgentsMemoryView::BASIC,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -92,7 +96,8 @@ final class MemoriesTest extends TestCase
     {
         $result = $this->client->beta->memoryStores->memories->update(
             'memory_id',
-            memoryStoreID: 'memory_store_id'
+            memoryStoreID: 'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -113,6 +118,7 @@ final class MemoriesTest extends TestCase
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -123,7 +129,8 @@ final class MemoriesTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->memoryStores->memories->list(
-            'memory_store_id'
+            'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -140,7 +147,8 @@ final class MemoriesTest extends TestCase
     {
         $result = $this->client->beta->memoryStores->memories->delete(
             'memory_id',
-            memoryStoreID: 'memory_store_id'
+            memoryStoreID: 'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -156,6 +164,7 @@ final class MemoriesTest extends TestCase
             expectedContentSha256: 'expected_content_sha256',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

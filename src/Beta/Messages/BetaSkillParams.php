@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Specification for a skill to be loaded in a container (request model).
+ * Specification for a skill to be loaded in a container.
  *
  * @phpstan-type BetaSkillParamsShape = array{
  *   skillID: string, type: Type|value-of<Type>, version?: string|null

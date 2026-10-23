@@ -88,7 +88,7 @@ final class RulesRawService implements RulesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/federation_rules?beta=true',
+            path: 'v1/organizations/federation_rules',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -97,7 +97,9 @@ final class RulesRawService implements RulesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.create',
                 route: '/v1/organizations/federation_rules',
                 createdId: 'anthropic.organization.federation_rule.id',
@@ -136,14 +138,14 @@ final class RulesRawService implements RulesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/federation_rules/%1$s?beta=true', $federationRuleID,
-            ],
+            path: ['v1/organizations/federation_rules/%1$s', $federationRuleID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.retrieve',
                 route: '/v1/organizations/federation_rules/{federation_rule_id}',
                 attributes: [
@@ -210,9 +212,7 @@ final class RulesRawService implements RulesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/federation_rules/%1$s?beta=true', $federationRuleID,
-            ],
+            path: ['v1/organizations/federation_rules/%1$s', $federationRuleID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -221,7 +221,9 @@ final class RulesRawService implements RulesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.update',
                 route: '/v1/organizations/federation_rules/{federation_rule_id}',
                 attributes: [
@@ -273,7 +275,7 @@ final class RulesRawService implements RulesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/federation_rules?beta=true',
+            path: 'v1/organizations/federation_rules',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived', 'issuerID' => 'issuer_id'],
@@ -282,7 +284,9 @@ final class RulesRawService implements RulesRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.list',
                 route: '/v1/organizations/federation_rules',
                 query: ['include_archived', 'issuer_id', 'limit', 'page'],
@@ -331,14 +335,15 @@ final class RulesRawService implements RulesRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/federation_rules/%1$s/archive?beta=true',
-                $federationRuleID,
+                'v1/organizations/federation_rules/%1$s/archive', $federationRuleID,
             ],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.federation.rules.archive',
                 route: '/v1/organizations/federation_rules/{federation_rule_id}/archive',
                 attributes: [

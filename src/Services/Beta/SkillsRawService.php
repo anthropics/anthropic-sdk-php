@@ -64,7 +64,7 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/skills?beta=true',
+            path: 'v1/skills',
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
@@ -79,7 +79,9 @@ final class SkillsRawService implements SkillsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.create',
                 route: '/v1/skills',
                 createdId: 'anthropic.skill.id',
@@ -119,14 +121,16 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/skills/%1$s?beta=true', $skillID],
+            path: ['v1/skills/%1$s', $skillID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.retrieve',
                 route: '/v1/skills/{skill_id}',
                 attributes: ['anthropic.skill.id' => $skillID],
@@ -169,7 +173,7 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/skills?beta=true',
+            path: 'v1/skills',
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -177,7 +181,9 @@ final class SkillsRawService implements SkillsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.list',
                 route: '/v1/skills',
                 query: ['limit', 'page', 'source'],
@@ -218,14 +224,16 @@ final class SkillsRawService implements SkillsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/skills/%1$s?beta=true', $skillID],
+            path: ['v1/skills/%1$s', $skillID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.delete',
                 route: '/v1/skills/{skill_id}',
                 attributes: ['anthropic.skill.id' => $skillID],

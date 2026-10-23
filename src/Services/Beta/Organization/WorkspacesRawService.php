@@ -65,7 +65,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/workspaces?beta=true',
+            path: 'v1/organizations/workspaces',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -74,7 +74,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.create',
                 route: '/v1/organizations/workspaces',
                 createdId: 'anthropic.organization.workspace.id',
@@ -102,8 +104,10 @@ final class WorkspacesRawService implements WorkspacesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/workspaces/%1$s?beta=true', $workspaceID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            path: ['v1/organizations/workspaces/%1$s', $workspaceID],
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.retrieve',
                 route: '/v1/organizations/workspaces/{workspace_id}',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],
@@ -143,9 +147,11 @@ final class WorkspacesRawService implements WorkspacesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/workspaces/%1$s?beta=true', $workspaceID],
+            path: ['v1/organizations/workspaces/%1$s', $workspaceID],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.update',
                 route: '/v1/organizations/workspaces/{workspace_id}',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],
@@ -184,7 +190,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/workspaces?beta=true',
+            path: 'v1/organizations/workspaces',
             query: Util::array_transform_keys(
                 $parsed,
                 [
@@ -194,7 +200,9 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     'includeDefault' => 'include_default',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.list',
                 route: '/v1/organizations/workspaces',
                 query: [
@@ -228,10 +236,10 @@ final class WorkspacesRawService implements WorkspacesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/workspaces/%1$s/archive?beta=true', $workspaceID,
-            ],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            path: ['v1/organizations/workspaces/%1$s/archive', $workspaceID],
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.archive',
                 route: '/v1/organizations/workspaces/{workspace_id}/archive',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],

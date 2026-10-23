@@ -33,8 +33,9 @@ final class StainlessHelperHeader
      * The {@see HEADER} value to set after appending `$value` to whatever is
      * already present in `$headers` — existing tags keep their position, the
      * new tag goes at the end, duplicates are dropped, joined as one
-     * comma-separated string. The backend logs the header as one opaque
-     * string, so a second header line or a clobbered value loses data.
+     * comma-separated string. The new tag is appended to the existing value
+     * rather than replacing it, because a second header line or a clobbered
+     * value loses data.
      *
      * @param array<string, string|int|list<string|int>|null> $headers
      */

@@ -36,7 +36,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->workspaces->members->retrieve(
             'user_id',
-            workspaceID: 'workspace_id'
+            workspaceID: 'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -48,7 +49,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->workspaces->members->retrieve(
             'user_id',
-            workspaceID: 'workspace_id'
+            workspaceID: 'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -62,6 +64,7 @@ final class MembersTest extends TestCase
             'user_id',
             workspaceID: 'workspace_id',
             workspaceRole: WorkspaceRole::WORKSPACE_ADMIN,
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -75,6 +78,7 @@ final class MembersTest extends TestCase
             'user_id',
             workspaceID: 'workspace_id',
             workspaceRole: WorkspaceRole::WORKSPACE_ADMIN,
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -85,7 +89,8 @@ final class MembersTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->workspaces->members->list(
-            'workspace_id'
+            'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -104,6 +109,7 @@ final class MembersTest extends TestCase
             'workspace_id',
             userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
             workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -117,6 +123,7 @@ final class MembersTest extends TestCase
             'workspace_id',
             userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
             workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -128,7 +135,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->workspaces->members->remove(
             'user_id',
-            workspaceID: 'workspace_id'
+            workspaceID: 'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -140,7 +148,8 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->workspaces->members->remove(
             'user_id',
-            workspaceID: 'workspace_id'
+            workspaceID: 'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -30,7 +30,9 @@ final class OrganizationTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->organization->retrieve();
+        $result = $this->client->beta->organization->retrieve(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaOrganization::class, $result);

@@ -38,6 +38,7 @@ final class MessagesTest extends TestCase
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: Model::CLAUDE_OPUS_5_5,
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -143,6 +144,7 @@ final class MessagesTest extends TestCase
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -155,6 +157,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: Model::CLAUDE_OPUS_5_5,
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -245,6 +248,7 @@ final class MessagesTest extends TestCase
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

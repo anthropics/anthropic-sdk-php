@@ -32,7 +32,8 @@ final class RBACRolesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->rbacRoles->retrieve(
-            'rbac_role_id'
+            'rbac_role_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -42,7 +43,9 @@ final class RBACRolesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->rbacRoles->list();
+        $page = $this->client->beta->organization->rbacRoles->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);

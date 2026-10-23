@@ -72,7 +72,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/service_accounts?beta=true',
+            path: 'v1/organizations/service_accounts',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -81,7 +81,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.service_accounts.create',
                 route: '/v1/organizations/service_accounts',
                 createdId: 'anthropic.organization.service_account.id',
@@ -120,14 +122,14 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/service_accounts/%1$s?beta=true', $serviceAccountID,
-            ],
+            path: ['v1/organizations/service_accounts/%1$s', $serviceAccountID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.service_accounts.retrieve',
                 route: '/v1/organizations/service_accounts/{service_account_id}',
                 attributes: [
@@ -176,9 +178,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/service_accounts/%1$s?beta=true', $serviceAccountID,
-            ],
+            path: ['v1/organizations/service_accounts/%1$s', $serviceAccountID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -187,7 +187,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.service_accounts.update',
                 route: '/v1/organizations/service_accounts/{service_account_id}',
                 attributes: [
@@ -237,7 +239,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/service_accounts?beta=true',
+            path: 'v1/organizations/service_accounts',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -246,7 +248,9 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
                 $header_params,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.service_accounts.list',
                 route: '/v1/organizations/service_accounts',
                 query: ['include_archived', 'limit', 'page'],
@@ -292,14 +296,15 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/service_accounts/%1$s/archive?beta=true',
-                $serviceAccountID,
+                'v1/organizations/service_accounts/%1$s/archive', $serviceAccountID,
             ],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.service_accounts.archive',
                 route: '/v1/organizations/service_accounts/{service_account_id}/archive',
                 attributes: [

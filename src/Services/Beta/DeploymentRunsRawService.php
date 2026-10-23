@@ -58,7 +58,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/deployment_runs/%1$s?beta=true', $deploymentRunID],
+            path: ['v1/deployment_runs/%1$s', $deploymentRunID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -68,7 +68,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.deployment_runs.retrieve',
                 route: '/v1/deployment_runs/{deployment_run_id}',
                 attributes: ['anthropic.deployment_run.id' => $deploymentRunID],
@@ -129,7 +129,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/deployment_runs?beta=true',
+            path: 'v1/deployment_runs',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -151,7 +151,7 @@ final class DeploymentRunsRawService implements DeploymentRunsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.deployment_runs.list',
                 route: '/v1/deployment_runs',
                 query: [

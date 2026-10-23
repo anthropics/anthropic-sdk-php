@@ -37,7 +37,8 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->beta->organization->webhooks->create(
             enabledEvents: ['user_profile.enforcement_action_opened'],
-            url: 'x'
+            url: 'x',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -53,6 +54,7 @@ final class WebhooksTest extends TestCase
             description: 'description',
             name: 'name',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -63,7 +65,8 @@ final class WebhooksTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->webhooks->retrieve(
-            'webhook_endpoint_id'
+            'webhook_endpoint_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -74,7 +77,8 @@ final class WebhooksTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->webhooks->update(
-            'webhook_endpoint_id'
+            'webhook_endpoint_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -84,7 +88,9 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->webhooks->list();
+        $page = $this->client->beta->organization->webhooks->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);
@@ -99,7 +105,8 @@ final class WebhooksTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->organization->webhooks->delete(
-            'webhook_endpoint_id'
+            'webhook_endpoint_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -114,7 +121,10 @@ final class WebhooksTest extends TestCase
             ->beta
             ->organization
             ->webhooks
-            ->regenerateSigningSecret('webhook_endpoint_id')
+            ->regenerateSigningSecret(
+                'webhook_endpoint_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

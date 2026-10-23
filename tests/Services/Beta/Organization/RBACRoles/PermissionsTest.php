@@ -32,7 +32,8 @@ final class PermissionsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->organization->rbacRoles->permissions->list(
-            'rbac_role_id'
+            'rbac_role_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

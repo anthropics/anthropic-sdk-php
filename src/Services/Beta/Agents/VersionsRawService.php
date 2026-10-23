@@ -62,7 +62,7 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/agents/%1$s/versions?beta=true', $agentID],
+            path: ['v1/agents/%1$s/versions', $agentID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -73,7 +73,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.versions.list',
                 route: '/v1/agents/{agent_id}/versions',
                 query: ['limit', 'page'],

@@ -12,8 +12,6 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * Statistics about the work queue for an environment.
  *
- * Uses Redis Stream consumer group metrics for O(1) queries.
- *
  * @phpstan-type SelfHostedWorkQueueStatsShape = array{
  *   depth: int,
  *   oldestQueuedAt: string|null,
@@ -36,7 +34,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
     public string $type = 'work_queue_stats';
 
     /**
-     * Number of work items waiting to be picked up (lag from consumer group).
+     * Number of work items waiting to be picked up.
      */
     #[Required]
     public int $depth;
@@ -106,7 +104,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
     }
 
     /**
-     * Number of work items waiting to be picked up (lag from consumer group).
+     * Number of work items waiting to be picked up.
      */
     public function withDepth(int $depth): self
     {

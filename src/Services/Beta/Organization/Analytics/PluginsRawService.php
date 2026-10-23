@@ -74,7 +74,7 @@ final class PluginsRawService implements PluginsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/plugins?beta=true',
+            path: 'v1/organizations/analytics/plugins',
             query: Util::array_transform_keys(
                 $parsed,
                 [
@@ -84,7 +84,9 @@ final class PluginsRawService implements PluginsRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.plugins.list',
                 route: '/v1/organizations/analytics/plugins',
                 query: [

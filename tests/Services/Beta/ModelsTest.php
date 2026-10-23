@@ -31,7 +31,10 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->models->retrieve('model_id');
+        $result = $this->client->beta->models->retrieve(
+            'model_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaModelInfo::class, $result);
@@ -40,7 +43,9 @@ final class ModelsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->models->list();
+        $page = $this->client->beta->models->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);

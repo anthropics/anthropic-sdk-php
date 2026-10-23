@@ -31,7 +31,9 @@ final class UsersTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->analytics->users->list();
+        $page = $this->client->beta->organization->analytics->users->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);

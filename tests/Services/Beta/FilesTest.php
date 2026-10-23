@@ -34,7 +34,9 @@ final class FilesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->files->list();
+        $page = $this->client->beta->files->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -48,7 +50,10 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->beta->files->delete('file_id');
+        $result = $this->client->beta->files->delete(
+            'file_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaDeletedFile::class, $result);
@@ -57,7 +62,10 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDownload(): void
     {
-        $result = $this->client->beta->files->download('file_id');
+        $result = $this->client->beta->files->download(
+            'file_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertIsString($result);
@@ -66,7 +74,10 @@ final class FilesTest extends TestCase
     #[Test]
     public function testRetrieveMetadata(): void
     {
-        $result = $this->client->beta->files->retrieveMetadata('file_id');
+        $result = $this->client->beta->files->retrieveMetadata(
+            'file_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaFileMetadata::class, $result);
@@ -77,6 +88,7 @@ final class FilesTest extends TestCase
     {
         $result = $this->client->beta->files->upload(
             file: FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -91,6 +103,7 @@ final class FilesTest extends TestCase
             expiresInSeconds: 3600,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

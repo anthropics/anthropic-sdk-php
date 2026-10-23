@@ -65,7 +65,7 @@ final class CertificatesRawService implements CertificatesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/tunnels/%1$s/certificates?beta=true', $tunnelID],
+            path: ['v1/tunnels/%1$s/certificates', $tunnelID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -77,7 +77,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.create',
                 route: '/v1/tunnels/{tunnel_id}/certificates',
                 attributes: ['anthropic.tunnel.id' => $tunnelID],
@@ -121,9 +121,7 @@ final class CertificatesRawService implements CertificatesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/tunnels/%1$s/certificates/%2$s?beta=true', $tunnelID, $certificateID,
-            ],
+            path: ['v1/tunnels/%1$s/certificates/%2$s', $tunnelID, $certificateID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -133,7 +131,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.retrieve',
                 route: '/v1/tunnels/{tunnel_id}/certificates/{certificate_id}',
                 attributes: [
@@ -183,7 +181,7 @@ final class CertificatesRawService implements CertificatesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/tunnels/%1$s/certificates?beta=true', $tunnelID],
+            path: ['v1/tunnels/%1$s/certificates', $tunnelID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['includeArchived' => 'include_archived'],
@@ -197,7 +195,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.list',
                 route: '/v1/tunnels/{tunnel_id}/certificates',
                 query: ['include_archived', 'limit', 'page'],
@@ -243,9 +241,7 @@ final class CertificatesRawService implements CertificatesRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/tunnels/%1$s/certificates/%2$s/archive?beta=true',
-                $tunnelID,
-                $certificateID,
+                'v1/tunnels/%1$s/certificates/%2$s/archive', $tunnelID, $certificateID,
             ],
             headers: Util::array_transform_keys(
                 $parsed,
@@ -256,7 +252,7 @@ final class CertificatesRawService implements CertificatesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'mcp-tunnels-2026-06-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.tunnels.certificates.archive',
                 route: '/v1/tunnels/{tunnel_id}/certificates/{certificate_id}/archive',
                 attributes: [

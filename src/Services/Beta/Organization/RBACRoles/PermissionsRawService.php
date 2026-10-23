@@ -53,11 +53,11 @@ final class PermissionsRawService implements PermissionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/rbac_roles/%1$s/permissions?beta=true', $rbacRoleID,
-            ],
+            path: ['v1/organizations/rbac_roles/%1$s/permissions', $rbacRoleID],
             query: $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_roles.permissions.list',
                 route: '/v1/organizations/rbac_roles/{rbac_role_id}/permissions',
                 query: ['limit', 'page'],

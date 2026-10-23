@@ -1949,17 +1949,17 @@ final class TracingTest extends TestCase
         $page = ['data' => [], 'has_more' => false, 'first_id' => null, 'last_id' => null, 'next_page' => null];
         $client = $this->client();
 
-        // `beta=true` is part of the path the SDK sends, and `debug` is the application's own: the endpoint defines neither.
+        // `debug` is the application's own: the endpoint does not define it.
         $this->transporter->addResponse(self::json($page));
         $client->beta->files->list(ids: ['a b', 'c'], limit: 2, requestOptions: ['extraQueryParams' => ['debug' => 'yes']]);
-        $this->assertSame('beta=true&ids%5B%5D=a%20b&ids%5B%5D=c&limit=2&debug=yes', $this->lastRequest()->getUri()->getQuery());
+        $this->assertSame('ids%5B%5D=a%20b&ids%5B%5D=c&limit=2&debug=yes', $this->lastRequest()->getUri()->getQuery());
         // `created_at[gte]` is the name of a parameter, brackets and all.
         $this->transporter->addResponse(self::json($page));
         $client->beta->agents->list(createdAtGte: new \DateTimeImmutable('2026-01-01T00:00:00Z'), requestOptions: ['extraQueryParams' => ['created_at[gt]' => 'not-defined-here']]);
         // Nothing is left of a query that has only what the endpoint does not define.
         $this->transporter->addResponse(self::json($page));
         $client->beta->files->list(requestOptions: ['extraQueryParams' => ['debug' => 'yes']]);
-        $this->assertSame('beta=true&debug=yes', $this->lastRequest()->getUri()->getQuery());
+        $this->assertSame('debug=yes', $this->lastRequest()->getUri()->getQuery());
 
         [$files, $agents, $none] = array_map(static fn (ImmutableSpan $span): array => $span->getAttributes()->toArray(), $this->spans());
         $this->assertSame('ids%5B%5D=a%20b&ids%5B%5D=c&limit=2', $files['url.query']);

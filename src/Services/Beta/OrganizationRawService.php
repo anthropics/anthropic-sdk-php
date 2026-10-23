@@ -40,8 +40,10 @@ final class OrganizationRawService implements OrganizationRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/me?beta=true',
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            path: 'v1/organizations/me',
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.retrieve',
                 route: '/v1/organizations/me',
             )),

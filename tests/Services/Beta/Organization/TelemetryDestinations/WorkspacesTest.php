@@ -39,7 +39,10 @@ final class WorkspacesTest extends TestCase
             ->organization
             ->telemetryDestinations
             ->workspaces
-            ->list('destination_id')
+            ->list(
+                'destination_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +63,11 @@ final class WorkspacesTest extends TestCase
             ->organization
             ->telemetryDestinations
             ->workspaces
-            ->add('workspace_id', destinationID: 'destination_id')
+            ->add(
+                'workspace_id',
+                destinationID: 'destination_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -80,6 +87,7 @@ final class WorkspacesTest extends TestCase
                 'workspace_id',
                 destinationID: 'destination_id',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -96,7 +104,11 @@ final class WorkspacesTest extends TestCase
             ->organization
             ->telemetryDestinations
             ->workspaces
-            ->remove('workspace_id', destinationID: 'destination_id')
+            ->remove(
+                'workspace_id',
+                destinationID: 'destination_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -119,6 +131,7 @@ final class WorkspacesTest extends TestCase
                 'workspace_id',
                 destinationID: 'destination_id',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 

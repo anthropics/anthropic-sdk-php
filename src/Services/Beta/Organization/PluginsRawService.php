@@ -94,7 +94,7 @@ final class PluginsRawService implements PluginsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/plugins?beta=true',
+            path: 'v1/organizations/plugins',
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
@@ -112,7 +112,7 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.create',
                 route: '/v1/organizations/plugins',
                 createdId: 'anthropic.organization.plugin.id',
@@ -158,7 +158,7 @@ final class PluginsRawService implements PluginsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/plugins/%1$s?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s', $pluginID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['organizationID' => 'organization_id'],
@@ -170,7 +170,7 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.retrieve',
                 route: '/v1/organizations/plugins/{plugin_id}',
                 query: ['organization_id'],
@@ -237,7 +237,7 @@ final class PluginsRawService implements PluginsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/plugins/%1$s?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s', $pluginID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -249,7 +249,7 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.update',
                 route: '/v1/organizations/plugins/{plugin_id}',
                 attributes: ['anthropic.organization.plugin.id' => $pluginID],
@@ -321,7 +321,7 @@ final class PluginsRawService implements PluginsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/plugins?beta=true',
+            path: 'v1/organizations/plugins',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -342,7 +342,7 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.list',
                 route: '/v1/organizations/plugins',
                 query: [
@@ -406,7 +406,7 @@ final class PluginsRawService implements PluginsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/organizations/plugins/%1$s?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s', $pluginID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -414,7 +414,7 @@ final class PluginsRawService implements PluginsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.delete',
                 route: '/v1/organizations/plugins/{plugin_id}',
                 attributes: ['anthropic.organization.plugin.id' => $pluginID],

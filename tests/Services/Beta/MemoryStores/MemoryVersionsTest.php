@@ -35,7 +35,8 @@ final class MemoryVersionsTest extends TestCase
     {
         $result = $this->client->beta->memoryStores->memoryVersions->retrieve(
             'memory_version_id',
-            memoryStoreID: 'memory_store_id'
+            memoryStoreID: 'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -51,6 +52,7 @@ final class MemoryVersionsTest extends TestCase
             view: ManagedAgentsMemoryView::BASIC,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -61,7 +63,8 @@ final class MemoryVersionsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->memoryStores->memoryVersions->list(
-            'memory_store_id'
+            'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -78,7 +81,8 @@ final class MemoryVersionsTest extends TestCase
     {
         $result = $this->client->beta->memoryStores->memoryVersions->redact(
             'memory_version_id',
-            memoryStoreID: 'memory_store_id'
+            memoryStoreID: 'memory_store_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -93,6 +97,7 @@ final class MemoryVersionsTest extends TestCase
             memoryStoreID: 'memory_store_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

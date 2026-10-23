@@ -68,7 +68,7 @@ final class UsersRawService implements UsersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/users?beta=true',
+            path: 'v1/organizations/analytics/users',
             query: Util::array_transform_keys(
                 $parsed,
                 [
@@ -78,7 +78,9 @@ final class UsersRawService implements UsersRawContract
                     'startingDate' => 'starting_date',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.users.list',
                 route: '/v1/organizations/analytics/users',
                 query: [

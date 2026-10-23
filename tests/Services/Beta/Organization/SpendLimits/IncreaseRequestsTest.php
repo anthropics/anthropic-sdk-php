@@ -39,7 +39,10 @@ final class IncreaseRequestsTest extends TestCase
             ->organization
             ->spendLimits
             ->increaseRequests
-            ->retrieve('spend_limit_increase_request_id')
+            ->retrieve(
+                'spend_limit_increase_request_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -55,7 +58,7 @@ final class IncreaseRequestsTest extends TestCase
             ->organization
             ->spendLimits
             ->increaseRequests
-            ->list()
+            ->list(requestOptions: ['extraQueryParams' => ['beta' => 'true']])
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -76,7 +79,11 @@ final class IncreaseRequestsTest extends TestCase
             ->organization
             ->spendLimits
             ->increaseRequests
-            ->approve('spend_limit_increase_request_id', amount: '50000')
+            ->approve(
+                'spend_limit_increase_request_id',
+                amount: '50000',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -97,6 +104,7 @@ final class IncreaseRequestsTest extends TestCase
                 amount: '50000',
                 period: SpendLimitPeriod::MONTHLY,
                 suppressNotification: true,
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -113,7 +121,10 @@ final class IncreaseRequestsTest extends TestCase
             ->organization
             ->spendLimits
             ->increaseRequests
-            ->deny('spend_limit_increase_request_id')
+            ->deny(
+                'spend_limit_increase_request_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

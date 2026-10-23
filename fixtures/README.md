@@ -3,9 +3,7 @@
 Table-test cases for the streaming accumulator — the code that folds a stream
 of `message_*` / `content_block_*` events into the same message the
 non-streaming endpoint returns. These files are **byte-identical across every
-Anthropic SDK**; the canonical source is the `accumulator-snapshots` package in
-the `anthropic-config` repo, and the end state is for the fixtures (and the
-per-language harnesses) to be emitted by the generators themselves.
+Anthropic SDK**.
 
 Each case is a pair of files sharing a basename under `ga/` (the
 `/v1/messages` stream) or `beta/` (the beta stream):

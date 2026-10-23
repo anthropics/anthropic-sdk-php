@@ -73,7 +73,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/memory_stores/%1$s/memories?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s/memories', $memoryStoreID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
@@ -86,7 +86,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.create',
                 route: '/v1/memory_stores/{memory_store_id}/memories',
                 query: ['view'],
@@ -134,11 +134,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/memory_stores/%1$s/memories/%2$s?beta=true',
-                $memoryStoreID,
-                $memoryID,
-            ],
+            path: ['v1/memory_stores/%1$s/memories/%2$s', $memoryStoreID, $memoryID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -149,7 +145,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.retrieve',
                 route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
                 query: ['view'],
@@ -202,11 +198,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/memory_stores/%1$s/memories/%2$s?beta=true',
-                $memoryStoreID,
-                $memoryID,
-            ],
+            path: ['v1/memory_stores/%1$s/memories/%2$s', $memoryStoreID, $memoryID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
@@ -222,7 +214,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.update',
                 route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
                 query: ['view'],
@@ -275,7 +267,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/memory_stores/%1$s/memories?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s/memories', $memoryStoreID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['pathPrefix' => 'path_prefix'],
@@ -289,7 +281,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.list',
                 route: '/v1/memory_stores/{memory_store_id}/memories',
                 query: ['depth', 'limit', 'page', 'path_prefix', 'view'],
@@ -338,11 +330,7 @@ final class MemoriesRawService implements MemoriesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: [
-                'v1/memory_stores/%1$s/memories/%2$s?beta=true',
-                $memoryStoreID,
-                $memoryID,
-            ],
+            path: ['v1/memory_stores/%1$s/memories/%2$s', $memoryStoreID, $memoryID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['expectedContentSha256' => 'expected_content_sha256'],
@@ -356,7 +344,7 @@ final class MemoriesRawService implements MemoriesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.memories.delete',
                 route: '/v1/memory_stores/{memory_store_id}/memories/{memory_id}',
                 query: ['expected_content_sha256'],

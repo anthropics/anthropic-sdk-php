@@ -32,7 +32,8 @@ final class VersionsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->agents->versions->list(
-            'agent_011CZkYpogX7uDKUyvBTophP'
+            'agent_011CZkYpogX7uDKUyvBTophP',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

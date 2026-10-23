@@ -32,7 +32,10 @@ final class WorkspacesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->beta->organization->workspaces->create(name: 'x');
+        $result = $this->client->beta->organization->workspaces->create(
+            name: 'x',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Workspace::class, $result);
@@ -52,6 +55,7 @@ final class WorkspacesTest extends TestCase
             externalKeyID: 'ekey_01SDCCSbTxrXDpWc1phhtcfK',
             tags: ['env' => 'prod', 'team' => 'platform'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -62,7 +66,8 @@ final class WorkspacesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->workspaces->retrieve(
-            'workspace_id'
+            'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -73,7 +78,8 @@ final class WorkspacesTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->workspaces->update(
-            'workspace_id'
+            'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -83,7 +89,9 @@ final class WorkspacesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->workspaces->list();
+        $page = $this->client->beta->organization->workspaces->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);
@@ -98,7 +106,8 @@ final class WorkspacesTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->organization->workspaces->archive(
-            'workspace_id'
+            'workspace_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

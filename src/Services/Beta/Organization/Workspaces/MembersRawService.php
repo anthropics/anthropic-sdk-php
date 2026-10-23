@@ -62,11 +62,11 @@ final class MembersRawService implements MembersRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/workspaces/%1$s/members/%2$s?beta=true',
-                $workspaceID,
-                $userID,
+                'v1/organizations/workspaces/%1$s/members/%2$s', $workspaceID, $userID,
             ],
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.retrieve',
                 route: '/v1/organizations/workspaces/{workspace_id}/members/{user_id}',
                 attributes: [
@@ -109,12 +109,12 @@ final class MembersRawService implements MembersRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/workspaces/%1$s/members/%2$s?beta=true',
-                $workspaceID,
-                $userID,
+                'v1/organizations/workspaces/%1$s/members/%2$s', $workspaceID, $userID,
             ],
             body: (object) array_diff_key($parsed, array_flip(['workspaceID'])),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.update',
                 route: '/v1/organizations/workspaces/{workspace_id}/members/{user_id}',
                 attributes: [
@@ -154,14 +154,14 @@ final class MembersRawService implements MembersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/workspaces/%1$s/members?beta=true', $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/members', $workspaceID],
             query: Util::array_transform_keys(
                 $parsed,
                 ['afterID' => 'after_id', 'beforeID' => 'before_id']
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.list',
                 route: '/v1/organizations/workspaces/{workspace_id}/members',
                 query: ['after_id', 'before_id', 'limit'],
@@ -200,11 +200,11 @@ final class MembersRawService implements MembersRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/workspaces/%1$s/members?beta=true', $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/members', $workspaceID],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.add',
                 route: '/v1/organizations/workspaces/{workspace_id}/members',
                 attributes: ['anthropic.organization.workspace.id' => $workspaceID],
@@ -243,11 +243,11 @@ final class MembersRawService implements MembersRawContract
         return $this->client->request(
             method: 'delete',
             path: [
-                'v1/organizations/workspaces/%1$s/members/%2$s?beta=true',
-                $workspaceID,
-                $userID,
+                'v1/organizations/workspaces/%1$s/members/%2$s', $workspaceID, $userID,
             ],
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.members.remove',
                 route: '/v1/organizations/workspaces/{workspace_id}/members/{user_id}',
                 attributes: [

@@ -114,9 +114,7 @@ final class EventsRawService implements EventsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/sessions/%1$s/threads/%2$s/events?beta=true', $sessionID, $threadID,
-            ],
+            path: ['v1/sessions/%1$s/threads/%2$s/events', $sessionID, $threadID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -127,7 +125,7 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.events.list',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}/events',
                 query: ['limit', 'page'],
@@ -176,9 +174,7 @@ final class EventsRawService implements EventsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/sessions/%1$s/threads/%2$s/stream?beta=true', $sessionID, $threadID,
-            ],
+            path: ['v1/sessions/%1$s/threads/%2$s/stream', $sessionID, $threadID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['eventDeltas' => 'event_deltas'],
@@ -192,7 +188,7 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.events.stream',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}/stream',
                 query: ['event_deltas'],

@@ -69,9 +69,7 @@ final class ResourcesRawService implements ResourcesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/sessions/%1$s/resources/%2$s?beta=true', $sessionID, $resourceID,
-            ],
+            path: ['v1/sessions/%1$s/resources/%2$s', $sessionID, $resourceID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -81,7 +79,7 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.resources.retrieve',
                 route: '/v1/sessions/{session_id}/resources/{resource_id}',
                 attributes: [
@@ -129,9 +127,7 @@ final class ResourcesRawService implements ResourcesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/sessions/%1$s/resources/%2$s?beta=true', $sessionID, $resourceID,
-            ],
+            path: ['v1/sessions/%1$s/resources/%2$s', $sessionID, $resourceID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -143,7 +139,7 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.resources.update',
                 route: '/v1/sessions/{session_id}/resources/{resource_id}',
                 attributes: [
@@ -190,7 +186,7 @@ final class ResourcesRawService implements ResourcesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s/resources?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/resources', $sessionID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -201,7 +197,7 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.resources.list',
                 route: '/v1/sessions/{session_id}/resources',
                 query: ['limit', 'page'],
@@ -244,9 +240,7 @@ final class ResourcesRawService implements ResourcesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: [
-                'v1/sessions/%1$s/resources/%2$s?beta=true', $sessionID, $resourceID,
-            ],
+            path: ['v1/sessions/%1$s/resources/%2$s', $sessionID, $resourceID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -256,7 +250,7 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.resources.delete',
                 route: '/v1/sessions/{session_id}/resources/{resource_id}',
                 attributes: [
@@ -303,7 +297,7 @@ final class ResourcesRawService implements ResourcesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/sessions/%1$s/resources?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/resources', $sessionID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -315,7 +309,7 @@ final class ResourcesRawService implements ResourcesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.resources.add',
                 route: '/v1/sessions/{session_id}/resources',
                 attributes: ['anthropic.session.id' => $sessionID],

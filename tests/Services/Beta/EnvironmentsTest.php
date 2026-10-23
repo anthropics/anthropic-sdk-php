@@ -34,7 +34,8 @@ final class EnvironmentsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->environments->create(
-            name: 'python-data-analysis'
+            name: 'python-data-analysis',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -69,6 +70,7 @@ final class EnvironmentsTest extends TestCase
             scope: 'organization',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -79,7 +81,8 @@ final class EnvironmentsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->environments->retrieve(
-            'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -90,7 +93,8 @@ final class EnvironmentsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->environments->update(
-            'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -100,7 +104,9 @@ final class EnvironmentsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->environments->list();
+        $page = $this->client->beta->environments->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -115,7 +121,8 @@ final class EnvironmentsTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->environments->delete(
-            'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -126,7 +133,8 @@ final class EnvironmentsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->environments->archive(
-            'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

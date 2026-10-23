@@ -60,14 +60,16 @@ final class ModelsRawService implements ModelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/models/%1$s?beta=true', $modelID],
+            path: ['v1/models/%1$s', $modelID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.models.retrieve',
                 route: '/v1/models/{model_id}',
                 attributes: ['anthropic.model.id' => $modelID],
@@ -113,7 +115,7 @@ final class ModelsRawService implements ModelsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/models?beta=true',
+            path: 'v1/models',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['afterID' => 'after_id', 'beforeID' => 'before_id'],
@@ -124,7 +126,9 @@ final class ModelsRawService implements ModelsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.models.list',
                 route: '/v1/models',
                 query: ['after_id', 'before_id', 'lifecycle', 'limit'],

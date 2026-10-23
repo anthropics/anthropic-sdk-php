@@ -69,7 +69,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/telemetry_destinations/%1$s/workspaces?beta=true',
+                'v1/organizations/telemetry_destinations/%1$s/workspaces',
                 $destinationID,
             ],
             query: array_intersect_key($parsed, $query_params),
@@ -84,7 +84,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.telemetry_destinations.workspaces.list',
                 route: '/v1/organizations/telemetry_destinations/{destination_id}/workspaces',
                 query: ['limit', 'page'],
@@ -135,7 +135,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/telemetry_destinations/%1$s/workspaces/%2$s?beta=true',
+                'v1/organizations/telemetry_destinations/%1$s/workspaces/%2$s',
                 $destinationID,
                 $workspaceID,
             ],
@@ -150,7 +150,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.telemetry_destinations.workspaces.add',
                 route: '/v1/organizations/telemetry_destinations/{destination_id}/workspaces/{workspace_id}',
                 attributes: [
@@ -200,7 +200,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
         return $this->client->request(
             method: 'delete',
             path: [
-                'v1/organizations/telemetry_destinations/%1$s/workspaces/%2$s?beta=true',
+                'v1/organizations/telemetry_destinations/%1$s/workspaces/%2$s',
                 $destinationID,
                 $workspaceID,
             ],
@@ -215,7 +215,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.telemetry_destinations.workspaces.remove',
                 route: '/v1/organizations/telemetry_destinations/{destination_id}/workspaces/{workspace_id}',
                 attributes: [

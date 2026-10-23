@@ -135,7 +135,7 @@ final class CostRawService implements CostRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/analytics/cost?beta=true',
+            path: 'v1/organizations/analytics/cost',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -174,7 +174,7 @@ final class CostRawService implements CostRawContract
                     ],
                 ],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.analytics.cost.list',
                 route: '/v1/organizations/analytics/cost',
                 query: [

@@ -68,7 +68,7 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/skills/%1$s/versions?beta=true', $skillID],
+            path: ['v1/skills/%1$s/versions', $skillID],
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
@@ -83,7 +83,9 @@ final class VersionsRawService implements VersionsRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.create',
                 route: '/v1/skills/{skill_id}/versions',
                 attributes: ['anthropic.skill.id' => $skillID],
@@ -127,14 +129,16 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],
+            path: ['v1/skills/%1$s/versions/%2$s', $skillID, $version],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.retrieve',
                 route: '/v1/skills/{skill_id}/versions/{version}',
                 attributes: [
@@ -183,7 +187,7 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/skills/%1$s/versions?beta=true', $skillID],
+            path: ['v1/skills/%1$s/versions', $skillID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -191,7 +195,9 @@ final class VersionsRawService implements VersionsRawContract
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.list',
                 route: '/v1/skills/{skill_id}/versions',
                 query: ['limit', 'page'],
@@ -236,14 +242,16 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/skills/%1$s/versions/%2$s?beta=true', $skillID, $version],
+            path: ['v1/skills/%1$s/versions/%2$s', $skillID, $version],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.delete',
                 route: '/v1/skills/{skill_id}/versions/{version}',
                 attributes: [
@@ -289,16 +297,16 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/skills/%1$s/versions/%2$s/content?beta=true', $skillID, $version,
-            ],
+            path: ['v1/skills/%1$s/versions/%2$s/content', $skillID, $version],
             headers: Util::array_transform_keys(
                 ['Accept' => 'application/binary', ...$parsed],
                 [
                     'betas' => 'anthropic-beta', 'workspaceID' => 'anthropic-workspace-id',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.skills.versions.download',
                 route: '/v1/skills/{skill_id}/versions/{version}/content',
                 attributes: [

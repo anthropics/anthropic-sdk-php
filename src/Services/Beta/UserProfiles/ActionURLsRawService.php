@@ -61,7 +61,7 @@ final class ActionURLsRawService implements ActionURLsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/user_profiles/%1$s/action_urls?beta=true', $userProfileID],
+            path: ['v1/user_profiles/%1$s/action_urls', $userProfileID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -73,7 +73,7 @@ final class ActionURLsRawService implements ActionURLsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'user-profiles-2026-08-18']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.user_profiles.action_urls.create',
                 route: '/v1/user_profiles/{user_profile_id}/action_urls',
                 attributes: ['anthropic.user_profile.id' => $userProfileID],

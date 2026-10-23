@@ -70,9 +70,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/environments/%1$s/work/%2$s?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -82,7 +80,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.retrieve',
                 route: '/v1/environments/{environment_id}/work/{work_id}',
                 attributes: [
@@ -132,9 +130,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/environments/%1$s/work/%2$s?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -146,7 +142,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.update',
                 route: '/v1/environments/{environment_id}/work/{work_id}',
                 attributes: [
@@ -194,7 +190,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/environments/%1$s/work?beta=true', $environmentID],
+            path: ['v1/environments/%1$s/work', $environmentID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -203,7 +199,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.list',
                 route: '/v1/environments/{environment_id}/work',
                 query: ['limit', 'page'],
@@ -247,9 +243,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/environments/%1$s/work/%2$s/ack?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s/ack', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -257,7 +251,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.ack',
                 route: '/v1/environments/{environment_id}/work/{work_id}/ack',
                 attributes: [
@@ -309,9 +303,7 @@ final class WorkRawService implements WorkRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/environments/%1$s/work/%2$s/heartbeat?beta=true',
-                $environmentID,
-                $workID,
+                'v1/environments/%1$s/work/%2$s/heartbeat', $environmentID, $workID,
             ],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
@@ -327,7 +319,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.heartbeat',
                 route: '/v1/environments/{environment_id}/work/{work_id}/heartbeat',
                 query: ['desired_ttl_seconds', 'expected_last_heartbeat'],
@@ -377,7 +369,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/environments/%1$s/work/poll?beta=true', $environmentID],
+            path: ['v1/environments/%1$s/work/poll', $environmentID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -395,7 +387,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.poll',
                 route: '/v1/environments/{environment_id}/work/poll',
                 query: ['block_ms', 'reclaim_older_than_ms'],
@@ -433,7 +425,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/environments/%1$s/work/stats?beta=true', $environmentID],
+            path: ['v1/environments/%1$s/work/stats', $environmentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -443,7 +435,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.stats',
                 route: '/v1/environments/{environment_id}/work/stats',
                 attributes: ['anthropic.environment.id' => $environmentID],
@@ -490,9 +482,7 @@ final class WorkRawService implements WorkRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/environments/%1$s/work/%2$s/stop?beta=true', $environmentID, $workID,
-            ],
+            path: ['v1/environments/%1$s/work/%2$s/stop', $environmentID, $workID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -504,7 +494,7 @@ final class WorkRawService implements WorkRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.environments.work.stop',
                 route: '/v1/environments/{environment_id}/work/{work_id}/stop',
                 attributes: [

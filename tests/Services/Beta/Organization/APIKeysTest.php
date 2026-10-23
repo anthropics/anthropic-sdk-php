@@ -32,7 +32,8 @@ final class APIKeysTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->apiKeys->retrieve(
-            'api_key_id'
+            'api_key_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -42,7 +43,10 @@ final class APIKeysTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->beta->organization->apiKeys->update('api_key_id');
+        $result = $this->client->beta->organization->apiKeys->update(
+            'api_key_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(APIKey::class, $result);
@@ -51,7 +55,9 @@ final class APIKeysTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->apiKeys->list();
+        $page = $this->client->beta->organization->apiKeys->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);

@@ -133,7 +133,7 @@ final class EventsRawService implements EventsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s/events?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/events', $sessionID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -152,7 +152,7 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.events.list',
                 route: '/v1/sessions/{session_id}/events',
                 query: [
@@ -205,7 +205,7 @@ final class EventsRawService implements EventsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/sessions/%1$s/events?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/events', $sessionID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -217,7 +217,7 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.events.send',
                 route: '/v1/sessions/{session_id}/events',
                 attributes: ['anthropic.session.id' => $sessionID],
@@ -258,7 +258,7 @@ final class EventsRawService implements EventsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s/events/stream?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/events/stream', $sessionID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['eventDeltas' => 'event_deltas'],
@@ -272,7 +272,7 @@ final class EventsRawService implements EventsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.events.stream',
                 route: '/v1/sessions/{session_id}/events/stream',
                 query: ['event_deltas'],

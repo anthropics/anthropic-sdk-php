@@ -36,7 +36,8 @@ final class WorkTest extends TestCase
     {
         $result = $this->client->beta->environments->work->retrieve(
             'work_id',
-            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -51,6 +52,7 @@ final class WorkTest extends TestCase
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -64,6 +66,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             metadata: ['foo' => 'string'],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -79,6 +82,7 @@ final class WorkTest extends TestCase
             metadata: ['foo' => 'string'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -89,7 +93,8 @@ final class WorkTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->environments->work->list(
-            'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -106,7 +111,8 @@ final class WorkTest extends TestCase
     {
         $result = $this->client->beta->environments->work->ack(
             'work_id',
-            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -120,6 +126,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -131,7 +138,8 @@ final class WorkTest extends TestCase
     {
         $result = $this->client->beta->environments->work->heartbeat(
             'work_id',
-            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -147,6 +155,7 @@ final class WorkTest extends TestCase
             desiredTTLSeconds: 0,
             expectedLastHeartbeat: 'expected_last_heartbeat',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -157,7 +166,8 @@ final class WorkTest extends TestCase
     public function testPoll(): void
     {
         $result = $this->client->beta->environments->work->poll(
-            'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -168,7 +178,8 @@ final class WorkTest extends TestCase
     public function testStats(): void
     {
         $result = $this->client->beta->environments->work->stats(
-            'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -180,7 +191,8 @@ final class WorkTest extends TestCase
     {
         $result = $this->client->beta->environments->work->stop(
             'work_id',
-            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW'
+            environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -196,6 +208,7 @@ final class WorkTest extends TestCase
             force: true,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

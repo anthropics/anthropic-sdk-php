@@ -37,6 +37,7 @@ final class SessionsTest extends TestCase
         $result = $this->client->beta->sessions->create(
             agent: 'agent_011CZkYpogX7uDKUyvBTophP',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -73,6 +74,7 @@ final class SessionsTest extends TestCase
             vaultIDs: ['string'],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -83,7 +85,8 @@ final class SessionsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->sessions->retrieve(
-            'sesn_011CZkZAtmR3yMPDzynEDxu7'
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -94,7 +97,8 @@ final class SessionsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->sessions->update(
-            'sesn_011CZkZAtmR3yMPDzynEDxu7'
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -104,7 +108,9 @@ final class SessionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->sessions->list();
+        $page = $this->client->beta->sessions->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BidirectionalPageCursor::class, $page);
@@ -119,7 +125,8 @@ final class SessionsTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->sessions->delete(
-            'sesn_011CZkZAtmR3yMPDzynEDxu7'
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -130,7 +137,8 @@ final class SessionsTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->sessions->archive(
-            'sesn_011CZkZAtmR3yMPDzynEDxu7'
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -66,7 +66,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/memory_stores?beta=true',
+            path: 'v1/memory_stores',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -78,7 +78,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.create',
                 route: '/v1/memory_stores',
                 createdId: 'gen_ai.memory.store.id',
@@ -116,7 +116,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/memory_stores/%1$s?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s', $memoryStoreID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -126,7 +126,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.retrieve',
                 route: '/v1/memory_stores/{memory_store_id}',
                 attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
@@ -172,7 +172,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/memory_stores/%1$s?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s', $memoryStoreID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -184,7 +184,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.update',
                 route: '/v1/memory_stores/{memory_store_id}',
                 attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
@@ -231,7 +231,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/memory_stores?beta=true',
+            path: 'v1/memory_stores',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -249,7 +249,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.list',
                 route: '/v1/memory_stores',
                 query: [
@@ -296,7 +296,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/memory_stores/%1$s?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s', $memoryStoreID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -306,7 +306,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.delete',
                 route: '/v1/memory_stores/{memory_store_id}',
                 attributes: ['gen_ai.memory.store.id' => $memoryStoreID],
@@ -346,7 +346,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/memory_stores/%1$s/archive?beta=true', $memoryStoreID],
+            path: ['v1/memory_stores/%1$s/archive', $memoryStoreID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -356,7 +356,7 @@ final class MemoryStoresRawService implements MemoryStoresRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'agent-memory-2026-07-22']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.memory_stores.archive',
                 route: '/v1/memory_stores/{memory_store_id}/archive',
                 attributes: ['gen_ai.memory.store.id' => $memoryStoreID],

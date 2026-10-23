@@ -85,7 +85,7 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/plugins/%1$s/versions?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s/versions', $pluginID],
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
@@ -103,7 +103,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.create',
                 route: '/v1/organizations/plugins/{plugin_id}/versions',
                 attributes: ['anthropic.organization.plugin.id' => $pluginID],
@@ -154,9 +154,7 @@ final class VersionsRawService implements VersionsRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/plugins/%1$s/versions/%2$s?beta=true',
-                $pluginID,
-                $version,
+                'v1/organizations/plugins/%1$s/versions/%2$s', $pluginID, $version,
             ],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
@@ -169,7 +167,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.retrieve',
                 route: '/v1/organizations/plugins/{plugin_id}/versions/{version}',
                 query: ['organization_id'],
@@ -224,7 +222,7 @@ final class VersionsRawService implements VersionsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/plugins/%1$s/versions?beta=true', $pluginID],
+            path: ['v1/organizations/plugins/%1$s/versions', $pluginID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['organizationID' => 'organization_id'],
@@ -236,7 +234,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.list',
                 route: '/v1/organizations/plugins/{plugin_id}/versions',
                 query: ['limit', 'organization_id', 'page'],
@@ -304,7 +302,7 @@ final class VersionsRawService implements VersionsRawContract
         return $this->client->request(
             method: 'get',
             path: [
-                'v1/organizations/plugins/%1$s/versions/%2$s/content?beta=true',
+                'v1/organizations/plugins/%1$s/versions/%2$s/content',
                 $pluginID,
                 $version,
             ],
@@ -319,7 +317,7 @@ final class VersionsRawService implements VersionsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.versions.download',
                 route: '/v1/organizations/plugins/{plugin_id}/versions/{version}/content',
                 query: ['organization_id'],

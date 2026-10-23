@@ -38,6 +38,7 @@ final class ExternalKeysTest extends TestCase
                 'kmsARN' => 'arn:aws:kms:us-east-1:111122223333:key/abcd1234-5678-90ab-cdef-000011112222',
                 'type' => 'aws',
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -56,6 +57,7 @@ final class ExternalKeysTest extends TestCase
             ],
             displayName: 'x',
             geo: 'us',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -66,7 +68,8 @@ final class ExternalKeysTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->externalKeys->retrieve(
-            'external_key_id'
+            'external_key_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -77,7 +80,8 @@ final class ExternalKeysTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->externalKeys->update(
-            'external_key_id'
+            'external_key_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -87,7 +91,9 @@ final class ExternalKeysTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->externalKeys->list();
+        $page = $this->client->beta->organization->externalKeys->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -102,7 +108,8 @@ final class ExternalKeysTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->organization->externalKeys->delete(
-            'external_key_id'
+            'external_key_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -113,7 +120,8 @@ final class ExternalKeysTest extends TestCase
     public function testValidate(): void
     {
         $result = $this->client->beta->organization->externalKeys->validate(
-            'external_key_id'
+            'external_key_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

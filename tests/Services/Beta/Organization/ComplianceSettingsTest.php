@@ -30,7 +30,9 @@ final class ComplianceSettingsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->beta->organization->complianceSettings->retrieve();
+        $result = $this->client->beta->organization->complianceSettings->retrieve(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ComplianceSettings::class, $result);
@@ -40,7 +42,8 @@ final class ComplianceSettingsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->complianceSettings->update(
-            state: ['type' => 'enabled']
+            state: ['type' => 'enabled'],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -51,7 +54,8 @@ final class ComplianceSettingsTest extends TestCase
     public function testUpdateWithOptionalParams(): void
     {
         $result = $this->client->beta->organization->complianceSettings->update(
-            state: ['type' => 'enabled']
+            state: ['type' => 'enabled'],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

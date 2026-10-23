@@ -46,8 +46,10 @@ final class RBACRolesRawService implements RBACRolesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/rbac_roles/%1$s?beta=true', $rbacRoleID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            path: ['v1/organizations/rbac_roles/%1$s', $rbacRoleID],
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_roles.retrieve',
                 route: '/v1/organizations/rbac_roles/{rbac_role_id}',
                 attributes: ['anthropic.organization.rbac_role.id' => $rbacRoleID],
@@ -82,9 +84,11 @@ final class RBACRolesRawService implements RBACRolesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/rbac_roles?beta=true',
+            path: 'v1/organizations/rbac_roles',
             query: $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.rbac_roles.list',
                 route: '/v1/organizations/rbac_roles',
                 query: ['limit', 'page'],

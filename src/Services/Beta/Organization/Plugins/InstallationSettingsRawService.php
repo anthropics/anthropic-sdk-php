@@ -79,10 +79,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/plugins/%1$s/installation_settings?beta=true',
-                $pluginID,
-            ],
+            path: ['v1/organizations/plugins/%1$s/installation_settings', $pluginID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['organizationID' => 'organization_id', 'targetType' => 'target_type'],
@@ -94,7 +91,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.installation_settings.list',
                 route: '/v1/organizations/plugins/{plugin_id}/installation_settings',
                 query: ['limit', 'organization_id', 'page', 'target_type'],
@@ -156,7 +153,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
         return $this->client->request(
             method: 'delete',
             path: [
-                'v1/organizations/plugins/%1$s/installation_settings/%2$s?beta=true',
+                'v1/organizations/plugins/%1$s/installation_settings/%2$s',
                 $pluginID,
                 $target,
             ],
@@ -167,7 +164,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.installation_settings.remove',
                 route: '/v1/organizations/plugins/{plugin_id}/installation_settings/{target}',
                 attributes: [
@@ -229,7 +226,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/plugins/%1$s/installation_settings/%2$s?beta=true',
+                'v1/organizations/plugins/%1$s/installation_settings/%2$s',
                 $pluginID,
                 $target,
             ],
@@ -244,7 +241,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugins.installation_settings.set',
                 route: '/v1/organizations/plugins/{plugin_id}/installation_settings/{target}',
                 attributes: [

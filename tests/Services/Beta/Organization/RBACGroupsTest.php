@@ -33,7 +33,8 @@ final class RBACGroupsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->organization->rbacGroups->create(
-            name: 'Engineering'
+            name: 'Engineering',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -44,7 +45,8 @@ final class RBACGroupsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->organization->rbacGroups->create(
-            name: 'Engineering'
+            name: 'Engineering',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -55,7 +57,8 @@ final class RBACGroupsTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->rbacGroups->retrieve(
-            'rbac_group_id'
+            'rbac_group_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -66,7 +69,8 @@ final class RBACGroupsTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->rbacGroups->update(
-            'rbac_group_id'
+            'rbac_group_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -76,7 +80,9 @@ final class RBACGroupsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->rbacGroups->list();
+        $page = $this->client->beta->organization->rbacGroups->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -91,7 +97,8 @@ final class RBACGroupsTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->organization->rbacGroups->delete(
-            'rbac_group_id'
+            'rbac_group_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

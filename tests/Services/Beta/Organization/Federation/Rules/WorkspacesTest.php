@@ -40,7 +40,10 @@ final class WorkspacesTest extends TestCase
             ->federation
             ->rules
             ->workspaces
-            ->list('federation_rule_id')
+            ->list(
+                'federation_rule_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -62,7 +65,11 @@ final class WorkspacesTest extends TestCase
             ->federation
             ->rules
             ->workspaces
-            ->add('federation_rule_id', workspaceID: 'workspace_id')
+            ->add(
+                'federation_rule_id',
+                workspaceID: 'workspace_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -83,6 +90,7 @@ final class WorkspacesTest extends TestCase
                 'federation_rule_id',
                 workspaceID: 'workspace_id',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 
@@ -100,7 +108,11 @@ final class WorkspacesTest extends TestCase
             ->federation
             ->rules
             ->workspaces
-            ->remove('workspace_id', federationRuleID: 'federation_rule_id')
+            ->remove(
+                'workspace_id',
+                federationRuleID: 'federation_rule_id',
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+            )
         ;
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -121,6 +133,7 @@ final class WorkspacesTest extends TestCase
                 'workspace_id',
                 federationRuleID: 'federation_rule_id',
                 betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
 

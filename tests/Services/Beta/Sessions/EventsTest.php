@@ -33,7 +33,8 @@ final class EventsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->sessions->events->list(
-            'sesn_011CZkZAtmR3yMPDzynEDxu7'
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -58,6 +59,7 @@ final class EventsTest extends TestCase
                     'type' => 'user.message',
                 ],
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -79,6 +81,7 @@ final class EventsTest extends TestCase
             ],
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

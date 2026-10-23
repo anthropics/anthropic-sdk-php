@@ -35,6 +35,7 @@ final class ThreadsTest extends TestCase
         $result = $this->client->beta->sessions->threads->retrieve(
             'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -49,6 +50,7 @@ final class ThreadsTest extends TestCase
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -59,7 +61,8 @@ final class ThreadsTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->beta->sessions->threads->list(
-            'sesn_011CZkZAtmR3yMPDzynEDxu7'
+            'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -77,6 +80,7 @@ final class ThreadsTest extends TestCase
         $result = $this->client->beta->sessions->threads->archive(
             'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -91,6 +95,7 @@ final class ThreadsTest extends TestCase
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

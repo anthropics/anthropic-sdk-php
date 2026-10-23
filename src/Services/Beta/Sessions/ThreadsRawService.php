@@ -62,7 +62,7 @@ final class ThreadsRawService implements ThreadsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s/threads/%2$s?beta=true', $sessionID, $threadID],
+            path: ['v1/sessions/%1$s/threads/%2$s', $sessionID, $threadID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -72,7 +72,7 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.retrieve',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}',
                 attributes: [
@@ -120,7 +120,7 @@ final class ThreadsRawService implements ThreadsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/sessions/%1$s/threads?beta=true', $sessionID],
+            path: ['v1/sessions/%1$s/threads', $sessionID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -131,7 +131,7 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.list',
                 route: '/v1/sessions/{session_id}/threads',
                 query: ['limit', 'page', 'statuses'],
@@ -174,9 +174,7 @@ final class ThreadsRawService implements ThreadsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/sessions/%1$s/threads/%2$s/archive?beta=true', $sessionID, $threadID,
-            ],
+            path: ['v1/sessions/%1$s/threads/%2$s/archive', $sessionID, $threadID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -186,7 +184,7 @@ final class ThreadsRawService implements ThreadsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.sessions.threads.archive',
                 route: '/v1/sessions/{session_id}/threads/{thread_id}/archive',
                 attributes: [

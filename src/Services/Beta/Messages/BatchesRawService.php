@@ -77,7 +77,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/messages/batches?beta=true',
+            path: 'v1/messages/batches',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -89,7 +89,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.create',
                 route: '/v1/messages/batches',
                 attributes: ['anthropic.message.batch.request_count' => is_array($requests) ? count($requests) : null],
@@ -130,7 +130,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -140,7 +140,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.retrieve',
                 route: '/v1/messages/batches/{message_batch_id}',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],
@@ -185,7 +185,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/messages/batches?beta=true',
+            path: 'v1/messages/batches',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['afterID' => 'after_id', 'beforeID' => 'before_id'],
@@ -199,7 +199,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.list',
                 route: '/v1/messages/batches',
                 query: ['after_id', 'before_id', 'limit'],
@@ -242,7 +242,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/messages/batches/%1$s?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -252,7 +252,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.delete',
                 route: '/v1/messages/batches/{message_batch_id}',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],
@@ -294,7 +294,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/messages/batches/%1$s/cancel?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s/cancel', $messageBatchID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -304,7 +304,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.cancel',
                 route: '/v1/messages/batches/{message_batch_id}/cancel',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],
@@ -340,7 +340,7 @@ final class BatchesRawService implements BatchesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/messages/batches/%1$s/results?beta=true', $messageBatchID],
+            path: ['v1/messages/batches/%1$s/results', $messageBatchID],
             headers: Util::array_transform_keys(
                 ['Accept' => 'application/x-jsonl', ...$parsed],
                 [
@@ -350,7 +350,7 @@ final class BatchesRawService implements BatchesRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'message-batches-2024-09-24']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.messages.batches.results',
                 route: '/v1/messages/batches/{message_batch_id}/results',
                 attributes: ['anthropic.message.batch.id' => $messageBatchID],

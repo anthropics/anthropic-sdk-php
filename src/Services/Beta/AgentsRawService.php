@@ -80,7 +80,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/agents?beta=true',
+            path: 'v1/agents',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -92,7 +92,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.create',
                 route: '/v1/agents',
                 createdId: 'gen_ai.agent.id',
@@ -135,7 +135,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/agents/%1$s?beta=true', $agentID],
+            path: ['v1/agents/%1$s', $agentID],
             query: array_intersect_key($parsed, $query_params),
             headers: Util::array_transform_keys(
                 $header_params,
@@ -146,7 +146,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.retrieve',
                 route: '/v1/agents/{agent_id}',
                 query: ['version'],
@@ -199,7 +199,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/agents/%1$s?beta=true', $agentID],
+            path: ['v1/agents/%1$s', $agentID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -211,7 +211,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.update',
                 route: '/v1/agents/{agent_id}',
                 attributes: ['gen_ai.agent.id' => $agentID],
@@ -258,7 +258,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/agents?beta=true',
+            path: 'v1/agents',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 [
@@ -276,7 +276,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.list',
                 route: '/v1/agents',
                 query: [
@@ -321,7 +321,7 @@ final class AgentsRawService implements AgentsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/agents/%1$s/archive?beta=true', $agentID],
+            path: ['v1/agents/%1$s/archive', $agentID],
             headers: Util::array_transform_keys(
                 $parsed,
                 [
@@ -331,7 +331,7 @@ final class AgentsRawService implements AgentsRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'managed-agents-2026-04-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.agents.archive',
                 route: '/v1/agents/{agent_id}/archive',
                 attributes: ['gen_ai.agent.id' => $agentID],

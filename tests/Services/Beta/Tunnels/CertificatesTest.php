@@ -34,7 +34,8 @@ final class CertificatesTest extends TestCase
     {
         $result = $this->client->beta->tunnels->certificates->create(
             'tunnel_id',
-            caCertificatePEM: 'ca_certificate_pem'
+            caCertificatePEM: 'ca_certificate_pem',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -49,6 +50,7 @@ final class CertificatesTest extends TestCase
             caCertificatePEM: 'ca_certificate_pem',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +62,8 @@ final class CertificatesTest extends TestCase
     {
         $result = $this->client->beta->tunnels->certificates->retrieve(
             'certificate_id',
-            tunnelID: 'tunnel_id'
+            tunnelID: 'tunnel_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -75,6 +78,7 @@ final class CertificatesTest extends TestCase
             tunnelID: 'tunnel_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -84,7 +88,10 @@ final class CertificatesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->tunnels->certificates->list('tunnel_id');
+        $page = $this->client->beta->tunnels->certificates->list(
+            'tunnel_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -100,7 +107,8 @@ final class CertificatesTest extends TestCase
     {
         $result = $this->client->beta->tunnels->certificates->archive(
             'certificate_id',
-            tunnelID: 'tunnel_id'
+            tunnelID: 'tunnel_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -115,6 +123,7 @@ final class CertificatesTest extends TestCase
             tunnelID: 'tunnel_id',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -67,7 +67,7 @@ final class ExternalKey implements BaseModel
     public ?string $displayName;
 
     /**
-     * Data residency geo. Selects which regional validator handles this key's encrypt/decrypt roundtrips.
+     * Data residency geo. Selects the region that handles this key's encrypt/decrypt roundtrips.
      */
     #[Required]
     public string $geo;
@@ -192,7 +192,7 @@ final class ExternalKey implements BaseModel
     }
 
     /**
-     * Data residency geo. Selects which regional validator handles this key's encrypt/decrypt roundtrips.
+     * Data residency geo. Selects the region that handles this key's encrypt/decrypt roundtrips.
      */
     public function withGeo(string $geo): self
     {

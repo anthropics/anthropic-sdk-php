@@ -73,9 +73,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/plugin_marketplaces/%1$s?beta=true', $marketplaceID,
-            ],
+            path: ['v1/organizations/plugin_marketplaces/%1$s', $marketplaceID],
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['organizationID' => 'organization_id'],
@@ -87,7 +85,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugin_marketplaces.retrieve',
                 route: '/v1/organizations/plugin_marketplaces/{marketplace_id}',
                 query: ['organization_id'],
@@ -138,9 +136,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/plugin_marketplaces/%1$s?beta=true', $marketplaceID,
-            ],
+            path: ['v1/organizations/plugin_marketplaces/%1$s', $marketplaceID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -152,7 +148,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugin_marketplaces.update',
                 route: '/v1/organizations/plugin_marketplaces/{marketplace_id}',
                 attributes: [
@@ -210,7 +206,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/plugin_marketplaces?beta=true',
+            path: 'v1/organizations/plugin_marketplaces',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['organizationID' => 'organization_id', 'ownerType' => 'owner_type'],
@@ -222,7 +218,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugin_marketplaces.list',
                 route: '/v1/organizations/plugin_marketplaces',
                 query: ['limit', 'organization_id', 'owner_type', 'page', 'source'],
@@ -279,7 +275,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/plugin_marketplaces/validate_archive?beta=true',
+            path: 'v1/organizations/plugin_marketplaces/validate_archive',
             headers: Util::array_transform_keys(
                 [
                     'Content-Type' => 'multipart/form-data',
@@ -297,7 +293,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugin_marketplaces.validate_archive',
                 route: '/v1/organizations/plugin_marketplaces/validate_archive',
             )),
@@ -353,7 +349,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/plugin_marketplaces/validate_repository?beta=true',
+            path: 'v1/organizations/plugin_marketplaces/validate_repository',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -365,7 +361,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'ce-plugins-2026-09-01']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.plugin_marketplaces.validate_repository',
                 route: '/v1/organizations/plugin_marketplaces/validate_repository',
             )),

@@ -34,7 +34,8 @@ final class IssuersTest extends TestCase
     {
         $result = $this->client->beta->organization->federation->issuers->create(
             issuerURL: 'x',
-            name: 'x'
+            name: 'x',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -55,6 +56,7 @@ final class IssuersTest extends TestCase
             ],
             maxJWTLifetimeSeconds: 1,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -65,7 +67,8 @@ final class IssuersTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->organization->federation->issuers->retrieve(
-            'federation_issuer_id'
+            'federation_issuer_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -76,7 +79,8 @@ final class IssuersTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->organization->federation->issuers->update(
-            'federation_issuer_id'
+            'federation_issuer_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -86,7 +90,9 @@ final class IssuersTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->organization->federation->issuers->list();
+        $page = $this->client->beta->organization->federation->issuers->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -101,7 +107,8 @@ final class IssuersTest extends TestCase
     public function testArchive(): void
     {
         $result = $this->client->beta->organization->federation->issuers->archive(
-            'federation_issuer_id'
+            'federation_issuer_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

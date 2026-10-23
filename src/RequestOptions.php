@@ -124,6 +124,14 @@ final class RequestOptions implements BaseModel
     public ?array $openTelemetry;
 
     /**
+     * The query pairs that tell the operation apart from the others with its path in the OpenAPI document. Only the SDK
+     * sets them, with {@see self::withQualifiers()}: they are no request option, so an array of request options has no key for them.
+     *
+     * @var array<string,string>|null
+     */
+    private ?array $qualifiers = null;
+
+    /**
      * What the SDK method that makes the request knows of its API call, for the call's span. Only the SDK sets it, with
      * {@see self::withApiCall()}: it is no request option, so an array of request options has no key for it.
      */
@@ -143,8 +151,11 @@ final class RequestOptions implements BaseModel
 
         // @phpstan-ignore-next-line argument.type
         $self = self::with(...array_merge(...$parsed));
-        // The last options that name the API call win, as with every request option.
+        // The last options that have what the SDK sets win, as with every request option.
         foreach ($options as $o) {
+            if ($o instanceof self && !is_null($o->qualifiers)) {
+                $self->qualifiers = $o->qualifiers;
+            }
             if ($o instanceof self && !is_null($o->apiCall)) {
                 $self->apiCall = $o->apiCall;
             }
@@ -315,6 +326,33 @@ final class RequestOptions implements BaseModel
         $self->openTelemetry = $openTelemetry;
 
         return $self;
+    }
+
+    /**
+     * @internal
+     *
+     * These options for a request to the operation that `$qualifiers` tell apart
+     *
+     * @param array<string,string> $qualifiers
+     */
+    public function withQualifiers(array $qualifiers): self
+    {
+        $self = clone $this;
+        $self->qualifiers = $qualifiers;
+
+        return $self;
+    }
+
+    /**
+     * @internal
+     *
+     * What the SDK method that makes the request set with {@see self::withQualifiers()}
+     *
+     * @return array<string,string>|null
+     */
+    public function qualifiers(): ?array
+    {
+        return $this->qualifiers;
     }
 
     /**

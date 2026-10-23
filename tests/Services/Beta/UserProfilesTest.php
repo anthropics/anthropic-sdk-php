@@ -33,7 +33,9 @@ final class UserProfilesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->beta->userProfiles->create();
+        $result = $this->client->beta->userProfiles->create(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BetaUserProfile::class, $result);
@@ -43,7 +45,8 @@ final class UserProfilesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->userProfiles->retrieve(
-            'uprof_011CZkZCu8hGbp5mYRQgUmz9'
+            'uprof_011CZkZCu8hGbp5mYRQgUmz9',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -54,7 +57,8 @@ final class UserProfilesTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->beta->userProfiles->update(
-            'uprof_011CZkZCu8hGbp5mYRQgUmz9'
+            'uprof_011CZkZCu8hGbp5mYRQgUmz9',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -64,7 +68,9 @@ final class UserProfilesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->userProfiles->list();
+        $page = $this->client->beta->userProfiles->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PageCursor::class, $page);
@@ -79,7 +85,8 @@ final class UserProfilesTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->userProfiles->delete(
-            'uprof_011CZkZCu8hGbp5mYRQgUmz9'
+            'uprof_011CZkZCu8hGbp5mYRQgUmz9',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -90,7 +97,8 @@ final class UserProfilesTest extends TestCase
     public function testCreateEnrollmentURL(): void
     {
         $result = $this->client->beta->userProfiles->createEnrollmentURL(
-            'uprof_011CZkZCu8hGbp5mYRQgUmz9'
+            'uprof_011CZkZCu8hGbp5mYRQgUmz9',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

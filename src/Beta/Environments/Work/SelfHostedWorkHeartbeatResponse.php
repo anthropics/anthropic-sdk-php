@@ -35,7 +35,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     public string $type = 'work_heartbeat';
 
     /**
-     * RFC 3339 timestamp of the actual heartbeat from DB.
+     * RFC 3339 timestamp of the most recent heartbeat recorded for this work item, or an empty string if none has been recorded.
      */
     #[Required('last_heartbeat')]
     public string $lastHeartbeat;
@@ -109,7 +109,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp of the actual heartbeat from DB.
+     * RFC 3339 timestamp of the most recent heartbeat recorded for this work item, or an empty string if none has been recorded.
      */
     public function withLastHeartbeat(string $lastHeartbeat): self
     {

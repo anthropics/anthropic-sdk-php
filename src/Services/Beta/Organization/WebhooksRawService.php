@@ -77,7 +77,7 @@ final class WebhooksRawService implements WebhooksRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/webhooks?beta=true',
+            path: 'v1/organizations/webhooks',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -89,7 +89,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.create',
                 route: '/v1/organizations/webhooks',
                 createdId: 'anthropic.organization.webhook.id',
@@ -128,7 +128,7 @@ final class WebhooksRawService implements WebhooksRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/webhooks/%1$s?beta=true', $webhookEndpointID],
+            path: ['v1/organizations/webhooks/%1$s', $webhookEndpointID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -136,7 +136,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.retrieve',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],
@@ -181,7 +181,7 @@ final class WebhooksRawService implements WebhooksRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/webhooks/%1$s?beta=true', $webhookEndpointID],
+            path: ['v1/organizations/webhooks/%1$s', $webhookEndpointID],
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -193,7 +193,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.update',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],
@@ -241,7 +241,7 @@ final class WebhooksRawService implements WebhooksRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/webhooks?beta=true',
+            path: 'v1/organizations/webhooks',
             query: Util::array_transform_keys(
                 array_intersect_key($parsed, $query_params),
                 ['afterID' => 'after_id', 'beforeID' => 'before_id'],
@@ -253,7 +253,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.list',
                 route: '/v1/organizations/webhooks',
                 query: ['after_id', 'before_id', 'limit', 'order'],
@@ -293,7 +293,7 @@ final class WebhooksRawService implements WebhooksRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/organizations/webhooks/%1$s?beta=true', $webhookEndpointID],
+            path: ['v1/organizations/webhooks/%1$s', $webhookEndpointID],
             headers: Util::array_transform_keys(
                 $parsed,
                 ['betas' => 'anthropic-beta']
@@ -301,7 +301,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.delete',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],
@@ -342,7 +342,7 @@ final class WebhooksRawService implements WebhooksRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/webhooks/%1$s/regenerate_signing_secret?beta=true',
+                'v1/organizations/webhooks/%1$s/regenerate_signing_secret',
                 $webhookEndpointID,
             ],
             headers: Util::array_transform_keys(
@@ -352,7 +352,7 @@ final class WebhooksRawService implements WebhooksRawContract
             options: RequestOptions::parse(
                 ['extraHeaders' => ['anthropic-beta' => 'webhooks-2026-10-07']],
                 $options,
-            )->withApiCall(new ApiCallInfo(
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.webhooks.regenerate_signing_secret',
                 route: '/v1/organizations/webhooks/{webhook_endpoint_id}/regenerate_signing_secret',
                 attributes: ['anthropic.organization.webhook.id' => $webhookEndpointID],

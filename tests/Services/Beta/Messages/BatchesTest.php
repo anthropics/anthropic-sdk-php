@@ -46,6 +46,7 @@ final class BatchesTest extends TestCase
                     ],
                 ],
             ],
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -173,6 +174,7 @@ final class BatchesTest extends TestCase
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             userProfileID: 'anthropic-user-profile-id',
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -183,7 +185,8 @@ final class BatchesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->beta->messages->batches->retrieve(
-            'message_batch_id'
+            'message_batch_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -193,7 +196,9 @@ final class BatchesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->beta->messages->batches->list();
+        $page = $this->client->beta->messages->batches->list(
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Page::class, $page);
@@ -208,7 +213,8 @@ final class BatchesTest extends TestCase
     public function testDelete(): void
     {
         $result = $this->client->beta->messages->batches->delete(
-            'message_batch_id'
+            'message_batch_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -219,7 +225,8 @@ final class BatchesTest extends TestCase
     public function testCancel(): void
     {
         $result = $this->client->beta->messages->batches->cancel(
-            'message_batch_id'
+            'message_batch_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

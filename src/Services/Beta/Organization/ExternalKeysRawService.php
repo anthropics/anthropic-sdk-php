@@ -60,9 +60,11 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/organizations/external_keys?beta=true',
+            path: 'v1/organizations/external_keys',
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.external_keys.create',
                 route: '/v1/organizations/external_keys',
                 createdId: 'anthropic.organization.external_key.id',
@@ -90,8 +92,10 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: ['v1/organizations/external_keys/%1$s?beta=true', $externalKeyID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.external_keys.retrieve',
                 route: '/v1/organizations/external_keys/{external_key_id}',
                 attributes: [
@@ -136,9 +140,11 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: ['v1/organizations/external_keys/%1$s?beta=true', $externalKeyID],
+            path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
             body: (object) $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.external_keys.update',
                 route: '/v1/organizations/external_keys/{external_key_id}',
                 attributes: [
@@ -176,9 +182,11 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: 'v1/organizations/external_keys?beta=true',
+            path: 'v1/organizations/external_keys',
             query: $parsed,
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.external_keys.list',
                 route: '/v1/organizations/external_keys',
                 query: ['limit', 'page'],
@@ -209,8 +217,10 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
-            path: ['v1/organizations/external_keys/%1$s?beta=true', $externalKeyID],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            path: ['v1/organizations/external_keys/%1$s', $externalKeyID],
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.external_keys.delete',
                 route: '/v1/organizations/external_keys/{external_key_id}',
                 attributes: [
@@ -245,10 +255,10 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: [
-                'v1/organizations/external_keys/%1$s/validate?beta=true', $externalKeyID,
-            ],
-            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+            path: ['v1/organizations/external_keys/%1$s/validate', $externalKeyID],
+            options: RequestOptions::parse($requestOptions)->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.external_keys.validate',
                 route: '/v1/organizations/external_keys/{external_key_id}/validate',
                 attributes: [

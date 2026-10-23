@@ -72,12 +72,14 @@ final class RateLimitsRawService implements RateLimitsRawContract
         return $this->client->request(
             method: 'post',
             path: [
-                'v1/organizations/workspaces/%1$s/rate_limits/%2$s?beta=true',
+                'v1/organizations/workspaces/%1$s/rate_limits/%2$s',
                 $workspaceID,
                 $rateLimitID,
             ],
             body: (object) array_diff_key($parsed, array_flip(['workspaceID'])),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.rate_limits.update',
                 route: '/v1/organizations/workspaces/{workspace_id}/rate_limits/{rate_limit_id}',
                 attributes: [
@@ -130,16 +132,16 @@ final class RateLimitsRawService implements RateLimitsRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
-            path: [
-                'v1/organizations/workspaces/%1$s/rate_limits?beta=true', $workspaceID,
-            ],
+            path: ['v1/organizations/workspaces/%1$s/rate_limits', $workspaceID],
             query: Util::array_transform_keys(
                 $parsed,
                 [
                     'groupType' => 'group_type', 'includeInherited' => 'include_inherited',
                 ],
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.workspaces.rate_limits.list',
                 route: '/v1/organizations/workspaces/{workspace_id}/rate_limits',
                 query: ['group_type', 'include_inherited', 'limit', 'page'],

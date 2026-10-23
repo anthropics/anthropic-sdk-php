@@ -131,7 +131,7 @@ final class MessagesRawService implements MessagesRawContract
 
         $response = $this->client->request(
             method: 'post',
-            path: 'v1/messages?beta=true',
+            path: 'v1/messages',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -140,7 +140,9 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
             )),
@@ -210,7 +212,7 @@ final class MessagesRawService implements MessagesRawContract
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
-            path: 'v1/messages?beta=true',
+            path: 'v1/messages',
             headers: Util::array_transform_keys(
                 [
                     'Accept' => 'text/event-stream',
@@ -225,7 +227,9 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
             )),
@@ -285,7 +289,7 @@ final class MessagesRawService implements MessagesRawContract
 
         $response = $this->client->request(
             method: 'post',
-            path: 'v1/messages/count_tokens?beta=true',
+            path: 'v1/messages/count_tokens',
             headers: Util::array_transform_keys(
                 array_intersect_key($parsed, array_flip(array_keys($header_params))),
                 $header_params,
@@ -294,7 +298,9 @@ final class MessagesRawService implements MessagesRawContract
                 $parsed,
                 array_flip(array_keys($header_params))
             ),
-            options: $options->withApiCall(new ApiCallInfo(
+            options: $options->withQualifiers([
+                'beta' => 'true',
+            ])->withApiCall(new ApiCallInfo(
                 name: $callSpan?->name,
                 span: $callSpan?->span,
             )),
