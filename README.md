@@ -82,7 +82,7 @@ $verbose = new Client(openTelemetry: ['traces' => ['contentMode' => 'content', '
 $client->messages->create(
   maxTokens: 1024,
   messages: [['role' => 'user', 'content' => 'Hello, Claude']],
-  model: 'claude-sonnet-5',
+  model: 'claude-sonnet-5-5',
   requestOptions: ['openTelemetry' => ['conversationId' => $conversationId]],
 );
 ```

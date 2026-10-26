@@ -6,6 +6,10 @@
 
 * **api:** add user_profile_id to External Keys and Workspaces
 
+### Documentation
+
+* **examples:** use current model IDs
+
 ## [1.3.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.2.0...v1.3.0) (2026-10-23)
 
 ### Features
