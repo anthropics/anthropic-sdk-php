@@ -51,7 +51,7 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->rbacGroups->members->add(
             'rbac_group_id',
-            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
+            userID: 'user_01WxYzAbCdEfGhJkMnPqRsTu',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -64,7 +64,7 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->beta->organization->rbacGroups->members->add(
             'rbac_group_id',
-            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
+            userID: 'user_01WxYzAbCdEfGhJkMnPqRsTu',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

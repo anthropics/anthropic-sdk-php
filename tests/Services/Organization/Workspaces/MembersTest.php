@@ -102,7 +102,7 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->organization->workspaces->members->add(
             'workspace_id',
-            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
+            userID: 'user_01WxYzAbCdEfGhJkMnPqRsTu',
             workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
         );
 
@@ -115,7 +115,7 @@ final class MembersTest extends TestCase
     {
         $result = $this->client->organization->workspaces->members->add(
             'workspace_id',
-            userID: 'user_01WCz1FkmYMm4gnmykNKUu3Q',
+            userID: 'user_01WxYzAbCdEfGhJkMnPqRsTu',
             workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
         );
 

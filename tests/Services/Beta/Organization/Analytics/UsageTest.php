@@ -62,7 +62,7 @@ final class UsageTest extends TestCase
     {
         $page = $this->client->beta->organization->analytics->usage->list(
             startingAt: new \DateTimeImmutable('2026-09-01T00:00:00Z'),
-            actorIDs: ['user_01WCz1FkmYMm4gnmykNKUu3Q'],
+            actorIDs: ['user_01WxYzAbCdEfGhJkMnPqRsTu'],
             actorTypes: [AnalyticsActorType::SERVICE_ACCOUNT_ACTOR],
             agentIDs: ['agent_01VHd3EAGJ6PLkP9LM7DDu3f'],
             apiKeyIDs: ['apikey_01Rj2N8SVvo6BePZj99NhmiT'],
