@@ -41,6 +41,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *   providerConfig: ProviderConfigShape,
      *   displayName?: string|null,
      *   geo?: Geo|value-of<Geo>,
+     *   userProfileID?: string|null,
      * }|ExternalKeyCreateParams $params
      * @param RequestOpts|null $requestOptions
      *

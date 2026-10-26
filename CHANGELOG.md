@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.3.0...v1.4.0) (2026-10-26)
+
+### Features
+
+* **api:** add user_profile_id to External Keys and Workspaces
+
 ## [1.3.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.2.0...v1.3.0) (2026-10-23)
 
 ### Features

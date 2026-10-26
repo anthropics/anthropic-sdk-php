@@ -28,6 +28,7 @@ interface ExternalKeysContract
      * @param ProviderConfigShape $providerConfig KMS provider identity and auth coordinates
      * @param string|null $displayName human-friendly display name
      * @param Geo|value-of<Geo> $geo Data residency geo. Only `us` is supported.
+     * @param string|null $userProfileID ID of a user profile to bind the key to. Omit this field for a key that isn't bound to a user profile. Such a key can be attached to a Workspace whatever its user profile. The binding cannot be changed later. A key bound to a user profile can only be attached to a Workspace that has the same user profile.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -36,6 +37,7 @@ interface ExternalKeysContract
         AWSExternalKeyConfig|array|GCPExternalKeyConfig|AzureExternalKeyConfigParam $providerConfig,
         ?string $displayName = null,
         Geo|string|null $geo = null,
+        ?string $userProfileID = null,
         RequestOptions|array|null $requestOptions = null,
     ): ExternalKey;
 

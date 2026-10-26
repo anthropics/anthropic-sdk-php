@@ -24,6 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   providerConfig: ProviderConfigShape,
  *   displayName?: string|null,
  *   geo?: null|Geo|value-of<Geo>,
+ *   userProfileID?: string|null,
  * }
  */
 final class ExternalKeyCreateParams implements BaseModel
@@ -53,6 +54,12 @@ final class ExternalKeyCreateParams implements BaseModel
      */
     #[Optional(enum: Geo::class)]
     public ?string $geo;
+
+    /**
+     * ID of a user profile to bind the key to. Omit this field for a key that isn't bound to a user profile. Such a key can be attached to a Workspace whatever its user profile. The binding cannot be changed later. A key bound to a user profile can only be attached to a Workspace that has the same user profile.
+     */
+    #[Optional('user_profile_id', nullable: true)]
+    public ?string $userProfileID;
 
     /**
      * `new ExternalKeyCreateParams()` is missing required properties by the API.
@@ -85,6 +92,7 @@ final class ExternalKeyCreateParams implements BaseModel
         AWSExternalKeyConfig|array|GCPExternalKeyConfig|AzureExternalKeyConfigParam $providerConfig,
         ?string $displayName = null,
         Geo|string|null $geo = null,
+        ?string $userProfileID = null,
     ): self {
         $self = new self;
 
@@ -92,6 +100,7 @@ final class ExternalKeyCreateParams implements BaseModel
 
         null !== $displayName && $self['displayName'] = $displayName;
         null !== $geo && $self['geo'] = $geo;
+        null !== $userProfileID && $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
@@ -130,6 +139,17 @@ final class ExternalKeyCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['geo'] = $geo;
+
+        return $self;
+    }
+
+    /**
+     * ID of a user profile to bind the key to. Omit this field for a key that isn't bound to a user profile. Such a key can be attached to a Workspace whatever its user profile. The binding cannot be changed later. A key bound to a user profile can only be attached to a Workspace that has the same user profile.
+     */
+    public function withUserProfileID(?string $userProfileID): self
+    {
+        $self = clone $this;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
