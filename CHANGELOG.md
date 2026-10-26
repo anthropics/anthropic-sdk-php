@@ -6,6 +6,11 @@
 
 * **api:** add user_profile_id to External Keys and Workspaces
 
+### Chores
+
+* **docs:** clarify what disabling the Compliance API stops
+
+
 ### Documentation
 
 * **examples:** use current model IDs
