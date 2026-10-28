@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.3.0...v1.4.0) (2026-10-27)
+## [1.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.3.0...v1.4.0) (2026-10-28)
 
 ### Features
 
@@ -9,6 +9,7 @@
 ### Chores
 
 * **docs:** clarify what disabling the Compliance API stops
+* **docs:** clarify what the capability_access_all role action grants
 * **docs:** update example user ID in Admin API examples
 
 
