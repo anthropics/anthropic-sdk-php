@@ -6,6 +6,7 @@ docs/
 composer.lock
 phpunit.xml
 playground/
+.stdy.log
 *.swo
 *.swp
 vendor/
