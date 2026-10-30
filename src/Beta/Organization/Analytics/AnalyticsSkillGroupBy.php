@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams;
+namespace Anthropic\Beta\Organization\Analytics;
 
-enum GroupBy: string
+/**
+ * A dimension to group skill activity by.
+ */
+enum AnalyticsSkillGroupBy: string
 {
     case PRODUCT = 'product';
 

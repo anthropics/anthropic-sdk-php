@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\Analytics;
 
 use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorActivity;
+use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorGroupBy;
 use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams;
-use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams\GroupBy;
 use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -46,7 +46,7 @@ final class ConnectorsRawService implements ConnectorsRawContract
      *   date?: string|null,
      *   endingDate?: string|null,
      *   filter?: list<string>|null,
-     *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+     *   groupBy?: list<AnalyticsConnectorGroupBy|value-of<AnalyticsConnectorGroupBy>>|null,
      *   limit?: int|null,
      *   order?: Order|value-of<Order>|null,
      *   orderBy?: string|null,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\SpendLimits\Effective;
 
-use Anthropic\Beta\Organization\SpendLimits\Effective\EffectiveListParams\Period;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -24,7 +24,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type EffectiveListParamsShape = array{
  *   limit?: int|null,
  *   page?: string|null,
- *   period?: list<Period|value-of<Period>>|null,
+ *   period?: list<SpendLimitPeriod|value-of<SpendLimitPeriod>>|null,
  *   userIDs?: list<string>|null,
  * }
  */
@@ -49,9 +49,9 @@ final class EffectiveListParams implements BaseModel
     /**
      * Restrict the report to these limit periods. Omit to return one row per period each member resolves a spend limit for.
      *
-     * @var list<value-of<Period>>|null $period
+     * @var list<value-of<SpendLimitPeriod>>|null $period
      */
-    #[Optional(list: Period::class, nullable: true)]
+    #[Optional(list: SpendLimitPeriod::class, nullable: true)]
     public ?array $period;
 
     /**
@@ -72,7 +72,7 @@ final class EffectiveListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Period|value-of<Period>>|null $period
+     * @param list<SpendLimitPeriod|value-of<SpendLimitPeriod>>|null $period
      * @param list<string>|null $userIDs
      */
     public static function with(
@@ -116,7 +116,7 @@ final class EffectiveListParams implements BaseModel
     /**
      * Restrict the report to these limit periods. Omit to return one row per period each member resolves a spend limit for.
      *
-     * @param list<Period|value-of<Period>>|null $period
+     * @param list<SpendLimitPeriod|value-of<SpendLimitPeriod>>|null $period
      */
     public function withPeriod(?array $period): self
     {

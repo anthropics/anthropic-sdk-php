@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\Skills\SkillListParams;
+namespace Anthropic\Beta\Organization\Analytics;
 
-enum GroupBy: string
+/**
+ * A dimension to group plugin activity by.
+ */
+enum AnalyticsPluginGroupBy: string
 {
     case PRODUCT = 'product';
 

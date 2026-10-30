@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\Plugins\PluginListParams;
+namespace Anthropic\Beta\Organization\Analytics;
 
-enum GroupBy: string
+/**
+ * A dimension to group artifact activity by.
+ */
+enum AnalyticsArtifactGroupBy: string
 {
     case PRODUCT = 'product';
 

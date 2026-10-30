@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\Analytics;
 
 use Anthropic\Beta\Organization\Analytics\AnalyticsArtifactActivity;
+use Anthropic\Beta\Organization\Analytics\AnalyticsArtifactGroupBy;
 use Anthropic\Beta\Organization\Analytics\Artifacts\ArtifactListParams;
-use Anthropic\Beta\Organization\Analytics\Artifacts\ArtifactListParams\GroupBy;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -41,7 +41,7 @@ final class ArtifactsRawService implements ArtifactsRawContract
      * @param array{
      *   date: string,
      *   filter?: list<string>|null,
-     *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+     *   groupBy?: list<AnalyticsArtifactGroupBy|value-of<AnalyticsArtifactGroupBy>>|null,
      *   limit?: int|null,
      *   page?: string|null,
      * }|ArtifactListParams $params

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics\Connectors;
 
-use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams\GroupBy;
+use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorGroupBy;
 use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams\Order;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
@@ -29,7 +29,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   date?: string|null,
  *   endingDate?: string|null,
  *   filter?: list<string>|null,
- *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+ *   groupBy?: list<AnalyticsConnectorGroupBy|value-of<AnalyticsConnectorGroupBy>>|null,
  *   limit?: int|null,
  *   order?: null|Order|value-of<Order>,
  *   orderBy?: string|null,
@@ -66,9 +66,9 @@ final class ConnectorListParams implements BaseModel
     /**
      * Dimensions to break results out by (e.g. `group_by[]=user_id`). Supported on this endpoint: `product`, `rbac_group_id`, `user_id`. Grouped rows carry the requested dimension values as additional fields and paginate like ungrouped responses via `next_page`; an unsupported dimension returns 400. `rbac_group_id` attributes a user to every group they held at any point during each covered UTC day, so grouped rows are not an exclusive partition and can sum above org-level totals. At most 100 entries.
      *
-     * @var list<value-of<GroupBy>>|null $groupBy
+     * @var list<value-of<AnalyticsConnectorGroupBy>>|null $groupBy
      */
-    #[Optional(list: GroupBy::class, nullable: true)]
+    #[Optional(list: AnalyticsConnectorGroupBy::class, nullable: true)]
     public ?array $groupBy;
 
     /**
@@ -114,7 +114,7 @@ final class ConnectorListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $filter
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
+     * @param list<AnalyticsConnectorGroupBy|value-of<AnalyticsConnectorGroupBy>>|null $groupBy
      * @param Order|value-of<Order>|null $order
      */
     public static function with(
@@ -181,7 +181,7 @@ final class ConnectorListParams implements BaseModel
     /**
      * Dimensions to break results out by (e.g. `group_by[]=user_id`). Supported on this endpoint: `product`, `rbac_group_id`, `user_id`. Grouped rows carry the requested dimension values as additional fields and paginate like ungrouped responses via `next_page`; an unsupported dimension returns 400. `rbac_group_id` attributes a user to every group they held at any point during each covered UTC day, so grouped rows are not an exclusive partition and can sum above org-level totals. At most 100 entries.
      *
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
+     * @param list<AnalyticsConnectorGroupBy|value-of<AnalyticsConnectorGroupBy>>|null $groupBy
      */
     public function withGroupBy(?array $groupBy): self
     {

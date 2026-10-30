@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics\Plugins;
 
-use Anthropic\Beta\Organization\Analytics\Plugins\PluginListParams\GroupBy;
+use Anthropic\Beta\Organization\Analytics\AnalyticsPluginGroupBy;
 use Anthropic\Beta\Organization\Analytics\Plugins\PluginListParams\Order;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
@@ -32,7 +32,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   date?: string|null,
  *   endingDate?: string|null,
  *   filter?: list<string>|null,
- *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+ *   groupBy?: list<AnalyticsPluginGroupBy|value-of<AnalyticsPluginGroupBy>>|null,
  *   limit?: int|null,
  *   order?: null|Order|value-of<Order>,
  *   orderBy?: string|null,
@@ -69,9 +69,9 @@ final class PluginListParams implements BaseModel
     /**
      * Dimensions to break results out by (e.g. `group_by[]=user_id`). Supported on this endpoint: `product`, `rbac_group_id`, `user_id`. On this endpoint `product` takes the values `chat_cowork_unified`, `claude_code`, or `cowork` only (the surfaces with plugin attribution). Grouped rows carry the requested dimension values as additional fields and paginate like ungrouped responses via `next_page`; an unsupported dimension returns 400. `rbac_group_id` attributes a user to every group they held at any point during each covered UTC day, so grouped rows are not an exclusive partition and can sum above org-level totals. At most 100 entries.
      *
-     * @var list<value-of<GroupBy>>|null $groupBy
+     * @var list<value-of<AnalyticsPluginGroupBy>>|null $groupBy
      */
-    #[Optional(list: GroupBy::class, nullable: true)]
+    #[Optional(list: AnalyticsPluginGroupBy::class, nullable: true)]
     public ?array $groupBy;
 
     /**
@@ -117,7 +117,7 @@ final class PluginListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $filter
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
+     * @param list<AnalyticsPluginGroupBy|value-of<AnalyticsPluginGroupBy>>|null $groupBy
      * @param Order|value-of<Order>|null $order
      */
     public static function with(
@@ -184,7 +184,7 @@ final class PluginListParams implements BaseModel
     /**
      * Dimensions to break results out by (e.g. `group_by[]=user_id`). Supported on this endpoint: `product`, `rbac_group_id`, `user_id`. On this endpoint `product` takes the values `chat_cowork_unified`, `claude_code`, or `cowork` only (the surfaces with plugin attribution). Grouped rows carry the requested dimension values as additional fields and paginate like ungrouped responses via `next_page`; an unsupported dimension returns 400. `rbac_group_id` attributes a user to every group they held at any point during each covered UTC day, so grouped rows are not an exclusive partition and can sum above org-level totals. At most 100 entries.
      *
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
+     * @param list<AnalyticsPluginGroupBy|value-of<AnalyticsPluginGroupBy>>|null $groupBy
      */
     public function withGroupBy(?array $groupBy): self
     {

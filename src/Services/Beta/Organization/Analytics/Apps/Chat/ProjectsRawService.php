@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\Analytics\Apps\Chat;
 
 use Anthropic\Beta\Organization\Analytics\AnalyticsProjectActivity;
+use Anthropic\Beta\Organization\Analytics\AnalyticsProjectGroupBy;
 use Anthropic\Beta\Organization\Analytics\Apps\Chat\Projects\ProjectListParams;
-use Anthropic\Beta\Organization\Analytics\Apps\Chat\Projects\ProjectListParams\GroupBy;
 use Anthropic\Beta\Organization\Analytics\Apps\Chat\Projects\ProjectListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -43,7 +43,7 @@ final class ProjectsRawService implements ProjectsRawContract
      *   date?: string|null,
      *   endingDate?: string|null,
      *   filter?: list<string>|null,
-     *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+     *   groupBy?: list<AnalyticsProjectGroupBy|value-of<AnalyticsProjectGroupBy>>|null,
      *   limit?: int|null,
      *   order?: Order|value-of<Order>|null,
      *   orderBy?: string|null,
