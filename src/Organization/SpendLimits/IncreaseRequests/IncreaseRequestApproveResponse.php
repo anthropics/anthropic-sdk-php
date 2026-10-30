@@ -29,7 +29,7 @@ use Anthropic\Organization\SpendLimits\SpendSummary;
  *   period: SpendLimitPeriod|value-of<SpendLimitPeriod>,
  *   resolvedAt: \DateTimeInterface|null,
  *   resolvedBy: SpendLimitIncreaseRequestResolvedByShape|null,
- *   spendLimit: SpendLimit|SpendLimitShape,
+ *   spendLimit: null|SpendLimit|SpendLimitShape,
  *   spendSummary: null|SpendSummary|SpendSummaryShape,
  *   status: SpendLimitIncreaseRequestStatus|value-of<SpendLimitIncreaseRequestStatus>,
  *   type: 'spend_limit_increase_request',
@@ -77,7 +77,7 @@ final class IncreaseRequestApproveResponse implements BaseModel
      * A configured spend limit: a cap on metered spend for one scope and period.
      */
     #[Required('spend_limit')]
-    public SpendLimit $spendLimit;
+    public ?SpendLimit $spendLimit;
 
     /**
      * Per-member effective-limit report row (`GET /spend_limits/effective`).
@@ -135,7 +135,7 @@ final class IncreaseRequestApproveResponse implements BaseModel
      * @param SpendLimitIncreaseRequestActorShape $actor
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod> $period
      * @param SpendLimitIncreaseRequestResolvedByShape|null $resolvedBy
-     * @param SpendLimit|SpendLimitShape $spendLimit
+     * @param SpendLimit|SpendLimitShape|null $spendLimit
      * @param SpendSummary|SpendSummaryShape|null $spendSummary
      * @param SpendLimitIncreaseRequestStatus|value-of<SpendLimitIncreaseRequestStatus> $status
      */
@@ -146,7 +146,7 @@ final class IncreaseRequestApproveResponse implements BaseModel
         SpendLimitPeriod|string $period,
         ?\DateTimeInterface $resolvedAt,
         SpendLimitUserActor|array|SpendLimitScopedAPIKeyActor|null $resolvedBy,
-        SpendLimit|array $spendLimit,
+        SpendLimit|array|null $spendLimit,
         SpendSummary|array|null $spendSummary,
         SpendLimitIncreaseRequestStatus|string $status,
     ): self {
@@ -231,9 +231,9 @@ final class IncreaseRequestApproveResponse implements BaseModel
     /**
      * A configured spend limit: a cap on metered spend for one scope and period.
      *
-     * @param SpendLimit|SpendLimitShape $spendLimit
+     * @param SpendLimit|SpendLimitShape|null $spendLimit
      */
-    public function withSpendLimit(SpendLimit|array $spendLimit): self
+    public function withSpendLimit(SpendLimit|array|null $spendLimit): self
     {
         $self = clone $this;
         $self['spendLimit'] = $spendLimit;
