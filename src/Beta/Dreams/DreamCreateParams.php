@@ -55,7 +55,7 @@ final class DreamCreateParams implements BaseModel
      *
      * In the object form, `speed` can only be `standard`.
      *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+     * The [Availability section of the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#feature-availability) lists the supported models.
      *
      * @var ModelVariants $model
      */
@@ -162,7 +162,7 @@ final class DreamCreateParams implements BaseModel
      *
      * In the object form, `speed` can only be `standard`.
      *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+     * The [Availability section of the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#feature-availability) lists the supported models.
      *
      * @param ModelShape $model
      */

@@ -52,7 +52,7 @@ final class DreamsService implements DreamsContract
      *
      * In the object form, `speed` can only be `standard`.
      *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+     * The [Availability section of the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#feature-availability) lists the supported models.
      * @param string|null $instructions Body param: Guidance that steers how the dream reads the sessions and organizes the output memory store, from 1 to 4,096 characters.
      *
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#steer-with-instructions) for what kinds of instructions work well.
