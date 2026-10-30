@@ -60,7 +60,7 @@ final class ToolSearchToolBm25_20251119 implements BaseModel
     public ?bool $deferLoading;
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     #[Optional]
     public ?bool $strict;
@@ -175,7 +175,7 @@ final class ToolSearchToolBm25_20251119 implements BaseModel
     }
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     public function withStrict(bool $strict): self
     {

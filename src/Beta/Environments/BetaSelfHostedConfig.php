@@ -20,7 +20,7 @@ final class BetaSelfHostedConfig implements BaseModel
     use SdkModel;
 
     /**
-     * Environment type.
+     * Environment type
      *
      * @var 'self_hosted' $type
      */
@@ -43,7 +43,7 @@ final class BetaSelfHostedConfig implements BaseModel
     }
 
     /**
-     * Environment type.
+     * Environment type
      *
      * @param 'self_hosted' $type
      */

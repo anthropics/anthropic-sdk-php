@@ -27,7 +27,7 @@ final class BetaCompactionContentBlockDelta implements BaseModel
     public ?string $content;
 
     /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     * Opaque metadata from prior compaction, to be round-tripped verbatim
      */
     #[Required('encrypted_content')]
     public ?string $encryptedContent;
@@ -79,7 +79,7 @@ final class BetaCompactionContentBlockDelta implements BaseModel
     }
 
     /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     * Opaque metadata from prior compaction, to be round-tripped verbatim
      */
     public function withEncryptedContent(?string $encryptedContent): self
     {

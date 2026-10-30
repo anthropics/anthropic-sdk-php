@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update a Memory Store.
+ * Update a Memory Store
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::update()
  *

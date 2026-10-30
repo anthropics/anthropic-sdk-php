@@ -85,7 +85,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * Retrieve a service account by its ID (`svac_...`).
      *
-     * @param string $serviceAccountID ID of the service account
+     * @param string $serviceAccountID ID of the service account.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ServiceAccount>
@@ -123,7 +123,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * Setting `organization_role` to `admin` (even when unchanged) requires an
      * interactive credential (a user OAuth token or a Console session).
      *
-     * @param string $serviceAccountID ID of the service account to update
+     * @param string $serviceAccountID ID of the service account to update.
      * @param array{
      *   description?: string|null,
      *   organizationRole?: ServiceAccountUpdateParams\OrganizationRole|value-of<ServiceAccountUpdateParams\OrganizationRole>|null,
@@ -219,7 +219,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * rule still targets this service account, same as issuer archival; archive
      * those rules first or change their target to another service account.
      *
-     * @param string $serviceAccountID ID of the service account to archive
+     * @param string $serviceAccountID ID of the service account to archive.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ServiceAccount>

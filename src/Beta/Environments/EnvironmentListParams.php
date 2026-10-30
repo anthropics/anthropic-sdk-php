@@ -30,13 +30,13 @@ final class EnvironmentListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Include archived environments in the response.
+     * Include archived environments in the response
      */
     #[Optional]
     public ?bool $includeArchived;
 
     /**
-     * Maximum number of environments to return.
+     * Maximum number of environments to return
      */
     #[Optional]
     public ?int $limit;
@@ -94,7 +94,7 @@ final class EnvironmentListParams implements BaseModel
     }
 
     /**
-     * Include archived environments in the response.
+     * Include archived environments in the response
      */
     public function withIncludeArchived(bool $includeArchived): self
     {
@@ -105,7 +105,7 @@ final class EnvironmentListParams implements BaseModel
     }
 
     /**
-     * Maximum number of environments to return.
+     * Maximum number of environments to return
      */
     public function withLimit(int $limit): self
     {

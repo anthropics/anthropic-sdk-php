@@ -31,7 +31,7 @@ interface RBACGroupsContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -44,7 +44,7 @@ interface RBACGroupsContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param string|null $name Name of the RBAC Group. Not uniqueness-enforced.
      * @param RequestOpts|null $requestOptions
      *
@@ -62,7 +62,7 @@ interface RBACGroupsContract
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param string|null $page optionally set to the `next_page` token from the previous response
+     * @param string|null $page Optionally set to the `next_page` token from the previous response.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<RBACGroup>
@@ -78,7 +78,7 @@ interface RBACGroupsContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

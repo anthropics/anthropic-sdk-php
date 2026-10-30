@@ -57,19 +57,19 @@ final class AnalyticsProjectActivity implements BaseModel
     public int $distinctUserCount;
 
     /**
-     * Number of messages sent in the project on the requested day.
+     * Number of messages sent in the project on the requested day
      */
     #[Required('message_count')]
     public int $messageCount;
 
     /**
-     * Tagged project identifier (e.g. `claude_proj_...`).
+     * Tagged project identifier (e.g. `claude_proj_...`)
      */
     #[Required('project_id')]
     public string $projectID;
 
     /**
-     * Name of the project.
+     * Name of the project
      */
     #[Required('project_name')]
     public string $projectName;
@@ -210,7 +210,7 @@ final class AnalyticsProjectActivity implements BaseModel
     }
 
     /**
-     * Number of messages sent in the project on the requested day.
+     * Number of messages sent in the project on the requested day
      */
     public function withMessageCount(int $messageCount): self
     {
@@ -221,7 +221,7 @@ final class AnalyticsProjectActivity implements BaseModel
     }
 
     /**
-     * Tagged project identifier (e.g. `claude_proj_...`).
+     * Tagged project identifier (e.g. `claude_proj_...`)
      */
     public function withProjectID(string $projectID): self
     {
@@ -232,7 +232,7 @@ final class AnalyticsProjectActivity implements BaseModel
     }
 
     /**
-     * Name of the project.
+     * Name of the project
      */
     public function withProjectName(string $projectName): self
     {

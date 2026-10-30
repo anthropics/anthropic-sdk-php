@@ -24,7 +24,7 @@ interface TargetsRawContract
     /**
      * @api
      *
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
      * @param array<string,mixed>|TargetCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -58,7 +58,7 @@ interface TargetsRawContract
     /**
      * @api
      *
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
      * @param array<string,mixed>|TargetListParams $params
      * @param RequestOpts|null $requestOptions
      *

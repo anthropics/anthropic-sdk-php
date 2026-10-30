@@ -47,7 +47,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * membership is returned with its assigned role. An archived service
      * account returns 404.
      *
-     * @param string $serviceAccountID path param: ID of the service account
+     * @param string $serviceAccountID Path param: ID of the service account.
      * @param array{
      *   workspaceID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -110,7 +110,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * return 400. Archived service accounts cannot be updated and are
      * rejected.
      *
-     * @param string $serviceAccountID path param: ID of the service account
+     * @param string $serviceAccountID Path param: ID of the service account.
      * @param array{
      *   workspaceID: string,
      *   workspaceRole: value-of<NoBillingWorkspaceRole>,
@@ -179,7 +179,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * included in this list. Memberships of archived service accounts are
      * omitted from the results.
      *
-     * @param string $workspaceID path param: ID of the workspace
+     * @param string $workspaceID Path param: ID of the workspace.
      * @param array{
      *   limit?: int,
      *   page?: string|null,
@@ -243,7 +243,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * value supplied here. Archived workspaces return 400. Archived service
      * accounts cannot be added and are rejected.
      *
-     * @param string $workspaceID path param: ID of the workspace
+     * @param string $workspaceID Path param: ID of the workspace.
      * @param array{
      *   serviceAccountID: string,
      *   workspaceRole: value-of<NoBillingWorkspaceRole>,
@@ -305,7 +305,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * explicit default-workspace row reverts to the implicit `workspace_user`
      * membership. Archived workspaces return 400.
      *
-     * @param string $serviceAccountID path param: ID of the service account
+     * @param string $serviceAccountID Path param: ID of the service account.
      * @param array{
      *   workspaceID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

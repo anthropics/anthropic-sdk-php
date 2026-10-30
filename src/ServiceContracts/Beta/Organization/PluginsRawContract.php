@@ -39,7 +39,7 @@ interface PluginsRawContract
     /**
      * @api
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array<string,mixed>|PluginRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +56,7 @@ interface PluginsRawContract
     /**
      * @api
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array<string,mixed>|PluginUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -88,7 +88,7 @@ interface PluginsRawContract
     /**
      * @api
      *
-     * @param string $pluginID ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID ID of the Plugin (prefixed `plugin_`).
      * @param array<string,mixed>|PluginDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *

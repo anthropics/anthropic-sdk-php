@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update Workspace.
+ * Update Workspace
  *
  * @see Anthropic\Services\Beta\Organization\WorkspacesService::update()
  *

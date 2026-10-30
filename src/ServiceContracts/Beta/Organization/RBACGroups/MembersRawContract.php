@@ -22,7 +22,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param array<string,mixed>|MemberListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -39,7 +39,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param array<string,mixed>|MemberAddParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +56,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array<string,mixed>|MemberRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

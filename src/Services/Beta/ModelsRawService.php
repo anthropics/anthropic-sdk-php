@@ -36,7 +36,7 @@ final class ModelsRawService implements ModelsRawContract
      *
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
-     * @param string $modelID model identifier or alias
+     * @param string $modelID Model identifier or alias.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

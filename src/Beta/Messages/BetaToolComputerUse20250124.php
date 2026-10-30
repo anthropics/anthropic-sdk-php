@@ -86,7 +86,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
     public ?array $inputExamples;
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     #[Optional]
     public ?bool $strict;
@@ -253,7 +253,7 @@ final class BetaToolComputerUse20250124 implements BaseModel
     }
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     public function withStrict(bool $strict): self
     {

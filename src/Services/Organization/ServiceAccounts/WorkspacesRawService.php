@@ -50,7 +50,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * or the service account is archived. Restart pagination from the first
      * page to recover.
      *
-     * @param string $serviceAccountID ID of the service account
+     * @param string $serviceAccountID ID of the service account.
      * @param array{limit?: int, page?: string|null}|WorkspaceListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -102,7 +102,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * workspaces return 400. Archived service accounts cannot be added and are
      * rejected.
      *
-     * @param string $serviceAccountID ID of the service account
+     * @param string $serviceAccountID ID of the service account.
      * @param array{
      *   workspaceID: string, workspaceRole: value-of<NoBillingWorkspaceRole>
      * }|WorkspaceAddParams $params
@@ -158,7 +158,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * to the implicit `workspace_user` membership. Archived workspaces return
      * 400.
      *
-     * @param string $workspaceID ID of the workspace
+     * @param string $workspaceID ID of the workspace.
      * @param array{serviceAccountID: string}|WorkspaceRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

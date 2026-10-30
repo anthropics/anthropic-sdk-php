@@ -20,7 +20,7 @@ interface APIKeysRawContract
     /**
      * @api
      *
-     * @param string $apiKeyID ID of the API key
+     * @param string $apiKeyID ID of the API key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<APIKey>
@@ -35,7 +35,7 @@ interface APIKeysRawContract
     /**
      * @api
      *
-     * @param string $apiKeyID ID of the API key
+     * @param string $apiKeyID ID of the API key.
      * @param array<string,mixed>|APIKeyUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

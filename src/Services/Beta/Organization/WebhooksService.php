@@ -51,10 +51,10 @@ final class WebhooksService implements WebhooksContract
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
      * @param list<EnabledEvent|value-of<EnabledEvent>> $enabledEvents Body param: The event types to deliver to the endpoint. Must list at least one.
-     * @param string $url body param: The HTTPS URL that deliveries are sent to
-     * @param string $description body param: Notes about the endpoint
-     * @param string $name body param: A short label for the endpoint
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header
+     * @param string $url Body param: The HTTPS URL that deliveries are sent to.
+     * @param string $description Body param: Notes about the endpoint.
+     * @param string $name Body param: A short label for the endpoint.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -90,8 +90,8 @@ final class WebhooksService implements WebhooksContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `webhooks-2026-10-07` in this header
+     * @param string $webhookEndpointID ID of the webhook endpoint.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -116,13 +116,13 @@ final class WebhooksService implements WebhooksContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID path param: ID of the webhook endpoint
-     * @param string $description body param: Notes about the endpoint
+     * @param string $webhookEndpointID Path param: ID of the webhook endpoint.
+     * @param string $description Body param: Notes about the endpoint.
      * @param list<\Anthropic\Beta\Organization\Webhooks\WebhookUpdateParams\EnabledEvent|value-of<\Anthropic\Beta\Organization\Webhooks\WebhookUpdateParams\EnabledEvent>> $enabledEvents Body param: The event types to deliver to the endpoint. Replaces the whole set; an empty list leaves it unchanged.
-     * @param string $name body param: A short label for the endpoint
+     * @param string $name Body param: A short label for the endpoint.
      * @param State|value-of<State> $state Body param: `disabled` stops deliveries. `enabled` resumes them and clears `disabled_reason`. Events that happen while the endpoint is disabled are never delivered.
-     * @param string $url body param: The HTTPS URL that deliveries are sent to
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header
+     * @param string $url Body param: The HTTPS URL that deliveries are sent to.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -168,7 +168,7 @@ final class WebhooksService implements WebhooksContract
      * @param string|null $beforeID Query param: ID of a webhook endpoint to use as a cursor. Returns the first `limit` endpoints that come before it in list order, not the `limit` endpoints just before it.
      * @param int $limit Query param: Number of items to return per page, up to `100`. The default, `0`, means `20`.
      * @param Order|value-of<Order>|null $order Query param: Sort order by `created_at`. Defaults to `desc`, newest first.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<OrganizationWebhookEndpoint>
@@ -206,8 +206,8 @@ final class WebhooksService implements WebhooksContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `webhooks-2026-10-07` in this header
+     * @param string $webhookEndpointID ID of the webhook endpoint.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -233,8 +233,8 @@ final class WebhooksService implements WebhooksContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `webhooks-2026-10-07` in this header
+     * @param string $webhookEndpointID ID of the webhook endpoint.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

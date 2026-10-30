@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete Workspace Member.
+ * Delete Workspace Member
  *
  * @see Anthropic\Services\Beta\Organization\Workspaces\MembersService::remove()
  *

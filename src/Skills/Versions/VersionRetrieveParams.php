@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Skill Version.
+ * Get Skill Version
  *
  * @see Anthropic\Services\Skills\VersionsService::retrieve()
  *

@@ -41,7 +41,7 @@ final class SelfHostedWork implements BaseModel
     use SdkModel;
 
     /**
-     * The type of object (always 'work').
+     * The type of object (always 'work')
      *
      * @var 'work' $type
      */
@@ -49,43 +49,43 @@ final class SelfHostedWork implements BaseModel
     public string $type = 'work';
 
     /**
-     * Work identifier (e.g., 'work_...').
+     * Work identifier (e.g., 'work_...')
      */
     #[Required]
     public string $id;
 
     /**
-     * RFC 3339 timestamp when the work item was acknowledged and assigned to a self-hosted sandbox.
+     * RFC 3339 timestamp when the work item was acknowledged and assigned to a self-hosted sandbox
      */
     #[Required('acknowledged_at')]
     public ?string $acknowledgedAt;
 
     /**
-     * RFC 3339 timestamp when work was created.
+     * RFC 3339 timestamp when work was created
      */
     #[Required('created_at')]
     public string $createdAt;
 
     /**
-     * The actual work to be performed.
+     * The actual work to be performed
      */
     #[Required]
     public SessionWorkData $data;
 
     /**
-     * Environment identifier this work belongs to (e.g., `env_...`).
+     * Environment identifier this work belongs to (e.g., `env_...`)
      */
     #[Required('environment_id')]
     public string $environmentID;
 
     /**
-     * RFC 3339 timestamp of the most recent heartbeat.
+     * RFC 3339 timestamp of the most recent heartbeat
      */
     #[Required('latest_heartbeat_at')]
     public ?string $latestHeartbeatAt;
 
     /**
-     * User-provided metadata key-value pairs associated with this work item.
+     * User-provided metadata key-value pairs associated with this work item
      *
      * @var array<string,string> $metadata
      */
@@ -99,13 +99,13 @@ final class SelfHostedWork implements BaseModel
     public ?string $secret;
 
     /**
-     * RFC 3339 timestamp when work execution started.
+     * RFC 3339 timestamp when work execution started
      */
     #[Required('started_at')]
     public ?string $startedAt;
 
     /**
-     * Current state of the work item.
+     * Current state of the work item
      *
      * @var value-of<State> $state
      */
@@ -113,13 +113,13 @@ final class SelfHostedWork implements BaseModel
     public string $state;
 
     /**
-     * RFC 3339 timestamp when stop was requested.
+     * RFC 3339 timestamp when stop was requested
      */
     #[Required('stop_requested_at')]
     public ?string $stopRequestedAt;
 
     /**
-     * RFC 3339 timestamp when work execution stopped.
+     * RFC 3339 timestamp when work execution stopped
      */
     #[Required('stopped_at')]
     public ?string $stoppedAt;
@@ -210,7 +210,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * Work identifier (e.g., 'work_...').
+     * Work identifier (e.g., 'work_...')
      */
     public function withID(string $id): self
     {
@@ -221,7 +221,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when the work item was acknowledged and assigned to a self-hosted sandbox.
+     * RFC 3339 timestamp when the work item was acknowledged and assigned to a self-hosted sandbox
      */
     public function withAcknowledgedAt(?string $acknowledgedAt): self
     {
@@ -232,7 +232,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when work was created.
+     * RFC 3339 timestamp when work was created
      */
     public function withCreatedAt(string $createdAt): self
     {
@@ -243,7 +243,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * The actual work to be performed.
+     * The actual work to be performed
      *
      * @param SessionWorkData|SessionWorkDataShape $data
      */
@@ -256,7 +256,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * Environment identifier this work belongs to (e.g., `env_...`).
+     * Environment identifier this work belongs to (e.g., `env_...`)
      */
     public function withEnvironmentID(string $environmentID): self
     {
@@ -267,7 +267,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp of the most recent heartbeat.
+     * RFC 3339 timestamp of the most recent heartbeat
      */
     public function withLatestHeartbeatAt(?string $latestHeartbeatAt): self
     {
@@ -278,7 +278,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * User-provided metadata key-value pairs associated with this work item.
+     * User-provided metadata key-value pairs associated with this work item
      *
      * @param array<string,string> $metadata
      */
@@ -302,7 +302,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when work execution started.
+     * RFC 3339 timestamp when work execution started
      */
     public function withStartedAt(?string $startedAt): self
     {
@@ -313,7 +313,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * Current state of the work item.
+     * Current state of the work item
      *
      * @param State|value-of<State> $state
      */
@@ -326,7 +326,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when stop was requested.
+     * RFC 3339 timestamp when stop was requested
      */
     public function withStopRequestedAt(?string $stopRequestedAt): self
     {
@@ -337,7 +337,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when work execution stopped.
+     * RFC 3339 timestamp when work execution stopped
      */
     public function withStoppedAt(?string $stoppedAt): self
     {
@@ -348,7 +348,7 @@ final class SelfHostedWork implements BaseModel
     }
 
     /**
-     * The type of object (always 'work').
+     * The type of object (always 'work')
      *
      * @param 'work' $type
      */

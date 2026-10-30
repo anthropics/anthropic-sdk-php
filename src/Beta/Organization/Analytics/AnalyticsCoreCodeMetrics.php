@@ -33,7 +33,7 @@ final class AnalyticsCoreCodeMetrics implements BaseModel
     public int $artifactsCreatedCount;
 
     /**
-     * Number of commits made via Claude Code.
+     * Number of commits made via Claude Code
      */
     #[Required('commit_count')]
     public int $commitCount;
@@ -51,7 +51,7 @@ final class AnalyticsCoreCodeMetrics implements BaseModel
     public AnalyticsLinesOfCode $linesOfCode;
 
     /**
-     * Number of pull requests created via Claude Code.
+     * Number of pull requests created via Claude Code
      */
     #[Required('pull_request_count')]
     public int $pullRequestCount;
@@ -123,7 +123,7 @@ final class AnalyticsCoreCodeMetrics implements BaseModel
     }
 
     /**
-     * Number of commits made via Claude Code.
+     * Number of commits made via Claude Code
      */
     public function withCommitCount(int $commitCount): self
     {
@@ -159,7 +159,7 @@ final class AnalyticsCoreCodeMetrics implements BaseModel
     }
 
     /**
-     * Number of pull requests created via Claude Code.
+     * Number of pull requests created via Claude Code
      */
     public function withPullRequestCount(int $pullRequestCount): self
     {

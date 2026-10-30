@@ -21,13 +21,13 @@ final class AnalyticsLinesOfCode implements BaseModel
     use SdkModel;
 
     /**
-     * Lines of code added.
+     * Lines of code added
      */
     #[Required('added_count')]
     public int $addedCount;
 
     /**
-     * Lines of code removed.
+     * Lines of code removed
      */
     #[Required('removed_count')]
     public int $removedCount;
@@ -67,7 +67,7 @@ final class AnalyticsLinesOfCode implements BaseModel
     }
 
     /**
-     * Lines of code added.
+     * Lines of code added
      */
     public function withAddedCount(int $addedCount): self
     {
@@ -78,7 +78,7 @@ final class AnalyticsLinesOfCode implements BaseModel
     }
 
     /**
-     * Lines of code removed.
+     * Lines of code removed
      */
     public function withRemovedCount(int $removedCount): self
     {

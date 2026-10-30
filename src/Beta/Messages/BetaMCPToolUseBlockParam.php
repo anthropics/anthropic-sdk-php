@@ -42,7 +42,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     public string $name;
 
     /**
-     * The name of the MCP server.
+     * The name of the MCP server
      */
     #[Required('server_name')]
     public string $serverName;
@@ -131,7 +131,7 @@ final class BetaMCPToolUseBlockParam implements BaseModel
     }
 
     /**
-     * The name of the MCP server.
+     * The name of the MCP server
      */
     public function withServerName(string $serverName): self
     {

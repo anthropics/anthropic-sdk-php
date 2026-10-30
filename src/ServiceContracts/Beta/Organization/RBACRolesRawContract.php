@@ -19,7 +19,7 @@ interface RBACRolesRawContract
     /**
      * @api
      *
-     * @param string $rbacRoleID ID of the RBAC Role
+     * @param string $rbacRoleID ID of the RBAC Role.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<RBACRole>

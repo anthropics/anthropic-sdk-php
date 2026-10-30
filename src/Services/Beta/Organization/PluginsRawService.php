@@ -130,7 +130,7 @@ final class PluginsRawService implements PluginsRawContract
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array{
      *   organizationID?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -212,7 +212,7 @@ final class PluginsRawService implements PluginsRawContract
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array{
      *   servedVersionID: string,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -383,7 +383,7 @@ final class PluginsRawService implements PluginsRawContract
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $pluginID ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID ID of the Plugin (prefixed `plugin_`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|PluginDeleteParams $params

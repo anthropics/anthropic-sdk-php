@@ -22,9 +22,9 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $name body param: Name of the Workspace
+     * @param string $name Body param: Name of the Workspace.
      * @param DataResidencyCreateConfig|DataResidencyCreateConfigShape|null $dataResidency Body param: Data residency configuration for the workspace. If omitted, defaults to `workspace_geo: "us"`, `allowed_inference_geos: "unrestricted"`, and `default_inference_geo: "global"`.
-     * @param string|null $displayColor body param: Hex color code representing the Workspace in the Anthropic Console
+     * @param string|null $displayColor Body param: Hex color code representing the Workspace in the Anthropic Console.
      * @param string|null $externalKeyID Body param: ID of the customer-managed encryption key (CMEK) configuration to use for this
      * Workspace. Setting this field requires CMEK to be enabled for your
      * organization. When set, data stored for this Workspace is encrypted with the
@@ -38,7 +38,7 @@ interface WorkspacesContract
      * key on your cloud KMS; the `external_key_id` stays the same.
      * @param array<string,string>|null $tags Body param: User-defined tags as string key-value pairs. Keys may not begin with `anthropic`.
      * @param string|null $userProfileID Body param: ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. The user profile can't be replaced or removed later; only deleting the user profile clears it.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -57,7 +57,7 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -70,8 +70,8 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param DataResidencyUpdateConfig|DataResidencyUpdateConfigShape|null $dataResidency data residency configuration for the workspace
-     * @param string $displayColor hex color code representing the Workspace in the Anthropic Console
+     * @param DataResidencyUpdateConfig|DataResidencyUpdateConfigShape|null $dataResidency Data residency configuration for the workspace.
+     * @param string $displayColor Hex color code representing the Workspace in the Anthropic Console.
      * @param string $externalKeyID ID of the customer-managed encryption key (CMEK) configuration to use for this
      * Workspace. Setting this field requires CMEK to be enabled for your
      * organization. When set, data stored for this Workspace is encrypted with the
@@ -83,7 +83,7 @@ interface WorkspacesContract
      * on this request. This field is write-once: once a key is attached to a Workspace
      * it cannot be detached or replaced. To rotate key material, rotate the underlying
      * key on your cloud KMS; the `external_key_id` stays the same.
-     * @param string $name name of the Workspace
+     * @param string $name Name of the Workspace.
      * @param array<string,string|null>|null $tags User-defined tags as string key-value pairs. Keys may not begin with `anthropic`.
      * @param string $userProfileID ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. Once set, it can't be replaced or removed (sending the same ID again changes nothing); only deleting the user profile clears it. The default Workspace can't have a user profile.
      * @param RequestOpts|null $requestOptions

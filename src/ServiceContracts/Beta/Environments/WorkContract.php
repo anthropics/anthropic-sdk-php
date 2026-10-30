@@ -22,7 +22,7 @@ interface WorkContract
      *
      * @param string $workID Path param
      * @param string $environmentID Path param
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -44,7 +44,7 @@ interface WorkContract
      * @param string $workID Path param
      * @param string $environmentID Path param
      * @param array<string,string|null> $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve existing metadata.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -67,7 +67,7 @@ interface WorkContract
      * @param string $environmentID Path param
      * @param int $limit Query param: Maximum number of work items to return
      * @param string|null $page Query param: Opaque cursor from previous response for pagination
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<SelfHostedWork>
@@ -87,7 +87,7 @@ interface WorkContract
      *
      * @param string $workID Path param
      * @param string $environmentID Path param
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -106,7 +106,7 @@ interface WorkContract
      * @param string $environmentID Path param
      * @param int|null $desiredTTLSeconds Query param: Desired TTL in seconds
      * @param string|null $expectedLastHeartbeat Query param: Expected last_heartbeat for conditional update (optimistic concurrency). Use literal 'NO_HEARTBEAT' to claim an unclaimed lease (first heartbeat). For subsequent heartbeats, echo the server's previous last_heartbeat value exactly. Returns 412 Precondition Failed if the actual value doesn't match.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -126,7 +126,7 @@ interface WorkContract
      * @param string $environmentID Path param
      * @param int|null $blockMs Query param: How long to wait for work to arrive before returning. Must be 1-999 in milliseconds. Defaults to non-blocking (returns immediately if no work is available).
      * @param int|null $reclaimOlderThanMs Query param: Reclaim unacknowledged work items older than this many milliseconds. If omitted, uses the default (5000ms).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $anthropicWorkerID Header param: Unique identifier for the specific worker polling, used to track aggregated environment-level work metrics in Console
      * @param RequestOpts|null $requestOptions
      *
@@ -144,7 +144,7 @@ interface WorkContract
     /**
      * @api
      *
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -165,7 +165,7 @@ interface WorkContract
      * @param string $workID Path param
      * @param string $environmentID Path param
      * @param bool $force Body param: If true, immediately stop work without graceful shutdown
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.

@@ -115,7 +115,7 @@ final class RulesRawService implements RulesRawContract
      *
      * Retrieve a federation rule by its ID (`fdrl_...`).
      *
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $federationRuleID ID of the federation rule.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|RuleRetrieveParams $params
@@ -179,7 +179,7 @@ final class RulesRawService implements RulesRawContract
      * `workspace:developer` or `workspace:inference`; other scopes require a
      * Console session.
      *
-     * @param string $federationRuleID path param: ID of the federation rule to update
+     * @param string $federationRuleID Path param: ID of the federation rule to update.
      * @param array{
      *   appliesToAllWorkspaces?: bool|null,
      *   attributes?: array<string,string>|null,
@@ -311,7 +311,7 @@ final class RulesRawService implements RulesRawContract
      * whose `oauth_scope` is `workspace:developer` or `workspace:inference`;
      * other scopes require a Console session.
      *
-     * @param string $federationRuleID ID of the federation rule to archive
+     * @param string $federationRuleID ID of the federation rule to archive.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|RuleArchiveParams $params

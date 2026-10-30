@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Session.
+ * Get Session
  *
  * @see Anthropic\Services\Beta\SessionsService::retrieve()
  *

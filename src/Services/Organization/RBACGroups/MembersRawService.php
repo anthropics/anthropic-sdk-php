@@ -35,7 +35,7 @@ final class MembersRawService implements MembersRawContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param array{limit?: int, page?: string|null}|MemberListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -76,7 +76,7 @@ final class MembersRawService implements MembersRawContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param array{userID: string}|MemberAddParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -116,7 +116,7 @@ final class MembersRawService implements MembersRawContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array{rbacGroupID: string}|MemberRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

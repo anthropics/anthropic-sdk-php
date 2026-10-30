@@ -41,7 +41,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * rules with `applies_to_all_workspaces` or a legacy single
      * `workspace_id`, check those fields on the rule itself.
      *
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $federationRuleID ID of the federation rule.
      * @param array{limit?: int, page?: string|null}|WorkspaceListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -95,7 +95,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * whose `oauth_scope` is `workspace:developer` or `workspace:inference`;
      * other scopes require a Console session.
      *
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $federationRuleID ID of the federation rule.
      * @param array{workspaceID: string}|WorkspaceAddParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -146,7 +146,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * `workspace:developer` or `workspace:inference`; other scopes require a
      * Console session.
      *
-     * @param string $workspaceID ID of the workspace to disable for
+     * @param string $workspaceID ID of the workspace to disable for.
      * @param array{federationRuleID: string}|WorkspaceRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

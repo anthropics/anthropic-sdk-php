@@ -18,9 +18,9 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $federationRuleID ID of the federation rule
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string $federationRuleID ID of the federation rule.
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<FederationRuleWorkspace>
@@ -37,8 +37,8 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $federationRuleID ID of the federation rule
-     * @param string $workspaceID tagged ID of the workspace to enable this rule for
+     * @param string $federationRuleID ID of the federation rule.
+     * @param string $workspaceID Tagged ID of the workspace to enable this rule for.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -52,8 +52,8 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the workspace to disable for
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $workspaceID ID of the workspace to disable for.
+     * @param string $federationRuleID ID of the federation rule.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

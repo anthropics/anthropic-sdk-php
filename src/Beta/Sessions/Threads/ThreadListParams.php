@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Session Threads.
+ * List Session Threads
  *
  * @see Anthropic\Services\Beta\Sessions\ThreadsService::list()
  *

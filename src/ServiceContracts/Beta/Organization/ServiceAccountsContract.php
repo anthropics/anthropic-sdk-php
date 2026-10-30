@@ -20,9 +20,9 @@ interface ServiceAccountsContract
      * @api
      *
      * @param string $name Body param: Slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
-     * @param string|null $description body param: Optional free-text description
+     * @param string|null $description Body param: Optional free-text description.
      * @param OrganizationRole|value-of<OrganizationRole> $organizationRole Body param: Org-level role. Defaults to `developer`.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -38,8 +38,8 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $serviceAccountID ID of the service account.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -53,10 +53,10 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account to update
+     * @param string $serviceAccountID Path param: ID of the service account to update.
      * @param string|null $description Body param: Replaces the description. Omit to leave unchanged; send `null` to clear (the field is stored as an empty string).
      * @param \Anthropic\Beta\Organization\ServiceAccounts\ServiceAccountUpdateParams\OrganizationRole|value-of<\Anthropic\Beta\Organization\ServiceAccounts\ServiceAccountUpdateParams\OrganizationRole>|null $organizationRole Body param: Replaces the org-level role. Omit or send `null` to leave unchanged.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -73,9 +73,9 @@ interface ServiceAccountsContract
      * @api
      *
      * @param bool $includeArchived Query param: Include archived resources. Defaults to false.
-     * @param int $limit query param: Number of results per page
-     * @param string|null $page query param: Opaque cursor from a previous response's `next_page`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param int $limit Query param: Number of results per page.
+     * @param string|null $page Query param: Opaque cursor from a previous response's `next_page`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ServiceAccount>
@@ -93,8 +93,8 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account to archive
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $serviceAccountID ID of the service account to archive.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

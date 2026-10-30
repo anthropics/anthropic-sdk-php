@@ -46,11 +46,11 @@ final class CredentialsService implements CredentialsContract
      *
      * Create a Credential
      *
-     * @param string $vaultID path param: Identifier of the vault to create the credential in
-     * @param AuthShape $auth body param: Authentication configuration for the credential
+     * @param string $vaultID Path param: Identifier of the vault to create the credential in.
+     * @param AuthShape $auth Body param: Authentication configuration for the credential.
      * @param string|null $displayName Body param: Human-readable name for the credential. Up to 255 characters.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata to attach to the credential. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -88,9 +88,9 @@ final class CredentialsService implements CredentialsContract
      *
      * Retrieve a Credential
      *
-     * @param string $credentialID path param: Unique identifier of the credential to retrieve
-     * @param string $vaultID path param: Identifier of the vault containing the credential
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param string $credentialID Path param: Unique identifier of the credential to retrieve.
+     * @param string $vaultID Path param: Identifier of the vault containing the credential.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -120,12 +120,12 @@ final class CredentialsService implements CredentialsContract
      *
      * Update a Credential
      *
-     * @param string $credentialID path param: Unique identifier of the credential to update
-     * @param string $vaultID path param: Identifier of the vault containing the credential
+     * @param string $credentialID Path param: Unique identifier of the credential to update.
+     * @param string $vaultID Path param: Identifier of the vault containing the credential.
      * @param AuthShape1 $auth Body param: New authentication settings for the credential. The `type` must match the credential's current type, which can't be changed.
      * @param string|null $displayName Body param: Updated human-readable name for the credential. 1-255 characters.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omitted keys are preserved.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -165,11 +165,11 @@ final class CredentialsService implements CredentialsContract
      *
      * List Credentials
      *
-     * @param string $vaultID path param: Identifier of the vault to list credentials for
+     * @param string $vaultID Path param: Identifier of the vault to list credentials for.
      * @param bool $includeArchived Query param: Whether to include archived credentials in the results. Defaults to `false`.
      * @param int $limit Query param: Maximum number of credentials to return per page. Defaults to 20, maximum 100.
      * @param string $page Query param: The `next_page` value from a previous [List Credentials](https://platform.claude.com/docs/en/api/beta/vaults/credentials/list) response, to get the next page. Leave it out to get the first page.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -209,9 +209,9 @@ final class CredentialsService implements CredentialsContract
      *
      * Delete a Credential
      *
-     * @param string $credentialID path param: Unique identifier of the credential to delete
-     * @param string $vaultID path param: Identifier of the vault containing the credential
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param string $credentialID Path param: Unique identifier of the credential to delete.
+     * @param string $vaultID Path param: Identifier of the vault containing the credential.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -241,9 +241,9 @@ final class CredentialsService implements CredentialsContract
      *
      * Archive a Credential
      *
-     * @param string $credentialID path param: Unique identifier of the credential to archive
-     * @param string $vaultID path param: Identifier of the vault containing the credential
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param string $credentialID Path param: Unique identifier of the credential to archive.
+     * @param string $vaultID Path param: Identifier of the vault containing the credential.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -273,9 +273,9 @@ final class CredentialsService implements CredentialsContract
      *
      * Validate an MCP OAuth Credential
      *
-     * @param string $credentialID path param: Unique identifier of the credential to validate
-     * @param string $vaultID path param: Identifier of the vault containing the credential
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param string $credentialID Path param: Unique identifier of the credential to validate.
+     * @param string $vaultID Path param: Identifier of the vault containing the credential.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.

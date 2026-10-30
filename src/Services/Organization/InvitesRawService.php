@@ -74,7 +74,7 @@ final class InvitesRawService implements InvitesRawContract
      *
      * Retrieve an invite by ID.
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<OrganizationInvite>
@@ -149,7 +149,7 @@ final class InvitesRawService implements InvitesRawContract
      *
      * Delete a pending invite.
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<InviteDeleteResponse>

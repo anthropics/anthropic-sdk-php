@@ -23,7 +23,7 @@ final class SessionWorkData implements BaseModel
     use SdkModel;
 
     /**
-     * Type of work data.
+     * Type of work data
      *
      * @var 'session' $type
      */
@@ -31,7 +31,7 @@ final class SessionWorkData implements BaseModel
     public string $type = 'session';
 
     /**
-     * Session identifier (e.g., 'session_...').
+     * Session identifier (e.g., 'session_...')
      */
     #[Required]
     public string $id;
@@ -70,7 +70,7 @@ final class SessionWorkData implements BaseModel
     }
 
     /**
-     * Session identifier (e.g., 'session_...').
+     * Session identifier (e.g., 'session_...')
      */
     public function withID(string $id): self
     {
@@ -81,7 +81,7 @@ final class SessionWorkData implements BaseModel
     }
 
     /**
-     * Type of work data.
+     * Type of work data
      *
      * @param 'session' $type
      */

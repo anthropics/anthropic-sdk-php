@@ -68,7 +68,7 @@ final class AnalyticsPluginActivity implements BaseModel
     public ?int $installCount;
 
     /**
-     * Number of plugin invocations on the requested day.
+     * Number of plugin invocations on the requested day
      */
     #[Required('invocation_count')]
     public int $invocationCount;
@@ -80,7 +80,7 @@ final class AnalyticsPluginActivity implements BaseModel
     public ?string $pluginID;
 
     /**
-     * Name of the plugin.
+     * Name of the plugin
      */
     #[Required('plugin_name')]
     public string $pluginName;
@@ -242,7 +242,7 @@ final class AnalyticsPluginActivity implements BaseModel
     }
 
     /**
-     * Number of plugin invocations on the requested day.
+     * Number of plugin invocations on the requested day
      */
     public function withInvocationCount(int $invocationCount): self
     {
@@ -264,7 +264,7 @@ final class AnalyticsPluginActivity implements BaseModel
     }
 
     /**
-     * Name of the plugin.
+     * Name of the plugin
      */
     public function withPluginName(string $pluginName): self
     {

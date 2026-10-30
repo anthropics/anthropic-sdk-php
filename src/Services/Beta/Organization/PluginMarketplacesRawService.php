@@ -45,7 +45,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $marketplaceID path param: ID of the plugin marketplace (prefixed `marketplace_`)
+     * @param string $marketplaceID Path param: ID of the plugin marketplace (prefixed `marketplace_`).
      * @param array{
      *   organizationID?: string|null,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -111,7 +111,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $marketplaceID path param: ID of the plugin marketplace (prefixed `marketplace_`)
+     * @param string $marketplaceID Path param: ID of the plugin marketplace (prefixed `marketplace_`).
      * @param array{
      *   defaultInstallationPreference: DefaultInstallationPreference|value-of<DefaultInstallationPreference>,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

@@ -21,13 +21,13 @@ final class AnalyticsToolActionCounts implements BaseModel
     use SdkModel;
 
     /**
-     * Number of tool proposals accepted.
+     * Number of tool proposals accepted
      */
     #[Required('accepted_count')]
     public int $acceptedCount;
 
     /**
-     * Number of tool proposals rejected.
+     * Number of tool proposals rejected
      */
     #[Required('rejected_count')]
     public int $rejectedCount;
@@ -69,7 +69,7 @@ final class AnalyticsToolActionCounts implements BaseModel
     }
 
     /**
-     * Number of tool proposals accepted.
+     * Number of tool proposals accepted
      */
     public function withAcceptedCount(int $acceptedCount): self
     {
@@ -80,7 +80,7 @@ final class AnalyticsToolActionCounts implements BaseModel
     }
 
     /**
-     * Number of tool proposals rejected.
+     * Number of tool proposals rejected
      */
     public function withRejectedCount(int $rejectedCount): self
     {

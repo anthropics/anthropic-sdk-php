@@ -28,6 +28,7 @@
 
 * add a description to the AnthropicBeta type
 * **examples:** use current model IDs
+* keep descriptions in docblocks as the API's spec has them
 * **readme:** point to the docs site for documentation
 
 ## [1.3.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.2.0...v1.3.0) (2026-10-23)

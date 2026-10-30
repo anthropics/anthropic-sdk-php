@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * Specification for an Agent. Provide a specific `version` or use the short-form `agent="agent_id"` for the most recent version.
+ * Specification for an Agent. Provide a specific `version` or use the short-form `agent="agent_id"` for the most recent version
  *
  * @phpstan-type BetaManagedAgentsAgentParamsShape = array{
  *   id: string, type: 'agent', version?: int|null

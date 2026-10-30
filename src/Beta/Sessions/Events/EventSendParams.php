@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Send Events.
+ * Send Events
  *
  * @see Anthropic\Services\Beta\Sessions\EventsService::send()
  *

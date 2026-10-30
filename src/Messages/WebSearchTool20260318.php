@@ -96,7 +96,7 @@ final class WebSearchTool20260318 implements BaseModel
     public ?string $responseInclusion;
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     #[Optional]
     public ?bool $strict;
@@ -264,7 +264,7 @@ final class WebSearchTool20260318 implements BaseModel
     }
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     public function withStrict(bool $strict): self
     {

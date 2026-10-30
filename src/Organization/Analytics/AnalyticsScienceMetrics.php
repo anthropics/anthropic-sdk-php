@@ -25,7 +25,7 @@ final class AnalyticsScienceMetrics implements BaseModel
     use SdkModel;
 
     /**
-     * Number of delegations (handoffs to a specialized agent) in Claude Science sessions.
+     * Number of delegations (handoffs to a specialized agent) in Claude Science sessions
      */
     #[Required('delegation_count')]
     public int $delegationCount;
@@ -37,19 +37,19 @@ final class AnalyticsScienceMetrics implements BaseModel
     public ?int $distinctSessionCount;
 
     /**
-     * Number of messages sent in Claude Science sessions.
+     * Number of messages sent in Claude Science sessions
      */
     #[Required('message_count')]
     public int $messageCount;
 
     /**
-     * Number of remote compute jobs launched from Claude Science sessions.
+     * Number of remote compute jobs launched from Claude Science sessions
      */
     #[Required('remote_compute_job_count')]
     public int $remoteComputeJobCount;
 
     /**
-     * Total number of skill invocations in Claude Science sessions.
+     * Total number of skill invocations in Claude Science sessions
      */
     #[Required('skills_used_count')]
     public int $skillsUsedCount;
@@ -108,7 +108,7 @@ final class AnalyticsScienceMetrics implements BaseModel
     }
 
     /**
-     * Number of delegations (handoffs to a specialized agent) in Claude Science sessions.
+     * Number of delegations (handoffs to a specialized agent) in Claude Science sessions
      */
     public function withDelegationCount(int $delegationCount): self
     {
@@ -130,7 +130,7 @@ final class AnalyticsScienceMetrics implements BaseModel
     }
 
     /**
-     * Number of messages sent in Claude Science sessions.
+     * Number of messages sent in Claude Science sessions
      */
     public function withMessageCount(int $messageCount): self
     {
@@ -141,7 +141,7 @@ final class AnalyticsScienceMetrics implements BaseModel
     }
 
     /**
-     * Number of remote compute jobs launched from Claude Science sessions.
+     * Number of remote compute jobs launched from Claude Science sessions
      */
     public function withRemoteComputeJobCount(int $remoteComputeJobCount): self
     {
@@ -152,7 +152,7 @@ final class AnalyticsScienceMetrics implements BaseModel
     }
 
     /**
-     * Total number of skill invocations in Claude Science sessions.
+     * Total number of skill invocations in Claude Science sessions
      */
     public function withSkillsUsedCount(int $skillsUsedCount): self
     {

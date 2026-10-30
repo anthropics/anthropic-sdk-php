@@ -23,7 +23,7 @@ final class SelfHostedWorkListResponse implements BaseModel
     use SdkModel;
 
     /**
-     * List of work items.
+     * List of work items
      *
      * @var list<SelfHostedWork> $data
      */
@@ -31,7 +31,7 @@ final class SelfHostedWorkListResponse implements BaseModel
     public array $data;
 
     /**
-     * Opaque cursor for fetching the next page of results.
+     * Opaque cursor for fetching the next page of results
      */
     #[Required('next_page')]
     public ?string $nextPage;
@@ -73,7 +73,7 @@ final class SelfHostedWorkListResponse implements BaseModel
     }
 
     /**
-     * List of work items.
+     * List of work items
      *
      * @param list<SelfHostedWork|SelfHostedWorkShape> $data
      */
@@ -86,7 +86,7 @@ final class SelfHostedWorkListResponse implements BaseModel
     }
 
     /**
-     * Opaque cursor for fetching the next page of results.
+     * Opaque cursor for fetching the next page of results
      */
     public function withNextPage(?string $nextPage): self
     {

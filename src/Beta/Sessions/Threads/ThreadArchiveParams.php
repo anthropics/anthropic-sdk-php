@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Archive Session Thread.
+ * Archive Session Thread
  *
  * @see Anthropic\Services\Beta\Sessions\ThreadsService::archive()
  *

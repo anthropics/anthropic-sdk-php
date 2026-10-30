@@ -90,7 +90,7 @@ trait SdkModel
      *
      * Magic get is intended to occur when we have manually unset
      * a native class property, indicating an omitted value,
-     * or a property overridden with an incongruent type
+     * or a property overridden with an incongruent type.
      *
      * @throws \Exception
      */

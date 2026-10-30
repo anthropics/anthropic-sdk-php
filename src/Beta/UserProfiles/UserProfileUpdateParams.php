@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Update User Profile.
+ * Update User Profile
  *
  * @see Anthropic\Services\Beta\UserProfilesService::update()
  *

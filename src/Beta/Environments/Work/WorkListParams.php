@@ -30,13 +30,13 @@ final class WorkListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Maximum number of work items to return.
+     * Maximum number of work items to return
      */
     #[Optional]
     public ?int $limit;
 
     /**
-     * Opaque cursor from previous response for pagination.
+     * Opaque cursor from previous response for pagination
      */
     #[Optional(nullable: true)]
     public ?string $page;
@@ -76,7 +76,7 @@ final class WorkListParams implements BaseModel
     }
 
     /**
-     * Maximum number of work items to return.
+     * Maximum number of work items to return
      */
     public function withLimit(int $limit): self
     {
@@ -87,7 +87,7 @@ final class WorkListParams implements BaseModel
     }
 
     /**
-     * Opaque cursor from previous response for pagination.
+     * Opaque cursor from previous response for pagination
      */
     public function withPage(?string $page): self
     {

@@ -53,9 +53,9 @@ final class WorkspacesService implements WorkspacesContract
      * or the service account is archived. Restart pagination from the first
      * page to recover.
      *
-     * @param string $serviceAccountID ID of the service account
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string $serviceAccountID ID of the service account.
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ServiceAccountWorkspaceMember>
@@ -90,9 +90,9 @@ final class WorkspacesService implements WorkspacesContract
      * workspaces return 400. Archived service accounts cannot be added and are
      * rejected.
      *
-     * @param string $serviceAccountID ID of the service account
-     * @param string $workspaceID tagged workspace ID to add the service account to
-     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole role to assign to the service account in this workspace
+     * @param string $serviceAccountID ID of the service account.
+     * @param string $workspaceID Tagged workspace ID to add the service account to.
+     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Role to assign to the service account in this workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -128,8 +128,8 @@ final class WorkspacesService implements WorkspacesContract
      * to the implicit `workspace_user` membership. Archived workspaces return
      * 400.
      *
-     * @param string $workspaceID ID of the workspace
-     * @param string $serviceAccountID ID of the service account
+     * @param string $workspaceID ID of the workspace.
+     * @param string $serviceAccountID ID of the service account.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

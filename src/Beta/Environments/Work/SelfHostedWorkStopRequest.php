@@ -19,7 +19,7 @@ final class SelfHostedWorkStopRequest implements BaseModel
     use SdkModel;
 
     /**
-     * If true, immediately stop work without graceful shutdown.
+     * If true, immediately stop work without graceful shutdown
      */
     #[Optional]
     public ?bool $force;
@@ -44,7 +44,7 @@ final class SelfHostedWorkStopRequest implements BaseModel
     }
 
     /**
-     * If true, immediately stop work without graceful shutdown.
+     * If true, immediately stop work without graceful shutdown
      */
     public function withForce(bool $force): self
     {

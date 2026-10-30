@@ -40,7 +40,7 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
     public string $id;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -49,7 +49,7 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
     public string $mountPath;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
@@ -124,7 +124,7 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -154,7 +154,7 @@ final class ManagedAgentsGitHubRepositoryResource implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {

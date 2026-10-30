@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get User Profile.
+ * Get User Profile
  *
  * @see Anthropic\Services\Beta\UserProfilesService::retrieve()
  *

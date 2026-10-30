@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Agent.
+ * Get Agent
  *
  * @see Anthropic\Services\Beta\AgentsService::retrieve()
  *

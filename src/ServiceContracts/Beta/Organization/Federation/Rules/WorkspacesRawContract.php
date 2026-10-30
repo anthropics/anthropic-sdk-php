@@ -22,7 +22,7 @@ interface WorkspacesRawContract
     /**
      * @api
      *
-     * @param string $federationRuleID path param: ID of the federation rule
+     * @param string $federationRuleID Path param: ID of the federation rule.
      * @param array<string,mixed>|WorkspaceListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -39,7 +39,7 @@ interface WorkspacesRawContract
     /**
      * @api
      *
-     * @param string $federationRuleID path param: ID of the federation rule
+     * @param string $federationRuleID Path param: ID of the federation rule.
      * @param array<string,mixed>|WorkspaceAddParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +56,7 @@ interface WorkspacesRawContract
     /**
      * @api
      *
-     * @param string $workspaceID path param: ID of the workspace to disable for
+     * @param string $workspaceID Path param: ID of the workspace to disable for.
      * @param array<string,mixed>|WorkspaceRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

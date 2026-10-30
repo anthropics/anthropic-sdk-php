@@ -59,25 +59,25 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     public ?int $assignedSeatCount;
 
     /**
-     * Number of users with Cowork activity on the requested day.
+     * Number of users with Cowork activity on the requested day
      */
     #[Required('cowork_daily_active_user_count')]
     public int $coworkDailyActiveUserCount;
 
     /**
-     * Number of users with Cowork activity in the 30-day rolling window.
+     * Number of users with Cowork activity in the 30-day rolling window
      */
     #[Required('cowork_monthly_active_user_count')]
     public int $coworkMonthlyActiveUserCount;
 
     /**
-     * Number of users with Cowork activity in the 7-day rolling window.
+     * Number of users with Cowork activity in the 7-day rolling window
      */
     #[Required('cowork_weekly_active_user_count')]
     public int $coworkWeeklyActiveUserCount;
 
     /**
-     * Number of users with token consumption on the requested day.
+     * Number of users with token consumption on the requested day
      */
     #[Required('daily_active_user_count')]
     public int $dailyActiveUserCount;
@@ -95,7 +95,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     public \DateTimeInterface $endingAt;
 
     /**
-     * Number of users with token consumption in the 30-day rolling window.
+     * Number of users with token consumption in the 30-day rolling window
      */
     #[Required('monthly_active_user_count')]
     public int $monthlyActiveUserCount;
@@ -119,7 +119,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     public \DateTimeInterface $startingAt;
 
     /**
-     * Number of users with token consumption in the 7-day rolling window.
+     * Number of users with token consumption in the 7-day rolling window
      */
     #[Required('weekly_active_user_count')]
     public int $weeklyActiveUserCount;
@@ -380,7 +380,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with Cowork activity on the requested day.
+     * Number of users with Cowork activity on the requested day
      */
     public function withCoworkDailyActiveUserCount(
         int $coworkDailyActiveUserCount
@@ -392,7 +392,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with Cowork activity in the 30-day rolling window.
+     * Number of users with Cowork activity in the 30-day rolling window
      */
     public function withCoworkMonthlyActiveUserCount(
         int $coworkMonthlyActiveUserCount
@@ -404,7 +404,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with Cowork activity in the 7-day rolling window.
+     * Number of users with Cowork activity in the 7-day rolling window
      */
     public function withCoworkWeeklyActiveUserCount(
         int $coworkWeeklyActiveUserCount
@@ -416,7 +416,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with token consumption on the requested day.
+     * Number of users with token consumption on the requested day
      */
     public function withDailyActiveUserCount(int $dailyActiveUserCount): self
     {
@@ -449,7 +449,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with token consumption in the 30-day rolling window.
+     * Number of users with token consumption in the 30-day rolling window
      */
     public function withMonthlyActiveUserCount(
         int $monthlyActiveUserCount
@@ -494,7 +494,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with token consumption in the 7-day rolling window.
+     * Number of users with token consumption in the 7-day rolling window
      */
     public function withWeeklyActiveUserCount(int $weeklyActiveUserCount): self
     {

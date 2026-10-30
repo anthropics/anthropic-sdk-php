@@ -15,7 +15,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Deployment.
+ * Create Deployment
  *
  * @see Anthropic\Services\Beta\DeploymentsService::create()
  *

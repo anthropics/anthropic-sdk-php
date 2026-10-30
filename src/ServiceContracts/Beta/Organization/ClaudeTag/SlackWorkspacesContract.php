@@ -20,9 +20,9 @@ interface SlackWorkspacesContract
     /**
      * @api
      *
-     * @param string $id path param: The workspace's identifier, starting with `slws_`
+     * @param string $id Path param: The workspace's identifier, starting with `slws_`.
      * @param bool $includeInherited Query param: When `true`, `settings` holds what applies in the workspace once the organization's Slack defaults are taken into account, and every member of `sources` names the level a value comes from. When `false` or left out, `settings` holds what the workspace itself stores.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -37,9 +37,9 @@ interface SlackWorkspacesContract
     /**
      * @api
      *
-     * @param string $id path param: The workspace's identifier, starting with `slws_`
-     * @param ClaudeTagSettingsUpdate|ClaudeTagSettingsUpdateShape $settings body param: The settings to change
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param string $id Path param: The workspace's identifier, starting with `slws_`.
+     * @param ClaudeTagSettingsUpdate|ClaudeTagSettingsUpdateShape $settings Body param: The settings to change.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -56,9 +56,9 @@ interface SlackWorkspacesContract
      *
      * @param bool $includeInherited Query param: When `true`, `settings` holds what applies in each workspace once the organization's Slack defaults are taken into account, and every member of `sources` names the level a value comes from. When `false` or left out, `settings` holds what each workspace itself stores.
      * @param int $limit Query param: Number of items to return per page, between 1 and 100. Defaults to 20.
-     * @param string $page query param: Opaque cursor from a previous response's `next_page`
+     * @param string $page Query param: Opaque cursor from a previous response's `next_page`.
      * @param string $slackWorkspaceID Query param: Slack's identifier for one workspace, as in the workspace object's `slack.workspace_id`, not its `id`. With it `data` holds that workspace alone, or nothing when it is not set up.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaClaudeTagSlackWorkspace>

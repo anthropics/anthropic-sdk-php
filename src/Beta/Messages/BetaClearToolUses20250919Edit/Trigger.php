@@ -12,7 +12,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Condition that triggers the context management strategy.
+ * Condition that triggers the context management strategy
  *
  * @phpstan-import-type BetaInputTokensTriggerShape from \Anthropic\Beta\Messages\BetaInputTokensTrigger
  * @phpstan-import-type BetaToolUsesTriggerShape from \Anthropic\Beta\Messages\BetaToolUsesTrigger

@@ -27,7 +27,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     use SdkModel;
 
     /**
-     * The type of response.
+     * The type of response
      *
      * @var 'work_heartbeat' $type
      */
@@ -35,19 +35,19 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     public string $type = 'work_heartbeat';
 
     /**
-     * RFC 3339 timestamp of the most recent heartbeat recorded for this work item, or an empty string if none has been recorded.
+     * RFC 3339 timestamp of the most recent heartbeat recorded for this work item, or an empty string if none has been recorded
      */
     #[Required('last_heartbeat')]
     public string $lastHeartbeat;
 
     /**
-     * Whether the heartbeat succeeded in extending the lease.
+     * Whether the heartbeat succeeded in extending the lease
      */
     #[Required('lease_extended')]
     public bool $leaseExtended;
 
     /**
-     * Current state of the work item (active/stopping/stopped).
+     * Current state of the work item (active/stopping/stopped)
      *
      * @var value-of<State> $state
      */
@@ -55,7 +55,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     public string $state;
 
     /**
-     * Effective TTL applied to the lease.
+     * Effective TTL applied to the lease
      */
     #[Required('ttl_seconds')]
     public int $ttlSeconds;
@@ -109,7 +109,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp of the most recent heartbeat recorded for this work item, or an empty string if none has been recorded.
+     * RFC 3339 timestamp of the most recent heartbeat recorded for this work item, or an empty string if none has been recorded
      */
     public function withLastHeartbeat(string $lastHeartbeat): self
     {
@@ -120,7 +120,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     }
 
     /**
-     * Whether the heartbeat succeeded in extending the lease.
+     * Whether the heartbeat succeeded in extending the lease
      */
     public function withLeaseExtended(bool $leaseExtended): self
     {
@@ -131,7 +131,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     }
 
     /**
-     * Current state of the work item (active/stopping/stopped).
+     * Current state of the work item (active/stopping/stopped)
      *
      * @param State|value-of<State> $state
      */
@@ -144,7 +144,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     }
 
     /**
-     * Effective TTL applied to the lease.
+     * Effective TTL applied to the lease
      */
     public function withTTLSeconds(int $ttlSeconds): self
     {
@@ -155,7 +155,7 @@ final class SelfHostedWorkHeartbeatResponse implements BaseModel
     }
 
     /**
-     * The type of response.
+     * The type of response
      *
      * @param 'work_heartbeat' $type
      */

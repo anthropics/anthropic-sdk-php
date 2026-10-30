@@ -38,7 +38,7 @@ final class ModelsService implements ModelsContract
      *
      * The Models API response can be used to determine information about a specific model or resolve a model alias to a model ID.
      *
-     * @param string $modelID model identifier or alias
+     * @param string $modelID Model identifier or alias.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.

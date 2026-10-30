@@ -70,14 +70,14 @@ final class SessionsService implements SessionsContract
      * Create Session
      *
      * @param AgentShape $agent Body param: Agent identifier. Accepts the `agent` ID string, which pins the latest version for the session, or an `agent` object with both id and version specified.
-     * @param string $environmentID body param: ID of the `environment` defining the container configuration for this session
+     * @param string $environmentID Body param: ID of the `environment` defining the container configuration for this session.
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape $budget Body param: Enforced spend ceiling for the session. Omit to create an uncapped session. Every model the session can run — the agent's model and each callable agent's model — must have a public list price, or the request is rejected with reason `model_not_budgetable`.
      * @param list<InitialEventShape> $initialEvents Body param: Initial events to send to the `session` at creation, processed in order. Supports `user.message` and `user.define_outcome` events. Maximum 50 events.
      * @param array<string,string> $metadata Body param: Arbitrary key-value metadata attached to the session. Maximum 16 pairs, keys up to 64 chars, values up to 512 chars.
      * @param list<ResourceShape> $resources Body param: Resources (e.g. repositories, files) to mount into the session's container.
-     * @param string|null $title body param: Human-readable session title
-     * @param list<string> $vaultIDs body param: Vault IDs for stored credentials the agent can use during the session
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param string|null $title Body param: Human-readable session title.
+     * @param list<string> $vaultIDs Body param: Vault IDs for stored credentials the agent can use during the session.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -124,7 +124,7 @@ final class SessionsService implements SessionsContract
      *
      * Get Session
      *
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -157,9 +157,9 @@ final class SessionsService implements SessionsContract
      * @param BetaManagedAgentsSessionAgentUpdate|BetaManagedAgentsSessionAgentUpdateShape $agent Body param: Agent configuration update. Only `tools` and `mcp_servers` are updatable mid-session. Only valid for sessions created from an agent or deployment reference. The session must not be running.
      * @param BetaManagedAgentsBudgetLimit|BetaManagedAgentsBudgetLimitShape|null $budget Body param: Enforced spend ceiling for the session. Set an object to replace the budget of a session that was created with one, or `null` to remove it; omit to preserve. A budget cannot be added to a session created without one (rejected with reason `budget_create_only`), and a removed budget cannot be re-added. Allowed in any non-terminated status. Lowering `max_list_cost` to at or below the session's consumed list cost is rejected with reason `budget_not_raised`, and every model the session can run must have a public list price or the request is rejected with reason `model_not_budgetable`.
      * @param array<string,string|null>|null $metadata Body param: Metadata patch. Set a key to a string to upsert it, or to null to delete it. Omit the field to preserve.
-     * @param string|null $title body param: Human-readable session title
+     * @param string|null $title Body param: Human-readable session title.
      * @param list<string> $vaultIDs Body param: Vault IDs (`vlt_*`) to attach to the session. Not yet supported; requests setting this field are rejected. Reserved for future use.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -201,20 +201,20 @@ final class SessionsService implements SessionsContract
      *
      * List Sessions
      *
-     * @param string $agentID query param: Filter sessions created with this agent ID
+     * @param string $agentID Query param: Filter sessions created with this agent ID.
      * @param int $agentVersion Query param: Filter by agent version. Only applies when `agent_id` is also set.
-     * @param \DateTimeInterface $createdAtGt query param: Return sessions created after this time (exclusive)
-     * @param \DateTimeInterface $createdAtGte query param: Return sessions created at or after this time (inclusive)
-     * @param \DateTimeInterface $createdAtLt query param: Return sessions created before this time (exclusive)
-     * @param \DateTimeInterface $createdAtLte query param: Return sessions created at or before this time (inclusive)
-     * @param string $deploymentID query param: Filter sessions created by this deployment ID
+     * @param \DateTimeInterface $createdAtGt Query param: Return sessions created after this time (exclusive).
+     * @param \DateTimeInterface $createdAtGte Query param: Return sessions created at or after this time (inclusive).
+     * @param \DateTimeInterface $createdAtLt Query param: Return sessions created before this time (exclusive).
+     * @param \DateTimeInterface $createdAtLte Query param: Return sessions created at or before this time (inclusive).
+     * @param string $deploymentID Query param: Filter sessions created by this deployment ID.
      * @param bool $includeArchived Query param: When true, includes archived sessions. Default: false (exclude archived).
-     * @param int $limit query param: Maximum number of results to return
-     * @param string $memoryStoreID query param: Filter sessions whose resources contain a `memory_store` with this memory store ID
+     * @param int $limit Query param: Maximum number of results to return.
+     * @param string $memoryStoreID Query param: Filter sessions whose resources contain a `memory_store` with this memory store ID.
      * @param Order|value-of<Order> $order Query param: Sort direction for results, ordered by `created_at`. Defaults to `desc` (newest first).
-     * @param string $page query param: Opaque pagination cursor from a previous response
+     * @param string $page Query param: Opaque pagination cursor from a previous response.
      * @param list<Status|value-of<Status>> $statuses Query param: Filter by session status. Repeat the parameter to match any of multiple statuses.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -273,7 +273,7 @@ final class SessionsService implements SessionsContract
      *
      * Delete Session
      *
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -302,7 +302,7 @@ final class SessionsService implements SessionsContract
      *
      * Archive Session
      *
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.

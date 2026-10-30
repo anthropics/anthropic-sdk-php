@@ -42,7 +42,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
+     * @param string $webhookEndpointID ID of the webhook endpoint.
      * @param array<string,mixed>|WebhookRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -59,7 +59,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param string $webhookEndpointID path param: ID of the webhook endpoint
+     * @param string $webhookEndpointID Path param: ID of the webhook endpoint.
      * @param array<string,mixed>|WebhookUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -91,7 +91,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
+     * @param string $webhookEndpointID ID of the webhook endpoint.
      * @param array<string,mixed>|WebhookDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -108,7 +108,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
+     * @param string $webhookEndpointID ID of the webhook endpoint.
      * @param array<string,mixed>|WebhookRegenerateSigningSecretParams $params
      * @param RequestOpts|null $requestOptions
      *

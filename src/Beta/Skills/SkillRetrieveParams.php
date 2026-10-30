@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Skill.
+ * Get Skill
  *
  * @see Anthropic\Services\Beta\SkillsService::retrieve()
  *

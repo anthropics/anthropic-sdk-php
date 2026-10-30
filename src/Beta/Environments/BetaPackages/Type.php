@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Environments\BetaPackages;
 
 /**
- * Package configuration type.
+ * Package configuration type
  */
 enum Type: string
 {

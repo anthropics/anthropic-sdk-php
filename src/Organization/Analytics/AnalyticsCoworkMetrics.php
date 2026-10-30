@@ -37,7 +37,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     use SdkModel;
 
     /**
-     * Number of tool actions completed in Cowork sessions.
+     * Number of tool actions completed in Cowork sessions
      */
     #[Required('action_count')]
     public int $actionCount;
@@ -49,13 +49,13 @@ final class AnalyticsCoworkMetrics implements BaseModel
     public int $artifactsCreatedCount;
 
     /**
-     * Total number of connector invocations in Cowork sessions.
+     * Total number of connector invocations in Cowork sessions
      */
     #[Required('connectors_used_count')]
     public int $connectorsUsedCount;
 
     /**
-     * Number of Dispatch (background agent) turns completed.
+     * Number of Dispatch (background agent) turns completed
      */
     #[Required('dispatch_turn_count')]
     public int $dispatchTurnCount;
@@ -97,7 +97,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     public ?int $fileEditCount;
 
     /**
-     * Number of messages sent in Cowork sessions.
+     * Number of messages sent in Cowork sessions
      */
     #[Required('message_count')]
     public int $messageCount;
@@ -127,7 +127,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     public ?int $sessionsWithFileEditsCount;
 
     /**
-     * Total number of skill invocations in Cowork sessions.
+     * Total number of skill invocations in Cowork sessions
      */
     #[Required('skills_used_count')]
     public int $skillsUsedCount;
@@ -240,7 +240,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     }
 
     /**
-     * Number of tool actions completed in Cowork sessions.
+     * Number of tool actions completed in Cowork sessions
      */
     public function withActionCount(int $actionCount): self
     {
@@ -262,7 +262,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     }
 
     /**
-     * Total number of connector invocations in Cowork sessions.
+     * Total number of connector invocations in Cowork sessions
      */
     public function withConnectorsUsedCount(int $connectorsUsedCount): self
     {
@@ -273,7 +273,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     }
 
     /**
-     * Number of Dispatch (background agent) turns completed.
+     * Number of Dispatch (background agent) turns completed
      */
     public function withDispatchTurnCount(int $dispatchTurnCount): self
     {
@@ -353,7 +353,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     }
 
     /**
-     * Number of messages sent in Cowork sessions.
+     * Number of messages sent in Cowork sessions
      */
     public function withMessageCount(int $messageCount): self
     {
@@ -409,7 +409,7 @@ final class AnalyticsCoworkMetrics implements BaseModel
     }
 
     /**
-     * Total number of skill invocations in Cowork sessions.
+     * Total number of skill invocations in Cowork sessions
      */
     public function withSkillsUsedCount(int $skillsUsedCount): self
     {

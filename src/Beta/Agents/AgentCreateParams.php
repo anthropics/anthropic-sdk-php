@@ -15,7 +15,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Agent.
+ * Create Agent
  *
  * @see Anthropic\Services\Beta\AgentsService::create()
  *
@@ -53,7 +53,7 @@ final class AgentCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control.
+     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control
      *
      * @var ModelVariants $model
      */
@@ -213,7 +213,7 @@ final class AgentCreateParams implements BaseModel
     }
 
     /**
-     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control.
+     * Model identifier. Accepts the [model string](https://platform.claude.com/docs/en/about-claude/models/overview#latest-models-comparison), e.g. `claude-opus-5-5`, or a `model_config` object for additional configuration control
      *
      * @param ModelShape $model
      */

@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete Session Resource.
+ * Delete Session Resource
  *
  * @see Anthropic\Services\Beta\Sessions\ResourcesService::delete()
  *

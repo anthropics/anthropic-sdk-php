@@ -44,7 +44,7 @@ final class BetaManagedAgentsVault implements BaseModel
     public ?\DateTimeInterface $archivedAt;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -64,7 +64,7 @@ final class BetaManagedAgentsVault implements BaseModel
     public array $metadata;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
@@ -151,7 +151,7 @@ final class BetaManagedAgentsVault implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -197,7 +197,7 @@ final class BetaManagedAgentsVault implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {

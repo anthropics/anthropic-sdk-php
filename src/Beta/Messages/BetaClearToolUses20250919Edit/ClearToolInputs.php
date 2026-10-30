@@ -10,7 +10,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 
 /**
- * Whether to clear all tool inputs (bool) or specific tool inputs to clear (list).
+ * Whether to clear all tool inputs (bool) or specific tool inputs to clear (list)
  *
  * @phpstan-type ClearToolInputsVariants = bool|list<string>
  * @phpstan-type ClearToolInputsShape = ClearToolInputsVariants

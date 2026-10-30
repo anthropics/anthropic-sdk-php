@@ -90,7 +90,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * Retrieve a federation issuer by its ID (`fdis_...`).
      *
-     * @param string $federationIssuerID ID of the federation issuer
+     * @param string $federationIssuerID ID of the federation issuer.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<FederationIssuer>
@@ -130,7 +130,7 @@ final class IssuersRawService implements IssuersRawContract
      * `workspace:developer` or `workspace:inference` requires a Console
      * session.
      *
-     * @param string $federationIssuerID ID of the federation issuer to update
+     * @param string $federationIssuerID ID of the federation issuer to update.
      * @param array{
      *   checkJTI?: bool|null,
      *   issuerURL?: string|null,
@@ -228,7 +228,7 @@ final class IssuersRawService implements IssuersRawContract
      * rule still references the issuer; archive those rules first (a rule's
      * issuer cannot be changed), or recreate them against another issuer.
      *
-     * @param string $federationIssuerID ID of the federation issuer to archive
+     * @param string $federationIssuerID ID of the federation issuer to archive.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<FederationIssuer>

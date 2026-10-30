@@ -42,7 +42,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array<string,mixed>|BatchRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -74,7 +74,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array<string,mixed>|BatchDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -91,7 +91,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array<string,mixed>|BatchCancelParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -108,7 +108,7 @@ interface BatchesRawContract
     /**
      * @api
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array<string,mixed>|BatchResultsParams $params
      * @param RequestOpts|null $requestOptions
      *

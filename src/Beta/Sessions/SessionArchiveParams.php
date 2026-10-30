@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Archive Session.
+ * Archive Session
  *
  * @see Anthropic\Services\Beta\SessionsService::archive()
  *

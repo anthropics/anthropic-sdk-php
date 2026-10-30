@@ -19,7 +19,7 @@ interface PermissionsRawContract
     /**
      * @api
      *
-     * @param string $rbacRoleID ID of the RBAC Role
+     * @param string $rbacRoleID ID of the RBAC Role.
      * @param array<string,mixed>|PermissionListParams $params
      * @param RequestOpts|null $requestOptions
      *

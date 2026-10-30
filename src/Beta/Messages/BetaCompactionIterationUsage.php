@@ -29,7 +29,7 @@ final class BetaCompactionIterationUsage implements BaseModel
     use SdkModel;
 
     /**
-     * Usage for a compaction iteration.
+     * Usage for a compaction iteration
      *
      * @var 'compaction' $type
      */
@@ -37,7 +37,7 @@ final class BetaCompactionIterationUsage implements BaseModel
     public string $type = 'compaction';
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      */
     #[Required('cache_creation')]
     public ?BetaCacheCreation $cacheCreation;
@@ -122,7 +122,7 @@ final class BetaCompactionIterationUsage implements BaseModel
     }
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      */
@@ -181,7 +181,7 @@ final class BetaCompactionIterationUsage implements BaseModel
     }
 
     /**
-     * Usage for a compaction iteration.
+     * Usage for a compaction iteration
      *
      * @param 'compaction' $type
      */

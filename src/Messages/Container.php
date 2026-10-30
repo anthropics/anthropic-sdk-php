@@ -9,7 +9,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Information about the container used in the request (for the code execution tool).
+ * Information about the container used in the request (for the code execution tool)
  *
  * @phpstan-import-type ContainerSkillShape from \Anthropic\Messages\ContainerSkill
  *
@@ -25,7 +25,7 @@ final class Container implements BaseModel
     use SdkModel;
 
     /**
-     * Identifier for the container used in this request.
+     * Identifier for the container used in this request
      */
     #[Required]
     public string $id;
@@ -37,7 +37,7 @@ final class Container implements BaseModel
     public \DateTimeInterface $expiresAt;
 
     /**
-     * Skills loaded in the container.
+     * Skills loaded in the container
      *
      * @var list<ContainerSkill>|null $skills
      */
@@ -85,7 +85,7 @@ final class Container implements BaseModel
     }
 
     /**
-     * Identifier for the container used in this request.
+     * Identifier for the container used in this request
      */
     public function withID(string $id): self
     {
@@ -107,7 +107,7 @@ final class Container implements BaseModel
     }
 
     /**
-     * Skills loaded in the container.
+     * Skills loaded in the container
      *
      * @param list<ContainerSkill|ContainerSkillShape>|null $skills
      */

@@ -19,7 +19,7 @@ interface SharesRawContract
     /**
      * @api
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array<string,mixed>|ShareListParams $params
      * @param RequestOpts|null $requestOptions
      *

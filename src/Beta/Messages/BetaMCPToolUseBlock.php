@@ -35,13 +35,13 @@ final class BetaMCPToolUseBlock implements BaseModel
     public array $input;
 
     /**
-     * The name of the MCP tool.
+     * The name of the MCP tool
      */
     #[Required]
     public string $name;
 
     /**
-     * The name of the MCP server.
+     * The name of the MCP server
      */
     #[Required('server_name')]
     public string $serverName;
@@ -112,7 +112,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     }
 
     /**
-     * The name of the MCP tool.
+     * The name of the MCP tool
      */
     public function withName(string $name): self
     {
@@ -123,7 +123,7 @@ final class BetaMCPToolUseBlock implements BaseModel
     }
 
     /**
-     * The name of the MCP server.
+     * The name of the MCP server
      */
     public function withServerName(string $serverName): self
     {

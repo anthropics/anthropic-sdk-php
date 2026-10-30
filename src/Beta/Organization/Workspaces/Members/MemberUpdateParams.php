@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Update Workspace Member.
+ * Update Workspace Member
  *
  * @see Anthropic\Services\Beta\Organization\Workspaces\MembersService::update()
  *

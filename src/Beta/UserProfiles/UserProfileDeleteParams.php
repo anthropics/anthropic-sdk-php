@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete User Profile.
+ * Delete User Profile
  *
  * @see Anthropic\Services\Beta\UserProfilesService::delete()
  *

@@ -141,12 +141,12 @@ final class MessagesService implements MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param MessageCreateParamsContainerShape|null $container body param: Container identifier for reuse across requests
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     * @param MessageCreateParamsContainerShape|null $container Body param: Container identifier for reuse across requests.
      * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
-     * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
-     * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param Metadata|MetadataShape $metadata Body param: An object describing metadata about the request.
+     * @param OutputConfig|OutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://platform.claude.com/docs/en/api/service-tiers) for details.
@@ -377,12 +377,12 @@ final class MessagesService implements MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param MessageCreateParamsContainerShape|null $container body param: Container identifier for reuse across requests
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     * @param MessageCreateParamsContainerShape|null $container Body param: Container identifier for reuse across requests.
      * @param DiagnosticsParam|DiagnosticsParamShape|null $diagnostics Body param: Request-level diagnostics. Supply `previous_message_id` to have the response include `diagnostics.cache_miss_reason` explaining any prompt-cache divergence from that prior request.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
-     * @param Metadata|MetadataShape $metadata body param: An object describing metadata about the request
-     * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param Metadata|MetadataShape $metadata Body param: An object describing metadata about the request.
+     * @param OutputConfig|OutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param ServiceTier|value-of<ServiceTier> $serviceTier Body param: Determines whether to use priority capacity (if available) or standard capacity for this request.
      *
      * Anthropic offers different levels of service for your API requests. See [service-tiers](https://platform.claude.com/docs/en/api/service-tiers) for details.
@@ -590,8 +590,8 @@ final class MessagesService implements MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
-     * @param OutputConfig|OutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param CacheControlEphemeral|CacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
+     * @param OutputConfig|OutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param \Anthropic\Messages\MessageCountTokensParams\Speed|value-of<\Anthropic\Messages\MessageCountTokensParams\Speed>|null $speed Body param: The inference speed mode for this request. `"fast"` enables high output-tokens-per-second inference.
      *
      * Some models require the `fast-mode-2026-02-01` beta header for any `speed` value. See [fast mode](https://platform.claude.com/docs/en/build-with-claude/fast-mode) for which models.

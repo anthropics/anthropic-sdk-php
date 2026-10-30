@@ -34,7 +34,7 @@ final class Usage implements BaseModel
     use SdkModel;
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      */
     #[Required('cache_creation')]
     public ?CacheCreation $cacheCreation;
@@ -182,7 +182,7 @@ final class Usage implements BaseModel
     }
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      *
      * @param CacheCreation|CacheCreationShape|null $cacheCreation
      */

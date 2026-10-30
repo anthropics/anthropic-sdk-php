@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create a Memory.
+ * Create a Memory
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoriesService::create()
  *

@@ -91,7 +91,7 @@ final class AnalyticsUserActivity implements BaseModel
     public ?AnalyticsUser $user;
 
     /**
-     * Number of web searches performed.
+     * Number of web searches performed
      */
     #[Required('web_search_count')]
     public int $webSearchCount;
@@ -316,7 +316,7 @@ final class AnalyticsUserActivity implements BaseModel
     }
 
     /**
-     * Number of web searches performed.
+     * Number of web searches performed
      */
     public function withWebSearchCount(int $webSearchCount): self
     {

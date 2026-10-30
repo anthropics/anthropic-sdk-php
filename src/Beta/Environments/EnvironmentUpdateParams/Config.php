@@ -15,7 +15,7 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * Updated environment configuration.
+ * Updated environment configuration
  *
  * @phpstan-import-type BetaCloudConfigParamsShape from \Anthropic\Beta\Environments\BetaCloudConfigParams
  * @phpstan-import-type BetaSelfHostedConfigParamsShape from \Anthropic\Beta\Environments\BetaSelfHostedConfigParams

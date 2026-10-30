@@ -36,7 +36,7 @@ final class BetaManagedAgentsGitHubRepositoryResourceConfig implements BaseModel
     public string $type = 'github_repository';
 
     /**
-     * Github URL of the repository.
+     * Github URL of the repository
      */
     #[Required]
     public string $url;
@@ -108,7 +108,7 @@ final class BetaManagedAgentsGitHubRepositoryResourceConfig implements BaseModel
     }
 
     /**
-     * Github URL of the repository.
+     * Github URL of the repository
      */
     public function withURL(string $url): self
     {

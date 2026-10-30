@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\FileParam;
 
 /**
- * Create Skill Version.
+ * Create Skill Version
  *
  * @see Anthropic\Services\Skills\VersionsService::create()
  *

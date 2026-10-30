@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Deployment Run.
+ * Get Deployment Run
  *
  * @see Anthropic\Services\Beta\DeploymentRunsService::retrieve()
  *

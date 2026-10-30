@@ -86,19 +86,19 @@ final class AnalyticsChatMetrics implements BaseModel
     public ?int $distinctSkillsUsedCount;
 
     /**
-     * Number of messages sent.
+     * Number of messages sent
      */
     #[Required('message_count')]
     public int $messageCount;
 
     /**
-     * Number of times the user opened a shared conversation in a project.
+     * Number of times the user opened a shared conversation in a project
      */
     #[Required('shared_conversations_viewed_count')]
     public int $sharedConversationsViewedCount;
 
     /**
-     * Number of messages that used extended thinking.
+     * Number of messages that used extended thinking
      */
     #[Required('thinking_message_count')]
     public int $thinkingMessageCount;
@@ -292,7 +292,7 @@ final class AnalyticsChatMetrics implements BaseModel
     }
 
     /**
-     * Number of messages sent.
+     * Number of messages sent
      */
     public function withMessageCount(int $messageCount): self
     {
@@ -303,7 +303,7 @@ final class AnalyticsChatMetrics implements BaseModel
     }
 
     /**
-     * Number of times the user opened a shared conversation in a project.
+     * Number of times the user opened a shared conversation in a project
      */
     public function withSharedConversationsViewedCount(
         int $sharedConversationsViewedCount
@@ -315,7 +315,7 @@ final class AnalyticsChatMetrics implements BaseModel
     }
 
     /**
-     * Number of messages that used extended thinking.
+     * Number of messages that used extended thinking
      */
     public function withThinkingMessageCount(int $thinkingMessageCount): self
     {

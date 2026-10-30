@@ -13,7 +13,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Retrieve a Memory Version.
+ * Retrieve a Memory Version
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoryVersionsService::retrieve()
  *

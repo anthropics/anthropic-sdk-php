@@ -37,7 +37,7 @@ interface RBACGroupsRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<RBACGroup>
@@ -52,7 +52,7 @@ interface RBACGroupsRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param array<string,mixed>|RBACGroupUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -84,7 +84,7 @@ interface RBACGroupsRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<RBACGroupDeleteResponse>

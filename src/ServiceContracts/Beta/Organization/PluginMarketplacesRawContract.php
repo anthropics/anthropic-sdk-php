@@ -24,7 +24,7 @@ interface PluginMarketplacesRawContract
     /**
      * @api
      *
-     * @param string $marketplaceID path param: ID of the plugin marketplace (prefixed `marketplace_`)
+     * @param string $marketplaceID Path param: ID of the plugin marketplace (prefixed `marketplace_`).
      * @param array<string,mixed>|PluginMarketplaceRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -41,7 +41,7 @@ interface PluginMarketplacesRawContract
     /**
      * @api
      *
-     * @param string $marketplaceID path param: ID of the plugin marketplace (prefixed `marketplace_`)
+     * @param string $marketplaceID Path param: ID of the plugin marketplace (prefixed `marketplace_`).
      * @param array<string,mixed>|PluginMarketplaceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

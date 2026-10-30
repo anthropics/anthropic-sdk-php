@@ -139,7 +139,7 @@ abstract class BaseClient
     /**
      * @internal
      *
-     * The tracer for one API call, from the tracer provider the application has registered by the time the call starts, or null when this client's spans are disabled, or when the tracer provider throws
+     * The tracer for one API call, from the tracer provider the application has registered by the time the call starts, or null when this client's spans are disabled, or when the tracer provider throws.
      */
     public function tracer(): ?TracerInterface
     {

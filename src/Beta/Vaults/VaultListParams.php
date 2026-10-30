@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Vaults.
+ * List Vaults
  *
  * @see Anthropic\Services\Beta\VaultsService::list()
  *

@@ -20,7 +20,7 @@ interface ModelsRawContract
     /**
      * @api
      *
-     * @param string $modelID model identifier or alias
+     * @param string $modelID Model identifier or alias.
      * @param array<string,mixed>|ModelRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *

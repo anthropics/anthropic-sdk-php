@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Action URL.
+ * Create Action URL
  *
  * @see Anthropic\Services\Beta\UserProfiles\ActionURLsService::create()
  *

@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update Agent.
+ * Update Agent
  *
  * @see Anthropic\Services\Beta\AgentsService::update()
  *

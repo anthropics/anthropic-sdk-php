@@ -24,7 +24,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account
+     * @param string $serviceAccountID Path param: ID of the service account.
      * @param array<string,mixed>|ServiceAccountRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -41,7 +41,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account
+     * @param string $serviceAccountID Path param: ID of the service account.
      * @param array<string,mixed>|ServiceAccountUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -58,7 +58,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $workspaceID path param: ID of the workspace
+     * @param string $workspaceID Path param: ID of the workspace.
      * @param array<string,mixed>|ServiceAccountListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -75,7 +75,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $workspaceID path param: ID of the workspace
+     * @param string $workspaceID Path param: ID of the workspace.
      * @param array<string,mixed>|ServiceAccountAddParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -92,7 +92,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account
+     * @param string $serviceAccountID Path param: ID of the service account.
      * @param array<string,mixed>|ServiceAccountRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

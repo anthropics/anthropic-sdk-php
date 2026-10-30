@@ -79,7 +79,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * Get Workspace
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Workspace>

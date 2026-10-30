@@ -36,7 +36,7 @@ interface RulesRawContract
     /**
      * @api
      *
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $federationRuleID ID of the federation rule.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<FederationRule>
@@ -51,7 +51,7 @@ interface RulesRawContract
     /**
      * @api
      *
-     * @param string $federationRuleID ID of the federation rule to update
+     * @param string $federationRuleID ID of the federation rule to update.
      * @param array<string,mixed>|RuleUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -83,7 +83,7 @@ interface RulesRawContract
     /**
      * @api
      *
-     * @param string $federationRuleID ID of the federation rule to archive
+     * @param string $federationRuleID ID of the federation rule to archive.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<FederationRule>

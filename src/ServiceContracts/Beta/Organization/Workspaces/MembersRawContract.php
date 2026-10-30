@@ -24,7 +24,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array<string,mixed>|MemberRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -41,7 +41,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $userID path param: ID of the User
+     * @param string $userID Path param: ID of the User.
      * @param array<string,mixed>|MemberUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -58,7 +58,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param array<string,mixed>|MemberListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -75,7 +75,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param array<string,mixed>|MemberAddParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -92,7 +92,7 @@ interface MembersRawContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array<string,mixed>|MemberRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

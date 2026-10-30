@@ -74,7 +74,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<RBACGroup>
@@ -107,7 +107,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param array{name?: string|null}|RBACGroupUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -188,7 +188,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<RBACGroupDeleteResponse>

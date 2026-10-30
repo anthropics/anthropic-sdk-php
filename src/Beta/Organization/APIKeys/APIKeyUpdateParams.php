@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Update API Key.
+ * Update API Key
  *
  * @see Anthropic\Services\Beta\Organization\APIKeysService::update()
  *

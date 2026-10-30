@@ -24,7 +24,7 @@ final class JSONOutputFormat implements BaseModel
     public string $type = 'json_schema';
 
     /**
-     * The JSON schema of the format.
+     * The JSON schema of the format
      *
      * @var array<string,mixed> $schema
      */
@@ -67,7 +67,7 @@ final class JSONOutputFormat implements BaseModel
     }
 
     /**
-     * The JSON schema of the format.
+     * The JSON schema of the format
      *
      * @param array<string,mixed> $schema
      */

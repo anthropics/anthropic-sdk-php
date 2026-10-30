@@ -92,7 +92,7 @@ final class BetaAdvisorTool20260301 implements BaseModel
     public ?int $maxUses;
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     #[Optional]
     public ?bool $strict;
@@ -265,7 +265,7 @@ final class BetaAdvisorTool20260301 implements BaseModel
     }
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     public function withStrict(bool $strict): self
     {

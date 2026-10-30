@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Archive Agent.
+ * Archive Agent
  *
  * @see Anthropic\Services\Beta\AgentsService::archive()
  *

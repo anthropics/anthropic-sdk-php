@@ -43,8 +43,8 @@ final class ExternalKeysService implements ExternalKeysContract
      *
      * Create an external key config owned by the caller's organization.
      *
-     * @param ProviderConfigShape $providerConfig KMS provider identity and auth coordinates
-     * @param string|null $displayName human-friendly display name
+     * @param ProviderConfigShape $providerConfig KMS provider identity and auth coordinates.
+     * @param string|null $displayName Human-friendly display name.
      * @param Geo|value-of<Geo> $geo Data residency geo. Only `us` is supported.
      * @param string|null $userProfileID ID of a user profile to bind the key to. Omit this field for a key that isn't bound to a user profile. Such a key can be attached to a Workspace whatever its user profile. The binding cannot be changed later. A key bound to a user profile can only be attached to a Workspace that has the same user profile.
      * @param RequestOpts|null $requestOptions
@@ -78,7 +78,7 @@ final class ExternalKeysService implements ExternalKeysContract
      *
      * Retrieve a single external key config in the caller's organization by ID.
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -102,10 +102,10 @@ final class ExternalKeysService implements ExternalKeysContract
      * be changed once any workspace references this config, because previously
      * encrypted data requires the original key identity to decrypt.
      *
-     * @param string $externalKeyID ID of the External Key
-     * @param string|null $displayName human-friendly display name
+     * @param string $externalKeyID ID of the External Key.
+     * @param string|null $displayName Human-friendly display name.
      * @param \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyUpdateParams\Geo|value-of<\Anthropic\Beta\Organization\ExternalKeys\ExternalKeyUpdateParams\Geo>|null $geo Data residency geo. Only `us` is supported.
-     * @param ProviderConfigShape1|null $providerConfig KMS provider identity and auth coordinates
+     * @param ProviderConfigShape1|null $providerConfig KMS provider identity and auth coordinates.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -139,8 +139,8 @@ final class ExternalKeysService implements ExternalKeysContract
      * Results are ordered by creation time (newest first). Use the
      * `next_page` cursor from the response to fetch subsequent pages.
      *
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ExternalKey>
@@ -167,7 +167,7 @@ final class ExternalKeysService implements ExternalKeysContract
      *
      * The request is rejected if any workspace still references this config.
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -192,7 +192,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * `success` if the roundtrip succeeded, or `failure` with an error
      * message if it failed or timed out.
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

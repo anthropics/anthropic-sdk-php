@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Workspace.
+ * Create Workspace
  *
  * @see Anthropic\Services\Organization\WorkspacesService::create()
  *

@@ -20,9 +20,9 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account
-     * @param string $workspaceID path param: ID of the workspace
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $serviceAccountID Path param: ID of the service account.
+     * @param string $workspaceID Path param: ID of the workspace.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -37,10 +37,10 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account
-     * @param string $workspaceID path param: ID of the workspace
-     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole body param: New role for the service account in this workspace
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $serviceAccountID Path param: ID of the service account.
+     * @param string $workspaceID Path param: ID of the workspace.
+     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Body param: New role for the service account in this workspace.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -56,10 +56,10 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $workspaceID path param: ID of the workspace
-     * @param int $limit query param: Number of results per page
-     * @param string|null $page query param: Opaque cursor from a previous response's `next_page`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Path param: ID of the workspace.
+     * @param int $limit Query param: Number of results per page.
+     * @param string|null $page Query param: Opaque cursor from a previous response's `next_page`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ServiceAccountWorkspaceMember>
@@ -77,10 +77,10 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $workspaceID path param: ID of the workspace
-     * @param string $serviceAccountID body param: Tagged service account ID to add
-     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole body param: Role to assign to the service account in this workspace
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Path param: ID of the workspace.
+     * @param string $serviceAccountID Body param: Tagged service account ID to add.
+     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Body param: Role to assign to the service account in this workspace.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -96,9 +96,9 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account
-     * @param string $workspaceID path param: ID of the workspace
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $serviceAccountID Path param: ID of the service account.
+     * @param string $workspaceID Path param: ID of the workspace.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

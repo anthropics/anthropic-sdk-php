@@ -20,7 +20,7 @@ final class BetaUnrestrictedNetwork implements BaseModel
     use SdkModel;
 
     /**
-     * Network policy type.
+     * Network policy type
      *
      * @var 'unrestricted' $type
      */
@@ -43,7 +43,7 @@ final class BetaUnrestrictedNetwork implements BaseModel
     }
 
     /**
-     * Network policy type.
+     * Network policy type
      *
      * @param 'unrestricted' $type
      */

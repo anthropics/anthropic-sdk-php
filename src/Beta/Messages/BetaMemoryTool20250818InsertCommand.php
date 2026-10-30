@@ -20,7 +20,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     use SdkModel;
 
     /**
-     * Command type identifier.
+     * Command type identifier
      *
      * @var 'insert' $command
      */
@@ -28,19 +28,19 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     public string $command = 'insert';
 
     /**
-     * Line number where text should be inserted.
+     * Line number where text should be inserted
      */
     #[Required('insert_line')]
     public int $insertLine;
 
     /**
-     * Text to insert at the specified line.
+     * Text to insert at the specified line
      */
     #[Required('insert_text')]
     public string $insertText;
 
     /**
-     * Path to the file where text should be inserted.
+     * Path to the file where text should be inserted
      */
     #[Required]
     public string $path;
@@ -89,7 +89,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     }
 
     /**
-     * Command type identifier.
+     * Command type identifier
      *
      * @param 'insert' $command
      */
@@ -102,7 +102,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     }
 
     /**
-     * Line number where text should be inserted.
+     * Line number where text should be inserted
      */
     public function withInsertLine(int $insertLine): self
     {
@@ -113,7 +113,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     }
 
     /**
-     * Text to insert at the specified line.
+     * Text to insert at the specified line
      */
     public function withInsertText(string $insertText): self
     {
@@ -124,7 +124,7 @@ final class BetaMemoryTool20250818InsertCommand implements BaseModel
     }
 
     /**
-     * Path to the file where text should be inserted.
+     * Path to the file where text should be inserted
      */
     public function withPath(string $path): self
     {

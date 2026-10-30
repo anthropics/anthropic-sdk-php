@@ -26,7 +26,7 @@ final class AnalyticsOfficeProductMetrics implements BaseModel
     use SdkModel;
 
     /**
-     * Number of MCP connector invocations.
+     * Number of MCP connector invocations
      */
     #[Required('connectors_used_count')]
     public int $connectorsUsedCount;
@@ -50,13 +50,13 @@ final class AnalyticsOfficeProductMetrics implements BaseModel
     public ?int $distinctSkillsUsedCount;
 
     /**
-     * Number of messages sent.
+     * Number of messages sent
      */
     #[Required('message_count')]
     public int $messageCount;
 
     /**
-     * Number of skill invocations.
+     * Number of skill invocations
      */
     #[Required('skills_used_count')]
     public int $skillsUsedCount;
@@ -119,7 +119,7 @@ final class AnalyticsOfficeProductMetrics implements BaseModel
     }
 
     /**
-     * Number of MCP connector invocations.
+     * Number of MCP connector invocations
      */
     public function withConnectorsUsedCount(int $connectorsUsedCount): self
     {
@@ -165,7 +165,7 @@ final class AnalyticsOfficeProductMetrics implements BaseModel
     }
 
     /**
-     * Number of messages sent.
+     * Number of messages sent
      */
     public function withMessageCount(int $messageCount): self
     {
@@ -176,7 +176,7 @@ final class AnalyticsOfficeProductMetrics implements BaseModel
     }
 
     /**
-     * Number of skill invocations.
+     * Number of skill invocations
      */
     public function withSkillsUsedCount(int $skillsUsedCount): self
     {

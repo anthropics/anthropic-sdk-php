@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Organization\APIKeys\APIKeyUpdateParams\Status;
 
 /**
- * Update API Key.
+ * Update API Key
  *
  * @see Anthropic\Services\Organization\APIKeysService::update()
  *

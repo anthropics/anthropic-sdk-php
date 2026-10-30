@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Files.
+ * List Files
  *
  * @see Anthropic\Services\Beta\FilesService::list()
  *

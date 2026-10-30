@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Session Resources.
+ * List Session Resources
  *
  * @see Anthropic\Services\Beta\Sessions\ResourcesService::list()
  *

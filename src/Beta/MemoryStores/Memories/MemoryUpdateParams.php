@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Update a Memory.
+ * Update a Memory
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoriesService::update()
  *

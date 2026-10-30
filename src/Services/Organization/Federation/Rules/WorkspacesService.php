@@ -44,9 +44,9 @@ final class WorkspacesService implements WorkspacesContract
      * rules with `applies_to_all_workspaces` or a legacy single
      * `workspace_id`, check those fields on the rule itself.
      *
-     * @param string $federationRuleID ID of the federation rule
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string $federationRuleID ID of the federation rule.
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<FederationRuleWorkspace>
@@ -83,8 +83,8 @@ final class WorkspacesService implements WorkspacesContract
      * whose `oauth_scope` is `workspace:developer` or `workspace:inference`;
      * other scopes require a Console session.
      *
-     * @param string $federationRuleID ID of the federation rule
-     * @param string $workspaceID tagged ID of the workspace to enable this rule for
+     * @param string $federationRuleID ID of the federation rule.
+     * @param string $workspaceID Tagged ID of the workspace to enable this rule for.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -114,8 +114,8 @@ final class WorkspacesService implements WorkspacesContract
      * `workspace:developer` or `workspace:inference`; other scopes require a
      * Console session.
      *
-     * @param string $workspaceID ID of the workspace to disable for
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $workspaceID ID of the workspace to disable for.
+     * @param string $federationRuleID ID of the federation rule.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

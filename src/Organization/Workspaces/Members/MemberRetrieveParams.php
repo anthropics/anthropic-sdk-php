@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Workspace Member.
+ * Get Workspace Member
  *
  * @see Anthropic\Services\Organization\Workspaces\MembersService::retrieve()
  *

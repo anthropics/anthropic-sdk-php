@@ -41,7 +41,7 @@ final class IncreaseRequestsService implements IncreaseRequestsContract
      * While `pending`, the response includes a live `spend_summary` for the
      * requester at the request's period.
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -65,7 +65,7 @@ final class IncreaseRequestsService implements IncreaseRequestsContract
      * Requests whose requester is no longer a member are excluded.
      *
      * @param list<string>|null $actorIDs Filter by requester, as `user_...` tagged IDs.
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param list<SpendLimitIncreaseRequestStatus|value-of<SpendLimitIncreaseRequestStatus>>|null $status Filter by status. Omit to return all.
      * @param RequestOpts|null $requestOptions
      *
@@ -105,8 +105,8 @@ final class IncreaseRequestsService implements IncreaseRequestsContract
      * the member was blocked on. Anthropic emails the requester unless
      * `suppress_notification` is set.
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
-     * @param string $amount new per-user spend limit as a non-negative integer decimal string (minor units)
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param string $amount New per-user spend limit as a non-negative integer decimal string (minor units).
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod>|null $period
      * @param RequestOpts|null $requestOptions
      *
@@ -141,7 +141,7 @@ final class IncreaseRequestsService implements IncreaseRequestsContract
      * Idempotent on `denied`; denying an already-`approved` request returns
      * 400. Anthropic emails the requester unless `suppress_notification` is set.
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

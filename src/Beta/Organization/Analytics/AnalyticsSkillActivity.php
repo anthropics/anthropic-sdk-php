@@ -121,7 +121,7 @@ final class AnalyticsSkillActivity implements BaseModel
     public ?string $skillDisplayName;
 
     /**
-     * Name of the skill.
+     * Name of the skill
      */
     #[Required('skill_name')]
     public string $skillName;
@@ -407,7 +407,7 @@ final class AnalyticsSkillActivity implements BaseModel
     }
 
     /**
-     * Name of the skill.
+     * Name of the skill
      */
     public function withSkillName(string $skillName): self
     {

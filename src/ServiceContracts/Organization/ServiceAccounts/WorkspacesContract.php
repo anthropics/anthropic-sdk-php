@@ -19,9 +19,9 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string $serviceAccountID ID of the service account.
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ServiceAccountWorkspaceMember>
@@ -38,9 +38,9 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account
-     * @param string $workspaceID tagged workspace ID to add the service account to
-     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole role to assign to the service account in this workspace
+     * @param string $serviceAccountID ID of the service account.
+     * @param string $workspaceID Tagged workspace ID to add the service account to.
+     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Role to assign to the service account in this workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -55,8 +55,8 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the workspace
-     * @param string $serviceAccountID ID of the service account
+     * @param string $workspaceID ID of the workspace.
+     * @param string $serviceAccountID ID of the service account.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

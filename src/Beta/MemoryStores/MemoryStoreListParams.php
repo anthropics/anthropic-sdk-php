@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Memory Stores.
+ * List Memory Stores
  *
  * @see Anthropic\Services\Beta\MemoryStoresService::list()
  *

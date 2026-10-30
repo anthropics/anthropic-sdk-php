@@ -452,7 +452,7 @@ final class Util
     /**
      * @internal
      *
-     * Whether any file part in the body reads from a stream that cannot seek back, so the body can be encoded and sent only once
+     * Whether any file part in the body reads from a stream that cannot seek back, so the body can be encoded and sent only once.
      */
     public static function hasNonSeekableFilePart(mixed $body): bool
     {

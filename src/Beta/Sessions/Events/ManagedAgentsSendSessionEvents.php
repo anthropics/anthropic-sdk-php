@@ -25,7 +25,7 @@ final class ManagedAgentsSendSessionEvents implements BaseModel
     use SdkModel;
 
     /**
-     * Sent events.
+     * Sent events
      *
      * @var list<DataVariants>|null $data
      */
@@ -54,7 +54,7 @@ final class ManagedAgentsSendSessionEvents implements BaseModel
     }
 
     /**
-     * Sent events.
+     * Sent events
      *
      * @param list<DataShape> $data
      */

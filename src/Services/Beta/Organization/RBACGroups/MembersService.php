@@ -38,11 +38,11 @@ final class MembersService implements MembersContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param string|null $page optionally set to the `next_page` token from the previous response
+     * @param string|null $page Optionally set to the `next_page` token from the previous response.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaRBACGroupMember>
@@ -70,8 +70,8 @@ final class MembersService implements MembersContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
-     * @param string $userID ID of the User
+     * @param string $rbacGroupID ID of the RBAC Group.
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -96,8 +96,8 @@ final class MembersService implements MembersContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $userID ID of the User
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $userID ID of the User.
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -22,7 +22,7 @@ interface VersionsRawContract
     /**
      * @api
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array<string,mixed>|VersionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -39,7 +39,7 @@ interface VersionsRawContract
     /**
      * @api
      *
-     * @param string $version path param: ID of the Plugin Version (prefixed `pluginver_`), or `latest` for the newest one
+     * @param string $version Path param: ID of the Plugin Version (prefixed `pluginver_`), or `latest` for the newest one.
      * @param array<string,mixed>|VersionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +56,7 @@ interface VersionsRawContract
     /**
      * @api
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array<string,mixed>|VersionListParams $params
      * @param RequestOpts|null $requestOptions
      *

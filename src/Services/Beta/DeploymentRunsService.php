@@ -37,8 +37,8 @@ final class DeploymentRunsService implements DeploymentRunsContract
      *
      * Get Deployment Run
      *
-     * @param string $deploymentRunID unique identifier of the deployment run
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param string $deploymentRunID Unique identifier of the deployment run.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -67,16 +67,16 @@ final class DeploymentRunsService implements DeploymentRunsContract
      *
      * List Deployment Runs
      *
-     * @param \DateTimeInterface $createdAtGt query param: Return runs created strictly after this time (exclusive)
-     * @param \DateTimeInterface $createdAtGte query param: Return runs created at or after this time (inclusive)
-     * @param \DateTimeInterface $createdAtLt query param: Return runs created strictly before this time (exclusive)
-     * @param \DateTimeInterface $createdAtLte query param: Return runs created at or before this time (inclusive)
+     * @param \DateTimeInterface $createdAtGt Query param: Return runs created strictly after this time (exclusive).
+     * @param \DateTimeInterface $createdAtGte Query param: Return runs created at or after this time (inclusive).
+     * @param \DateTimeInterface $createdAtLt Query param: Return runs created strictly before this time (exclusive).
+     * @param \DateTimeInterface $createdAtLte Query param: Return runs created at or before this time (inclusive).
      * @param string $deploymentID Query param: Filter to a specific deployment. Omit to list across all deployments in the workspace. Filtering by a non-existent `deployment_id` returns 200 with empty data.
      * @param bool $hasError Query param: Filter: true for runs with non-null `error`, false for runs with non-null `session_id`. Omit for all.
      * @param int $limit Query param: Maximum results per page. Default 20, maximum 1000.
      * @param string $page Query param: Opaque pagination cursor. Pass `next_page` from the previous response. Invalid or expired cursors return 400.
      * @param BetaManagedAgentsTriggerType|value-of<BetaManagedAgentsTriggerType> $triggerType Query param: Filter runs by what triggered them. Omit to return all runs.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `managed-agents-2026-04-01` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.

@@ -20,7 +20,7 @@ interface RateLimitsRawContract
     /**
      * @api
      *
-     * @param string $rateLimitID path param: The `id` of the organization's rate-limit entry to set overrides for
+     * @param string $rateLimitID Path param: The `id` of the organization's rate-limit entry to set overrides for.
      * @param array<string,mixed>|RateLimitUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -37,7 +37,7 @@ interface RateLimitsRawContract
     /**
      * @api
      *
-     * @param string $workspaceID the ID of the workspace
+     * @param string $workspaceID The ID of the workspace.
      * @param array<string,mixed>|RateLimitListParams $params
      * @param RequestOpts|null $requestOptions
      *

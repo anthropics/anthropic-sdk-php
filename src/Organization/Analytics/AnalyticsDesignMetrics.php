@@ -42,7 +42,7 @@ final class AnalyticsDesignMetrics implements BaseModel
     public ?int $distinctSessionCount;
 
     /**
-     * Number of messages sent in Claude Design sessions.
+     * Number of messages sent in Claude Design sessions
      */
     #[Required('message_count')]
     public int $messageCount;
@@ -132,7 +132,7 @@ final class AnalyticsDesignMetrics implements BaseModel
     }
 
     /**
-     * Number of messages sent in Claude Design sessions.
+     * Number of messages sent in Claude Design sessions
      */
     public function withMessageCount(int $messageCount): self
     {

@@ -38,13 +38,13 @@ final class EnvironmentCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Human-readable name for the environment.
+     * Human-readable name for the environment
      */
     #[Required]
     public string $name;
 
     /**
-     * Environment configuration.
+     * Environment configuration
      *
      * @var ConfigVariants|null $config
      */
@@ -52,13 +52,13 @@ final class EnvironmentCreateParams implements BaseModel
     public BetaCloudConfigParams|BetaSelfHostedConfigParams|null $config;
 
     /**
-     * Optional description of the environment.
+     * Optional description of the environment
      */
     #[Optional(nullable: true)]
     public ?string $description;
 
     /**
-     * User-provided metadata key-value pairs.
+     * User-provided metadata key-value pairs
      *
      * @var array<string,string>|null $metadata
      */
@@ -142,7 +142,7 @@ final class EnvironmentCreateParams implements BaseModel
     }
 
     /**
-     * Human-readable name for the environment.
+     * Human-readable name for the environment
      */
     public function withName(string $name): self
     {
@@ -153,7 +153,7 @@ final class EnvironmentCreateParams implements BaseModel
     }
 
     /**
-     * Environment configuration.
+     * Environment configuration
      *
      * @param ConfigShape|null $config
      */
@@ -167,7 +167,7 @@ final class EnvironmentCreateParams implements BaseModel
     }
 
     /**
-     * Optional description of the environment.
+     * Optional description of the environment
      */
     public function withDescription(?string $description): self
     {
@@ -178,7 +178,7 @@ final class EnvironmentCreateParams implements BaseModel
     }
 
     /**
-     * User-provided metadata key-value pairs.
+     * User-provided metadata key-value pairs
      *
      * @param array<string,string> $metadata
      */

@@ -12,6 +12,10 @@ return (new Config)
     ->setRules([
         '@PhpCsFixer' => true,
         'phpdoc_align' => false,
+        'phpdoc_annotation_without_dot' => false,
+        'phpdoc_summary' => false,
+        // The other groups would rewrite a class that is named Resource or Integer.
+        'phpdoc_types' => ['groups' => ['simple']],
         'new_with_parentheses' => ['named_class' => false],
         'ordered_types' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],
         'phpdoc_types_order' => ['null_adjustment' => 'always_last', 'sort_algorithm' => 'none'],

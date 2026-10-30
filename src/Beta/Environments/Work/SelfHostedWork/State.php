@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Environments\Work\SelfHostedWork;
 
 /**
- * Current state of the work item.
+ * Current state of the work item
  */
 enum State: string
 {

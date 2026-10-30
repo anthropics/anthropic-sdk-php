@@ -33,7 +33,7 @@ final class BetaCloudConfigParams implements BaseModel
     use SdkModel;
 
     /**
-     * Environment type.
+     * Environment type
      *
      * @var 'cloud' $type
      */
@@ -80,7 +80,7 @@ final class BetaCloudConfigParams implements BaseModel
     }
 
     /**
-     * Environment type.
+     * Environment type
      *
      * @param 'cloud' $type
      */
