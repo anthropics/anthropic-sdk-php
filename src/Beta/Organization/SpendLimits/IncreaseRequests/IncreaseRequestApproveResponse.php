@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\SpendLimits\IncreaseRequests;
 
-use Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\Actor;
-use Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\ResolvedBy;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitScopedAPIKeyActor;
@@ -17,20 +15,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type ActorShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\Actor
- * @phpstan-import-type ResolvedByShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\ResolvedBy
+ * @phpstan-import-type BetaSpendLimitIncreaseRequestActorShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequestActor
+ * @phpstan-import-type BetaSpendLimitIncreaseRequestResolvedByShape from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequestResolvedBy
  * @phpstan-import-type SpendLimitShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimit
  * @phpstan-import-type SpendSummaryShape from \Anthropic\Beta\Organization\SpendLimits\SpendSummary
- * @phpstan-import-type ActorVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\Actor
- * @phpstan-import-type ResolvedByVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\ResolvedBy
+ * @phpstan-import-type BetaSpendLimitIncreaseRequestActorVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequestActor
+ * @phpstan-import-type BetaSpendLimitIncreaseRequestResolvedByVariants from \Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequestResolvedBy
  *
  * @phpstan-type IncreaseRequestApproveResponseShape = array{
  *   id: string,
- *   actor: ActorShape,
+ *   actor: BetaSpendLimitIncreaseRequestActorShape,
  *   createdAt: \DateTimeInterface,
  *   period: SpendLimitPeriod|value-of<SpendLimitPeriod>,
  *   resolvedAt: \DateTimeInterface|null,
- *   resolvedBy: ResolvedByShape|null,
+ *   resolvedBy: BetaSpendLimitIncreaseRequestResolvedByShape|null,
  *   spendLimit: SpendLimit|SpendLimitShape,
  *   spendSummary: null|SpendSummary|SpendSummaryShape,
  *   status: BetaSpendLimitIncreaseRequestStatus|value-of<BetaSpendLimitIncreaseRequestStatus>,
@@ -49,8 +47,12 @@ final class IncreaseRequestApproveResponse implements BaseModel
     #[Required]
     public string $id;
 
-    /** @var ActorVariants $actor */
-    #[Required(union: Actor::class)]
+    /**
+     * Who submitted the increase request.
+     *
+     * @var BetaSpendLimitIncreaseRequestActorVariants $actor
+     */
+    #[Required(union: BetaSpendLimitIncreaseRequestActor::class)]
     public SpendLimitUserActor|SpendLimitScopedAPIKeyActor $actor;
 
     #[Required('created_at')]
@@ -63,8 +65,15 @@ final class IncreaseRequestApproveResponse implements BaseModel
     #[Required('resolved_at')]
     public ?\DateTimeInterface $resolvedAt;
 
-    /** @var ResolvedByVariants|null $resolvedBy */
-    #[Required('resolved_by', union: ResolvedBy::class)]
+    /**
+     * Who approved or denied the increase request.
+     *
+     * @var BetaSpendLimitIncreaseRequestResolvedByVariants|null $resolvedBy
+     */
+    #[Required(
+        'resolved_by',
+        union: BetaSpendLimitIncreaseRequestResolvedBy::class
+    )]
     public SpendLimitUserActor|SpendLimitScopedAPIKeyActor|null $resolvedBy;
 
     /**
@@ -126,9 +135,9 @@ final class IncreaseRequestApproveResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ActorShape $actor
+     * @param BetaSpendLimitIncreaseRequestActorShape $actor
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod> $period
-     * @param ResolvedByShape|null $resolvedBy
+     * @param BetaSpendLimitIncreaseRequestResolvedByShape|null $resolvedBy
      * @param SpendLimit|SpendLimitShape $spendLimit
      * @param SpendSummary|SpendSummaryShape|null $spendSummary
      * @param BetaSpendLimitIncreaseRequestStatus|value-of<BetaSpendLimitIncreaseRequestStatus> $status
@@ -168,7 +177,9 @@ final class IncreaseRequestApproveResponse implements BaseModel
     }
 
     /**
-     * @param ActorShape $actor
+     * Who submitted the increase request.
+     *
+     * @param BetaSpendLimitIncreaseRequestActorShape $actor
      */
     public function withActor(
         SpendLimitUserActor|array|SpendLimitScopedAPIKeyActor $actor
@@ -207,7 +218,9 @@ final class IncreaseRequestApproveResponse implements BaseModel
     }
 
     /**
-     * @param ResolvedByShape|null $resolvedBy
+     * Who approved or denied the increase request.
+     *
+     * @param BetaSpendLimitIncreaseRequestResolvedByShape|null $resolvedBy
      */
     public function withResolvedBy(
         SpendLimitUserActor|array|SpendLimitScopedAPIKeyActor|null $resolvedBy

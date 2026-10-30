@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse\Actor;
+namespace Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequestActor;
 
 enum Type: string
 {

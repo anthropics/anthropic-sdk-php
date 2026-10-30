@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics\Plugins;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsOrder;
 use Anthropic\Beta\Organization\Analytics\AnalyticsPluginGroupBy;
-use Anthropic\Beta\Organization\Analytics\Plugins\PluginListParams\Order;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -34,7 +34,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   filter?: list<string>|null,
  *   groupBy?: list<AnalyticsPluginGroupBy|value-of<AnalyticsPluginGroupBy>>|null,
  *   limit?: int|null,
- *   order?: null|Order|value-of<Order>,
+ *   order?: null|AnalyticsOrder|value-of<AnalyticsOrder>,
  *   orderBy?: string|null,
  *   page?: string|null,
  *   startingDate?: string|null,
@@ -83,9 +83,9 @@ final class PluginListParams implements BaseModel
     /**
      * Sort direction: `asc` or `desc`. Defaults to `asc` for the endpoint's sort column and to `desc` when `order_by` names a metric (a top-N ranking). Applies to `order_by`, or to the endpoint's default sort field when `order_by` is omitted.
      *
-     * @var value-of<Order>|null $order
+     * @var value-of<AnalyticsOrder>|null $order
      */
-    #[Optional(enum: Order::class, nullable: true)]
+    #[Optional(enum: AnalyticsOrder::class, nullable: true)]
     public ?string $order;
 
     /**
@@ -118,7 +118,7 @@ final class PluginListParams implements BaseModel
      *
      * @param list<string>|null $filter
      * @param list<AnalyticsPluginGroupBy|value-of<AnalyticsPluginGroupBy>>|null $groupBy
-     * @param Order|value-of<Order>|null $order
+     * @param AnalyticsOrder|value-of<AnalyticsOrder>|null $order
      */
     public static function with(
         ?string $date = null,
@@ -126,7 +126,7 @@ final class PluginListParams implements BaseModel
         ?array $filter = null,
         ?array $groupBy = null,
         ?int $limit = null,
-        Order|string|null $order = null,
+        AnalyticsOrder|string|null $order = null,
         ?string $orderBy = null,
         ?string $page = null,
         ?string $startingDate = null,
@@ -208,9 +208,9 @@ final class PluginListParams implements BaseModel
     /**
      * Sort direction: `asc` or `desc`. Defaults to `asc` for the endpoint's sort column and to `desc` when `order_by` names a metric (a top-N ranking). Applies to `order_by`, or to the endpoint's default sort field when `order_by` is omitted.
      *
-     * @param Order|value-of<Order>|null $order
+     * @param AnalyticsOrder|value-of<AnalyticsOrder>|null $order
      */
-    public function withOrder(Order|string|null $order): self
+    public function withOrder(AnalyticsOrder|string|null $order): self
     {
         $self = clone $this;
         $self['order'] = $order;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization\Analytics;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsOrder;
 use Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity;
 use Anthropic\Beta\Organization\Analytics\AnalyticsSkillGroupBy;
 use Anthropic\Beta\Organization\Analytics\Skills\SkillListParams;
-use Anthropic\Beta\Organization\Analytics\Skills\SkillListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -46,7 +46,7 @@ final class SkillsRawService implements SkillsRawContract
      *   filter?: list<string>|null,
      *   groupBy?: list<AnalyticsSkillGroupBy|value-of<AnalyticsSkillGroupBy>>|null,
      *   limit?: int|null,
-     *   order?: Order|value-of<Order>|null,
+     *   order?: AnalyticsOrder|value-of<AnalyticsOrder>|null,
      *   orderBy?: string|null,
      *   page?: string|null,
      *   startingDate?: string|null,

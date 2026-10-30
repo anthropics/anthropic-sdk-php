@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization\Analytics;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsOrder;
 use Anthropic\Beta\Organization\Analytics\AnalyticsPluginActivity;
 use Anthropic\Beta\Organization\Analytics\AnalyticsPluginGroupBy;
 use Anthropic\Beta\Organization\Analytics\Plugins\PluginListParams;
-use Anthropic\Beta\Organization\Analytics\Plugins\PluginListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -51,7 +51,7 @@ final class PluginsRawService implements PluginsRawContract
      *   filter?: list<string>|null,
      *   groupBy?: list<AnalyticsPluginGroupBy|value-of<AnalyticsPluginGroupBy>>|null,
      *   limit?: int|null,
-     *   order?: Order|value-of<Order>|null,
+     *   order?: AnalyticsOrder|value-of<AnalyticsOrder>|null,
      *   orderBy?: string|null,
      *   page?: string|null,
      *   startingDate?: string|null,

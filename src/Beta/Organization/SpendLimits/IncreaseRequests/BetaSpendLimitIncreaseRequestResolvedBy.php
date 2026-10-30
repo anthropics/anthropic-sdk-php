@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest;
+namespace Anthropic\Beta\Organization\SpendLimits\IncreaseRequests;
 
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitScopedAPIKeyActor;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitUserActor;
@@ -11,13 +11,15 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * Who approved or denied the increase request.
+ *
  * @phpstan-import-type SpendLimitUserActorShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitUserActor
  * @phpstan-import-type SpendLimitScopedAPIKeyActorShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitScopedAPIKeyActor
  *
- * @phpstan-type ResolvedByVariants = SpendLimitUserActor|SpendLimitScopedAPIKeyActor
- * @phpstan-type ResolvedByShape = ResolvedByVariants|SpendLimitUserActorShape|SpendLimitScopedAPIKeyActorShape
+ * @phpstan-type BetaSpendLimitIncreaseRequestResolvedByVariants = SpendLimitUserActor|SpendLimitScopedAPIKeyActor
+ * @phpstan-type BetaSpendLimitIncreaseRequestResolvedByShape = BetaSpendLimitIncreaseRequestResolvedByVariants|SpendLimitUserActorShape|SpendLimitScopedAPIKeyActorShape
  */
-final class ResolvedBy implements ConverterSource
+final class BetaSpendLimitIncreaseRequestResolvedBy implements ConverterSource
 {
     use SdkUnion;
 

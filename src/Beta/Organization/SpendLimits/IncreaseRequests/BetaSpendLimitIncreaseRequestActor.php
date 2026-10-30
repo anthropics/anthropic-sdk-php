@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\SpendLimits\IncreaseRequests\BetaSpendLimitIncreaseRequest;
+namespace Anthropic\Beta\Organization\SpendLimits\IncreaseRequests;
 
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitScopedAPIKeyActor;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitUserActor;
@@ -11,13 +11,15 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * Who submitted the increase request.
+ *
  * @phpstan-import-type SpendLimitUserActorShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitUserActor
  * @phpstan-import-type SpendLimitScopedAPIKeyActorShape from \Anthropic\Beta\Organization\SpendLimits\SpendLimitScopedAPIKeyActor
  *
- * @phpstan-type ActorVariants = SpendLimitUserActor|SpendLimitScopedAPIKeyActor
- * @phpstan-type ActorShape = ActorVariants|SpendLimitUserActorShape|SpendLimitScopedAPIKeyActorShape
+ * @phpstan-type BetaSpendLimitIncreaseRequestActorVariants = SpendLimitUserActor|SpendLimitScopedAPIKeyActor
+ * @phpstan-type BetaSpendLimitIncreaseRequestActorShape = BetaSpendLimitIncreaseRequestActorVariants|SpendLimitUserActorShape|SpendLimitScopedAPIKeyActorShape
  */
-final class Actor implements ConverterSource
+final class BetaSpendLimitIncreaseRequestActor implements ConverterSource
 {
     use SdkUnion;
 
