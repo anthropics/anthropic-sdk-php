@@ -1,0 +1,156 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Services\Organization\RBACGroups;
+
+use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
+use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Organization\RBACGroups\Members\DeletedRBACGroupMember;
+use Anthropic\Organization\RBACGroups\Members\MemberAddParams;
+use Anthropic\Organization\RBACGroups\Members\MemberListParams;
+use Anthropic\Organization\RBACGroups\Members\MemberRemoveParams;
+use Anthropic\Organization\RBACGroups\Members\RBACGroupMember;
+use Anthropic\PageCursor;
+use Anthropic\RequestOptions;
+use Anthropic\ServiceContracts\Organization\RBACGroups\MembersRawContract;
+
+/**
+ * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ */
+final class MembersRawService implements MembersRawContract
+{
+    // @phpstan-ignore-next-line
+    /**
+     * @internal
+     */
+    public function __construct(private Client $client) {}
+
+    /**
+     * @api
+     *
+     * List members of an RBAC Group.
+     *
+     * The RBAC Groups API is available to Claude Enterprise organizations only.
+     *
+     * @param string $rbacGroupID ID of the RBAC Group
+     * @param array{limit?: int, page?: string|null}|MemberListParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<PageCursor<RBACGroupMember>>
+     *
+     * @throws APIException
+     */
+    public function list(
+        string $rbacGroupID,
+        array|MemberListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = MemberListParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['v1/organizations/rbac_groups/%1$s/members', $rbacGroupID],
+            query: $parsed,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.members.list',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}/members',
+                query: ['limit', 'page'],
+                attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
+            )),
+            convert: RBACGroupMember::class,
+            page: PageCursor::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Add a User to an RBAC Group. Membership of groups provisioned by an identity provider (source type `"scim"`) cannot be modified via the API while an organization in the tenant uses SCIM provisioning.
+     *
+     * The RBAC Groups API is available to Claude Enterprise organizations only.
+     *
+     * @param string $rbacGroupID ID of the RBAC Group
+     * @param array{userID: string}|MemberAddParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<RBACGroupMember>
+     *
+     * @throws APIException
+     */
+    public function add(
+        string $rbacGroupID,
+        array|MemberAddParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = MemberAddParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['v1/organizations/rbac_groups/%1$s/members', $rbacGroupID],
+            body: (object) $parsed,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.members.add',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}/members',
+                attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
+                createdId: ['anthropic.organization.rbac_group.member.id' => 'user_id'],
+            )),
+            convert: RBACGroupMember::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Remove a User from an RBAC Group. Membership of groups provisioned by an identity provider (source type `"scim"`) cannot be modified via the API while an organization in the tenant uses SCIM provisioning.
+     *
+     * The RBAC Groups API is available to Claude Enterprise organizations only.
+     *
+     * @param string $userID ID of the User
+     * @param array{rbacGroupID: string}|MemberRemoveParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<DeletedRBACGroupMember>
+     *
+     * @throws APIException
+     */
+    public function remove(
+        string $userID,
+        array|MemberRemoveParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = MemberRemoveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $rbacGroupID = $parsed['rbacGroupID'];
+        unset($parsed['rbacGroupID']);
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'delete',
+            path: [
+                'v1/organizations/rbac_groups/%1$s/members/%2$s', $rbacGroupID, $userID,
+            ],
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.rbac_groups.members.remove',
+                route: '/v1/organizations/rbac_groups/{rbac_group_id}/members/{user_id}',
+                attributes: [
+                    'anthropic.organization.rbac_group.id' => $rbacGroupID,
+                    'anthropic.organization.rbac_group.member.id' => $userID,
+                ],
+            )),
+            convert: DeletedRBACGroupMember::class,
+        );
+    }
+}
