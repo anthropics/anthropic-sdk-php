@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -18,18 +17,18 @@ use Anthropic\Core\Contracts\BaseModel;
  *   connectorsUsedCount: int,
  *   dispatchTurnCount: int,
  *   distinctConnectorsUsedCount: int|null,
+ *   distinctPluginsUsedCount: int|null,
  *   distinctSessionCount: int|null,
  *   distinctSkillsUsedCount: int|null,
+ *   editToolCount: int|null,
+ *   fileEditCount: int|null,
  *   messageCount: int,
+ *   multiEditToolCount: int|null,
+ *   notebookEditToolCount: int|null,
+ *   pluginsUsedCount: int|null,
+ *   sessionsWithFileEditsCount: int|null,
  *   skillsUsedCount: int,
- *   distinctPluginsUsedCount?: int|null,
- *   editToolCount?: int|null,
- *   fileEditCount?: int|null,
- *   multiEditToolCount?: int|null,
- *   notebookEditToolCount?: int|null,
- *   pluginsUsedCount?: int|null,
- *   sessionsWithFileEditsCount?: int|null,
- *   writeToolCount?: int|null,
+ *   writeToolCount: int|null,
  * }
  */
 final class AnalyticsCoworkMetrics implements BaseModel
@@ -68,6 +67,12 @@ final class AnalyticsCoworkMetrics implements BaseModel
     public ?int $distinctConnectorsUsedCount;
 
     /**
+     * Number of distinct plugins used in Cowork sessions. Null while Cowork plugin-use metrics are not enabled for this organization. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     */
+    #[Required('distinct_plugins_used_count')]
+    public ?int $distinctPluginsUsedCount;
+
+    /**
      * Number of distinct Cowork sessions. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
      */
     #[Required('distinct_session_count')]
@@ -80,10 +85,46 @@ final class AnalyticsCoworkMetrics implements BaseModel
     public ?int $distinctSkillsUsedCount;
 
     /**
+     * Number of successful Edit tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
+     */
+    #[Required('edit_tool_count')]
+    public ?int $editToolCount;
+
+    /**
+     * Number of successful file-edit tool calls (Edit, MultiEdit, Write, NotebookEdit) in Cowork sessions. Null, never 0, while the file-edit metrics are not enabled for this organization.
+     */
+    #[Required('file_edit_count')]
+    public ?int $fileEditCount;
+
+    /**
      * Number of messages sent in Cowork sessions.
      */
     #[Required('message_count')]
     public int $messageCount;
+
+    /**
+     * Number of successful MultiEdit tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
+     */
+    #[Required('multi_edit_tool_count')]
+    public ?int $multiEditToolCount;
+
+    /**
+     * Number of successful NotebookEdit tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
+     */
+    #[Required('notebook_edit_tool_count')]
+    public ?int $notebookEditToolCount;
+
+    /**
+     * Total number of plugin invocations in Cowork sessions. Null while Cowork plugin-use metrics are not enabled for this organization.
+     */
+    #[Required('plugins_used_count')]
+    public ?int $pluginsUsedCount;
+
+    /**
+     * Number of distinct Cowork sessions with at least one successful file-edit tool call. Null while the file-edit metrics are not enabled for this organization. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     */
+    #[Required('sessions_with_file_edits_count')]
+    public ?int $sessionsWithFileEditsCount;
 
     /**
      * Total number of skill invocations in Cowork sessions.
@@ -92,51 +133,9 @@ final class AnalyticsCoworkMetrics implements BaseModel
     public int $skillsUsedCount;
 
     /**
-     * Number of distinct plugins used in Cowork sessions. Null while Cowork plugin-use metrics are not enabled for this organization. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
-     */
-    #[Optional('distinct_plugins_used_count', nullable: true)]
-    public ?int $distinctPluginsUsedCount;
-
-    /**
-     * Number of successful Edit tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
-     */
-    #[Optional('edit_tool_count', nullable: true)]
-    public ?int $editToolCount;
-
-    /**
-     * Number of successful file-edit tool calls (Edit, MultiEdit, Write, NotebookEdit) in Cowork sessions. Null, never 0, while the file-edit metrics are not enabled for this organization.
-     */
-    #[Optional('file_edit_count', nullable: true)]
-    public ?int $fileEditCount;
-
-    /**
-     * Number of successful MultiEdit tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
-     */
-    #[Optional('multi_edit_tool_count', nullable: true)]
-    public ?int $multiEditToolCount;
-
-    /**
-     * Number of successful NotebookEdit tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
-     */
-    #[Optional('notebook_edit_tool_count', nullable: true)]
-    public ?int $notebookEditToolCount;
-
-    /**
-     * Total number of plugin invocations in Cowork sessions. Null while Cowork plugin-use metrics are not enabled for this organization.
-     */
-    #[Optional('plugins_used_count', nullable: true)]
-    public ?int $pluginsUsedCount;
-
-    /**
-     * Number of distinct Cowork sessions with at least one successful file-edit tool call. Null while the file-edit metrics are not enabled for this organization. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
-     */
-    #[Optional('sessions_with_file_edits_count', nullable: true)]
-    public ?int $sessionsWithFileEditsCount;
-
-    /**
      * Number of successful Write tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
      */
-    #[Optional('write_tool_count', nullable: true)]
+    #[Required('write_tool_count')]
     public ?int $writeToolCount;
 
     /**
@@ -150,10 +149,18 @@ final class AnalyticsCoworkMetrics implements BaseModel
      *   connectorsUsedCount: ...,
      *   dispatchTurnCount: ...,
      *   distinctConnectorsUsedCount: ...,
+     *   distinctPluginsUsedCount: ...,
      *   distinctSessionCount: ...,
      *   distinctSkillsUsedCount: ...,
+     *   editToolCount: ...,
+     *   fileEditCount: ...,
      *   messageCount: ...,
+     *   multiEditToolCount: ...,
+     *   notebookEditToolCount: ...,
+     *   pluginsUsedCount: ...,
+     *   sessionsWithFileEditsCount: ...,
      *   skillsUsedCount: ...,
+     *   writeToolCount: ...,
      * )
      * ```
      *
@@ -166,10 +173,18 @@ final class AnalyticsCoworkMetrics implements BaseModel
      *   ->withConnectorsUsedCount(...)
      *   ->withDispatchTurnCount(...)
      *   ->withDistinctConnectorsUsedCount(...)
+     *   ->withDistinctPluginsUsedCount(...)
      *   ->withDistinctSessionCount(...)
      *   ->withDistinctSkillsUsedCount(...)
+     *   ->withEditToolCount(...)
+     *   ->withFileEditCount(...)
      *   ->withMessageCount(...)
+     *   ->withMultiEditToolCount(...)
+     *   ->withNotebookEditToolCount(...)
+     *   ->withPluginsUsedCount(...)
+     *   ->withSessionsWithFileEditsCount(...)
      *   ->withSkillsUsedCount(...)
+     *   ->withWriteToolCount(...)
      * ```
      */
     public function __construct()
@@ -188,18 +203,18 @@ final class AnalyticsCoworkMetrics implements BaseModel
         int $connectorsUsedCount,
         int $dispatchTurnCount,
         ?int $distinctConnectorsUsedCount,
+        ?int $distinctPluginsUsedCount,
         ?int $distinctSessionCount,
         ?int $distinctSkillsUsedCount,
+        ?int $editToolCount,
+        ?int $fileEditCount,
         int $messageCount,
+        ?int $multiEditToolCount,
+        ?int $notebookEditToolCount,
+        ?int $pluginsUsedCount,
+        ?int $sessionsWithFileEditsCount,
         int $skillsUsedCount,
-        ?int $distinctPluginsUsedCount = null,
-        ?int $editToolCount = null,
-        ?int $fileEditCount = null,
-        ?int $multiEditToolCount = null,
-        ?int $notebookEditToolCount = null,
-        ?int $pluginsUsedCount = null,
-        ?int $sessionsWithFileEditsCount = null,
-        ?int $writeToolCount = null,
+        ?int $writeToolCount,
     ): self {
         $self = new self;
 
@@ -208,19 +223,18 @@ final class AnalyticsCoworkMetrics implements BaseModel
         $self['connectorsUsedCount'] = $connectorsUsedCount;
         $self['dispatchTurnCount'] = $dispatchTurnCount;
         $self['distinctConnectorsUsedCount'] = $distinctConnectorsUsedCount;
+        $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
         $self['distinctSessionCount'] = $distinctSessionCount;
         $self['distinctSkillsUsedCount'] = $distinctSkillsUsedCount;
+        $self['editToolCount'] = $editToolCount;
+        $self['fileEditCount'] = $fileEditCount;
         $self['messageCount'] = $messageCount;
+        $self['multiEditToolCount'] = $multiEditToolCount;
+        $self['notebookEditToolCount'] = $notebookEditToolCount;
+        $self['pluginsUsedCount'] = $pluginsUsedCount;
+        $self['sessionsWithFileEditsCount'] = $sessionsWithFileEditsCount;
         $self['skillsUsedCount'] = $skillsUsedCount;
-
-        null !== $distinctPluginsUsedCount && $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
-        null !== $editToolCount && $self['editToolCount'] = $editToolCount;
-        null !== $fileEditCount && $self['fileEditCount'] = $fileEditCount;
-        null !== $multiEditToolCount && $self['multiEditToolCount'] = $multiEditToolCount;
-        null !== $notebookEditToolCount && $self['notebookEditToolCount'] = $notebookEditToolCount;
-        null !== $pluginsUsedCount && $self['pluginsUsedCount'] = $pluginsUsedCount;
-        null !== $sessionsWithFileEditsCount && $self['sessionsWithFileEditsCount'] = $sessionsWithFileEditsCount;
-        null !== $writeToolCount && $self['writeToolCount'] = $writeToolCount;
+        $self['writeToolCount'] = $writeToolCount;
 
         return $self;
     }
@@ -282,6 +296,18 @@ final class AnalyticsCoworkMetrics implements BaseModel
     }
 
     /**
+     * Number of distinct plugins used in Cowork sessions. Null while Cowork plugin-use metrics are not enabled for this organization. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
+     */
+    public function withDistinctPluginsUsedCount(
+        ?int $distinctPluginsUsedCount
+    ): self {
+        $self = clone $this;
+        $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
+
+        return $self;
+    }
+
+    /**
      * Number of distinct Cowork sessions. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
      */
     public function withDistinctSessionCount(?int $distinctSessionCount): self
@@ -305,40 +331,6 @@ final class AnalyticsCoworkMetrics implements BaseModel
     }
 
     /**
-     * Number of messages sent in Cowork sessions.
-     */
-    public function withMessageCount(int $messageCount): self
-    {
-        $self = clone $this;
-        $self['messageCount'] = $messageCount;
-
-        return $self;
-    }
-
-    /**
-     * Total number of skill invocations in Cowork sessions.
-     */
-    public function withSkillsUsedCount(int $skillsUsedCount): self
-    {
-        $self = clone $this;
-        $self['skillsUsedCount'] = $skillsUsedCount;
-
-        return $self;
-    }
-
-    /**
-     * Number of distinct plugins used in Cowork sessions. Null while Cowork plugin-use metrics are not enabled for this organization. Approximate (HLL, typical error <2%) in date-range mode. Null on aggregated rows where a distinct count cannot be computed.
-     */
-    public function withDistinctPluginsUsedCount(
-        ?int $distinctPluginsUsedCount
-    ): self {
-        $self = clone $this;
-        $self['distinctPluginsUsedCount'] = $distinctPluginsUsedCount;
-
-        return $self;
-    }
-
-    /**
      * Number of successful Edit tool calls in Cowork sessions. Null while the file-edit metrics are not enabled for this organization.
      */
     public function withEditToolCount(?int $editToolCount): self
@@ -356,6 +348,17 @@ final class AnalyticsCoworkMetrics implements BaseModel
     {
         $self = clone $this;
         $self['fileEditCount'] = $fileEditCount;
+
+        return $self;
+    }
+
+    /**
+     * Number of messages sent in Cowork sessions.
+     */
+    public function withMessageCount(int $messageCount): self
+    {
+        $self = clone $this;
+        $self['messageCount'] = $messageCount;
 
         return $self;
     }
@@ -401,6 +404,17 @@ final class AnalyticsCoworkMetrics implements BaseModel
     ): self {
         $self = clone $this;
         $self['sessionsWithFileEditsCount'] = $sessionsWithFileEditsCount;
+
+        return $self;
+    }
+
+    /**
+     * Total number of skill invocations in Cowork sessions.
+     */
+    public function withSkillsUsedCount(int $skillsUsedCount): self
+    {
+        $self = clone $this;
+        $self['skillsUsedCount'] = $skillsUsedCount;
 
         return $self;
     }

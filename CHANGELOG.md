@@ -7,6 +7,11 @@
 * **api:** add types for analytics group_by and spend limit period filters
 * **api:** add user_profile_id to External Keys and Workspaces
 
+### Bug Fixes
+
+* **api:** require always-sent analytics fields and drop the unused project product field
+
+
 ### Chores
 
 * **docs:** clarify what disabling the Compliance API stops
