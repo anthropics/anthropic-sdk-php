@@ -17,14 +17,10 @@ enum Model: string
 {
     // Anthropic model identifiers
 
-    /**
-     * Fastest model for high-volume, real-time tasks
-     */
+    /** Fastest model for high-volume, real-time tasks */
     case CLAUDE_HAIKU_5_5 = 'claude-haiku-5-5';
 
-    /**
-     * Efficient model for coding and agents
-     */
+    /** Efficient model for coding and agents */
     case CLAUDE_SONNET_5_5 = 'claude-sonnet-5-5';
 
     /**
@@ -32,9 +28,7 @@ enum Model: string
      */
     case CLAUDE_FABLE_5_1 = 'claude-fable-5-1';
 
-    /**
-     * Powerful intelligence for coding, knowledge work, and long-running agents
-     */
+    /** Powerful intelligence for coding, knowledge work, and long-running agents */
     case CLAUDE_OPUS_5_5 = 'claude-opus-5-5';
 
     /**
@@ -42,9 +36,7 @@ enum Model: string
      */
     case CLAUDE_MYTHOS_5_1 = 'claude-mythos-5-1';
 
-    /**
-     * Efficient model for coding and agents
-     */
+    /** Efficient model for coding and agents */
     case CLAUDE_SONNET_5 = 'claude-sonnet-5';
 
     /**
@@ -52,24 +44,16 @@ enum Model: string
      */
     case CLAUDE_FABLE_5 = 'claude-fable-5';
 
-    /**
-     * Most capable model for cybersecurity and biology research
-     */
+    /** Most capable model for cybersecurity and biology research */
     case CLAUDE_MYTHOS_5 = 'claude-mythos-5';
 
-    /**
-     * Powerful intelligence for long-running agents and coding
-     */
+    /** Powerful intelligence for long-running agents and coding */
     case CLAUDE_OPUS_5 = 'claude-opus-5';
 
-    /**
-     * Powerful intelligence for long-running agents and coding
-     */
+    /** Powerful intelligence for long-running agents and coding */
     case CLAUDE_OPUS_4_8 = 'claude-opus-4-8';
 
-    /**
-     * Powerful intelligence for long-running agents and coding
-     */
+    /** Powerful intelligence for long-running agents and coding */
     case CLAUDE_OPUS_4_7 = 'claude-opus-4-7';
 
     /**
@@ -79,28 +63,20 @@ enum Model: string
      */
     case CLAUDE_MYTHOS_PREVIEW = 'claude-mythos-preview';
 
-    /**
-     * Powerful intelligence for long-running agents and coding
-     */
+    /** Powerful intelligence for long-running agents and coding */
     case CLAUDE_OPUS_4_6 = 'claude-opus-4-6';
 
-    /**
-     * Best combination of speed and intelligence
-     */
+    /** Best combination of speed and intelligence */
     case CLAUDE_SONNET_4_6 = 'claude-sonnet-4-6';
 
     case CLAUDE_HAIKU_4_5 = 'claude-haiku-4-5';
 
     case CLAUDE_HAIKU_4_5_20251001 = 'claude-haiku-4-5-20251001';
 
-    /**
-     * Powerful intelligence for long-running agents and coding
-     */
+    /** Powerful intelligence for long-running agents and coding */
     case CLAUDE_OPUS_4_5 = 'claude-opus-4-5';
 
-    /**
-     * Powerful intelligence for long-running agents and coding
-     */
+    /** Powerful intelligence for long-running agents and coding */
     case CLAUDE_OPUS_4_5_20251101 = 'claude-opus-4-5-20251101';
 
     /**

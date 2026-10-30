@@ -14,6 +14,8 @@ use Anthropic\Core\Conversion\ListOf;
 use Psr\Http\Message\ResponseInterface;
 
 /**
+ * @phpstan-import-type NormalizedRequest from \Anthropic\Core\BaseClient
+ *
  * @phpstan-type BidirectionalPageCursorShape = array{
  *   data?: list<array<string,mixed>>|null,
  *   nextPage?: string|null,
@@ -45,13 +47,7 @@ final class BidirectionalPageCursor implements BaseModel, BasePage
     /**
      * @internal
      *
-     * @param array{
-     *   method: string,
-     *   path: string,
-     *   query: array<string,mixed>,
-     *   headers: array<string,string|list<string>|null>,
-     *   body: mixed,
-     * } $requestInfo
+     * @param NormalizedRequest $requestInfo
      */
     public function __construct(
         private string|Converter|ConverterSource $convert,
@@ -88,16 +84,7 @@ final class BidirectionalPageCursor implements BaseModel, BasePage
     /**
      * @internal
      *
-     * @return array{
-     *   array{
-     *     method: string,
-     *     path: string,
-     *     query: array<string,mixed>,
-     *     headers: array<string,string|list<string>|null>,
-     *     body: mixed,
-     *   },
-     *   RequestOptions,
-     * }|null
+     * @return array{NormalizedRequest, RequestOptions}|null
      */
     public function nextRequest(): ?array
     {

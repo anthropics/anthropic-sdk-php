@@ -11,9 +11,7 @@ namespace Anthropic\Beta\MemoryStores\MemoryVersions;
  */
 enum ManagedAgentsMemoryVersionOperation: string
 {
-    /**
-     * The memory was created. The first version in any memory's lineage.
-     */
+    /** The memory was created. The first version in any memory's lineage. */
     case CREATED = 'created';
 
     /**

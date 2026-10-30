@@ -22,6 +22,7 @@
 * **docs:** update example user ID in Admin API examples
 * **internal:** add a section for each repository's own review rules
 * **internal:** forward scripts/test arguments and ignore .stdy.log
+* **internal:** simplify the doc comments of enum cases, generic types and page classes
 
 
 ### Documentation

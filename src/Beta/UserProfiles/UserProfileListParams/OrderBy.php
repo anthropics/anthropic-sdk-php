@@ -9,9 +9,7 @@ namespace Anthropic\Beta\UserProfiles\UserProfileListParams;
  */
 enum OrderBy: string
 {
-    /**
-     * Sort by when each user profile was created. This is the default.
-     */
+    /** Sort by when each user profile was created. This is the default. */
     case CREATED_AT = 'created_at';
 
     /**

@@ -46,7 +46,7 @@ final class TargetsRawService implements TargetsRawContract
      * }|TargetCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget,>
+     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
      * @throws APIException
      */
@@ -98,7 +98,7 @@ final class TargetsRawService implements TargetsRawContract
      * }|TargetRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget,>
+     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
      * @throws APIException
      */
@@ -158,7 +158,7 @@ final class TargetsRawService implements TargetsRawContract
      * }|TargetListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget,>,>
+     * @return BaseResponse<PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>>
      *
      * @throws APIException
      */
