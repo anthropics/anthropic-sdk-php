@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
+use Anthropic\Beta\Organization\RBACGroups\DeletedRBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroup;
-use Anthropic\Beta\Organization\RBACGroups\RBACGroupDeleteResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -86,5 +86,5 @@ interface RBACGroupsContract
     public function delete(
         string $rbacGroupID,
         RequestOptions|array|null $requestOptions = null
-    ): RBACGroupDeleteResponse;
+    ): DeletedRBACGroup;
 }

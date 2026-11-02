@@ -2,8 +2,8 @@
 
 namespace Tests\Services\Beta\Organization\RBACGroups;
 
+use Anthropic\Beta\Organization\RBACGroups\Members\BetaDeletedRBACGroupMember;
 use Anthropic\Beta\Organization\RBACGroups\Members\BetaRBACGroupMember;
-use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveResponse;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -82,7 +82,7 @@ final class MembersTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(MemberRemoveResponse::class, $result);
+        $this->assertInstanceOf(BetaDeletedRBACGroupMember::class, $result);
     }
 
     #[Test]
@@ -95,6 +95,6 @@ final class MembersTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(MemberRemoveResponse::class, $result);
+        $this->assertInstanceOf(BetaDeletedRBACGroupMember::class, $result);
     }
 }

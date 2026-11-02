@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -17,7 +16,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsConnectorClaudeCodeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorClaudeCodeMetrics
  * @phpstan-import-type AnalyticsConnectorCoworkMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorCoworkMetrics
  * @phpstan-import-type AnalyticsConnectorOfficeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorOfficeMetrics
- * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorActivity\ChatCoworkUnifiedMetrics
+ * @phpstan-import-type AnalyticsConnectorChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorChatCoworkUnifiedMetrics
  *
  * @phpstan-type AnalyticsConnectorActivityShape = array{
  *   chatMetrics: AnalyticsConnectorChatMetrics|AnalyticsConnectorChatMetricsShape,
@@ -32,7 +31,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   readCallCount: int|null,
  *   unclassifiedCallCount: int|null,
  *   writeCallCount: int|null,
- *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
+ *   chatCoworkUnifiedMetrics?: null|AnalyticsConnectorChatCoworkUnifiedMetrics|AnalyticsConnectorChatCoworkUnifiedMetricsShape,
  *   product?: string|null,
  *   rbacGroupID?: string|null,
  *   rbacGroupName?: string|null,
@@ -120,7 +119,7 @@ final class AnalyticsConnectorActivity implements BaseModel
      * Connector use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
      */
     #[Optional('chat_cowork_unified_metrics', nullable: true)]
-    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
+    public ?AnalyticsConnectorChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
 
     /**
      * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
@@ -199,7 +198,7 @@ final class AnalyticsConnectorActivity implements BaseModel
      * @param AnalyticsConnectorClaudeCodeMetrics|AnalyticsConnectorClaudeCodeMetricsShape $claudeCodeMetrics
      * @param AnalyticsConnectorCoworkMetrics|AnalyticsConnectorCoworkMetricsShape $coworkMetrics
      * @param AnalyticsConnectorOfficeMetrics|AnalyticsConnectorOfficeMetricsShape $officeMetrics
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     * @param AnalyticsConnectorChatCoworkUnifiedMetrics|AnalyticsConnectorChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public static function with(
         AnalyticsConnectorChatMetrics|array $chatMetrics,
@@ -214,7 +213,7 @@ final class AnalyticsConnectorActivity implements BaseModel
         ?int $readCallCount,
         ?int $unclassifiedCallCount,
         ?int $writeCallCount,
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
+        AnalyticsConnectorChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?string $product = null,
         ?string $rbacGroupID = null,
         ?string $rbacGroupName = null,
@@ -394,10 +393,10 @@ final class AnalyticsConnectorActivity implements BaseModel
     /**
      * Connector use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
      *
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     * @param AnalyticsConnectorChatCoworkUnifiedMetrics|AnalyticsConnectorChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public function withChatCoworkUnifiedMetrics(
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+        AnalyticsConnectorChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics,
     ): self {
         $self = clone $this;
         $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;

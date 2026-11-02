@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization;
 
+use Anthropic\Beta\Organization\RBACGroups\DeletedRBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroupCreateParams;
-use Anthropic\Beta\Organization\RBACGroups\RBACGroupDeleteResponse;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroupListParams;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroupUpdateParams;
 use Anthropic\Client;
@@ -191,7 +191,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
      * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<RBACGroupDeleteResponse>
+     * @return BaseResponse<DeletedRBACGroup>
      *
      * @throws APIException
      */
@@ -210,7 +210,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
                 route: '/v1/organizations/rbac_groups/{rbac_group_id}',
                 attributes: ['anthropic.organization.rbac_group.id' => $rbacGroupID],
             )),
-            convert: RBACGroupDeleteResponse::class,
+            convert: DeletedRBACGroup::class,
         );
     }
 }

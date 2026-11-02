@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization\RBACGroups;
 
+use Anthropic\Beta\Organization\RBACGroups\Members\BetaDeletedRBACGroupMember;
 use Anthropic\Beta\Organization\RBACGroups\Members\BetaRBACGroupMember;
-use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveResponse;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -106,7 +106,7 @@ final class MembersService implements MembersContract
         string $userID,
         string $rbacGroupID,
         RequestOptions|array|null $requestOptions = null,
-    ): MemberRemoveResponse {
+    ): BetaDeletedRBACGroupMember {
         $params = Util::removeNulls(['rbacGroupID' => $rbacGroupID]);
 
         // @phpstan-ignore-next-line argument.type

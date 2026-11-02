@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ShareStatus;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -18,7 +17,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsSkillClaudeCodeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillClaudeCodeMetrics
  * @phpstan-import-type AnalyticsSkillCoworkMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillCoworkMetrics
  * @phpstan-import-type AnalyticsSkillOfficeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillOfficeMetrics
- * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ChatCoworkUnifiedMetrics
+ * @phpstan-import-type AnalyticsSkillChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillChatCoworkUnifiedMetrics
  *
  * @phpstan-type AnalyticsSkillActivityShape = array{
  *   attributedListPrice: string|null,
@@ -34,7 +33,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   shareStatus: null|ShareStatus|value-of<ShareStatus>,
  *   skillDisplayName: string|null,
  *   skillName: string,
- *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
+ *   chatCoworkUnifiedMetrics?: null|AnalyticsSkillChatCoworkUnifiedMetrics|AnalyticsSkillChatCoworkUnifiedMetricsShape,
  *   product?: string|null,
  *   rbacGroupID?: string|null,
  *   rbacGroupName?: string|null,
@@ -130,7 +129,7 @@ final class AnalyticsSkillActivity implements BaseModel
      * Skill use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
      */
     #[Optional('chat_cowork_unified_metrics', nullable: true)]
-    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
+    public ?AnalyticsSkillChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
 
     /**
      * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
@@ -212,7 +211,7 @@ final class AnalyticsSkillActivity implements BaseModel
      * @param AnalyticsSkillCoworkMetrics|AnalyticsSkillCoworkMetricsShape $coworkMetrics
      * @param AnalyticsSkillOfficeMetrics|AnalyticsSkillOfficeMetricsShape $officeMetrics
      * @param ShareStatus|value-of<ShareStatus>|null $shareStatus
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     * @param AnalyticsSkillChatCoworkUnifiedMetrics|AnalyticsSkillChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public static function with(
         ?string $attributedListPrice,
@@ -228,7 +227,7 @@ final class AnalyticsSkillActivity implements BaseModel
         ShareStatus|string|null $shareStatus,
         ?string $skillDisplayName,
         string $skillName,
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
+        AnalyticsSkillChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?string $product = null,
         ?string $rbacGroupID = null,
         ?string $rbacGroupName = null,
@@ -420,10 +419,10 @@ final class AnalyticsSkillActivity implements BaseModel
     /**
      * Skill use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
      *
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     * @param AnalyticsSkillChatCoworkUnifiedMetrics|AnalyticsSkillChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public function withChatCoworkUnifiedMetrics(
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+        AnalyticsSkillChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
     ): self {
         $self = clone $this;
         $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;

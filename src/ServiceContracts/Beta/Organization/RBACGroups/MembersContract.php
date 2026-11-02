@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization\RBACGroups;
 
+use Anthropic\Beta\Organization\RBACGroups\Members\BetaDeletedRBACGroupMember;
 use Anthropic\Beta\Organization\RBACGroups\Members\BetaRBACGroupMember;
-use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -64,5 +64,5 @@ interface MembersContract
         string $userID,
         string $rbacGroupID,
         RequestOptions|array|null $requestOptions = null,
-    ): MemberRemoveResponse;
+    ): BetaDeletedRBACGroupMember;
 }

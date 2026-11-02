@@ -2,28 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\AnalyticsConnectorActivity;
+namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorChatCoworkUnifiedChatMetrics;
-use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorChatCoworkUnifiedSessionsMetrics;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Connector use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+ * A connector's use in Chat and Cowork unified on one day: `chat` holds its
+ * use in chat conversations and `sessions` its use in Cowork sessions.
  *
  * @phpstan-import-type AnalyticsConnectorChatCoworkUnifiedChatMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorChatCoworkUnifiedChatMetrics
  * @phpstan-import-type AnalyticsConnectorChatCoworkUnifiedSessionsMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsConnectorChatCoworkUnifiedSessionsMetrics
  *
- * @phpstan-type ChatCoworkUnifiedMetricsShape = array{
+ * @phpstan-type AnalyticsConnectorChatCoworkUnifiedMetricsShape = array{
  *   chat: AnalyticsConnectorChatCoworkUnifiedChatMetrics|AnalyticsConnectorChatCoworkUnifiedChatMetricsShape,
  *   sessions: AnalyticsConnectorChatCoworkUnifiedSessionsMetrics|AnalyticsConnectorChatCoworkUnifiedSessionsMetricsShape,
  * }
  */
-final class ChatCoworkUnifiedMetrics implements BaseModel
+final class AnalyticsConnectorChatCoworkUnifiedMetrics implements BaseModel
 {
-    /** @use SdkModel<ChatCoworkUnifiedMetricsShape> */
+    /** @use SdkModel<AnalyticsConnectorChatCoworkUnifiedMetricsShape> */
     use SdkModel;
 
     /**
@@ -41,17 +40,19 @@ final class ChatCoworkUnifiedMetrics implements BaseModel
     public AnalyticsConnectorChatCoworkUnifiedSessionsMetrics $sessions;
 
     /**
-     * `new ChatCoworkUnifiedMetrics()` is missing required properties by the API.
+     * `new AnalyticsConnectorChatCoworkUnifiedMetrics()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ChatCoworkUnifiedMetrics::with(chat: ..., sessions: ...)
+     * AnalyticsConnectorChatCoworkUnifiedMetrics::with(chat: ..., sessions: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ChatCoworkUnifiedMetrics())->withChat(...)->withSessions(...)
+     * (new AnalyticsConnectorChatCoworkUnifiedMetrics())
+     *   ->withChat(...)
+     *   ->withSessions(...)
      * ```
      */
     public function __construct()

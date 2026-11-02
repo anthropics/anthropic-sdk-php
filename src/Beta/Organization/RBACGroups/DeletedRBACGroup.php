@@ -10,13 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-type RBACGroupDeleteResponseShape = array{
+ * @phpstan-type DeletedRBACGroupShape = array{
  *   id: string, type: 'rbac_group_deleted'
  * }
  */
-final class RBACGroupDeleteResponse implements BaseModel
+final class DeletedRBACGroup implements BaseModel
 {
-    /** @use SdkModel<RBACGroupDeleteResponseShape> */
+    /** @use SdkModel<DeletedRBACGroupShape> */
     use SdkModel;
 
     /**
@@ -36,17 +36,17 @@ final class RBACGroupDeleteResponse implements BaseModel
     public string $id;
 
     /**
-     * `new RBACGroupDeleteResponse()` is missing required properties by the API.
+     * `new DeletedRBACGroup()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * RBACGroupDeleteResponse::with(id: ...)
+     * DeletedRBACGroup::with(id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new RBACGroupDeleteResponse())->withID(...)
+     * (new DeletedRBACGroup())->withID(...)
      * ```
      */
     public function __construct()

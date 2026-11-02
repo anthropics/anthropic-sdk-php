@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization;
 
+use Anthropic\Beta\Organization\RBACGroups\DeletedRBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroup;
-use Anthropic\Beta\Organization\RBACGroups\RBACGroupDeleteResponse;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -155,7 +155,7 @@ final class RBACGroupsService implements RBACGroupsContract
     public function delete(
         string $rbacGroupID,
         RequestOptions|array|null $requestOptions = null
-    ): RBACGroupDeleteResponse {
+    ): DeletedRBACGroup {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($rbacGroupID, requestOptions: $requestOptions);
 

@@ -2,8 +2,8 @@
 
 namespace Tests\Services\Beta\Organization;
 
+use Anthropic\Beta\Organization\RBACGroups\DeletedRBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroup;
-use Anthropic\Beta\Organization\RBACGroups\RBACGroupDeleteResponse;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -102,6 +102,6 @@ final class RBACGroupsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(RBACGroupDeleteResponse::class, $result);
+        $this->assertInstanceOf(DeletedRBACGroup::class, $result);
     }
 }

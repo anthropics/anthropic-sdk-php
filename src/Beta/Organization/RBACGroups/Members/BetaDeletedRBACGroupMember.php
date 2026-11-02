@@ -10,13 +10,13 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-type MemberRemoveResponseShape = array{
+ * @phpstan-type BetaDeletedRBACGroupMemberShape = array{
  *   rbacGroupID: string, type: 'rbac_group_member_deleted', userID: string
  * }
  */
-final class MemberRemoveResponse implements BaseModel
+final class BetaDeletedRBACGroupMember implements BaseModel
 {
-    /** @use SdkModel<MemberRemoveResponseShape> */
+    /** @use SdkModel<BetaDeletedRBACGroupMemberShape> */
     use SdkModel;
 
     /**
@@ -40,17 +40,17 @@ final class MemberRemoveResponse implements BaseModel
     public string $userID;
 
     /**
-     * `new MemberRemoveResponse()` is missing required properties by the API.
+     * `new BetaDeletedRBACGroupMember()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MemberRemoveResponse::with(rbacGroupID: ..., userID: ...)
+     * BetaDeletedRBACGroupMember::with(rbacGroupID: ..., userID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MemberRemoveResponse())->withRBACGroupID(...)->withUserID(...)
+     * (new BetaDeletedRBACGroupMember())->withRBACGroupID(...)->withUserID(...)
      * ```
      */
     public function __construct()

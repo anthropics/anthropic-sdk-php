@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization\RBACGroups;
 
+use Anthropic\Beta\Organization\RBACGroups\Members\BetaDeletedRBACGroupMember;
 use Anthropic\Beta\Organization\RBACGroups\Members\BetaRBACGroupMember;
 use Anthropic\Beta\Organization\RBACGroups\Members\MemberAddParams;
 use Anthropic\Beta\Organization\RBACGroups\Members\MemberListParams;
 use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveParams;
-use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveResponse;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -124,7 +124,7 @@ final class MembersRawService implements MembersRawContract
      * @param array{rbacGroupID: string}|MemberRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<MemberRemoveResponse>
+     * @return BaseResponse<BetaDeletedRBACGroupMember>
      *
      * @throws APIException
      */
@@ -156,7 +156,7 @@ final class MembersRawService implements MembersRawContract
                     'anthropic.organization.rbac_group.member.id' => $userID,
                 ],
             )),
-            convert: MemberRemoveResponse::class,
+            convert: BetaDeletedRBACGroupMember::class,
         );
     }
 }

@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\AnalyticsPluginActivity;
+namespace Anthropic\Beta\Organization\Analytics;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Plugin use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+ * A plugin's use in Cowork sessions recorded while members had Chat
+ * and Cowork unified turned on.
  *
- * @phpstan-type ChatCoworkUnifiedMetricsShape = array{
+ * @phpstan-type AnalyticsPluginChatCoworkUnifiedMetricsShape = array{
  *   distinctSessionPluginUsedCount: int|null
  * }
  */
-final class ChatCoworkUnifiedMetrics implements BaseModel
+final class AnalyticsPluginChatCoworkUnifiedMetrics implements BaseModel
 {
-    /** @use SdkModel<ChatCoworkUnifiedMetricsShape> */
+    /** @use SdkModel<AnalyticsPluginChatCoworkUnifiedMetricsShape> */
     use SdkModel;
 
     /**
@@ -27,17 +28,20 @@ final class ChatCoworkUnifiedMetrics implements BaseModel
     public ?int $distinctSessionPluginUsedCount;
 
     /**
-     * `new ChatCoworkUnifiedMetrics()` is missing required properties by the API.
+     * `new AnalyticsPluginChatCoworkUnifiedMetrics()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ChatCoworkUnifiedMetrics::with(distinctSessionPluginUsedCount: ...)
+     * AnalyticsPluginChatCoworkUnifiedMetrics::with(
+     *   distinctSessionPluginUsedCount: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ChatCoworkUnifiedMetrics())->withDistinctSessionPluginUsedCount(...)
+     * (new AnalyticsPluginChatCoworkUnifiedMetrics())
+     *   ->withDistinctSessionPluginUsedCount(...)
      * ```
      */
     public function __construct()

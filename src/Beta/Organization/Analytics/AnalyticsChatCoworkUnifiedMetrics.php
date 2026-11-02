@@ -2,28 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity;
+namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Beta\Organization\Analytics\AnalyticsChatCoworkUnifiedChatMetrics;
-use Anthropic\Beta\Organization\Analytics\AnalyticsChatCoworkUnifiedSessionsMetrics;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Activity recorded while the member had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into `chat` (chat activity) and `sessions` (Cowork activity). Omitted from the response on deployments that do not offer Chat and Cowork unified.
+ * Activity in Chat and Cowork unified for one user on one day: `chat` holds
+ * chat activity and `sessions` holds Cowork session activity.
  *
  * @phpstan-import-type AnalyticsChatCoworkUnifiedChatMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsChatCoworkUnifiedChatMetrics
  * @phpstan-import-type AnalyticsChatCoworkUnifiedSessionsMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsChatCoworkUnifiedSessionsMetrics
  *
- * @phpstan-type ChatCoworkUnifiedMetricsShape = array{
+ * @phpstan-type AnalyticsChatCoworkUnifiedMetricsShape = array{
  *   chat: AnalyticsChatCoworkUnifiedChatMetrics|AnalyticsChatCoworkUnifiedChatMetricsShape,
  *   sessions: AnalyticsChatCoworkUnifiedSessionsMetrics|AnalyticsChatCoworkUnifiedSessionsMetricsShape,
  * }
  */
-final class ChatCoworkUnifiedMetrics implements BaseModel
+final class AnalyticsChatCoworkUnifiedMetrics implements BaseModel
 {
-    /** @use SdkModel<ChatCoworkUnifiedMetricsShape> */
+    /** @use SdkModel<AnalyticsChatCoworkUnifiedMetricsShape> */
     use SdkModel;
 
     /**
@@ -41,17 +40,17 @@ final class ChatCoworkUnifiedMetrics implements BaseModel
     public AnalyticsChatCoworkUnifiedSessionsMetrics $sessions;
 
     /**
-     * `new ChatCoworkUnifiedMetrics()` is missing required properties by the API.
+     * `new AnalyticsChatCoworkUnifiedMetrics()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ChatCoworkUnifiedMetrics::with(chat: ..., sessions: ...)
+     * AnalyticsChatCoworkUnifiedMetrics::with(chat: ..., sessions: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ChatCoworkUnifiedMetrics())->withChat(...)->withSessions(...)
+     * (new AnalyticsChatCoworkUnifiedMetrics())->withChat(...)->withSessions(...)
      * ```
      */
     public function __construct()
