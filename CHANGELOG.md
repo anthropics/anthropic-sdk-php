@@ -32,6 +32,7 @@
 ### Documentation
 
 * add a description to the AnthropicBeta type
+* **api:** show each field's own description for `speed`
 * **examples:** use current model IDs
 * keep descriptions in docblocks as the API's spec has them
 * **readme:** point to the docs site for documentation
