@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\SpendLimits;
 
 use Anthropic\Beta\Organization\SpendLimits\Effective\EffectiveListParams;
-use Anthropic\Beta\Organization\SpendLimits\Effective\EffectiveListParams\Period;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Beta\Organization\SpendLimits\SpendSummary;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -41,7 +41,7 @@ final class EffectiveRawService implements EffectiveRawContract
      * @param array{
      *   limit?: int,
      *   page?: string|null,
-     *   period?: list<Period|value-of<Period>>|null,
+     *   period?: list<SpendLimitPeriod|value-of<SpendLimitPeriod>>|null,
      *   userIDs?: list<string>|null,
      * }|EffectiveListParams $params
      * @param RequestOpts|null $requestOptions

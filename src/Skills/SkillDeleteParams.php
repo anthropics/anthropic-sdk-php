@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete Skill.
+ * Delete Skill
  *
  * @see Anthropic\Services\SkillsService::delete()
  *

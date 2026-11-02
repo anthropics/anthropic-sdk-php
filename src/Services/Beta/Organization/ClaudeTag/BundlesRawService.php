@@ -33,7 +33,7 @@ final class BundlesRawService implements BundlesRawContract
      *
      * Get one Bundle. What the Bundle grants (connectors, repositories and credentials) is never returned.
      *
-     * @param string $bundleID the Bundle's identifier, starting with `capp_`
+     * @param string $bundleID The Bundle's identifier, starting with `capp_`.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|BundleRetrieveParams $params

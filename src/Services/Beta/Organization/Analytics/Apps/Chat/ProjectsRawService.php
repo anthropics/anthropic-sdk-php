@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization\Analytics\Apps\Chat;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsOrder;
 use Anthropic\Beta\Organization\Analytics\AnalyticsProjectActivity;
+use Anthropic\Beta\Organization\Analytics\AnalyticsProjectGroupBy;
 use Anthropic\Beta\Organization\Analytics\Apps\Chat\Projects\ProjectListParams;
-use Anthropic\Beta\Organization\Analytics\Apps\Chat\Projects\ProjectListParams\GroupBy;
-use Anthropic\Beta\Organization\Analytics\Apps\Chat\Projects\ProjectListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -43,9 +43,9 @@ final class ProjectsRawService implements ProjectsRawContract
      *   date?: string|null,
      *   endingDate?: string|null,
      *   filter?: list<string>|null,
-     *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+     *   groupBy?: list<AnalyticsProjectGroupBy|value-of<AnalyticsProjectGroupBy>>|null,
      *   limit?: int|null,
-     *   order?: Order|value-of<Order>|null,
+     *   order?: AnalyticsOrder|value-of<AnalyticsOrder>|null,
      *   orderBy?: string|null,
      *   page?: string|null,
      *   startingDate?: string|null,

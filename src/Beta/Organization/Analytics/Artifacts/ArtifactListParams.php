@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics\Artifacts;
 
-use Anthropic\Beta\Organization\Analytics\Artifacts\ArtifactListParams\GroupBy;
+use Anthropic\Beta\Organization\Analytics\AnalyticsArtifactGroupBy;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -25,7 +25,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type ArtifactListParamsShape = array{
  *   date: string,
  *   filter?: list<string>|null,
- *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+ *   groupBy?: list<AnalyticsArtifactGroupBy|value-of<AnalyticsArtifactGroupBy>>|null,
  *   limit?: int|null,
  *   page?: string|null,
  * }
@@ -53,9 +53,9 @@ final class ArtifactListParams implements BaseModel
     /**
      * Dimensions to break results out by: `product`, `user_id` and/or `rbac_group_id`. The ungrouped artifact-type cube is finite and returned in full; grouped queries multiply the cube and paginate via `next_page`. `product` takes the values `chat_cowork_unified`, `chat`, `claude_code`, or `cowork` (the surfaces that create artifacts). `rbac_group_id` attributes a user to every group they held at any point during the requested UTC day, so grouped rows are not an exclusive partition. At most 100 entries.
      *
-     * @var list<value-of<GroupBy>>|null $groupBy
+     * @var list<value-of<AnalyticsArtifactGroupBy>>|null $groupBy
      */
-    #[Optional(list: GroupBy::class, nullable: true)]
+    #[Optional(list: AnalyticsArtifactGroupBy::class, nullable: true)]
     public ?array $groupBy;
 
     /**
@@ -95,7 +95,7 @@ final class ArtifactListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $filter
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
+     * @param list<AnalyticsArtifactGroupBy|value-of<AnalyticsArtifactGroupBy>>|null $groupBy
      */
     public static function with(
         string $date,
@@ -143,7 +143,7 @@ final class ArtifactListParams implements BaseModel
     /**
      * Dimensions to break results out by: `product`, `user_id` and/or `rbac_group_id`. The ungrouped artifact-type cube is finite and returned in full; grouped queries multiply the cube and paginate via `next_page`. `product` takes the values `chat_cowork_unified`, `chat`, `claude_code`, or `cowork` (the surfaces that create artifacts). `rbac_group_id` attributes a user to every group they held at any point during the requested UTC day, so grouped rows are not an exclusive partition. At most 100 entries.
      *
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
+     * @param list<AnalyticsArtifactGroupBy|value-of<AnalyticsArtifactGroupBy>>|null $groupBy
      */
     public function withGroupBy(?array $groupBy): self
     {

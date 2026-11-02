@@ -38,7 +38,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account
+     * @param string $serviceAccountID ID of the service account.
      * @param array<string,mixed>|ServiceAccountRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -55,7 +55,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account to update
+     * @param string $serviceAccountID Path param: ID of the service account to update.
      * @param array<string,mixed>|ServiceAccountUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -87,7 +87,7 @@ interface ServiceAccountsRawContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account to archive
+     * @param string $serviceAccountID ID of the service account to archive.
      * @param array<string,mixed>|ServiceAccountArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *

@@ -31,7 +31,7 @@ final class BetaAdvisorMessageIterationUsage implements BaseModel
     use SdkModel;
 
     /**
-     * Usage for an advisor sub-inference iteration.
+     * Usage for an advisor sub-inference iteration
      *
      * @var 'advisor_message' $type
      */
@@ -39,7 +39,7 @@ final class BetaAdvisorMessageIterationUsage implements BaseModel
     public string $type = 'advisor_message';
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      */
     #[Required('cache_creation')]
     public ?BetaCacheCreation $cacheCreation;
@@ -139,7 +139,7 @@ final class BetaAdvisorMessageIterationUsage implements BaseModel
     }
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      */
@@ -213,7 +213,7 @@ final class BetaAdvisorMessageIterationUsage implements BaseModel
     }
 
     /**
-     * Usage for an advisor sub-inference iteration.
+     * Usage for an advisor sub-inference iteration
      *
      * @param 'advisor_message' $type
      */

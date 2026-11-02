@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Agent Versions.
+ * List Agent Versions
  *
  * @see Anthropic\Services\Beta\Agents\VersionsService::list()
  *

@@ -20,7 +20,7 @@ interface InvitesContract
     /**
      * @api
      *
-     * @param string $email email of the User
+     * @param string $email Email of the User.
      * @param Role|value-of<Role> $role Role for the invited User.
      *
      * The accepted values depend on the organization type. Console and API organizations accept `user`, `developer`, `billing`, and `claude_code_user`; `admin` cannot be assigned through the API. Claude Enterprise organizations accept `user` and `managed`; inviting with the `managed` role requires the `write:rbac_groups` scope in addition to `write:members`.
@@ -39,7 +39,7 @@ interface InvitesContract
     /**
      * @api
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -81,7 +81,7 @@ interface InvitesContract
     /**
      * @api
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -55,6 +55,7 @@ final class ExternalKeysTest extends TestCase
             ],
             displayName: 'x',
             geo: 'us',
+            userProfileID: 'uprof_01SDCCSbTxrXDpWc1phhtcfK',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -22,13 +22,13 @@ final class ContainerSkill implements BaseModel
     use SdkModel;
 
     /**
-     * Skill ID.
+     * Skill ID
      */
     #[Required('skill_id')]
     public string $skillID;
 
     /**
-     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined).
+     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined)
      *
      * @var value-of<Type> $type
      */
@@ -82,7 +82,7 @@ final class ContainerSkill implements BaseModel
     }
 
     /**
-     * Skill ID.
+     * Skill ID
      */
     public function withSkillID(string $skillID): self
     {
@@ -93,7 +93,7 @@ final class ContainerSkill implements BaseModel
     }
 
     /**
-     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined).
+     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined)
      *
      * @param Type|value-of<Type> $type
      */

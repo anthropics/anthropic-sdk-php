@@ -139,7 +139,7 @@ abstract class BaseClient
     /**
      * @internal
      *
-     * The tracer for one API call, from the tracer provider the application has registered by the time the call starts, or null when this client's spans are disabled, or when the tracer provider throws
+     * The tracer for one API call, from the tracer provider the application has registered by the time the call starts, or null when this client's spans are disabled, or when the tracer provider throws.
      */
     public function tracer(): ?TracerInterface
     {
@@ -516,7 +516,7 @@ abstract class BaseClient
     /**
      * @internal
      *
-     * @param bool|int|float|string|resource|\Traversable<mixed,>|array<string,mixed>|null $data
+     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,mixed>|null $data
      * @param SpanInterface|null $span the call span, whose trace context each attempt carries. The query parameters that its `url.query` has are those that the API call of `$opts` names.
      * @param SentRequests|null $spanRequests how many requests this API call has sent, for the span's `url.*` attributes and resend count: null on the first attempt, which starts the count that every later attempt gets
      */

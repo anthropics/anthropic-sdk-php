@@ -38,7 +38,7 @@ interface IssuersRawContract
     /**
      * @api
      *
-     * @param string $federationIssuerID ID of the federation issuer
+     * @param string $federationIssuerID ID of the federation issuer.
      * @param array<string,mixed>|IssuerRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -55,7 +55,7 @@ interface IssuersRawContract
     /**
      * @api
      *
-     * @param string $federationIssuerID path param: ID of the federation issuer to update
+     * @param string $federationIssuerID Path param: ID of the federation issuer to update.
      * @param array<string,mixed>|IssuerUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -87,7 +87,7 @@ interface IssuersRawContract
     /**
      * @api
      *
-     * @param string $federationIssuerID ID of the federation issuer to archive
+     * @param string $federationIssuerID ID of the federation issuer to archive.
      * @param array<string,mixed>|IssuerArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *

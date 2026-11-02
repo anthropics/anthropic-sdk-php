@@ -23,13 +23,13 @@ final class BetaSkillParams implements BaseModel
     use SdkModel;
 
     /**
-     * Skill ID.
+     * Skill ID
      */
     #[Required('skill_id')]
     public string $skillID;
 
     /**
-     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined).
+     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined)
      *
      * @var value-of<Type> $type
      */
@@ -37,7 +37,7 @@ final class BetaSkillParams implements BaseModel
     public string $type;
 
     /**
-     * Skill version or 'latest' for most recent version.
+     * Skill version or 'latest' for most recent version
      */
     #[Optional]
     public ?string $version;
@@ -84,7 +84,7 @@ final class BetaSkillParams implements BaseModel
     }
 
     /**
-     * Skill ID.
+     * Skill ID
      */
     public function withSkillID(string $skillID): self
     {
@@ -95,7 +95,7 @@ final class BetaSkillParams implements BaseModel
     }
 
     /**
-     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined).
+     * Type of skill - either 'anthropic' (built-in) or 'custom' (user-defined)
      *
      * @param Type|value-of<Type> $type
      */
@@ -108,7 +108,7 @@ final class BetaSkillParams implements BaseModel
     }
 
     /**
-     * Skill version or 'latest' for most recent version.
+     * Skill version or 'latest' for most recent version
      */
     public function withVersion(string $version): self
     {

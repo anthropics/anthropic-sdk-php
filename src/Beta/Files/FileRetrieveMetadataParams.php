@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get File Metadata.
+ * Get File Metadata
  *
  * @see Anthropic\Services\Beta\FilesService::retrieveMetadata()
  *

@@ -76,7 +76,7 @@ final class SpendLimitsTest extends TestCase
     {
         $result = $this->client->beta->organization->spendLimits->set(
             amount: '50000',
-            scope: ['type' => 'user', 'userID' => 'user_01WCz1FkmYMm4gnmykNKUu3Q'],
+            scope: ['type' => 'user', 'userID' => 'user_01WxYzAbCdEfGhJkMnPqRsTu'],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -89,7 +89,7 @@ final class SpendLimitsTest extends TestCase
     {
         $result = $this->client->beta->organization->spendLimits->set(
             amount: '50000',
-            scope: ['type' => 'user', 'userID' => 'user_01WCz1FkmYMm4gnmykNKUu3Q'],
+            scope: ['type' => 'user', 'userID' => 'user_01WxYzAbCdEfGhJkMnPqRsTu'],
             period: SpendLimitPeriod::MONTHLY,
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],

@@ -14,7 +14,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Session.
+ * Create Session
  *
  * @see Anthropic\Services\Beta\SessionsService::create()
  *

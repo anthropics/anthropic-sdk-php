@@ -59,7 +59,7 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array{
      *   files: list<string|FileParam>,
      *   releaseNotes?: string,
@@ -122,7 +122,7 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $version path param: ID of the Plugin Version (prefixed `pluginver_`), or `latest` for the newest one
+     * @param string $version Path param: ID of the Plugin Version (prefixed `pluginver_`), or `latest` for the newest one.
      * @param array{
      *   pluginID: string,
      *   organizationID?: string|null,
@@ -192,7 +192,7 @@ final class VersionsRawService implements VersionsRawContract
      *
      * Every request must include the beta header `anthropic-beta: ce-plugins-2026-09-01`. A request without it returns `404`, exactly as if the endpoint did not exist. The Plugins API is in beta and is available to Claude Enterprise organizations only. It is not available to Claude Platform (Claude Console) organizations, or to organizations with HIPAA readiness enabled.
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array{
      *   limit?: int,
      *   organizationID?: string|null,

@@ -22,7 +22,7 @@ interface InstallationSettingsRawContract
     /**
      * @api
      *
-     * @param string $pluginID path param: ID of the Plugin (prefixed `plugin_`)
+     * @param string $pluginID Path param: ID of the Plugin (prefixed `plugin_`).
      * @param array<string,mixed>|InstallationSettingListParams $params
      * @param RequestOpts|null $requestOptions
      *

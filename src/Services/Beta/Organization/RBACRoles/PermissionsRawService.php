@@ -32,7 +32,7 @@ final class PermissionsRawService implements PermissionsRawContract
      *
      * The RBAC Roles API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacRoleID ID of the RBAC Role
+     * @param string $rbacRoleID ID of the RBAC Role.
      * @param array{limit?: int, page?: string|null}|PermissionListParams $params
      * @param RequestOpts|null $requestOptions
      *

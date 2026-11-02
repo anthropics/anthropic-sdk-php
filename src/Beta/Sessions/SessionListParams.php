@@ -13,7 +13,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Sessions.
+ * List Sessions
  *
  * @see Anthropic\Services\Beta\SessionsService::list()
  *

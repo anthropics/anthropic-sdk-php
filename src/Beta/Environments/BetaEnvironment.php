@@ -37,7 +37,7 @@ final class BetaEnvironment implements BaseModel
     use SdkModel;
 
     /**
-     * The type of object (always 'environment').
+     * The type of object (always 'environment')
      *
      * @var 'environment' $type
      */
@@ -45,19 +45,19 @@ final class BetaEnvironment implements BaseModel
     public string $type = 'environment';
 
     /**
-     * Environment identifier (e.g., 'env_...').
+     * Environment identifier (e.g., 'env_...')
      */
     #[Required]
     public string $id;
 
     /**
-     * RFC 3339 timestamp when environment was archived, or null if not archived.
+     * RFC 3339 timestamp when environment was archived, or null if not archived
      */
     #[Required('archived_at')]
     public ?string $archivedAt;
 
     /**
-     * Environment configuration (either Anthropic Cloud or self-hosted).
+     * Environment configuration (either Anthropic Cloud or self-hosted)
      *
      * @var ConfigVariants $config
      */
@@ -65,19 +65,19 @@ final class BetaEnvironment implements BaseModel
     public BetaCloudConfig|BetaSelfHostedConfig $config;
 
     /**
-     * RFC 3339 timestamp when environment was created.
+     * RFC 3339 timestamp when environment was created
      */
     #[Required('created_at')]
     public string $createdAt;
 
     /**
-     * User-provided description for the environment; null when unset.
+     * User-provided description for the environment; null when unset
      */
     #[Required]
     public ?string $description;
 
     /**
-     * User-provided metadata key-value pairs.
+     * User-provided metadata key-value pairs
      *
      * @var array<string,string> $metadata
      */
@@ -85,13 +85,13 @@ final class BetaEnvironment implements BaseModel
     public array $metadata;
 
     /**
-     * Human-readable name for the environment.
+     * Human-readable name for the environment
      */
     #[Required]
     public string $name;
 
     /**
-     * RFC 3339 timestamp when environment was last updated.
+     * RFC 3339 timestamp when environment was last updated
      */
     #[Required('updated_at')]
     public string $updatedAt;
@@ -177,7 +177,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * Environment identifier (e.g., 'env_...').
+     * Environment identifier (e.g., 'env_...')
      */
     public function withID(string $id): self
     {
@@ -188,7 +188,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when environment was archived, or null if not archived.
+     * RFC 3339 timestamp when environment was archived, or null if not archived
      */
     public function withArchivedAt(?string $archivedAt): self
     {
@@ -199,7 +199,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * Environment configuration (either Anthropic Cloud or self-hosted).
+     * Environment configuration (either Anthropic Cloud or self-hosted)
      *
      * @param ConfigShape $config
      */
@@ -213,7 +213,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when environment was created.
+     * RFC 3339 timestamp when environment was created
      */
     public function withCreatedAt(string $createdAt): self
     {
@@ -224,7 +224,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * User-provided description for the environment; null when unset.
+     * User-provided description for the environment; null when unset
      */
     public function withDescription(?string $description): self
     {
@@ -235,7 +235,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * User-provided metadata key-value pairs.
+     * User-provided metadata key-value pairs
      *
      * @param array<string,string> $metadata
      */
@@ -248,7 +248,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * Human-readable name for the environment.
+     * Human-readable name for the environment
      */
     public function withName(string $name): self
     {
@@ -259,7 +259,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * The type of object (always 'environment').
+     * The type of object (always 'environment')
      *
      * @param 'environment' $type
      */
@@ -272,7 +272,7 @@ final class BetaEnvironment implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp when environment was last updated.
+     * RFC 3339 timestamp when environment was last updated
      */
     public function withUpdatedAt(string $updatedAt): self
     {

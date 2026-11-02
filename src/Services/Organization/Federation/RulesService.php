@@ -62,13 +62,13 @@ final class RulesService implements RulesContract
      * manage rules whose `oauth_scope` is `workspace:developer` or
      * `workspace:inference`; other scopes require a Console session.
      *
-     * @param string $issuerID tagged ID of the federation issuer
+     * @param string $issuerID Tagged ID of the federation issuer.
      * @param FederationRuleMatch|FederationRuleMatchShape $match Conditions the verified JWT must satisfy for this rule to apply. At least one of `subject_prefix` (other than a wildcard-only value like `*`), `claims`, or `condition` is required; `audience` alone is not sufficient.
      * @param string $name Slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
      * @param string $oauthScope Space-separated OAuth scopes. OAuth callers may only set `workspace:developer` or `workspace:inference`; other scopes (such as `org:admin`) require a Console session.
      * @param ServiceAccountTarget|ServiceAccountTargetShape $target Identity that tokens minted via this rule act as. Currently always a `service_account` target.
-     * @param bool $appliesToAllWorkspaces when true, enable this rule for every workspace in the org (including workspaces created later)
-     * @param string|null $description optional free-text description
+     * @param bool $appliesToAllWorkspaces When true, enable this rule for every workspace in the org (including workspaces created later).
+     * @param string|null $description Optional free-text description.
      * @param int $tokenLifetimeSeconds Lifetime in seconds for access tokens minted via this rule (60-86400). Defaults to 3600 (1h). Minted tokens are capped at `max(60, min(this value, 2 × remaining assertion validity))` seconds.
      * @param string|null $workspaceID Tagged ID of the workspace to enable this rule for. Required unless `applies_to_all_workspaces` is true. Additional workspaces can be added via the `/federation_rules/{federation_rule_id}/workspaces` sub-resource.
      * @param RequestOpts|null $requestOptions
@@ -114,7 +114,7 @@ final class RulesService implements RulesContract
      *
      * Retrieve a federation rule by its ID (`fdrl_...`).
      *
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $federationRuleID ID of the federation rule.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -152,7 +152,7 @@ final class RulesService implements RulesContract
      * `workspace:developer` or `workspace:inference`; other scopes require a
      * Console session.
      *
-     * @param string $federationRuleID ID of the federation rule to update
+     * @param string $federationRuleID ID of the federation rule to update.
      * @param bool|null $appliesToAllWorkspaces When true, enables this rule for every workspace in the org (including workspaces created later). Setting `false` is rejected with 400 if no workspace would remain enabled; a rule with only a legacy `workspace_id` binding continues to mint.
      * @param string|null $description Replaces the description. Omit to leave unchanged; send `null` to clear (the field is stored as an empty string).
      * @param FederationRuleMatch|FederationRuleMatchShape|null $match Replaces the entire match object. All populated matcher fields must pass.
@@ -207,9 +207,9 @@ final class RulesService implements RulesContract
      * unless `include_archived=true`.
      *
      * @param bool $includeArchived Include archived resources. Defaults to false.
-     * @param string|null $issuerID filter to rules referencing this federation issuer
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string|null $issuerID Filter to rules referencing this federation issuer.
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<FederationRule>
@@ -253,7 +253,7 @@ final class RulesService implements RulesContract
      * whose `oauth_scope` is `workspace:developer` or `workspace:inference`;
      * other scopes require a Console session.
      *
-     * @param string $federationRuleID ID of the federation rule to archive
+     * @param string $federationRuleID ID of the federation rule to archive.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

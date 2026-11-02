@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Skill Versions.
+ * List Skill Versions
  *
  * @see Anthropic\Services\Beta\Skills\VersionsService::list()
  *

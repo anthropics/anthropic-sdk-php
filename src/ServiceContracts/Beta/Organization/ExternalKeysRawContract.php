@@ -38,7 +38,7 @@ interface ExternalKeysRawContract
     /**
      * @api
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ExternalKey>
@@ -53,7 +53,7 @@ interface ExternalKeysRawContract
     /**
      * @api
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param array<string,mixed>|ExternalKeyUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -85,7 +85,7 @@ interface ExternalKeysRawContract
     /**
      * @api
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ExternalKeyDeleteResponse>
@@ -100,7 +100,7 @@ interface ExternalKeysRawContract
     /**
      * @api
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ExternalKeyValidateResponse>

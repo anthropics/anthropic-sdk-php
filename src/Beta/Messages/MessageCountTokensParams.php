@@ -154,7 +154,7 @@ final class MessageCountTokensParams implements BaseModel
     public ?BetaContextManagementConfig $contextManagement;
 
     /**
-     * MCP servers to be utilized in this request.
+     * MCP servers to be utilized in this request
      *
      * @var list<BetaRequestMCPServerURLDefinition>|null $mcpServers
      */
@@ -509,7 +509,7 @@ final class MessageCountTokensParams implements BaseModel
     }
 
     /**
-     * MCP servers to be utilized in this request.
+     * MCP servers to be utilized in this request
      *
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers
      */
@@ -535,7 +535,7 @@ final class MessageCountTokensParams implements BaseModel
     }
 
     /**
-     * Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs).
+     * Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
      *

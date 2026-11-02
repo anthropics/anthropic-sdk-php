@@ -30,13 +30,13 @@ final class AnalyticsUser implements BaseModel
     public string $type = 'user';
 
     /**
-     * Tagged user identifier (e.g. `user_...`).
+     * Tagged user identifier (e.g. `user_...`)
      */
     #[Required]
     public string $id;
 
     /**
-     * Email address of the user.
+     * Email address of the user
      */
     #[Required('email_address')]
     public string $emailAddress;
@@ -76,7 +76,7 @@ final class AnalyticsUser implements BaseModel
     }
 
     /**
-     * Tagged user identifier (e.g. `user_...`).
+     * Tagged user identifier (e.g. `user_...`)
      */
     public function withID(string $id): self
     {
@@ -87,7 +87,7 @@ final class AnalyticsUser implements BaseModel
     }
 
     /**
-     * Email address of the user.
+     * Email address of the user
      */
     public function withEmailAddress(string $emailAddress): self
     {

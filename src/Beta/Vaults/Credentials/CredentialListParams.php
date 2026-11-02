@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Credentials.
+ * List Credentials
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::list()
  *

@@ -38,7 +38,7 @@ final class MembersRawService implements MembersRawContract
      *
      * Get Workspace Member
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array{workspaceID: string}|MemberRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -83,7 +83,7 @@ final class MembersRawService implements MembersRawContract
      *
      * Update Workspace Member
      *
-     * @param string $userID path param: ID of the User
+     * @param string $userID Path param: ID of the User.
      * @param array{
      *   workspaceID: string, workspaceRole: value-of<WorkspaceRole>
      * }|MemberUpdateParams $params
@@ -131,7 +131,7 @@ final class MembersRawService implements MembersRawContract
      *
      * List Workspace Members
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param array{
      *   afterID?: string, beforeID?: string, limit?: int
      * }|MemberListParams $params
@@ -177,7 +177,7 @@ final class MembersRawService implements MembersRawContract
      *
      * Create Workspace Member
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param array{
      *   userID: string, workspaceRole: value-of<NoBillingWorkspaceRole>
      * }|MemberAddParams $params
@@ -219,7 +219,7 @@ final class MembersRawService implements MembersRawContract
      *
      * Delete Workspace Member
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array{workspaceID: string}|MemberRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

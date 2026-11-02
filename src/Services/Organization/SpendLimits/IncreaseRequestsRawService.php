@@ -1,0 +1,210 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Services\Organization\SpendLimits;
+
+use Anthropic\Client;
+use Anthropic\Core\Contracts\BaseResponse;
+use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Core\Util;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveParams;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\IncreaseRequestDenyParams;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\IncreaseRequestListParams;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\SpendLimitIncreaseRequest;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\SpendLimitIncreaseRequestStatus;
+use Anthropic\Organization\SpendLimits\SpendLimitPeriod;
+use Anthropic\PageCursor;
+use Anthropic\RequestOptions;
+use Anthropic\ServiceContracts\Organization\SpendLimits\IncreaseRequestsRawContract;
+
+/**
+ * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ */
+final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
+{
+    // @phpstan-ignore-next-line
+    /**
+     * @internal
+     */
+    public function __construct(private Client $client) {}
+
+    /**
+     * @api
+     *
+     * Retrieve a spend limit increase request.
+     *
+     * While `pending`, the response includes a live `spend_summary` for the
+     * requester at the request's period.
+     *
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<SpendLimitIncreaseRequest>
+     *
+     * @throws APIException
+     */
+    public function retrieve(
+        string $spendLimitIncreaseRequestID,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: [
+                'v1/organizations/spend_limit_increase_requests/%1$s',
+                $spendLimitIncreaseRequestID,
+            ],
+            options: RequestOptions::parse($requestOptions)->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.retrieve',
+                route: '/v1/organizations/spend_limit_increase_requests/{spend_limit_increase_request_id}',
+                attributes: [
+                    'anthropic.organization.spend_limit_increase_request.id' => $spendLimitIncreaseRequestID,
+                ],
+            )),
+            convert: SpendLimitIncreaseRequest::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * List spend limit increase requests, most recent first.
+     *
+     * Pending requests include a live `spend_summary` for the requester.
+     * Requests whose requester is no longer a member are excluded.
+     *
+     * @param array{
+     *   actorIDs?: list<string>|null,
+     *   limit?: int,
+     *   page?: string|null,
+     *   status?: list<SpendLimitIncreaseRequestStatus|value-of<SpendLimitIncreaseRequestStatus>>|null,
+     * }|IncreaseRequestListParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<PageCursor<SpendLimitIncreaseRequest>>
+     *
+     * @throws APIException
+     */
+    public function list(
+        array|IncreaseRequestListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = IncreaseRequestListParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: 'v1/organizations/spend_limit_increase_requests',
+            query: Util::array_transform_keys($parsed, ['actorIDs' => 'actor_ids']),
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.list',
+                route: '/v1/organizations/spend_limit_increase_requests',
+                query: ['actor_ids', 'limit', 'page', 'status'],
+            )),
+            convert: SpendLimitIncreaseRequest::class,
+            page: PageCursor::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Approve a pending spend limit increase request.
+     *
+     * Writes a per-user spend limit at `amount` for the requester and
+     * transitions the request to `approved`. `period` defaults to the period
+     * the member was blocked on. Anthropic emails the requester unless
+     * `suppress_notification` is set.
+     *
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param array{
+     *   amount: string,
+     *   period?: SpendLimitPeriod|value-of<SpendLimitPeriod>|null,
+     *   suppressNotification?: bool,
+     * }|IncreaseRequestApproveParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<IncreaseRequestApproveResponse>
+     *
+     * @throws APIException
+     */
+    public function approve(
+        string $spendLimitIncreaseRequestID,
+        array|IncreaseRequestApproveParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = IncreaseRequestApproveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'v1/organizations/spend_limit_increase_requests/%1$s/approve',
+                $spendLimitIncreaseRequestID,
+            ],
+            body: (object) $parsed,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.approve',
+                route: '/v1/organizations/spend_limit_increase_requests/{spend_limit_increase_request_id}/approve',
+                attributes: [
+                    'anthropic.organization.spend_limit_increase_request.id' => $spendLimitIncreaseRequestID,
+                ],
+            )),
+            convert: IncreaseRequestApproveResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Deny a pending spend limit increase request.
+     *
+     * Idempotent on `denied`; denying an already-`approved` request returns
+     * 400. Anthropic emails the requester unless `suppress_notification` is set.
+     *
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param array{suppressNotification?: bool}|IncreaseRequestDenyParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<SpendLimitIncreaseRequest>
+     *
+     * @throws APIException
+     */
+    public function deny(
+        string $spendLimitIncreaseRequestID,
+        array|IncreaseRequestDenyParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = IncreaseRequestDenyParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: [
+                'v1/organizations/spend_limit_increase_requests/%1$s/deny',
+                $spendLimitIncreaseRequestID,
+            ],
+            body: (object) $parsed,
+            options: $options->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.spend_limits.increase_requests.deny',
+                route: '/v1/organizations/spend_limit_increase_requests/{spend_limit_increase_request_id}/deny',
+                attributes: [
+                    'anthropic.organization.spend_limit_increase_request.id' => $spendLimitIncreaseRequestID,
+                ],
+            )),
+            convert: SpendLimitIncreaseRequest::class,
+        );
+    }
+}

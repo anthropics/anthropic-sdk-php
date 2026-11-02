@@ -100,7 +100,7 @@ final class RulesRawService implements RulesRawContract
      *
      * Retrieve a federation rule by its ID (`fdrl_...`).
      *
-     * @param string $federationRuleID ID of the federation rule
+     * @param string $federationRuleID ID of the federation rule.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<FederationRule>
@@ -149,7 +149,7 @@ final class RulesRawService implements RulesRawContract
      * `workspace:developer` or `workspace:inference`; other scopes require a
      * Console session.
      *
-     * @param string $federationRuleID ID of the federation rule to update
+     * @param string $federationRuleID ID of the federation rule to update.
      * @param array{
      *   appliesToAllWorkspaces?: bool|null,
      *   description?: string|null,
@@ -256,7 +256,7 @@ final class RulesRawService implements RulesRawContract
      * whose `oauth_scope` is `workspace:developer` or `workspace:inference`;
      * other scopes require a Console session.
      *
-     * @param string $federationRuleID ID of the federation rule to archive
+     * @param string $federationRuleID ID of the federation rule to archive.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<FederationRule>

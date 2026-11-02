@@ -13,7 +13,7 @@ $client = new GoogleCloud\Client;
 $message = $client->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Hello, Claude!']],
-    model: Model::CLAUDE_HAIKU_4_5,
+    model: Model::CLAUDE_HAIKU_5_5,
 );
 
 var_dump($message->content);

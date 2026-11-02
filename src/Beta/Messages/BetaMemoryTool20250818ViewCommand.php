@@ -21,7 +21,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     use SdkModel;
 
     /**
-     * Command type identifier.
+     * Command type identifier
      *
      * @var 'view' $command
      */
@@ -29,13 +29,13 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     public string $command = 'view';
 
     /**
-     * Path to directory or file to view.
+     * Path to directory or file to view
      */
     #[Required]
     public string $path;
 
     /**
-     * Optional line range for viewing specific lines.
+     * Optional line range for viewing specific lines
      *
      * @var list<int>|null $viewRange
      */
@@ -80,7 +80,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     }
 
     /**
-     * Command type identifier.
+     * Command type identifier
      *
      * @param 'view' $command
      */
@@ -93,7 +93,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     }
 
     /**
-     * Path to directory or file to view.
+     * Path to directory or file to view
      */
     public function withPath(string $path): self
     {
@@ -104,7 +104,7 @@ final class BetaMemoryTool20250818ViewCommand implements BaseModel
     }
 
     /**
-     * Optional line range for viewing specific lines.
+     * Optional line range for viewing specific lines
      *
      * @param list<int> $viewRange
      */

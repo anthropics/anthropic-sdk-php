@@ -9,14 +9,10 @@ namespace Anthropic\UserProfiles;
  */
 enum UserProfileProgramStatus: string
 {
-    /**
-     * The profile is in the program.
-     */
+    /** The profile is in the program. */
     case ACTIVE = 'active';
 
-    /**
-     * The profile is not in the program yet, and something is still awaited.
-     */
+    /** The profile is not in the program yet, and something is still awaited. */
     case PENDING = 'pending';
 
     /**

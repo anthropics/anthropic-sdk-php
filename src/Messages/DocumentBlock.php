@@ -32,7 +32,7 @@ final class DocumentBlock implements BaseModel
     public string $type = 'document';
 
     /**
-     * Citation configuration for the document.
+     * Citation configuration for the document
      */
     #[Required]
     public ?CitationsConfig $citations;
@@ -42,7 +42,7 @@ final class DocumentBlock implements BaseModel
     public Base64PDFSource|PlainTextSource $source;
 
     /**
-     * The title of the document.
+     * The title of the document
      */
     #[Required]
     public ?string $title;
@@ -89,7 +89,7 @@ final class DocumentBlock implements BaseModel
     }
 
     /**
-     * Citation configuration for the document.
+     * Citation configuration for the document
      *
      * @param CitationsConfig|CitationsConfigShape|null $citations
      */
@@ -114,7 +114,7 @@ final class DocumentBlock implements BaseModel
     }
 
     /**
-     * The title of the document.
+     * The title of the document
      */
     public function withTitle(?string $title): self
     {

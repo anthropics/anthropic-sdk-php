@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Update Session Resource.
+ * Update Session Resource
  *
  * @see Anthropic\Services\Beta\Sessions\ResourcesService::update()
  *

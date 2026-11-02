@@ -31,7 +31,7 @@ final class BetaMessageIterationUsage implements BaseModel
     use SdkModel;
 
     /**
-     * Usage for a sampling iteration.
+     * Usage for a sampling iteration
      *
      * @var 'message' $type
      */
@@ -39,7 +39,7 @@ final class BetaMessageIterationUsage implements BaseModel
     public string $type = 'message';
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      */
     #[Required('cache_creation')]
     public ?BetaCacheCreation $cacheCreation;
@@ -139,7 +139,7 @@ final class BetaMessageIterationUsage implements BaseModel
     }
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      */
@@ -213,7 +213,7 @@ final class BetaMessageIterationUsage implements BaseModel
     }
 
     /**
-     * Usage for a sampling iteration.
+     * Usage for a sampling iteration
      *
      * @param 'message' $type
      */

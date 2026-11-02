@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * Add Session Resource.
+ * Add Session Resource
  *
  * @see Anthropic\Services\Beta\Sessions\ResourcesService::add()
  *

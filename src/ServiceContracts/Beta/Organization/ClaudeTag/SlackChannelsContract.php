@@ -26,8 +26,8 @@ interface SlackChannelsContract
      * @api
      *
      * @param ClaudeTagSlackChannelIdentifiers|ClaudeTagSlackChannelIdentifiersShape $slack Body param: Slack's own identifiers for the channel to set up. The organization must own the workspace.
-     * @param ClaudeTagSettingsCreate|ClaudeTagSettingsCreateShape $settings body param: Settings to store on the channel, applied as Update Slack Channel applies them
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param ClaudeTagSettingsCreate|ClaudeTagSettingsCreateShape $settings Body param: Settings to store on the channel, applied as Update Slack Channel applies them.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -42,9 +42,9 @@ interface SlackChannelsContract
     /**
      * @api
      *
-     * @param string $id path param: The channel's identifier, starting with `slch_`
+     * @param string $id Path param: The channel's identifier, starting with `slch_`.
      * @param bool $includeInherited Query param: When `true`, `settings` holds what applies in the channel once the settings levels above it are taken into account, and every member of `sources` names the level a value comes from. When `false` or left out, `settings` holds what the channel itself stores.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -59,9 +59,9 @@ interface SlackChannelsContract
     /**
      * @api
      *
-     * @param string $id path param: The channel's identifier, starting with `slch_`
-     * @param ClaudeTagSettingsUpdate|ClaudeTagSettingsUpdateShape $settings body param: The settings to change
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param string $id Path param: The channel's identifier, starting with `slch_`.
+     * @param ClaudeTagSettingsUpdate|ClaudeTagSettingsUpdateShape $settings Body param: The settings to change.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -79,9 +79,9 @@ interface SlackChannelsContract
      * @param string $slackWorkspaceID Query param: The Slack workspace whose channels to list: Slack's identifier for it, as in the channel object's `slack.workspace_id`, not the workspace object's `id`.
      * @param bool $includeInherited Query param: When `true`, `settings` holds what applies in each channel once the settings levels above it are taken into account, and every member of `sources` names the level a value comes from. When `false` or left out, `settings` holds what each channel itself stores.
      * @param int $limit Query param: Number of items to return per page, between 1 and 100. Defaults to 20.
-     * @param string $page query param: Opaque cursor from a previous response's `next_page`
+     * @param string $page Query param: Opaque cursor from a previous response's `next_page`.
      * @param string $slackChannelID Query param: Slack's identifier for one channel of that workspace, as in the channel object's `slack.channel_id`. It is not the channel object's `id`. With it `data` holds that channel alone, or nothing when the channel is not set up.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaClaudeTagSlackChannel>
@@ -101,8 +101,8 @@ interface SlackChannelsContract
     /**
      * @api
      *
-     * @param string $id the channel's identifier, starting with `slch_`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param string $id The channel's identifier, starting with `slch_`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

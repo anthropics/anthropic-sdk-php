@@ -32,7 +32,7 @@ final class BetaDocumentBlock implements BaseModel
     public string $type = 'document';
 
     /**
-     * Citation configuration for the document.
+     * Citation configuration for the document
      */
     #[Required]
     public ?BetaCitationConfig $citations;
@@ -42,7 +42,7 @@ final class BetaDocumentBlock implements BaseModel
     public BetaBase64PDFSource|BetaPlainTextSource $source;
 
     /**
-     * The title of the document.
+     * The title of the document
      */
     #[Required]
     public ?string $title;
@@ -89,7 +89,7 @@ final class BetaDocumentBlock implements BaseModel
     }
 
     /**
-     * Citation configuration for the document.
+     * Citation configuration for the document
      *
      * @param BetaCitationConfig|BetaCitationConfigShape|null $citations
      */
@@ -115,7 +115,7 @@ final class BetaDocumentBlock implements BaseModel
     }
 
     /**
-     * The title of the document.
+     * The title of the document
      */
     public function withTitle(?string $title): self
     {

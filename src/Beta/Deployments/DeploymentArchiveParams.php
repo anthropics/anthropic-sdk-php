@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Archive Deployment.
+ * Archive Deployment
  *
  * @see Anthropic\Services\Beta\DeploymentsService::archive()
  *

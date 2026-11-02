@@ -38,7 +38,7 @@ final class EnvironmentUpdateParams implements BaseModel
     use SdkParams;
 
     /**
-     * Updated environment configuration.
+     * Updated environment configuration
      *
      * @var ConfigVariants|null $config
      */
@@ -60,7 +60,7 @@ final class EnvironmentUpdateParams implements BaseModel
     public ?array $metadata;
 
     /**
-     * Updated name for the environment.
+     * Updated name for the environment
      */
     #[Optional(nullable: true)]
     public ?string $name;
@@ -127,7 +127,7 @@ final class EnvironmentUpdateParams implements BaseModel
     }
 
     /**
-     * Updated environment configuration.
+     * Updated environment configuration
      *
      * @param ConfigShape|null $config
      */
@@ -165,7 +165,7 @@ final class EnvironmentUpdateParams implements BaseModel
     }
 
     /**
-     * Updated name for the environment.
+     * Updated name for the environment
      */
     public function withName(?string $name): self
     {

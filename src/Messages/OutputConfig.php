@@ -33,7 +33,7 @@ final class OutputConfig implements BaseModel
     public ?string $effort;
 
     /**
-     * A schema to specify Claude's output format in responses. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs).
+     * A schema to specify Claude's output format in responses. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      */
     #[Optional(nullable: true)]
     public ?JSONOutputFormat $format;
@@ -79,7 +79,7 @@ final class OutputConfig implements BaseModel
     }
 
     /**
-     * A schema to specify Claude's output format in responses. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs).
+     * A schema to specify Claude's output format in responses. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * @param JSONOutputFormat|JSONOutputFormatShape|null $format
      */

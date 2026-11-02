@@ -36,7 +36,7 @@ final class SlackWorkspacesRawService implements SlackWorkspacesRawContract
      *
      * Get one Slack workspace and its settings. By default `settings` holds what the workspace itself stores: a setting that is null there is not set on the workspace and is inherited. With `include_inherited=true`, `settings` holds what applies in the workspace once the organization's Slack defaults are taken into account, and the request fails with 503 rather than resolve against a settings level that could not be read. Either way `sources` names the settings level each value comes from.
      *
-     * @param string $id path param: The workspace's identifier, starting with `slws_`
+     * @param string $id Path param: The workspace's identifier, starting with `slws_`.
      * @param array{
      *   includeInherited?: bool,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -97,7 +97,7 @@ final class SlackWorkspacesRawService implements SlackWorkspacesRawContract
      *
      * Change the settings a Slack workspace stores. The update is partial: a setting left out is unchanged, and a setting sent as null is cleared, so the workspace inherits it. If any value is refused, no setting in the request is stored.
      *
-     * @param string $id path param: The workspace's identifier, starting with `slws_`
+     * @param string $id Path param: The workspace's identifier, starting with `slws_`.
      * @param array{
      *   settings: ClaudeTagSettingsUpdate|ClaudeTagSettingsUpdateShape,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,

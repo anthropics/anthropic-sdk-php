@@ -40,7 +40,7 @@ final class InvitesService implements InvitesContract
      *
      * On plans that draw members from a finite pool of purchased seats, the invite automatically consumes a seat from the lowest tier with availability; there is no seat-tier parameter. When no seat is free the request fails with a 400 error rather than purchasing a seat.
      *
-     * @param string $email email of the User
+     * @param string $email Email of the User.
      * @param Role|value-of<Role> $role Role for the invited User.
      *
      * The accepted values depend on the organization type. Console and API organizations accept `user`, `developer`, `billing`, and `claude_code_user`; `admin` cannot be assigned through the API. Claude Enterprise organizations accept `user` and `managed`; inviting with the `managed` role requires the `write:rbac_groups` scope in addition to `write:members`.
@@ -70,7 +70,7 @@ final class InvitesService implements InvitesContract
      *
      * Retrieve an invite by ID.
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -137,7 +137,7 @@ final class InvitesService implements InvitesContract
      *
      * Delete a pending invite.
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

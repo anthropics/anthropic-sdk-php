@@ -27,7 +27,7 @@ final class BetaDreamModelConfigParam implements BaseModel
      *
      * The ID can be 1 to 256 characters long.
      *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+     * The [Availability section of the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#feature-availability) lists the supported models.
      */
     #[Required]
     public string $id;
@@ -86,7 +86,7 @@ final class BetaDreamModelConfigParam implements BaseModel
      *
      * The ID can be 1 to 256 characters long.
      *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+     * The [Availability section of the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#feature-availability) lists the supported models.
      */
     public function withID(string $id): self
     {

@@ -6,14 +6,10 @@ namespace Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 
 enum Status: string
 {
-    /**
-     * Transient error occurred, retrying automatically.
-     */
+    /** Transient error occurred, retrying automatically. */
     case RESCHEDULING = 'rescheduling';
 
-    /**
-     * Agent is actively executing.
-     */
+    /** Agent is actively executing. */
     case RUNNING = 'running';
 
     /**
@@ -21,8 +17,6 @@ enum Status: string
      */
     case IDLE = 'idle';
 
-    /**
-     * Session has ended, either due to an error or completion.
-     */
+    /** Session has ended, either due to an error or completion. */
     case TERMINATED = 'terminated';
 }

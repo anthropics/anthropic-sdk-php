@@ -39,10 +39,11 @@ final class BetaRBACRolePermission implements BaseModel
      * The vocabulary follows the resource: an `organization` grant carries a
      * product-feature entitlement (for example `chat`), an admin-panel
      * permission entitlement (`permission_*`), or a blanket capability-access
-     * mode — `capability_access_all` grants every product-feature entitlement,
-     * and `capability_access_all_ga` grants the generally-available subset as
-     * it stands at permission-check time; neither mode grants model-access
-     * entitlements. A consumer enumerating a role's per-feature grants should
+     * mode — `capability_access_all` grants every product-feature entitlement
+     * except `inference_hooks_inspection`, which a role holds only through its
+     * own row, and `capability_access_all_ga` grants the generally-available
+     * subset of those as it stands at permission-check time; neither mode grants
+     * model-access entitlements. A consumer enumerating a role's per-feature grants should
      * treat a blanket row as granting every product-feature entitlement it
      * covers, or it will under-report the role's effective access. A `connector_tool` grant carries
      * a tool-access action (`use` or `always_allow`); a `connector_scope` grant
@@ -109,10 +110,11 @@ final class BetaRBACRolePermission implements BaseModel
      * The vocabulary follows the resource: an `organization` grant carries a
      * product-feature entitlement (for example `chat`), an admin-panel
      * permission entitlement (`permission_*`), or a blanket capability-access
-     * mode — `capability_access_all` grants every product-feature entitlement,
-     * and `capability_access_all_ga` grants the generally-available subset as
-     * it stands at permission-check time; neither mode grants model-access
-     * entitlements. A consumer enumerating a role's per-feature grants should
+     * mode — `capability_access_all` grants every product-feature entitlement
+     * except `inference_hooks_inspection`, which a role holds only through its
+     * own row, and `capability_access_all_ga` grants the generally-available
+     * subset of those as it stands at permission-check time; neither mode grants
+     * model-access entitlements. A consumer enumerating a role's per-feature grants should
      * treat a blanket row as granting every product-feature entitlement it
      * covers, or it will under-report the role's effective access. A `connector_tool` grant carries
      * a tool-access action (`use` or `always_allow`); a `connector_scope` grant

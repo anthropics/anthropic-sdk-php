@@ -36,7 +36,7 @@ interface InvitesRawContract
     /**
      * @api
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<OrganizationInvite>
@@ -66,7 +66,7 @@ interface InvitesRawContract
     /**
      * @api
      *
-     * @param string $inviteID ID of the Invite
+     * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<InviteDeleteResponse>

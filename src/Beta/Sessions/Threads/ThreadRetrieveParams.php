@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Session Thread.
+ * Get Session Thread
  *
  * @see Anthropic\Services\Beta\Sessions\ThreadsService::retrieve()
  *

@@ -39,7 +39,7 @@ interface FilesRawContract
     /**
      * @api
      *
-     * @param string $fileID ID of the File
+     * @param string $fileID ID of the File.
      * @param array<string,mixed>|FileDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +56,7 @@ interface FilesRawContract
     /**
      * @api
      *
-     * @param string $fileID ID of the File
+     * @param string $fileID ID of the File.
      * @param array<string,mixed>|FileDownloadParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -73,7 +73,7 @@ interface FilesRawContract
     /**
      * @api
      *
-     * @param string $fileID ID of the File
+     * @param string $fileID ID of the File.
      * @param array<string,mixed>|FileRetrieveMetadataParams $params
      * @param RequestOpts|null $requestOptions
      *

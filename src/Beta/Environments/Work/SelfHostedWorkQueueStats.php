@@ -26,7 +26,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
     use SdkModel;
 
     /**
-     * The type of object.
+     * The type of object
      *
      * @var 'work_queue_stats' $type
      */
@@ -34,19 +34,19 @@ final class SelfHostedWorkQueueStats implements BaseModel
     public string $type = 'work_queue_stats';
 
     /**
-     * Number of work items waiting to be picked up.
+     * Number of work items waiting to be picked up
      */
     #[Required]
     public int $depth;
 
     /**
-     * RFC 3339 timestamp of oldest item in the work stream (includes both queued and pending items), null if stream empty.
+     * RFC 3339 timestamp of oldest item in the work stream (includes both queued and pending items), null if stream empty
      */
     #[Required('oldest_queued_at')]
     public ?string $oldestQueuedAt;
 
     /**
-     * Number of work items being processed (polled but not acknowledged).
+     * Number of work items being processed (polled but not acknowledged)
      */
     #[Required]
     public int $pending;
@@ -104,7 +104,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
     }
 
     /**
-     * Number of work items waiting to be picked up.
+     * Number of work items waiting to be picked up
      */
     public function withDepth(int $depth): self
     {
@@ -115,7 +115,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
     }
 
     /**
-     * RFC 3339 timestamp of oldest item in the work stream (includes both queued and pending items), null if stream empty.
+     * RFC 3339 timestamp of oldest item in the work stream (includes both queued and pending items), null if stream empty
      */
     public function withOldestQueuedAt(?string $oldestQueuedAt): self
     {
@@ -126,7 +126,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
     }
 
     /**
-     * Number of work items being processed (polled but not acknowledged).
+     * Number of work items being processed (polled but not acknowledged)
      */
     public function withPending(int $pending): self
     {
@@ -137,7 +137,7 @@ final class SelfHostedWorkQueueStats implements BaseModel
     }
 
     /**
-     * The type of object.
+     * The type of object
      *
      * @param 'work_queue_stats' $type
      */

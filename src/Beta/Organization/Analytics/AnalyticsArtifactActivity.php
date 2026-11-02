@@ -45,13 +45,13 @@ final class AnalyticsArtifactActivity implements BaseModel
     public string $artifactType;
 
     /**
-     * Number of artifacts created in this bucket on the requested day.
+     * Number of artifacts created in this bucket on the requested day
      */
     #[Required('artifacts_created_count')]
     public int $artifactsCreatedCount;
 
     /**
-     * Number of distinct users who created artifacts in this bucket on the requested day.
+     * Number of distinct users who created artifacts in this bucket on the requested day
      */
     #[Required('distinct_user_count')]
     public int $distinctUserCount;
@@ -63,7 +63,7 @@ final class AnalyticsArtifactActivity implements BaseModel
     public bool $isShared;
 
     /**
-     * Number of those artifacts that have been published (for Claude Code / Cowork artifacts: open to anyone with the link); never exceeds `artifacts_created_count`.
+     * Number of those artifacts that have been published (for Claude Code / Cowork artifacts: open to anyone with the link); never exceeds `artifacts_created_count`
      */
     #[Required('published_artifacts_created_count')]
     public int $publishedArtifactsCreatedCount;
@@ -166,7 +166,7 @@ final class AnalyticsArtifactActivity implements BaseModel
     }
 
     /**
-     * Number of artifacts created in this bucket on the requested day.
+     * Number of artifacts created in this bucket on the requested day
      */
     public function withArtifactsCreatedCount(int $artifactsCreatedCount): self
     {
@@ -177,7 +177,7 @@ final class AnalyticsArtifactActivity implements BaseModel
     }
 
     /**
-     * Number of distinct users who created artifacts in this bucket on the requested day.
+     * Number of distinct users who created artifacts in this bucket on the requested day
      */
     public function withDistinctUserCount(int $distinctUserCount): self
     {
@@ -199,7 +199,7 @@ final class AnalyticsArtifactActivity implements BaseModel
     }
 
     /**
-     * Number of those artifacts that have been published (for Claude Code / Cowork artifacts: open to anyone with the link); never exceeds `artifacts_created_count`.
+     * Number of those artifacts that have been published (for Claude Code / Cowork artifacts: open to anyone with the link); never exceeds `artifacts_created_count`
      */
     public function withPublishedArtifactsCreatedCount(
         int $publishedArtifactsCreatedCount

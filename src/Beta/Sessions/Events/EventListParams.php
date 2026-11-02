@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Events.
+ * List Events
  *
  * @see Anthropic\Services\Beta\Sessions\EventsService::list()
  *

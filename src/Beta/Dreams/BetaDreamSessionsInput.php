@@ -30,8 +30,6 @@ final class BetaDreamSessionsInput implements BaseModel
      *
      * Give 1 to 100 IDs, with no duplicates. Each session must be in the same workspace as the dream. Responses list the IDs in sorted order.
      *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists all the limits on a dream.
-     *
      * @var list<string> $sessionIDs
      */
     #[Required('session_ids', list: 'string')]
@@ -76,8 +74,6 @@ final class BetaDreamSessionsInput implements BaseModel
      * The IDs of the sessions whose transcripts the dream reads (`sesn_...`).
      *
      * Give 1 to 100 IDs, with no duplicates. Each session must be in the same workspace as the dream. Responses list the IDs in sorted order.
-     *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists all the limits on a dream.
      *
      * @param list<string> $sessionIDs
      */

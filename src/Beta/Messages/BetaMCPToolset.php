@@ -40,7 +40,7 @@ final class BetaMCPToolset implements BaseModel
     public string $type = 'mcp_toolset';
 
     /**
-     * Name of the MCP server to configure tools for.
+     * Name of the MCP server to configure tools for
      */
     #[Required('mcp_server_name')]
     public string $mcpServerName;
@@ -52,7 +52,7 @@ final class BetaMCPToolset implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * Configuration overrides for specific tools, keyed by tool name.
+     * Configuration overrides for specific tools, keyed by tool name
      *
      * @var array<string,BetaMCPToolConfig>|null $configs
      */
@@ -60,7 +60,7 @@ final class BetaMCPToolset implements BaseModel
     public ?array $configs;
 
     /**
-     * Default configuration applied to all tools from this server.
+     * Default configuration applied to all tools from this server
      */
     #[Optional('default_config')]
     public ?BetaMCPToolDefaultConfig $defaultConfig;
@@ -122,7 +122,7 @@ final class BetaMCPToolset implements BaseModel
     }
 
     /**
-     * Name of the MCP server to configure tools for.
+     * Name of the MCP server to configure tools for
      */
     public function withMCPServerName(string $mcpServerName): self
     {
@@ -158,7 +158,7 @@ final class BetaMCPToolset implements BaseModel
     }
 
     /**
-     * Configuration overrides for specific tools, keyed by tool name.
+     * Configuration overrides for specific tools, keyed by tool name
      *
      * @param array<string,BetaMCPToolConfig|BetaMCPToolConfigShape>|null $configs
      */
@@ -171,7 +171,7 @@ final class BetaMCPToolset implements BaseModel
     }
 
     /**
-     * Default configuration applied to all tools from this server.
+     * Default configuration applied to all tools from this server
      *
      * @param BetaMCPToolDefaultConfig|BetaMCPToolDefaultConfigShape $defaultConfig
      */

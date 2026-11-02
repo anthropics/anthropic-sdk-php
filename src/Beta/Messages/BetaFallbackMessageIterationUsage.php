@@ -38,7 +38,7 @@ final class BetaFallbackMessageIterationUsage implements BaseModel
     use SdkModel;
 
     /**
-     * Usage for the fallback-model attempt that served the response.
+     * Usage for the fallback-model attempt that served the response
      *
      * @var 'fallback_message' $type
      */
@@ -46,7 +46,7 @@ final class BetaFallbackMessageIterationUsage implements BaseModel
     public string $type = 'fallback_message';
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      */
     #[Required('cache_creation')]
     public ?BetaCacheCreation $cacheCreation;
@@ -146,7 +146,7 @@ final class BetaFallbackMessageIterationUsage implements BaseModel
     }
 
     /**
-     * Breakdown of cached tokens by TTL.
+     * Breakdown of cached tokens by TTL
      *
      * @param BetaCacheCreation|BetaCacheCreationShape|null $cacheCreation
      */
@@ -220,7 +220,7 @@ final class BetaFallbackMessageIterationUsage implements BaseModel
     }
 
     /**
-     * Usage for the fallback-model attempt that served the response.
+     * Usage for the fallback-model attempt that served the response
      *
      * @param 'fallback_message' $type
      */

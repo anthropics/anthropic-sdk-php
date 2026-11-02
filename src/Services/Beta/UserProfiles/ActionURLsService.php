@@ -38,8 +38,8 @@ final class ActionURLsService implements ActionURLsContract
      * Create Action URL
      *
      * @param string $userProfileID Path param: The ID of the user profile the action is for (`uprof_...`).
-     * @param UserProfileEnrollEndUserAction|UserProfileEnrollEndUserActionShape $action body param: The action that the person who opens the URL takes
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param UserProfileEnrollEndUserAction|UserProfileEnrollEndUserActionShape $action Body param: The action that the person who opens the URL takes.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.

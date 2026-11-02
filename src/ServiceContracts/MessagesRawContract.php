@@ -45,7 +45,7 @@ interface MessagesRawContract
      * @param array<string,mixed>|MessageCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<BaseStream<RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent,>,>
+     * @return BaseResponse<BaseStream<RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent>>
      *
      * @throws APIException
      */

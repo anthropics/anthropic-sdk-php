@@ -45,7 +45,7 @@ final class RateLimitsRawService implements RateLimitsRawContract
      * `GET /v1/organizations/workspaces/{workspace_id}/rate_limits` returns.
      * Changes take effect within about an hour.
      *
-     * @param string $rateLimitID path param: The `id` of the organization's rate-limit entry to set overrides for
+     * @param string $rateLimitID Path param: The `id` of the organization's rate-limit entry to set overrides for.
      * @param array{
      *   workspaceID: string,
      *   limits: list<BetaWorkspaceRateLimitUpdateValue|BetaWorkspaceRateLimitUpdateValueShape>,
@@ -106,7 +106,7 @@ final class RateLimitsRawService implements RateLimitsRawContract
      * page; when `limit` truncates the result, follow `next_page` to fetch
      * the remaining entries.
      *
-     * @param string $workspaceID the ID of the workspace
+     * @param string $workspaceID The ID of the workspace.
      * @param array{
      *   groupType?: GroupType|value-of<GroupType>|null,
      *   includeInherited?: bool,

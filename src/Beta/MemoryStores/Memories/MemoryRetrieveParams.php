@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Retrieve a Memory.
+ * Retrieve a Memory
  *
  * @see Anthropic\Services\Beta\MemoryStores\MemoriesService::retrieve()
  *

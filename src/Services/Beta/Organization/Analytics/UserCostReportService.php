@@ -61,12 +61,12 @@ final class UserCostReportService implements UserCostReportContract
      * @param list<string>|null $models Models to include. Defaults to all models. Use `group_by[]=model` to break out per-model values.
      * @param Order|value-of<Order> $order Sort direction. Defaults to `desc`.
      * @param OrderBy|value-of<OrderBy> $orderBy Metric to rank actors by. Defaults to `amount`.
-     * @param string|null $page opaque cursor from a previous response's `next_page` field
+     * @param string|null $page Opaque cursor from a previous response's `next_page` field.
      * @param list<AnalyticsProductFilter|value-of<AnalyticsProductFilter>>|null $products Product surfaces to include. Defaults to all products.
      * @param list<string>|null $rbacGroupIDs Filter to usage attributed to specific RBAC groups. Accepts tagged RBAC group IDs (`rbac_group_...`) or bare group UUIDs. A row matches when the user belonged to any of the listed groups on the (UTC) day the usage occurred; usage with no group attribution never matches.
      * @param list<string>|null $slackChannelIDs Filter to usage originating from specific Slack channels. Use `group_by[]=slack_channel_id` to break out per-channel values.
      * @param list<Speed|value-of<Speed>>|null $speeds Filter to fast or standard inference mode. Use `group_by[]=speed` to break out per-mode values.
-     * @param list<string>|null $userIDs filter to specific users by tagged user ID
+     * @param list<string>|null $userIDs Filter to specific users by tagged user ID.
      * @param RequestOpts|null $requestOptions
      *
      * @return ReportPageCursor<AnalyticsCostUsersItem>

@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List API Keys.
+ * List API Keys
  *
  * @see Anthropic\Services\Beta\Organization\APIKeysService::list()
  *

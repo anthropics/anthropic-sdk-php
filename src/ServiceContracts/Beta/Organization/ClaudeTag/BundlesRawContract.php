@@ -20,7 +20,7 @@ interface BundlesRawContract
     /**
      * @api
      *
-     * @param string $bundleID the Bundle's identifier, starting with `capp_`
+     * @param string $bundleID The Bundle's identifier, starting with `capp_`.
      * @param array<string,mixed>|BundleRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *

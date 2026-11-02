@@ -14,7 +14,7 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  *
  * In the object form, `speed` can only be `standard`.
  *
- * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+ * The [Availability section of the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#feature-availability) lists the supported models.
  *
  * @phpstan-import-type BetaDreamModelConfigParamShape from \Anthropic\Beta\Dreams\BetaDreamModelConfigParam
  *

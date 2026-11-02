@@ -32,6 +32,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   providerConfig: ProviderConfigShape,
  *   type: 'external_key',
  *   updatedAt: \DateTimeInterface,
+ *   userProfileID: string|null,
  * }
  */
 final class ExternalKey implements BaseModel
@@ -44,7 +45,7 @@ final class ExternalKey implements BaseModel
     public string $type = 'external_key';
 
     /**
-     * Identifier of the external key config. A tagged ID prefixed `ekey_`, or — for organizations on the Claude Platform on AWS — the AWS KMS key ARN.
+     * Identifier of the external key config: a tagged ID prefixed `ekey_`, or, on Claude Platform on AWS, an AWS KMS key's ARN.
      */
     #[Required]
     public string $id;
@@ -84,6 +85,12 @@ final class ExternalKey implements BaseModel
     public \DateTimeInterface $updatedAt;
 
     /**
+     * ID of the user profile the key is bound to, or null if the key is not bound to one. A key bound to a user profile can only be attached to a Workspace that has the same user profile. A key that isn't bound can be attached to a Workspace whatever its user profile.
+     */
+    #[Required('user_profile_id')]
+    public ?string $userProfileID;
+
+    /**
      * `new ExternalKey()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -96,6 +103,7 @@ final class ExternalKey implements BaseModel
      *   geo: ...,
      *   providerConfig: ...,
      *   updatedAt: ...,
+     *   userProfileID: ...,
      * )
      * ```
      *
@@ -110,6 +118,7 @@ final class ExternalKey implements BaseModel
      *   ->withGeo(...)
      *   ->withProviderConfig(...)
      *   ->withUpdatedAt(...)
+     *   ->withUserProfileID(...)
      * ```
      */
     public function __construct()
@@ -133,6 +142,7 @@ final class ExternalKey implements BaseModel
         string $geo,
         AWSExternalKeyConfig|array|GCPExternalKeyConfig|AzureExternalKeyConfig $providerConfig,
         \DateTimeInterface $updatedAt,
+        ?string $userProfileID,
     ): self {
         $self = new self;
 
@@ -143,12 +153,13 @@ final class ExternalKey implements BaseModel
         $self['geo'] = $geo;
         $self['providerConfig'] = $providerConfig;
         $self['updatedAt'] = $updatedAt;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }
 
     /**
-     * Identifier of the external key config. A tagged ID prefixed `ekey_`, or — for organizations on the Claude Platform on AWS — the AWS KMS key ARN.
+     * Identifier of the external key config: a tagged ID prefixed `ekey_`, or, on Claude Platform on AWS, an AWS KMS key's ARN.
      */
     public function withID(string $id): self
     {
@@ -231,6 +242,17 @@ final class ExternalKey implements BaseModel
     {
         $self = clone $this;
         $self['updatedAt'] = $updatedAt;
+
+        return $self;
+    }
+
+    /**
+     * ID of the user profile the key is bound to, or null if the key is not bound to one. A key bound to a user profile can only be attached to a Workspace that has the same user profile. A key that isn't bound can be attached to a Workspace whatever its user profile.
+     */
+    public function withUserProfileID(?string $userProfileID): self
+    {
+        $self = clone $this;
+        $self['userProfileID'] = $userProfileID;
 
         return $self;
     }

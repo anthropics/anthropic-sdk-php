@@ -19,8 +19,8 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account
-     * @param string $workspaceID ID of the workspace
+     * @param string $serviceAccountID ID of the service account.
+     * @param string $workspaceID ID of the workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -34,9 +34,9 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID path param: ID of the service account
-     * @param string $workspaceID path param: ID of the workspace
-     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole body param: New role for the service account in this workspace
+     * @param string $serviceAccountID Path param: ID of the service account.
+     * @param string $workspaceID Path param: ID of the workspace.
+     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Body param: New role for the service account in this workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -51,9 +51,9 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the workspace
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string $workspaceID ID of the workspace.
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ServiceAccountWorkspaceMember>
@@ -70,9 +70,9 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the workspace
-     * @param string $serviceAccountID tagged service account ID to add
-     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole role to assign to the service account in this workspace
+     * @param string $workspaceID ID of the workspace.
+     * @param string $serviceAccountID Tagged service account ID to add.
+     * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Role to assign to the service account in this workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -87,8 +87,8 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account
-     * @param string $workspaceID ID of the workspace
+     * @param string $serviceAccountID ID of the service account.
+     * @param string $workspaceID ID of the workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

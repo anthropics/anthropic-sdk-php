@@ -13,7 +13,7 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * An object that defines additional configuration control over model use.
+ * An object that defines additional configuration control over model use
  *
  * @phpstan-import-type EffortShape from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort
  * @phpstan-import-type EffortVariants from \Anthropic\Beta\Agents\BetaManagedAgentsModelConfigParams\Effort

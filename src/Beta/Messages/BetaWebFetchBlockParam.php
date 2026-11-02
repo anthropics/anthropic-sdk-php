@@ -33,13 +33,13 @@ final class BetaWebFetchBlockParam implements BaseModel
     public BetaRequestDocumentBlock $content;
 
     /**
-     * Fetched content URL.
+     * Fetched content URL
      */
     #[Required]
     public string $url;
 
     /**
-     * ISO 8601 timestamp when the content was retrieved.
+     * ISO 8601 timestamp when the content was retrieved
      */
     #[Optional('retrieved_at', nullable: true)]
     public ?string $retrievedAt;
@@ -108,7 +108,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     }
 
     /**
-     * Fetched content URL.
+     * Fetched content URL
      */
     public function withURL(string $url): self
     {
@@ -119,7 +119,7 @@ final class BetaWebFetchBlockParam implements BaseModel
     }
 
     /**
-     * ISO 8601 timestamp when the content was retrieved.
+     * ISO 8601 timestamp when the content was retrieved
      */
     public function withRetrievedAt(?string $retrievedAt): self
     {

@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Download File.
+ * Download File
  *
  * @see Anthropic\Services\Beta\FilesService::download()
  *

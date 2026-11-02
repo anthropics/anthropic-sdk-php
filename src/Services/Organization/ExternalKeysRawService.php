@@ -41,6 +41,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *   providerConfig: ProviderConfigShape,
      *   displayName?: string|null,
      *   geo?: Geo|value-of<Geo>,
+     *   userProfileID?: string|null,
      * }|ExternalKeyCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -76,7 +77,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * Retrieve a single external key config in the caller's organization by ID.
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ExternalKey>
@@ -111,7 +112,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      * be changed once any workspace references this config, because previously
      * encrypted data requires the original key identity to decrypt.
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param array{
      *   displayName?: string|null,
      *   geo?: ExternalKeyUpdateParams\Geo|value-of<ExternalKeyUpdateParams\Geo>|null,
@@ -195,7 +196,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * The request is rejected if any workspace still references this config.
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ExternalKeyDeleteResponse>
@@ -231,7 +232,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      * `success` if the roundtrip succeeded, or `failure` with an error
      * message if it failed or timed out.
      *
-     * @param string $externalKeyID ID of the External Key
+     * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ExternalKeyValidateResponse>

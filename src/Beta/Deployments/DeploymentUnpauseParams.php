@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Unpause Deployment.
+ * Unpause Deployment
  *
  * @see Anthropic\Services\Beta\DeploymentsService::unpause()
  *

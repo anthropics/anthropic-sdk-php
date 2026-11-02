@@ -20,7 +20,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     use SdkModel;
 
     /**
-     * Command type identifier.
+     * Command type identifier
      *
      * @var 'delete' $command
      */
@@ -28,7 +28,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     public string $command = 'delete';
 
     /**
-     * Path to the file or directory to delete.
+     * Path to the file or directory to delete
      */
     #[Required]
     public string $path;
@@ -67,7 +67,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     }
 
     /**
-     * Command type identifier.
+     * Command type identifier
      *
      * @param 'delete' $command
      */
@@ -80,7 +80,7 @@ final class BetaMemoryTool20250818DeleteCommand implements BaseModel
     }
 
     /**
-     * Path to the file or directory to delete.
+     * Path to the file or directory to delete
      */
     public function withPath(string $path): self
     {

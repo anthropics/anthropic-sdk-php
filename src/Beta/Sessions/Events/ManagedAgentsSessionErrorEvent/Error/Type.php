@@ -22,6 +22,10 @@ enum Type: string
 
     case CREDENTIAL_HOST_UNREACHABLE_ERROR = 'credential_host_unreachable_error';
 
+    case TOOL_USE_LIMIT_REACHED_ERROR = 'tool_use_limit_reached_error';
+
+    case COMPACTION_LIMIT_REACHED_ERROR = 'compaction_limit_reached_error';
+
     case REPOSITORY_AUTHENTICATION_ERROR = 'repository_authentication_error';
 
     case REPOSITORY_FORBIDDEN_ERROR = 'repository_forbidden_error';

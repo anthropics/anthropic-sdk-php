@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Environments\Work\SelfHostedWorkHeartbeatResponse;
 
 /**
- * Current state of the work item (active/stopping/stopped).
+ * Current state of the work item (active/stopping/stopped)
  */
 enum State: string
 {

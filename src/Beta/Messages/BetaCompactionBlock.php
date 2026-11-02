@@ -39,19 +39,19 @@ final class BetaCompactionBlock implements BaseModel
     public string $type = 'compaction';
 
     /**
-     * Summary of compacted content, or null if compaction failed.
+     * Summary of compacted content, or null if compaction failed
      */
     #[Required]
     public ?string $content;
 
     /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     * Opaque metadata from prior compaction, to be round-tripped verbatim
      */
     #[Required('encrypted_content')]
     public ?string $encryptedContent;
 
     /**
-     * Signature over the summary, to be sent back with the block verbatim.
+     * Signature over the summary, to be sent back with the block verbatim
      */
     #[Optional(nullable: true)]
     public ?string $signature;
@@ -108,7 +108,7 @@ final class BetaCompactionBlock implements BaseModel
     }
 
     /**
-     * Summary of compacted content, or null if compaction failed.
+     * Summary of compacted content, or null if compaction failed
      */
     public function withContent(?string $content): self
     {
@@ -119,7 +119,7 @@ final class BetaCompactionBlock implements BaseModel
     }
 
     /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     * Opaque metadata from prior compaction, to be round-tripped verbatim
      */
     public function withEncryptedContent(?string $encryptedContent): self
     {
@@ -141,7 +141,7 @@ final class BetaCompactionBlock implements BaseModel
     }
 
     /**
-     * Signature over the summary, to be sent back with the block verbatim.
+     * Signature over the summary, to be sent back with the block verbatim
      */
     public function withSignature(?string $signature): self
     {

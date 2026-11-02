@@ -32,7 +32,7 @@ final class BetaPackagesParams implements BaseModel
     use SdkModel;
 
     /**
-     * Ubuntu/Debian packages to install.
+     * Ubuntu/Debian packages to install
      *
      * @var list<string>|null $apt
      */
@@ -40,7 +40,7 @@ final class BetaPackagesParams implements BaseModel
     public ?array $apt;
 
     /**
-     * Rust packages to install.
+     * Rust packages to install
      *
      * @var list<string>|null $cargo
      */
@@ -48,7 +48,7 @@ final class BetaPackagesParams implements BaseModel
     public ?array $cargo;
 
     /**
-     * Ruby packages to install.
+     * Ruby packages to install
      *
      * @var list<string>|null $gem
      */
@@ -56,7 +56,7 @@ final class BetaPackagesParams implements BaseModel
     public ?array $gem;
 
     /**
-     * Go packages to install.
+     * Go packages to install
      *
      * @var list<string>|null $go
      */
@@ -64,7 +64,7 @@ final class BetaPackagesParams implements BaseModel
     public ?array $go;
 
     /**
-     * Node.js packages to install.
+     * Node.js packages to install
      *
      * @var list<string>|null $npm
      */
@@ -72,7 +72,7 @@ final class BetaPackagesParams implements BaseModel
     public ?array $npm;
 
     /**
-     * Python packages to install.
+     * Python packages to install
      *
      * @var list<string>|null $pip
      */
@@ -80,7 +80,7 @@ final class BetaPackagesParams implements BaseModel
     public ?array $pip;
 
     /**
-     * Package configuration type.
+     * Package configuration type
      *
      * @var value-of<Type>|null $type
      */
@@ -128,7 +128,7 @@ final class BetaPackagesParams implements BaseModel
     }
 
     /**
-     * Ubuntu/Debian packages to install.
+     * Ubuntu/Debian packages to install
      *
      * @param list<string>|null $apt
      */
@@ -141,7 +141,7 @@ final class BetaPackagesParams implements BaseModel
     }
 
     /**
-     * Rust packages to install.
+     * Rust packages to install
      *
      * @param list<string>|null $cargo
      */
@@ -154,7 +154,7 @@ final class BetaPackagesParams implements BaseModel
     }
 
     /**
-     * Ruby packages to install.
+     * Ruby packages to install
      *
      * @param list<string>|null $gem
      */
@@ -167,7 +167,7 @@ final class BetaPackagesParams implements BaseModel
     }
 
     /**
-     * Go packages to install.
+     * Go packages to install
      *
      * @param list<string>|null $go
      */
@@ -180,7 +180,7 @@ final class BetaPackagesParams implements BaseModel
     }
 
     /**
-     * Node.js packages to install.
+     * Node.js packages to install
      *
      * @param list<string>|null $npm
      */
@@ -193,7 +193,7 @@ final class BetaPackagesParams implements BaseModel
     }
 
     /**
-     * Python packages to install.
+     * Python packages to install
      *
      * @param list<string>|null $pip
      */
@@ -206,7 +206,7 @@ final class BetaPackagesParams implements BaseModel
     }
 
     /**
-     * Package configuration type.
+     * Package configuration type
      *
      * @param Type|value-of<Type> $type
      */

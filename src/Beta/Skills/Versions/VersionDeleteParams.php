@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete Skill Version.
+ * Delete Skill Version
  *
  * @see Anthropic\Services\Beta\Skills\VersionsService::delete()
  *

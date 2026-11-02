@@ -35,7 +35,7 @@ final class WorkHeartbeatParams implements BaseModel
     public string $environmentID;
 
     /**
-     * Desired TTL in seconds.
+     * Desired TTL in seconds
      */
     #[Optional(nullable: true)]
     public ?int $desiredTTLSeconds;
@@ -106,7 +106,7 @@ final class WorkHeartbeatParams implements BaseModel
     }
 
     /**
-     * Desired TTL in seconds.
+     * Desired TTL in seconds
      */
     public function withDesiredTTLSeconds(?int $desiredTTLSeconds): self
     {

@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\FileParam;
 
 /**
- * Upload File.
+ * Upload File
  *
  * @see Anthropic\Services\FilesService::upload()
  *

@@ -29,7 +29,7 @@ final class BetaPackages implements BaseModel
     use SdkModel;
 
     /**
-     * Ubuntu/Debian packages to install.
+     * Ubuntu/Debian packages to install
      *
      * @var list<string> $apt
      */
@@ -37,7 +37,7 @@ final class BetaPackages implements BaseModel
     public array $apt;
 
     /**
-     * Rust packages to install.
+     * Rust packages to install
      *
      * @var list<string> $cargo
      */
@@ -45,7 +45,7 @@ final class BetaPackages implements BaseModel
     public array $cargo;
 
     /**
-     * Ruby packages to install.
+     * Ruby packages to install
      *
      * @var list<string> $gem
      */
@@ -53,7 +53,7 @@ final class BetaPackages implements BaseModel
     public array $gem;
 
     /**
-     * Go packages to install.
+     * Go packages to install
      *
      * @var list<string> $go
      */
@@ -61,7 +61,7 @@ final class BetaPackages implements BaseModel
     public array $go;
 
     /**
-     * Node.js packages to install.
+     * Node.js packages to install
      *
      * @var list<string> $npm
      */
@@ -69,7 +69,7 @@ final class BetaPackages implements BaseModel
     public array $npm;
 
     /**
-     * Python packages to install.
+     * Python packages to install
      *
      * @var list<string> $pip
      */
@@ -77,7 +77,7 @@ final class BetaPackages implements BaseModel
     public array $pip;
 
     /**
-     * Package configuration type.
+     * Package configuration type
      *
      * @var value-of<Type>|null $type
      */
@@ -146,7 +146,7 @@ final class BetaPackages implements BaseModel
     }
 
     /**
-     * Ubuntu/Debian packages to install.
+     * Ubuntu/Debian packages to install
      *
      * @param list<string> $apt
      */
@@ -159,7 +159,7 @@ final class BetaPackages implements BaseModel
     }
 
     /**
-     * Rust packages to install.
+     * Rust packages to install
      *
      * @param list<string> $cargo
      */
@@ -172,7 +172,7 @@ final class BetaPackages implements BaseModel
     }
 
     /**
-     * Ruby packages to install.
+     * Ruby packages to install
      *
      * @param list<string> $gem
      */
@@ -185,7 +185,7 @@ final class BetaPackages implements BaseModel
     }
 
     /**
-     * Go packages to install.
+     * Go packages to install
      *
      * @param list<string> $go
      */
@@ -198,7 +198,7 @@ final class BetaPackages implements BaseModel
     }
 
     /**
-     * Node.js packages to install.
+     * Node.js packages to install
      *
      * @param list<string> $npm
      */
@@ -211,7 +211,7 @@ final class BetaPackages implements BaseModel
     }
 
     /**
-     * Python packages to install.
+     * Python packages to install
      *
      * @param list<string> $pip
      */
@@ -224,7 +224,7 @@ final class BetaPackages implements BaseModel
     }
 
     /**
-     * Package configuration type.
+     * Package configuration type
      *
      * @param Type|value-of<Type> $type
      */

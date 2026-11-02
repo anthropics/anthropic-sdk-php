@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization\Analytics;
 
+use Anthropic\Beta\Organization\Analytics\AnalyticsOrder;
 use Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity;
+use Anthropic\Beta\Organization\Analytics\AnalyticsUserGroupBy;
 use Anthropic\Beta\Organization\Analytics\Users\UserListParams;
-use Anthropic\Beta\Organization\Analytics\Users\UserListParams\GroupBy;
-use Anthropic\Beta\Organization\Analytics\Users\UserListParams\Order;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -43,9 +43,9 @@ final class UsersRawService implements UsersRawContract
      *   date?: string|null,
      *   endingDate?: string|null,
      *   filter?: list<string>|null,
-     *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+     *   groupBy?: list<AnalyticsUserGroupBy|value-of<AnalyticsUserGroupBy>>|null,
      *   limit?: int|null,
-     *   order?: Order|value-of<Order>|null,
+     *   order?: AnalyticsOrder|value-of<AnalyticsOrder>|null,
      *   orderBy?: string|null,
      *   page?: string|null,
      *   startingDate?: string|null,

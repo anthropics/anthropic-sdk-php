@@ -96,7 +96,7 @@ final class FilesRawService implements FilesRawContract
      *
      * Delete File
      *
-     * @param string $fileID ID of the File
+     * @param string $fileID ID of the File.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -143,7 +143,7 @@ final class FilesRawService implements FilesRawContract
      *
      * Download File
      *
-     * @param string $fileID ID of the File
+     * @param string $fileID ID of the File.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,
@@ -190,7 +190,7 @@ final class FilesRawService implements FilesRawContract
      *
      * Get File Metadata
      *
-     * @param string $fileID ID of the File
+     * @param string $fileID ID of the File.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      *   workspaceID?: string,

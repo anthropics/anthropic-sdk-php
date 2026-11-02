@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete File.
+ * Delete File
  *
  * @see Anthropic\Services\Beta\FilesService::delete()
  *

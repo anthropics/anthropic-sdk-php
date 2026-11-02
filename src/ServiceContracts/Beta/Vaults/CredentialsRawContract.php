@@ -27,7 +27,7 @@ interface CredentialsRawContract
     /**
      * @api
      *
-     * @param string $vaultID path param: Identifier of the vault to create the credential in
+     * @param string $vaultID Path param: Identifier of the vault to create the credential in.
      * @param array<string,mixed>|CredentialCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -44,7 +44,7 @@ interface CredentialsRawContract
     /**
      * @api
      *
-     * @param string $credentialID path param: Unique identifier of the credential to retrieve
+     * @param string $credentialID Path param: Unique identifier of the credential to retrieve.
      * @param array<string,mixed>|CredentialRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -61,7 +61,7 @@ interface CredentialsRawContract
     /**
      * @api
      *
-     * @param string $credentialID path param: Unique identifier of the credential to update
+     * @param string $credentialID Path param: Unique identifier of the credential to update.
      * @param array<string,mixed>|CredentialUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -78,7 +78,7 @@ interface CredentialsRawContract
     /**
      * @api
      *
-     * @param string $vaultID path param: Identifier of the vault to list credentials for
+     * @param string $vaultID Path param: Identifier of the vault to list credentials for.
      * @param array<string,mixed>|CredentialListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -95,7 +95,7 @@ interface CredentialsRawContract
     /**
      * @api
      *
-     * @param string $credentialID path param: Unique identifier of the credential to delete
+     * @param string $credentialID Path param: Unique identifier of the credential to delete.
      * @param array<string,mixed>|CredentialDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -112,7 +112,7 @@ interface CredentialsRawContract
     /**
      * @api
      *
-     * @param string $credentialID path param: Unique identifier of the credential to archive
+     * @param string $credentialID Path param: Unique identifier of the credential to archive.
      * @param array<string,mixed>|CredentialArchiveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -129,7 +129,7 @@ interface CredentialsRawContract
     /**
      * @api
      *
-     * @param string $credentialID path param: Unique identifier of the credential to validate
+     * @param string $credentialID Path param: Unique identifier of the credential to validate.
      * @param array<string,mixed>|CredentialMCPOAuthValidateParams $params
      * @param RequestOpts|null $requestOptions
      *

@@ -14,7 +14,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update a Credential.
+ * Update a Credential
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::update()
  *

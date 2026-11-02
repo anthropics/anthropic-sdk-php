@@ -29,7 +29,7 @@ final class BetaLimitedNetworkParams implements BaseModel
     use SdkModel;
 
     /**
-     * Network policy type.
+     * Network policy type
      *
      * @var 'limited' $type
      */
@@ -83,7 +83,7 @@ final class BetaLimitedNetworkParams implements BaseModel
     }
 
     /**
-     * Network policy type.
+     * Network policy type
      *
      * @param 'limited' $type
      */

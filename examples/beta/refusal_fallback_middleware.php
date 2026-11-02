@@ -22,7 +22,7 @@ $client = new Client(apiKey: $apiKey);
 $served = $client->beta->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Some prompt that triggers a refusal']],
-    model: 'claude-fable-5',
+    model: 'claude-fable-5-1',
     fallbacks: [['model' => 'claude-opus-4-8']],
     betas: ['server-side-fallback-2026-07-01'],
 );
@@ -44,7 +44,7 @@ $state = new BetaFallbackState; // pins follow-ups to the model that accepted
 $stream = $fallbackClient->beta->messages->createStream(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Some prompt that triggers a refusal']],
-    model: 'claude-fable-5',
+    model: 'claude-fable-5-1',
     requestOptions: ['fallbackState' => $state],
 );
 
@@ -65,7 +65,7 @@ echo "\n";
 $followUp = $fallbackClient->beta->messages->create(
     maxTokens: 1024,
     messages: [['role' => 'user', 'content' => 'Some prompt that triggers a refusal']],
-    model: 'claude-fable-5',
+    model: 'claude-fable-5-1',
     requestOptions: ['fallbackState' => $state],
 );
 echo "non-streaming, served by: {$followUp->model}\n";

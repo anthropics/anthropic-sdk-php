@@ -97,7 +97,7 @@ final class SlackChannelsRawService implements SlackChannelsRawContract
      *
      * Get one Slack channel and its settings. By default `settings` holds what the channel itself stores: a setting that is null there is not set on the channel and is inherited. With `include_inherited=true`, `settings` holds what applies in the channel once the settings levels above it are taken into account, and the request fails with 503 rather than resolve against a settings level that could not be read. Either way `sources` names the settings level each value comes from, so a caller tells the channel's own value from an inherited one by its source, not by whether it is null.
      *
-     * @param string $id path param: The channel's identifier, starting with `slch_`
+     * @param string $id Path param: The channel's identifier, starting with `slch_`.
      * @param array{
      *   includeInherited?: bool,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -158,7 +158,7 @@ final class SlackChannelsRawService implements SlackChannelsRawContract
      *
      * Change the settings a Slack channel stores. The update is partial: a setting left out is unchanged, and a setting sent as null is cleared, so the channel inherits it. If any value is refused, no setting in the request is stored. A group direct message takes no settings and returns 400.
      *
-     * @param string $id path param: The channel's identifier, starting with `slch_`
+     * @param string $id Path param: The channel's identifier, starting with `slch_`.
      * @param array{
      *   settings: ClaudeTagSettingsUpdate|ClaudeTagSettingsUpdateShape,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
@@ -294,7 +294,7 @@ final class SlackChannelsRawService implements SlackChannelsRawContract
      *
      * Remove a Slack channel from Claude Tag. This deletes the channel's stored settings and its Bundle Targets at once, and then, in the background, the channel's sessions and their transcripts, its memory, its routines and the artifacts published from it. None of it can be restored. The channel in Slack and its messages are unchanged. The request is refused with 400 and `error.details.error_code` `slack_channel_enabled` while `enabled` resolves to `true` for the channel, as a read with `include_inherited=true` returns it: set `enabled` to `false` on the channel first. This guards against removing a channel in use by mistake; it is not a way to keep Claude out, because the removal deletes the channel's own `enabled: false` with its other settings, after which the channel inherits again and Claude's next use of it can set it up anew with a new identifier. The identifier returns 404 as soon as the request returns, so a repeated removal returns 404. A group direct message returns 400, and so does a channel that holds configuration this API does not manage.
      *
-     * @param string $id the channel's identifier, starting with `slch_`
+     * @param string $id The channel's identifier, starting with `slch_`.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|SlackChannelDeleteParams $params

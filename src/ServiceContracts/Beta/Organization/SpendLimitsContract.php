@@ -25,7 +25,7 @@ interface SpendLimitsContract
     /**
      * @api
      *
-     * @param string $spendLimitID ID of the Spend Limit
+     * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -39,10 +39,10 @@ interface SpendLimitsContract
      * @api
      *
      * @param int $limit Query param: Maximum number of limits per page. Defaults to `20`.
-     * @param string|null $page query param: Opaque cursor from a previous response's `next_page` field
+     * @param string|null $page Query param: Opaque cursor from a previous response's `next_page` field.
      * @param list<ScopeType|value-of<ScopeType>>|null $scopeType Query param: Return only limits with these scope types. Omit for all. A scope type that doesn't apply to the organization gets a 400 error.
      * @param string|null $workspaceID Query param: Return only the limits whose `scope.workspace_id` is this workspace (`wrkspc_...`). Claude Console organizations only; other organizations get a 400 error.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `spend-limit-reads-2026-09-26` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `spend-limit-reads-2026-09-26` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<SpendLimit>
@@ -61,7 +61,7 @@ interface SpendLimitsContract
     /**
      * @api
      *
-     * @param string $spendLimitID ID of the Spend Limit
+     * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -77,7 +77,7 @@ interface SpendLimitsContract
      * @param string|null $amount Body param: Limit amount as a non-negative integer decimal string in the minor unit of the organization's billing currency (cents for USD): "50000" is $500.00. `null` sets an explicit no-limit override for this scope and `period` only — each period resolves independently, so caps for other periods still apply.
      * @param ScopeShape $scope Body param: What the limit applies to. Claude Enterprise organizations set `user` limits. Claude Console organizations set `organization` and `workspace` limits. Any other combination returns 400. Setting `organization` and `workspace` limits through the API is in an early access preview. To request access, contact your Anthropic account team.
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod> $period Body param
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

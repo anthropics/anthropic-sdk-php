@@ -40,7 +40,7 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
 
     /** @var ErrorVariants $error */
     #[Required(union: Error::class)]
-    public ManagedAgentsUnknownError|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|ManagedAgentsRepositoryAuthenticationError|ManagedAgentsRepositoryForbiddenError|ManagedAgentsRepositoryNotFoundError|ManagedAgentsRepositoryCheckoutError|ManagedAgentsRepositoryCloneError $error;
+    public ManagedAgentsUnknownError|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|ManagedAgentsToolUseLimitReachedError|ManagedAgentsCompactionLimitReachedError|ManagedAgentsRepositoryAuthenticationError|ManagedAgentsRepositoryForbiddenError|ManagedAgentsRepositoryNotFoundError|ManagedAgentsRepositoryCheckoutError|ManagedAgentsRepositoryCloneError $error;
 
     /**
      * Timestamp when the error occurred.
@@ -79,7 +79,7 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
      */
     public static function with(
         string $id,
-        ManagedAgentsUnknownError|array|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|ManagedAgentsRepositoryAuthenticationError|ManagedAgentsRepositoryForbiddenError|ManagedAgentsRepositoryNotFoundError|ManagedAgentsRepositoryCheckoutError|ManagedAgentsRepositoryCloneError $error,
+        ManagedAgentsUnknownError|array|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|ManagedAgentsToolUseLimitReachedError|ManagedAgentsCompactionLimitReachedError|ManagedAgentsRepositoryAuthenticationError|ManagedAgentsRepositoryForbiddenError|ManagedAgentsRepositoryNotFoundError|ManagedAgentsRepositoryCheckoutError|ManagedAgentsRepositoryCloneError $error,
         \DateTimeInterface $processedAt,
     ): self {
         $self = new self;
@@ -106,7 +106,7 @@ final class ManagedAgentsSessionErrorEvent implements BaseModel
      * @param ErrorShape $error
      */
     public function withError(
-        ManagedAgentsUnknownError|array|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|ManagedAgentsRepositoryAuthenticationError|ManagedAgentsRepositoryForbiddenError|ManagedAgentsRepositoryNotFoundError|ManagedAgentsRepositoryCheckoutError|ManagedAgentsRepositoryCloneError $error,
+        ManagedAgentsUnknownError|array|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|ManagedAgentsToolUseLimitReachedError|ManagedAgentsCompactionLimitReachedError|ManagedAgentsRepositoryAuthenticationError|ManagedAgentsRepositoryForbiddenError|ManagedAgentsRepositoryNotFoundError|ManagedAgentsRepositoryCheckoutError|ManagedAgentsRepositoryCloneError $error,
     ): self {
         $self = clone $this;
         $self['error'] = $error;

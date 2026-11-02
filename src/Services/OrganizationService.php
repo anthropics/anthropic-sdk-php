@@ -9,13 +9,17 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Organization\OrganizationInfo;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\OrganizationContract;
+use Anthropic\Services\Organization\AnalyticsService;
 use Anthropic\Services\Organization\APIKeysService;
 use Anthropic\Services\Organization\ComplianceSettingsService;
 use Anthropic\Services\Organization\ExternalKeysService;
 use Anthropic\Services\Organization\FederationService;
 use Anthropic\Services\Organization\InvitesService;
 use Anthropic\Services\Organization\RateLimitsService;
+use Anthropic\Services\Organization\RBACGroupsService;
+use Anthropic\Services\Organization\RBACRolesService;
 use Anthropic\Services\Organization\ServiceAccountsService;
+use Anthropic\Services\Organization\SpendLimitsService;
 use Anthropic\Services\Organization\UsersService;
 use Anthropic\Services\Organization\WorkspacesService;
 
@@ -75,6 +79,26 @@ final class OrganizationService implements OrganizationContract
     public ComplianceSettingsService $complianceSettings;
 
     /**
+     * @api
+     */
+    public AnalyticsService $analytics;
+
+    /**
+     * @api
+     */
+    public SpendLimitsService $spendLimits;
+
+    /**
+     * @api
+     */
+    public RBACGroupsService $rbacGroups;
+
+    /**
+     * @api
+     */
+    public RBACRolesService $rbacRoles;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -89,6 +113,10 @@ final class OrganizationService implements OrganizationContract
         $this->workspaces = new WorkspacesService($client);
         $this->rateLimits = new RateLimitsService($client);
         $this->complianceSettings = new ComplianceSettingsService($client);
+        $this->analytics = new AnalyticsService($client);
+        $this->spendLimits = new SpendLimitsService($client);
+        $this->rbacGroups = new RBACGroupsService($client);
+        $this->rbacRoles = new RBACRolesService($client);
     }
 
     /**

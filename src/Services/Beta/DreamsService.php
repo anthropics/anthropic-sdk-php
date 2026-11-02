@@ -47,17 +47,17 @@ final class DreamsService implements DreamsContract
      *
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#create-a-dream) to learn more about creating dreams.
      *
-     * @param list<BetaDreamInputShape> $inputs body param: The memory store and sessions for the dream to read, as exactly one `memory_store` entry and exactly one `sessions` entry
+     * @param list<BetaDreamInputShape> $inputs Body param: The memory store and sessions for the dream to read, as exactly one `memory_store` entry and exactly one `sessions` entry.
      * @param ModelShape $model Body param: The model that runs a dream, given as a model ID or as an object with `id` and `speed`.
      *
      * In the object form, `speed` can only be `standard`.
      *
-     * The [limits table in the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#limits) lists the supported models.
+     * The [Availability section of the Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#feature-availability) lists the supported models.
      * @param string|null $instructions Body param: Guidance that steers how the dream reads the sessions and organizes the output memory store, from 1 to 4,096 characters.
      *
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#steer-with-instructions) for what kinds of instructions work well.
      * @param BetaOutputBehaviorShape $outputBehavior Body param: Which memory store a dream writes its result to. Defaults to `create_new` when left out of a create request.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -101,7 +101,7 @@ final class DreamsService implements DreamsContract
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#track-progress) for how to poll a dream and what each status means.
      *
      * @param string $dreamID The ID of the dream to get (`drm_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `dreaming-2026-04-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -134,8 +134,8 @@ final class DreamsService implements DreamsContract
      *
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#list-dreams) for how to page through dreams.
      *
-     * @param \DateTimeInterface $createdAtGt query param: Return only dreams created after this time (exclusive), in RFC 3339
-     * @param \DateTimeInterface $createdAtLt query param: Return only dreams created before this time (exclusive), in RFC 3339
+     * @param \DateTimeInterface $createdAtGt Query param: Return only dreams created after this time (exclusive), in RFC 3339.
+     * @param \DateTimeInterface $createdAtLt Query param: Return only dreams created before this time (exclusive), in RFC 3339.
      * @param bool $includeArchived Query param: Whether to include archived dreams. Defaults to `false`.
      * @param int $limit Query param: The maximum number of dreams to return, from 1 to 100. Defaults to 20.
      * @param string $page Query param: The cursor for the page to return, taken from `next_page` in a previous response.
@@ -144,7 +144,7 @@ final class DreamsService implements DreamsContract
      * @param list<BetaDreamStatus|value-of<BetaDreamStatus>> $statuses Query param: Return only dreams that have one of these statuses.
      *
      * Repeat the parameter to give more than one status. Leave it out to return dreams of every status.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -194,7 +194,7 @@ final class DreamsService implements DreamsContract
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#archive-a-dream) to learn more about archiving dreams.
      *
      * @param string $dreamID The ID of the dream to archive (`drm_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `dreaming-2026-04-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
@@ -228,7 +228,7 @@ final class DreamsService implements DreamsContract
      * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#cancel-a-dream) to learn more about canceling dreams.
      *
      * @param string $dreamID The ID of the dream to cancel (`drm_...`).
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas this endpoint is in beta: requests must send `dreaming-2026-04-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `dreaming-2026-04-21` in this header.
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.

@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Organization\Workspaces\NoBillingWorkspaceRole;
 
 /**
- * Create Workspace Member.
+ * Create Workspace Member
  *
  * @see Anthropic\Services\Organization\Workspaces\MembersService::add()
  *

@@ -22,7 +22,7 @@ interface IncreaseRequestsRawContract
     /**
      * @api
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BetaSpendLimitIncreaseRequest>
@@ -52,7 +52,7 @@ interface IncreaseRequestsRawContract
     /**
      * @api
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param array<string,mixed>|IncreaseRequestApproveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -69,7 +69,7 @@ interface IncreaseRequestsRawContract
     /**
      * @api
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param array<string,mixed>|IncreaseRequestDenyParams $params
      * @param RequestOpts|null $requestOptions
      *

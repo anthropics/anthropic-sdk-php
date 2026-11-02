@@ -341,7 +341,7 @@ final class TelemetryDestinationsRawService implements TelemetryDestinationsRawC
      *
      * Send one test span, named `anthropic.test`, to the destination with its registered headers, once and without retries, and report the destination's answer. The response is 200 whether or not the destination answered with a 2xx status: its `result` has the type `success`, or the type `failure` and the reason in `error`. The destination's configuration, `state` and `delivery_health` do not change. A disabled destination can be tested too. Wait 10 seconds between tests of one destination; a request that comes sooner may be answered with status 429.
      *
-     * @param string $destinationID ID of the destination to test (starts with `tdst_`)
+     * @param string $destinationID ID of the destination to test (starts with `tdst_`).
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|TelemetryDestinationTestParams $params

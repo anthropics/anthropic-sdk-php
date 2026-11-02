@@ -49,19 +49,19 @@ final class BetaCompactionBlockParam implements BaseModel
     public ?BetaCacheControlEphemeral $cacheControl;
 
     /**
-     * Summary of previously compacted content, or null if compaction failed.
+     * Summary of previously compacted content, or null if compaction failed
      */
     #[Optional(nullable: true)]
     public ?string $content;
 
     /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     * Opaque metadata from prior compaction, to be round-tripped verbatim
      */
     #[Optional('encrypted_content', nullable: true)]
     public ?string $encryptedContent;
 
     /**
-     * The block's signature as returned, to be sent back verbatim.
+     * The block's signature as returned, to be sent back verbatim
      */
     #[Optional(nullable: true)]
     public ?string $signature;
@@ -131,7 +131,7 @@ final class BetaCompactionBlockParam implements BaseModel
     }
 
     /**
-     * Summary of previously compacted content, or null if compaction failed.
+     * Summary of previously compacted content, or null if compaction failed
      */
     public function withContent(?string $content): self
     {
@@ -142,7 +142,7 @@ final class BetaCompactionBlockParam implements BaseModel
     }
 
     /**
-     * Opaque metadata from prior compaction, to be round-tripped verbatim.
+     * Opaque metadata from prior compaction, to be round-tripped verbatim
      */
     public function withEncryptedContent(?string $encryptedContent): self
     {
@@ -153,7 +153,7 @@ final class BetaCompactionBlockParam implements BaseModel
     }
 
     /**
-     * The block's signature as returned, to be sent back verbatim.
+     * The block's signature as returned, to be sent back verbatim
      */
     public function withSignature(?string $signature): self
     {

@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Run Deployment Now.
+ * Run Deployment Now
  *
  * @see Anthropic\Services\Beta\DeploymentsService::run()
  *

@@ -15,7 +15,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update Deployment.
+ * Update Deployment
  *
  * @see Anthropic\Services\Beta\DeploymentsService::update()
  *

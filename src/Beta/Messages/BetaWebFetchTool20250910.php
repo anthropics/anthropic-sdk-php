@@ -55,7 +55,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public ?array $allowedCallers;
 
     /**
-     * List of domains to allow fetching from.
+     * List of domains to allow fetching from
      *
      * @var list<string>|null $allowedDomains
      */
@@ -63,7 +63,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public ?array $allowedDomains;
 
     /**
-     * List of domains to block fetching from.
+     * List of domains to block fetching from
      *
      * @var list<string>|null $blockedDomains
      */
@@ -101,7 +101,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     public ?int $maxUses;
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     #[Optional]
     public ?bool $strict;
@@ -195,7 +195,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     }
 
     /**
-     * List of domains to allow fetching from.
+     * List of domains to allow fetching from
      *
      * @param list<string>|null $allowedDomains
      */
@@ -208,7 +208,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     }
 
     /**
-     * List of domains to block fetching from.
+     * List of domains to block fetching from
      *
      * @param list<string>|null $blockedDomains
      */
@@ -282,7 +282,7 @@ final class BetaWebFetchTool20250910 implements BaseModel
     }
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     public function withStrict(bool $strict): self
     {

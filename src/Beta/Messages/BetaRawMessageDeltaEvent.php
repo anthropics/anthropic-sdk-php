@@ -36,7 +36,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     public string $type = 'message_delta';
 
     /**
-     * Information about context management strategies applied during the request.
+     * Information about context management strategies applied during the request
      */
     #[Required('context_management')]
     public ?BetaContextManagementResponse $contextManagement;
@@ -140,7 +140,7 @@ final class BetaRawMessageDeltaEvent implements BaseModel
     }
 
     /**
-     * Information about context management strategies applied during the request.
+     * Information about context management strategies applied during the request
      *
      * @param BetaContextManagementResponse|BetaContextManagementResponseShape|null $contextManagement
      */

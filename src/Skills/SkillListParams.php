@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Skills.
+ * List Skills
  *
  * @see Anthropic\Services\SkillsService::list()
  *

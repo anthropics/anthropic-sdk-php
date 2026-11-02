@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Retrieve a Credential.
+ * Retrieve a Credential
  *
  * @see Anthropic\Services\Beta\Vaults\CredentialsService::retrieve()
  *

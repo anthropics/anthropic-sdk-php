@@ -39,14 +39,14 @@ final class TargetsRawService implements TargetsRawContract
      *
      * Attach a Bundle to a Slack channel or a Slack workspace. A Bundle attached to a workspace can be used in the workspace and in every channel in it. Attaching a Bundle to a channel or workspace it is already attached to returns the existing Bundle Target. The channel or workspace must be set up: attaching never sets a channel up. A group direct message takes no Bundle and returns 400.
      *
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
      * @param array{
      *   target: BetaClaudeTagBundleTargetCreateShape,
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|TargetCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget,>
+     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
      * @throws APIException
      */
@@ -98,7 +98,7 @@ final class TargetsRawService implements TargetsRawContract
      * }|TargetRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget,>
+     * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
      * @throws APIException
      */
@@ -150,7 +150,7 @@ final class TargetsRawService implements TargetsRawContract
      *
      * List the Slack channels and Slack workspaces a Bundle is attached to, newest first by `created_at`. Only channels and workspaces the organization owns are listed; a Bundle that is attached to anything else has no Bundle Target for it.
      *
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
      * @param array{
      *   limit?: int,
      *   page?: string,
@@ -158,7 +158,7 @@ final class TargetsRawService implements TargetsRawContract
      * }|TargetListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget,>,>
+     * @return BaseResponse<PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>>
      *
      * @throws APIException
      */

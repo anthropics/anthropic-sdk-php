@@ -51,7 +51,7 @@ final class WorkPollParams implements BaseModel
     public ?array $betas;
 
     /**
-     * Unique identifier for the specific worker polling, used to track aggregated environment-level work metrics in Console.
+     * Unique identifier for the specific worker polling, used to track aggregated environment-level work metrics in Console
      */
     #[Optional]
     public ?string $anthropicWorkerID;
@@ -120,7 +120,7 @@ final class WorkPollParams implements BaseModel
     }
 
     /**
-     * Unique identifier for the specific worker polling, used to track aggregated environment-level work metrics in Console.
+     * Unique identifier for the specific worker polling, used to track aggregated environment-level work metrics in Console
      */
     public function withAnthropicWorkerID(string $anthropicWorkerID): self
     {

@@ -54,6 +54,7 @@ final class WorkspacesTest extends TestCase
             displayColor: '#6C5BB9',
             externalKeyID: 'ekey_01SDCCSbTxrXDpWc1phhtcfK',
             tags: ['env' => 'prod', 'team' => 'platform'],
+            userProfileID: 'uprof_01SDCCSbTxrXDpWc1phhtcfK',
             betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

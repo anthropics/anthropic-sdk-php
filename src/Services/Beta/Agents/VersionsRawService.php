@@ -32,7 +32,7 @@ final class VersionsRawService implements VersionsRawContract
      *
      * List Agent Versions
      *
-     * @param string $agentID path param: Agent ID to list versions for
+     * @param string $agentID Path param: Agent ID to list versions for.
      * @param array{
      *   limit?: int,
      *   page?: string,

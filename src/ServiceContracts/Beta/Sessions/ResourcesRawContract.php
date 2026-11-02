@@ -30,7 +30,7 @@ interface ResourcesRawContract
      * @param array<string,mixed>|ResourceRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
+     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource>
      *
      * @throws APIException
      */
@@ -47,7 +47,7 @@ interface ResourcesRawContract
      * @param array<string,mixed>|ResourceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>
+     * @return BaseResponse<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource>
      *
      * @throws APIException
      */
@@ -64,7 +64,7 @@ interface ResourcesRawContract
      * @param array<string,mixed>|ResourceListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource,>,>
+     * @return BaseResponse<PageCursor<ManagedAgentsGitHubRepositoryResource|ManagedAgentsFileResource|ManagedAgentsMemoryStoreResource>>
      *
      * @throws APIException
      */

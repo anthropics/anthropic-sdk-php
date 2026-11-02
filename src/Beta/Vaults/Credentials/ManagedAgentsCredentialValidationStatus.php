@@ -9,9 +9,7 @@ namespace Anthropic\Beta\Vaults\Credentials;
  */
 enum ManagedAgentsCredentialValidationStatus: string
 {
-    /**
-     * The credential successfully authenticated against its MCP server.
-     */
+    /** The credential successfully authenticated against its MCP server. */
     case VALID = 'valid';
 
     /**

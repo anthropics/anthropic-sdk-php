@@ -1,0 +1,84 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\ServiceContracts\Organization\SpendLimits;
+
+use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\IncreaseRequestApproveResponse;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\SpendLimitIncreaseRequest;
+use Anthropic\Organization\SpendLimits\IncreaseRequests\SpendLimitIncreaseRequestStatus;
+use Anthropic\Organization\SpendLimits\SpendLimitPeriod;
+use Anthropic\PageCursor;
+use Anthropic\RequestOptions;
+
+/**
+ * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
+ */
+interface IncreaseRequestsContract
+{
+    /**
+     * @api
+     *
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieve(
+        string $spendLimitIncreaseRequestID,
+        RequestOptions|array|null $requestOptions = null,
+    ): SpendLimitIncreaseRequest;
+
+    /**
+     * @api
+     *
+     * @param list<string>|null $actorIDs Filter by requester, as `user_...` tagged IDs.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
+     * @param list<SpendLimitIncreaseRequestStatus|value-of<SpendLimitIncreaseRequestStatus>>|null $status Filter by status. Omit to return all.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return PageCursor<SpendLimitIncreaseRequest>
+     *
+     * @throws APIException
+     */
+    public function list(
+        ?array $actorIDs = null,
+        ?int $limit = null,
+        ?string $page = null,
+        ?array $status = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): PageCursor;
+
+    /**
+     * @api
+     *
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param string $amount New per-user spend limit as a non-negative integer decimal string (minor units).
+     * @param SpendLimitPeriod|value-of<SpendLimitPeriod>|null $period
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function approve(
+        string $spendLimitIncreaseRequestID,
+        string $amount,
+        SpendLimitPeriod|string|null $period = null,
+        ?bool $suppressNotification = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): IncreaseRequestApproveResponse;
+
+    /**
+     * @api
+     *
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function deny(
+        string $spendLimitIncreaseRequestID,
+        ?bool $suppressNotification = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): SpendLimitIncreaseRequest;
+}

@@ -22,7 +22,7 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
     use SdkModel;
 
     /**
-     * The type of response.
+     * The type of response
      *
      * @var 'environment_deleted' $type
      */
@@ -30,7 +30,7 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
     public string $type = 'environment_deleted';
 
     /**
-     * Environment identifier.
+     * Environment identifier
      */
     #[Required]
     public string $id;
@@ -69,7 +69,7 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
     }
 
     /**
-     * Environment identifier.
+     * Environment identifier
      */
     public function withID(string $id): self
     {
@@ -80,7 +80,7 @@ final class BetaEnvironmentDeleteResponse implements BaseModel
     }
 
     /**
-     * The type of response.
+     * The type of response
      *
      * @param 'environment_deleted' $type
      */

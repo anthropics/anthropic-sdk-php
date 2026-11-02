@@ -57,6 +57,7 @@ final class ExternalKeysTest extends TestCase
             ],
             displayName: 'x',
             geo: 'us',
+            userProfileID: 'uprof_01SDCCSbTxrXDpWc1phhtcfK',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

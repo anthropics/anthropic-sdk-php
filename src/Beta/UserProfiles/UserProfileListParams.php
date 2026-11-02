@@ -13,7 +13,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List User Profiles.
+ * List User Profiles
  *
  * @see Anthropic\Services\Beta\UserProfilesService::list()
  *

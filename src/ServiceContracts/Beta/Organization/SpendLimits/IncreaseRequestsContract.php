@@ -20,7 +20,7 @@ interface IncreaseRequestsContract
     /**
      * @api
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -34,7 +34,7 @@ interface IncreaseRequestsContract
      * @api
      *
      * @param list<string>|null $actorIDs Filter by requester, as `user_...` tagged IDs.
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param list<BetaSpendLimitIncreaseRequestStatus|value-of<BetaSpendLimitIncreaseRequestStatus>>|null $status Filter by status. Omit to return all.
      * @param RequestOpts|null $requestOptions
      *
@@ -53,8 +53,8 @@ interface IncreaseRequestsContract
     /**
      * @api
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
-     * @param string $amount new per-user spend limit as a non-negative integer decimal string (minor units)
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
+     * @param string $amount New per-user spend limit as a non-negative integer decimal string (minor units).
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod>|null $period
      * @param RequestOpts|null $requestOptions
      *
@@ -71,7 +71,7 @@ interface IncreaseRequestsContract
     /**
      * @api
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

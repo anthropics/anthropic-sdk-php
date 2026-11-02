@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Get Session Resource.
+ * Get Session Resource
  *
  * @see Anthropic\Services\Beta\Sessions\ResourcesService::retrieve()
  *

@@ -11,7 +11,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete Session.
+ * Delete Session
  *
  * @see Anthropic\Services\Beta\SessionsService::delete()
  *

@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Organization\APIKeys\APIKeyListParams\Status;
 
 /**
- * List API Keys.
+ * List API Keys
  *
  * @see Anthropic\Services\Organization\APIKeysService::list()
  *

@@ -27,9 +27,7 @@ enum BetaDreamStatus: string
      */
     case RUNNING = 'running';
 
-    /**
-     * The dream finished and its output memory store holds the complete result.
-     */
+    /** The dream finished and its output memory store holds the complete result. */
     case COMPLETED = 'completed';
 
     /**

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization;
 
+use Anthropic\Beta\Organization\RBACGroups\DeletedRBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroup;
-use Anthropic\Beta\Organization\RBACGroups\RBACGroupDeleteResponse;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -69,7 +69,7 @@ final class RBACGroupsService implements RBACGroupsContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -91,7 +91,7 @@ final class RBACGroupsService implements RBACGroupsContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param string|null $name Name of the RBAC Group. Not uniqueness-enforced.
      * @param RequestOpts|null $requestOptions
      *
@@ -120,7 +120,7 @@ final class RBACGroupsService implements RBACGroupsContract
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param string|null $page optionally set to the `next_page` token from the previous response
+     * @param string|null $page Optionally set to the `next_page` token from the previous response.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<RBACGroup>
@@ -147,7 +147,7 @@ final class RBACGroupsService implements RBACGroupsContract
      *
      * The RBAC Groups API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -155,7 +155,7 @@ final class RBACGroupsService implements RBACGroupsContract
     public function delete(
         string $rbacGroupID,
         RequestOptions|array|null $requestOptions = null
-    ): RBACGroupDeleteResponse {
+    ): DeletedRBACGroup {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($rbacGroupID, requestOptions: $requestOptions);
 

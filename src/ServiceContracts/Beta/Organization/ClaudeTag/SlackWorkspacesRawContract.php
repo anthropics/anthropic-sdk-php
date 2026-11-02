@@ -21,7 +21,7 @@ interface SlackWorkspacesRawContract
     /**
      * @api
      *
-     * @param string $id path param: The workspace's identifier, starting with `slws_`
+     * @param string $id Path param: The workspace's identifier, starting with `slws_`.
      * @param array<string,mixed>|SlackWorkspaceRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -38,7 +38,7 @@ interface SlackWorkspacesRawContract
     /**
      * @api
      *
-     * @param string $id path param: The workspace's identifier, starting with `slws_`
+     * @param string $id Path param: The workspace's identifier, starting with `slws_`.
      * @param array<string,mixed>|SlackWorkspaceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

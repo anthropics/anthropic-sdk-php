@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization\RBACGroups;
 
+use Anthropic\Beta\Organization\RBACGroups\Members\BetaDeletedRBACGroupMember;
 use Anthropic\Beta\Organization\RBACGroups\Members\BetaRBACGroupMember;
-use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -18,11 +18,11 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param string|null $page optionally set to the `next_page` token from the previous response
+     * @param string|null $page Optionally set to the `next_page` token from the previous response.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaRBACGroupMember>
@@ -39,8 +39,8 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
-     * @param string $userID ID of the User
+     * @param string $rbacGroupID ID of the RBAC Group.
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -54,8 +54,8 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $userID ID of the User.
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -64,5 +64,5 @@ interface MembersContract
         string $userID,
         string $rbacGroupID,
         RequestOptions|array|null $requestOptions = null,
-    ): MemberRemoveResponse;
+    ): BetaDeletedRBACGroupMember;
 }

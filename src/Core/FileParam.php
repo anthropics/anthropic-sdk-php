@@ -20,7 +20,7 @@ final class FileParam
     public const DEFAULT_CONTENT_TYPE = 'application/octet-stream';
 
     /**
-     * @param resource|string $data the file content as a resource or string
+     * @param resource|string $data The file content as a resource or string.
      */
     private function __construct(
         public readonly mixed $data,
@@ -36,9 +36,9 @@ final class FileParam
      * fails with an error the client would normally retry, the error is thrown instead. Read such a stream into a
      * string and use {@see FileParam::fromString()} to keep retries.
      *
-     * @param resource $resource an open file resource
+     * @param resource $resource An open file resource.
      * @param string|null $filename Override the filename. Defaults to the resource URI basename, or to an empty name for a resource without one.
-     * @param string $contentType override the content type
+     * @param string $contentType Override the content type.
      */
     public static function fromResource(mixed $resource, ?string $filename = null, string $contentType = self::DEFAULT_CONTENT_TYPE): self
     {
@@ -57,9 +57,9 @@ final class FileParam
     /**
      * Create a FileParam from a string.
      *
-     * @param string $content the file content
-     * @param string $filename the filename for the Content-Disposition header
-     * @param string $contentType override the content type
+     * @param string $content The file content.
+     * @param string $filename The filename for the Content-Disposition header.
+     * @param string $contentType Override the content type.
      */
     public static function fromString(string $content, string $filename, string $contentType = self::DEFAULT_CONTENT_TYPE): self
     {

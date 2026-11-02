@@ -13,7 +13,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\FileParam;
 
 /**
- * Create Skill.
+ * Create Skill
  *
  * @see Anthropic\Services\Beta\SkillsService::create()
  *

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -19,23 +18,23 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsDesignMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsDesignMetrics
  * @phpstan-import-type AnalyticsOfficeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsOfficeMetrics
  * @phpstan-import-type AnalyticsScienceMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsScienceMetrics
- * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsUserActivity\ChatCoworkUnifiedMetrics
  * @phpstan-import-type AnalyticsUserShape from \Anthropic\Beta\Organization\Analytics\AnalyticsUser
+ * @phpstan-import-type AnalyticsChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsChatCoworkUnifiedMetrics
  *
  * @phpstan-type AnalyticsUserActivityShape = array{
  *   chatMetrics: AnalyticsChatMetrics|AnalyticsChatMetricsShape,
  *   claudeCodeMetrics: AnalyticsClaudeCodeMetrics|AnalyticsClaudeCodeMetricsShape,
  *   coworkMetrics: AnalyticsCoworkMetrics|AnalyticsCoworkMetricsShape,
  *   designMetrics: AnalyticsDesignMetrics|AnalyticsDesignMetricsShape,
+ *   distinctUserCount: int|null,
  *   officeMetrics: AnalyticsOfficeMetrics|AnalyticsOfficeMetricsShape,
  *   scienceMetrics: AnalyticsScienceMetrics|AnalyticsScienceMetricsShape,
+ *   user: null|AnalyticsUser|AnalyticsUserShape,
  *   webSearchCount: int,
- *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
- *   distinctUserCount?: int|null,
+ *   chatCoworkUnifiedMetrics?: null|AnalyticsChatCoworkUnifiedMetrics|AnalyticsChatCoworkUnifiedMetricsShape,
  *   lastActivityDate?: string|null,
  *   rbacGroupID?: string|null,
  *   rbacGroupName?: string|null,
- *   user?: null|AnalyticsUser|AnalyticsUserShape,
  * }
  */
 final class AnalyticsUserActivity implements BaseModel
@@ -68,6 +67,12 @@ final class AnalyticsUserActivity implements BaseModel
     public AnalyticsDesignMetrics $designMetrics;
 
     /**
+     * Number of distinct active users represented by this row. Only set for grouped rollups (`group_by[]`); null for per-user rows. In date-range mode, recomputed as an exact distinct count of the group's active members over the requested window, never a sum of per-day values.
+     */
+    #[Required('distinct_user_count')]
+    public ?int $distinctUserCount;
+
+    /**
      * Office Agent activity metrics for a single user on a given day, broken out by Office product.
      */
     #[Required('office_metrics')]
@@ -80,7 +85,13 @@ final class AnalyticsUserActivity implements BaseModel
     public AnalyticsScienceMetrics $scienceMetrics;
 
     /**
-     * Number of web searches performed.
+     * The user this row describes. Null on rows aggregated across users.
+     */
+    #[Required]
+    public ?AnalyticsUser $user;
+
+    /**
+     * Number of web searches performed
      */
     #[Required('web_search_count')]
     public int $webSearchCount;
@@ -89,13 +100,7 @@ final class AnalyticsUserActivity implements BaseModel
      * Activity recorded while the member had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into `chat` (chat activity) and `sessions` (Cowork activity). Omitted from the response on deployments that do not offer Chat and Cowork unified.
      */
     #[Optional('chat_cowork_unified_metrics', nullable: true)]
-    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
-
-    /**
-     * Number of distinct active users represented by this row. Only set for grouped rollups (`group_by[]`); null for per-user rows. In date-range mode, recomputed as an exact distinct count of the group's active members over the requested window, never a sum of per-day values.
-     */
-    #[Optional('distinct_user_count', nullable: true)]
-    public ?int $distinctUserCount;
+    public ?AnalyticsChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
 
     /**
      * Most recent UTC day (YYYY-MM-DD) on which the user had any counted activity, within the requested window: equal to the requested `date` in single-day mode, and to the latest active day from `starting_date` (inclusive) to `ending_date` (exclusive) in date-range rollup mode — never a day earlier than the window start. On filtered requests (`filter[]`) only days matching the filter count: with `filter[]=rbac_group_id:{id}` it is the last day the user was active while a member of that group, consistent with the row's other metrics. On grouped (`group_by[]`) rows it is the latest day any member of the group was active (the requested `date` in single-day mode). Omitted from the response while last-activity reporting is not enabled for this organization.
@@ -116,12 +121,6 @@ final class AnalyticsUserActivity implements BaseModel
     public ?string $rbacGroupName;
 
     /**
-     * The user this row describes. Null on rows aggregated across users.
-     */
-    #[Optional(nullable: true)]
-    public ?AnalyticsUser $user;
-
-    /**
      * `new AnalyticsUserActivity()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -131,8 +130,10 @@ final class AnalyticsUserActivity implements BaseModel
      *   claudeCodeMetrics: ...,
      *   coworkMetrics: ...,
      *   designMetrics: ...,
+     *   distinctUserCount: ...,
      *   officeMetrics: ...,
      *   scienceMetrics: ...,
+     *   user: ...,
      *   webSearchCount: ...,
      * )
      * ```
@@ -145,8 +146,10 @@ final class AnalyticsUserActivity implements BaseModel
      *   ->withClaudeCodeMetrics(...)
      *   ->withCoworkMetrics(...)
      *   ->withDesignMetrics(...)
+     *   ->withDistinctUserCount(...)
      *   ->withOfficeMetrics(...)
      *   ->withScienceMetrics(...)
+     *   ->withUser(...)
      *   ->withWebSearchCount(...)
      * ```
      */
@@ -166,23 +169,23 @@ final class AnalyticsUserActivity implements BaseModel
      * @param AnalyticsDesignMetrics|AnalyticsDesignMetricsShape $designMetrics
      * @param AnalyticsOfficeMetrics|AnalyticsOfficeMetricsShape $officeMetrics
      * @param AnalyticsScienceMetrics|AnalyticsScienceMetricsShape $scienceMetrics
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      * @param AnalyticsUser|AnalyticsUserShape|null $user
+     * @param AnalyticsChatCoworkUnifiedMetrics|AnalyticsChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public static function with(
         AnalyticsChatMetrics|array $chatMetrics,
         AnalyticsClaudeCodeMetrics|array $claudeCodeMetrics,
         AnalyticsCoworkMetrics|array $coworkMetrics,
         AnalyticsDesignMetrics|array $designMetrics,
+        ?int $distinctUserCount,
         AnalyticsOfficeMetrics|array $officeMetrics,
         AnalyticsScienceMetrics|array $scienceMetrics,
+        AnalyticsUser|array|null $user,
         int $webSearchCount,
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
-        ?int $distinctUserCount = null,
+        AnalyticsChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?string $lastActivityDate = null,
         ?string $rbacGroupID = null,
         ?string $rbacGroupName = null,
-        AnalyticsUser|array|null $user = null,
     ): self {
         $self = new self;
 
@@ -190,16 +193,16 @@ final class AnalyticsUserActivity implements BaseModel
         $self['claudeCodeMetrics'] = $claudeCodeMetrics;
         $self['coworkMetrics'] = $coworkMetrics;
         $self['designMetrics'] = $designMetrics;
+        $self['distinctUserCount'] = $distinctUserCount;
         $self['officeMetrics'] = $officeMetrics;
         $self['scienceMetrics'] = $scienceMetrics;
+        $self['user'] = $user;
         $self['webSearchCount'] = $webSearchCount;
 
         null !== $chatCoworkUnifiedMetrics && $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
-        null !== $distinctUserCount && $self['distinctUserCount'] = $distinctUserCount;
         null !== $lastActivityDate && $self['lastActivityDate'] = $lastActivityDate;
         null !== $rbacGroupID && $self['rbacGroupID'] = $rbacGroupID;
         null !== $rbacGroupName && $self['rbacGroupName'] = $rbacGroupName;
-        null !== $user && $self['user'] = $user;
 
         return $self;
     }
@@ -261,6 +264,17 @@ final class AnalyticsUserActivity implements BaseModel
     }
 
     /**
+     * Number of distinct active users represented by this row. Only set for grouped rollups (`group_by[]`); null for per-user rows. In date-range mode, recomputed as an exact distinct count of the group's active members over the requested window, never a sum of per-day values.
+     */
+    public function withDistinctUserCount(?int $distinctUserCount): self
+    {
+        $self = clone $this;
+        $self['distinctUserCount'] = $distinctUserCount;
+
+        return $self;
+    }
+
+    /**
      * Office Agent activity metrics for a single user on a given day, broken out by Office product.
      *
      * @param AnalyticsOfficeMetrics|AnalyticsOfficeMetricsShape $officeMetrics
@@ -289,7 +303,20 @@ final class AnalyticsUserActivity implements BaseModel
     }
 
     /**
-     * Number of web searches performed.
+     * The user this row describes. Null on rows aggregated across users.
+     *
+     * @param AnalyticsUser|AnalyticsUserShape|null $user
+     */
+    public function withUser(AnalyticsUser|array|null $user): self
+    {
+        $self = clone $this;
+        $self['user'] = $user;
+
+        return $self;
+    }
+
+    /**
+     * Number of web searches performed
      */
     public function withWebSearchCount(int $webSearchCount): self
     {
@@ -302,24 +329,13 @@ final class AnalyticsUserActivity implements BaseModel
     /**
      * Activity recorded while the member had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into `chat` (chat activity) and `sessions` (Cowork activity). Omitted from the response on deployments that do not offer Chat and Cowork unified.
      *
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     * @param AnalyticsChatCoworkUnifiedMetrics|AnalyticsChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public function withChatCoworkUnifiedMetrics(
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+        AnalyticsChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
     ): self {
         $self = clone $this;
         $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
-
-        return $self;
-    }
-
-    /**
-     * Number of distinct active users represented by this row. Only set for grouped rollups (`group_by[]`); null for per-user rows. In date-range mode, recomputed as an exact distinct count of the group's active members over the requested window, never a sum of per-day values.
-     */
-    public function withDistinctUserCount(?int $distinctUserCount): self
-    {
-        $self = clone $this;
-        $self['distinctUserCount'] = $distinctUserCount;
 
         return $self;
     }
@@ -353,19 +369,6 @@ final class AnalyticsUserActivity implements BaseModel
     {
         $self = clone $this;
         $self['rbacGroupName'] = $rbacGroupName;
-
-        return $self;
-    }
-
-    /**
-     * The user this row describes. Null on rows aggregated across users.
-     *
-     * @param AnalyticsUser|AnalyticsUserShape|null $user
-     */
-    public function withUser(AnalyticsUser|array|null $user): self
-    {
-        $self = clone $this;
-        $self['user'] = $user;
 
         return $self;
     }

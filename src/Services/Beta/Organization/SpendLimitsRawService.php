@@ -37,7 +37,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * Retrieve a spend limit by ID.
      *
-     * @param string $spendLimitID ID of the Spend Limit
+     * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SpendLimit>
@@ -140,7 +140,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      * workspace limits, but not its `usage_tier` limit. Deleting organization and
      * workspace limits through the API is in an early access preview.
      *
-     * @param string $spendLimitID ID of the Spend Limit
+     * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SpendLimitDeleteResponse>

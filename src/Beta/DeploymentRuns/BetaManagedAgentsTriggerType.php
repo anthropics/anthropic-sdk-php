@@ -9,9 +9,7 @@ namespace Anthropic\Beta\DeploymentRuns;
  */
 enum BetaManagedAgentsTriggerType: string
 {
-    /**
-     * The run was fired by the deployment's cron schedule.
-     */
+    /** The run was fired by the deployment's cron schedule. */
     case SCHEDULE = 'schedule';
 
     /**

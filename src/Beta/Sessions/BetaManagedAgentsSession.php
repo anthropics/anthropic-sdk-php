@@ -74,7 +74,7 @@ final class BetaManagedAgentsSession implements BaseModel
     public ?BetaManagedAgentsBudgetLimit $budget;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -115,7 +115,7 @@ final class BetaManagedAgentsSession implements BaseModel
     public ?string $title;
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
@@ -293,7 +293,7 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
@@ -390,7 +390,7 @@ final class BetaManagedAgentsSession implements BaseModel
     }
 
     /**
-     * A timestamp in RFC 3339 format.
+     * A timestamp in RFC 3339 format
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {

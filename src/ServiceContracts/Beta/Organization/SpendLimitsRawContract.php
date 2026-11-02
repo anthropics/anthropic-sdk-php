@@ -21,7 +21,7 @@ interface SpendLimitsRawContract
     /**
      * @api
      *
-     * @param string $spendLimitID ID of the Spend Limit
+     * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SpendLimit>
@@ -51,7 +51,7 @@ interface SpendLimitsRawContract
     /**
      * @api
      *
-     * @param string $spendLimitID ID of the Spend Limit
+     * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SpendLimitDeleteResponse>

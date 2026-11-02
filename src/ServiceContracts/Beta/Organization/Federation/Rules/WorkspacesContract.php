@@ -19,10 +19,10 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $federationRuleID path param: ID of the federation rule
-     * @param int $limit query param: Number of results per page
-     * @param string|null $page query param: Opaque cursor from a previous response's `next_page`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $federationRuleID Path param: ID of the federation rule.
+     * @param int $limit Query param: Number of results per page.
+     * @param string|null $page Query param: Opaque cursor from a previous response's `next_page`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaFederationRuleWorkspace>
@@ -40,9 +40,9 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $federationRuleID path param: ID of the federation rule
-     * @param string $workspaceID body param: Tagged ID of the workspace to enable this rule for
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $federationRuleID Path param: ID of the federation rule.
+     * @param string $workspaceID Body param: Tagged ID of the workspace to enable this rule for.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -57,9 +57,9 @@ interface WorkspacesContract
     /**
      * @api
      *
-     * @param string $workspaceID path param: ID of the workspace to disable for
-     * @param string $federationRuleID path param: ID of the federation rule
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param string $workspaceID Path param: ID of the workspace to disable for.
+     * @param string $federationRuleID Path param: ID of the federation rule.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

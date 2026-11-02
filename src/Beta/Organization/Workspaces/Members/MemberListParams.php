@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Workspace Members.
+ * List Workspace Members
  *
  * @see Anthropic\Services\Beta\Organization\Workspaces\MembersService::list()
  *

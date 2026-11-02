@@ -45,7 +45,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * membership is returned with its assigned role. An archived service
      * account returns 404.
      *
-     * @param string $serviceAccountID ID of the service account
+     * @param string $serviceAccountID ID of the service account.
      * @param array{workspaceID: string}|ServiceAccountRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -99,7 +99,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * return 400. Archived service accounts cannot be updated and are
      * rejected.
      *
-     * @param string $serviceAccountID path param: ID of the service account
+     * @param string $serviceAccountID Path param: ID of the service account.
      * @param array{
      *   workspaceID: string, workspaceRole: value-of<NoBillingWorkspaceRole>
      * }|ServiceAccountUpdateParams $params
@@ -156,7 +156,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * included in this list. Memberships of archived service accounts are
      * omitted from the results.
      *
-     * @param string $workspaceID ID of the workspace
+     * @param string $workspaceID ID of the workspace.
      * @param array{limit?: int, page?: string|null}|ServiceAccountListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -206,7 +206,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * value supplied here. Archived workspaces return 400. Archived service
      * accounts cannot be added and are rejected.
      *
-     * @param string $workspaceID ID of the workspace
+     * @param string $workspaceID ID of the workspace.
      * @param array{
      *   serviceAccountID: string, workspaceRole: value-of<NoBillingWorkspaceRole>
      * }|ServiceAccountAddParams $params
@@ -256,7 +256,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      * explicit default-workspace row reverts to the implicit `workspace_user`
      * membership. Archived workspaces return 400.
      *
-     * @param string $serviceAccountID ID of the service account
+     * @param string $serviceAccountID ID of the service account.
      * @param array{workspaceID: string}|ServiceAccountRemoveParams $params
      * @param RequestOpts|null $requestOptions
      *

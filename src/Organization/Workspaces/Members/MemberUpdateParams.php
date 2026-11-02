@@ -11,7 +11,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Organization\Workspaces\WorkspaceRole;
 
 /**
- * Update Workspace Member.
+ * Update Workspace Member
  *
  * @see Anthropic\Services\Organization\Workspaces\MembersService::update()
  *

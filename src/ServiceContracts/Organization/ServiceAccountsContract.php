@@ -19,7 +19,7 @@ interface ServiceAccountsContract
      * @api
      *
      * @param string $name Slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
-     * @param string|null $description optional free-text description
+     * @param string|null $description Optional free-text description.
      * @param OrganizationRole|value-of<OrganizationRole> $organizationRole Org-level role. Defaults to `developer`.
      * @param RequestOpts|null $requestOptions
      *
@@ -35,7 +35,7 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account
+     * @param string $serviceAccountID ID of the service account.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -48,7 +48,7 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account to update
+     * @param string $serviceAccountID ID of the service account to update.
      * @param string|null $description Replaces the description. Omit to leave unchanged; send `null` to clear (the field is stored as an empty string).
      * @param \Anthropic\Organization\ServiceAccounts\ServiceAccountUpdateParams\OrganizationRole|value-of<\Anthropic\Organization\ServiceAccounts\ServiceAccountUpdateParams\OrganizationRole>|null $organizationRole Replaces the org-level role. Omit or send `null` to leave unchanged.
      * @param RequestOpts|null $requestOptions
@@ -66,8 +66,8 @@ interface ServiceAccountsContract
      * @api
      *
      * @param bool $includeArchived Include archived resources. Defaults to false.
-     * @param int $limit number of results per page
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param int $limit Number of results per page.
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<ServiceAccount>
@@ -84,7 +84,7 @@ interface ServiceAccountsContract
     /**
      * @api
      *
-     * @param string $serviceAccountID ID of the service account to archive
+     * @param string $serviceAccountID ID of the service account to archive.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

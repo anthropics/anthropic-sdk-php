@@ -52,4 +52,4 @@ else
   echo
 fi
 
-exec -- ./vendor/bin/pest --colors=always
+exec -- ./vendor/bin/pest --colors=always "$@"

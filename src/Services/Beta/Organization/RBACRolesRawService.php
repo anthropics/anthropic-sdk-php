@@ -32,7 +32,7 @@ final class RBACRolesRawService implements RBACRolesRawContract
      *
      * The RBAC Roles API is available to Claude Enterprise organizations only.
      *
-     * @param string $rbacRoleID ID of the RBAC Role
+     * @param string $rbacRoleID ID of the RBAC Role.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<RBACRole>

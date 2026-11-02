@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
+use Anthropic\Beta\Organization\RBACGroups\DeletedRBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroup;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroupCreateParams;
-use Anthropic\Beta\Organization\RBACGroups\RBACGroupDeleteResponse;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroupListParams;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroupUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -37,7 +37,7 @@ interface RBACGroupsRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<RBACGroup>
@@ -52,7 +52,7 @@ interface RBACGroupsRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param array<string,mixed>|RBACGroupUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -84,10 +84,10 @@ interface RBACGroupsRawContract
     /**
      * @api
      *
-     * @param string $rbacGroupID ID of the RBAC Group
+     * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<RBACGroupDeleteResponse>
+     * @return BaseResponse<DeletedRBACGroup>
      *
      * @throws APIException
      */

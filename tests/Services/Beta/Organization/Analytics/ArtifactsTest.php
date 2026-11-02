@@ -3,6 +3,7 @@
 namespace Tests\Services\Beta\Organization\Analytics;
 
 use Anthropic\Beta\Organization\Analytics\AnalyticsArtifactActivity;
+use Anthropic\Beta\Organization\Analytics\AnalyticsArtifactGroupBy;
 use Anthropic\Client;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
@@ -51,7 +52,7 @@ final class ArtifactsTest extends TestCase
         $page = $this->client->beta->organization->analytics->artifacts->list(
             date: '2019-12-27',
             filter: ['string'],
-            groupBy: ['product'],
+            groupBy: [AnalyticsArtifactGroupBy::PRODUCT],
             limit: 1,
             page: 'page',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],

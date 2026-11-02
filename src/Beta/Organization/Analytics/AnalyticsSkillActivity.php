@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics;
 
-use Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ChatCoworkUnifiedMetrics;
 use Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ShareStatus;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
@@ -18,26 +17,26 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsSkillClaudeCodeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillClaudeCodeMetrics
  * @phpstan-import-type AnalyticsSkillCoworkMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillCoworkMetrics
  * @phpstan-import-type AnalyticsSkillOfficeMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillOfficeMetrics
- * @phpstan-import-type ChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillActivity\ChatCoworkUnifiedMetrics
+ * @phpstan-import-type AnalyticsSkillChatCoworkUnifiedMetricsShape from \Anthropic\Beta\Organization\Analytics\AnalyticsSkillChatCoworkUnifiedMetrics
  *
  * @phpstan-type AnalyticsSkillActivityShape = array{
+ *   attributedListPrice: string|null,
  *   chatMetrics: AnalyticsSkillChatMetrics|AnalyticsSkillChatMetricsShape,
  *   claudeCodeMetrics: AnalyticsSkillClaudeCodeMetrics|AnalyticsSkillClaudeCodeMetricsShape,
  *   coworkMetrics: AnalyticsSkillCoworkMetrics|AnalyticsSkillCoworkMetricsShape,
+ *   currency: string|null,
  *   distinctUserCount: int,
+ *   enableCount: int|null,
+ *   estimatedOverageSpend: string|null,
+ *   invocationCount: int|null,
  *   officeMetrics: AnalyticsSkillOfficeMetrics|AnalyticsSkillOfficeMetricsShape,
+ *   shareStatus: null|ShareStatus|value-of<ShareStatus>,
+ *   skillDisplayName: string|null,
  *   skillName: string,
- *   attributedListPrice?: string|null,
- *   chatCoworkUnifiedMetrics?: null|ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape,
- *   currency?: string|null,
- *   enableCount?: int|null,
- *   estimatedOverageSpend?: string|null,
- *   invocationCount?: int|null,
+ *   chatCoworkUnifiedMetrics?: null|AnalyticsSkillChatCoworkUnifiedMetrics|AnalyticsSkillChatCoworkUnifiedMetricsShape,
  *   product?: string|null,
  *   rbacGroupID?: string|null,
  *   rbacGroupName?: string|null,
- *   shareStatus?: null|ShareStatus|value-of<ShareStatus>,
- *   skillDisplayName?: string|null,
  *   userID?: string|null,
  * }
  */
@@ -45,6 +44,12 @@ final class AnalyticsSkillActivity implements BaseModel
 {
     /** @use SdkModel<AnalyticsSkillActivityShape> */
     use SdkModel;
+
+    /**
+     * List-price (rate-card) value of the member requests attributed to this skill, as a decimal string in the minor unit of `currency` (cents for USD), from Claude Code, Cowork, and Office Agent request-level attribution — the value of requests that involved the skill, not the skill's incremental cost. Unlike `estimated_overage_spend` this reflects usage value regardless of how it was funded — seat-covered usage counts — but it is undiscounted and does not tie to billed spend or the organization's spend reporting. claude.ai chat usage carries no request-level attribution and contributes nothing: the field is null on `chat` product rows and on `office_agent` product cuts dated before 2026-06-18 (the Office Agent attribution data-start), and on ungrouped rows it covers the Claude Code + Cowork + Office Agent share only (null when no attributable usage exists). Also null under the same conditions as `estimated_overage_spend` (spend reporting not enabled for this organization, `office_agent` product cuts before the 2026-06-18 data-start). "0" means attributable usage existed but none was attributed to this skill. Addable across days: date-range rollup mode returns the window's sum. On `group_by[]` and `filter[]` shapes both amounts can total below the ungrouped value for the same skill over the same date or range: spend attributed to a member–skill pair with no counted usage on that day is excluded from those cuts.
+     */
+    #[Required('attributed_list_price')]
+    public ?string $attributedListPrice;
 
     /**
      * Claude.ai activity metrics for a single skill on a given day.
@@ -65,10 +70,34 @@ final class AnalyticsSkillActivity implements BaseModel
     public AnalyticsSkillCoworkMetrics $coworkMetrics;
 
     /**
+     * Currency for this row's monetary fields (`estimated_overage_spend` and `attributed_list_price`), as an uppercase ISO-4217 code. Always "USD" when either amount is populated; null whenever both amounts are null.
+     */
+    #[Required]
+    public ?string $currency;
+
+    /**
      * Number of distinct users who used the skill on the requested day, or, in date-range mode, over the requested window — recomputed as an exact distinct count over the window's per-member daily rows, never a sum of per-day values. A skill counts as used only when it is explicitly activated — the model (or the user, via the skill's slash command) invokes it, reading its instructions into context as part of that activation. Skills that are merely installed or listed as available, or whose content reaches the context without an activation (preloaded, hook-injected, or read as a plain file), are not counted.
      */
     #[Required('distinct_user_count')]
     public int $distinctUserCount;
+
+    /**
+     * Distinct accounts that enabled this skill on the requested day (claude.ai only — the skill analog of plugin `install_count`). The count is org-wide: null when enable reporting is not enabled for this organization, or when the request scopes to `user_id` / `rbac_group_id` / `product` via `group_by[]` or `filter[]` (an org-wide count would be misleading on per-cut rows). A distinct count, not an event count: summing across days double-counts members who enable the skill on more than one day, so it is also null in date-range rollup mode (`starting_date`/`ending_date`).
+     */
+    #[Required('enable_count')]
+    public ?int $enableCount;
+
+    /**
+     * Estimated overage spend attributed to this skill, as a decimal string in the minor unit of `currency` (cents for USD; "1250" is $12.50, fractional cents possible) — an allocation of each member's daily post-discount, pre-credit metered overage spend (the same cost basis as the organization's spend reporting and the Cost & Usage API, so per-skill figures are directly comparable; spend with no skill attribution — including any member-day without skill invocations — is not represented, so skill rows sum to at most those totals) across the skills the member used. Overage only: usage covered by included seat allowances bills nothing and allocates $0 here — see `attributed_list_price` for the funding-independent usage-value companion. Claude Code, Cowork, and Office Agent spend use request-level skill attribution; claude.ai chat spend is approximated proportionally to skill-invoking messages. An estimate, not a billing number — and the cost of the requests/messages that involved the skill, not the skill's incremental cost (the same request would still have cost something without the skill active). "0" means no overage spend was attributed; null when spend reporting is not enabled for this organization, on `office_agent` product cuts dated before 2026-06-18 (the Office Agent attribution data-start). Addable across days: date-range rollup mode (`starting_date`/`ending_date`) returns the window's sum. With `group_by[]=user_id` each row carries the user's own attributed spend. On `group_by[]` and `filter[]` shapes both amounts can total below the ungrouped value for the same skill over the same date or range: spend attributed to a member–skill pair with no counted usage on that day is excluded from those cuts.
+     */
+    #[Required('estimated_overage_spend')]
+    public ?string $estimatedOverageSpend;
+
+    /**
+     * Total number of times this skill was invoked on the requested day (the skill analog of plugin `invocation_count`). Unlike `distinct_user_count` — which answers '# of users' — this is the true '# of uses'. A skill counts as used only when it is explicitly activated — the model (or the user, via the skill's slash command) invokes it, reading its instructions into context as part of that activation. Skills that are merely installed or listed as available, or whose content reaches the context without an activation (preloaded, hook-injected, or read as a plain file), are not counted. Null when invocation reporting is not enabled for this organization. Sum across a date range for total uses in the window — date-range rollup mode (`starting_date`/`ending_date`) returns this sum directly.
+     */
+    #[Required('invocation_count')]
+    public ?int $invocationCount;
 
     /**
      * Office Agent activity metrics for a single skill on a given day, broken out by Office product.
@@ -77,46 +106,30 @@ final class AnalyticsSkillActivity implements BaseModel
     public AnalyticsSkillOfficeMetrics $officeMetrics;
 
     /**
-     * Name of the skill.
+     * Skill share status (claude.ai only): one of `private`, `organization`, or `public`. Null for skills used only in Claude Code or Office (no per-skill share-status concept) and when share-status reporting is not yet available for the organization. Filterable via `filter[]=share_status:{value}`.
+     *
+     * @var value-of<ShareStatus>|null $shareStatus
+     */
+    #[Required('share_status', enum: ShareStatus::class)]
+    public ?string $shareStatus;
+
+    /**
+     * Human-readable display name for rows whose `skill_name` is an opaque skill id (user/organization skill types and plugin-delivered skills, whose user-defined names usage reports generally withhold). Organization-shared skills and skills delivered by the organization's own plugins (its plugin marketplaces and its library) resolve; plugin skill names are shown without their 'plugin:' prefix. The literal 'unknown' bucket row gets a fixed 'Unknown skill' label. For a member's own skill (private or personal-plugin) it is null, except when the skill's owner used it from Claude Code or Cowork in the requested period: then it shows the name that client reported at the time. Apart from that, the names of members' own skills are not disclosed to analytics-key holders. Also null for Anthropic-provided plugin skills (not resolved), for an organization skill or plugin whose name can no longer be found (for example, one since deleted), when `skill_name` is already a display name, or when display-name resolution is not enabled for this organization.
+     */
+    #[Required('skill_display_name')]
+    public ?string $skillDisplayName;
+
+    /**
+     * Name of the skill
      */
     #[Required('skill_name')]
     public string $skillName;
 
     /**
-     * List-price (rate-card) value of the member requests attributed to this skill, as a decimal string in the minor unit of `currency` (cents for USD), from Claude Code, Cowork, and Office Agent request-level attribution — the value of requests that involved the skill, not the skill's incremental cost. Unlike `estimated_overage_spend` this reflects usage value regardless of how it was funded — seat-covered usage counts — but it is undiscounted and does not tie to billed spend or the organization's spend reporting. claude.ai chat usage carries no request-level attribution and contributes nothing: the field is null on `chat` product rows and on `office_agent` product cuts dated before 2026-06-18 (the Office Agent attribution data-start), and on ungrouped rows it covers the Claude Code + Cowork + Office Agent share only (null when no attributable usage exists). Also null under the same conditions as `estimated_overage_spend` (spend reporting not enabled for this organization, `office_agent` product cuts before the 2026-06-18 data-start). "0" means attributable usage existed but none was attributed to this skill. Addable across days: date-range rollup mode returns the window's sum. On `group_by[]` and `filter[]` shapes both amounts can total below the ungrouped value for the same skill over the same date or range: spend attributed to a member–skill pair with no counted usage on that day is excluded from those cuts.
-     */
-    #[Optional('attributed_list_price', nullable: true)]
-    public ?string $attributedListPrice;
-
-    /**
      * Skill use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
      */
     #[Optional('chat_cowork_unified_metrics', nullable: true)]
-    public ?ChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
-
-    /**
-     * Currency for this row's monetary fields (`estimated_overage_spend` and `attributed_list_price`), as an uppercase ISO-4217 code. Always "USD" when either amount is populated; null whenever both amounts are null.
-     */
-    #[Optional(nullable: true)]
-    public ?string $currency;
-
-    /**
-     * Distinct accounts that enabled this skill on the requested day (claude.ai only — the skill analog of plugin `install_count`). The count is org-wide: null when enable reporting is not enabled for this organization, or when the request scopes to `user_id` / `rbac_group_id` / `product` via `group_by[]` or `filter[]` (an org-wide count would be misleading on per-cut rows). A distinct count, not an event count: summing across days double-counts members who enable the skill on more than one day, so it is also null in date-range rollup mode (`starting_date`/`ending_date`).
-     */
-    #[Optional('enable_count', nullable: true)]
-    public ?int $enableCount;
-
-    /**
-     * Estimated overage spend attributed to this skill, as a decimal string in the minor unit of `currency` (cents for USD; "1250" is $12.50, fractional cents possible) — an allocation of each member's daily post-discount, pre-credit metered overage spend (the same cost basis as the organization's spend reporting and the Cost & Usage API, so per-skill figures are directly comparable; spend with no skill attribution — including any member-day without skill invocations — is not represented, so skill rows sum to at most those totals) across the skills the member used. Overage only: usage covered by included seat allowances bills nothing and allocates $0 here — see `attributed_list_price` for the funding-independent usage-value companion. Claude Code, Cowork, and Office Agent spend use request-level skill attribution; claude.ai chat spend is approximated proportionally to skill-invoking messages. An estimate, not a billing number — and the cost of the requests/messages that involved the skill, not the skill's incremental cost (the same request would still have cost something without the skill active). "0" means no overage spend was attributed; null when spend reporting is not enabled for this organization, on `office_agent` product cuts dated before 2026-06-18 (the Office Agent attribution data-start). Addable across days: date-range rollup mode (`starting_date`/`ending_date`) returns the window's sum. With `group_by[]=user_id` each row carries the user's own attributed spend. On `group_by[]` and `filter[]` shapes both amounts can total below the ungrouped value for the same skill over the same date or range: spend attributed to a member–skill pair with no counted usage on that day is excluded from those cuts.
-     */
-    #[Optional('estimated_overage_spend', nullable: true)]
-    public ?string $estimatedOverageSpend;
-
-    /**
-     * Total number of times this skill was invoked on the requested day (the skill analog of plugin `invocation_count`). Unlike `distinct_user_count` — which answers '# of users' — this is the true '# of uses'. A skill counts as used only when it is explicitly activated — the model (or the user, via the skill's slash command) invokes it, reading its instructions into context as part of that activation. Skills that are merely installed or listed as available, or whose content reaches the context without an activation (preloaded, hook-injected, or read as a plain file), are not counted. Null when invocation reporting is not enabled for this organization. Sum across a date range for total uses in the window — date-range rollup mode (`starting_date`/`ending_date`) returns this sum directly.
-     */
-    #[Optional('invocation_count', nullable: true)]
-    public ?int $invocationCount;
+    public ?AnalyticsSkillChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
 
     /**
      * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
@@ -137,20 +150,6 @@ final class AnalyticsSkillActivity implements BaseModel
     public ?string $rbacGroupName;
 
     /**
-     * Skill share status (claude.ai only): one of `private`, `organization`, or `public`. Null for skills used only in Claude Code or Office (no per-skill share-status concept) and when share-status reporting is not yet available for the organization. Filterable via `filter[]=share_status:{value}`.
-     *
-     * @var value-of<ShareStatus>|null $shareStatus
-     */
-    #[Optional('share_status', enum: ShareStatus::class, nullable: true)]
-    public ?string $shareStatus;
-
-    /**
-     * Human-readable display name for rows whose `skill_name` is an opaque skill id (user/organization skill types and plugin-delivered skills, whose user-defined names usage reports generally withhold). Organization-shared skills and skills delivered by the organization's own plugins (its plugin marketplaces and its library) resolve; plugin skill names are shown without their 'plugin:' prefix. The literal 'unknown' bucket row gets a fixed 'Unknown skill' label. For a member's own skill (private or personal-plugin) it is null, except when the skill's owner used it from Claude Code or Cowork in the requested period: then it shows the name that client reported at the time. Apart from that, the names of members' own skills are not disclosed to analytics-key holders. Also null for Anthropic-provided plugin skills (not resolved), for an organization skill or plugin whose name can no longer be found (for example, one since deleted), when `skill_name` is already a display name, or when display-name resolution is not enabled for this organization.
-     */
-    #[Optional('skill_display_name', nullable: true)]
-    public ?string $skillDisplayName;
-
-    /**
      * Tagged user identifier (e.g. `user_...`). Present only when the request grouped by `user_id`.
      */
     #[Optional('user_id', nullable: true)]
@@ -162,11 +161,18 @@ final class AnalyticsSkillActivity implements BaseModel
      * To enforce required parameters use
      * ```
      * AnalyticsSkillActivity::with(
+     *   attributedListPrice: ...,
      *   chatMetrics: ...,
      *   claudeCodeMetrics: ...,
      *   coworkMetrics: ...,
+     *   currency: ...,
      *   distinctUserCount: ...,
+     *   enableCount: ...,
+     *   estimatedOverageSpend: ...,
+     *   invocationCount: ...,
      *   officeMetrics: ...,
+     *   shareStatus: ...,
+     *   skillDisplayName: ...,
      *   skillName: ...,
      * )
      * ```
@@ -175,11 +181,18 @@ final class AnalyticsSkillActivity implements BaseModel
      *
      * ```
      * (new AnalyticsSkillActivity())
+     *   ->withAttributedListPrice(...)
      *   ->withChatMetrics(...)
      *   ->withClaudeCodeMetrics(...)
      *   ->withCoworkMetrics(...)
+     *   ->withCurrency(...)
      *   ->withDistinctUserCount(...)
+     *   ->withEnableCount(...)
+     *   ->withEstimatedOverageSpend(...)
+     *   ->withInvocationCount(...)
      *   ->withOfficeMetrics(...)
+     *   ->withShareStatus(...)
+     *   ->withSkillDisplayName(...)
      *   ->withSkillName(...)
      * ```
      */
@@ -197,50 +210,61 @@ final class AnalyticsSkillActivity implements BaseModel
      * @param AnalyticsSkillClaudeCodeMetrics|AnalyticsSkillClaudeCodeMetricsShape $claudeCodeMetrics
      * @param AnalyticsSkillCoworkMetrics|AnalyticsSkillCoworkMetricsShape $coworkMetrics
      * @param AnalyticsSkillOfficeMetrics|AnalyticsSkillOfficeMetricsShape $officeMetrics
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      * @param ShareStatus|value-of<ShareStatus>|null $shareStatus
+     * @param AnalyticsSkillChatCoworkUnifiedMetrics|AnalyticsSkillChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
      */
     public static function with(
+        ?string $attributedListPrice,
         AnalyticsSkillChatMetrics|array $chatMetrics,
         AnalyticsSkillClaudeCodeMetrics|array $claudeCodeMetrics,
         AnalyticsSkillCoworkMetrics|array $coworkMetrics,
+        ?string $currency,
         int $distinctUserCount,
+        ?int $enableCount,
+        ?string $estimatedOverageSpend,
+        ?int $invocationCount,
         AnalyticsSkillOfficeMetrics|array $officeMetrics,
+        ShareStatus|string|null $shareStatus,
+        ?string $skillDisplayName,
         string $skillName,
-        ?string $attributedListPrice = null,
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
-        ?string $currency = null,
-        ?int $enableCount = null,
-        ?string $estimatedOverageSpend = null,
-        ?int $invocationCount = null,
+        AnalyticsSkillChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
         ?string $product = null,
         ?string $rbacGroupID = null,
         ?string $rbacGroupName = null,
-        ShareStatus|string|null $shareStatus = null,
-        ?string $skillDisplayName = null,
         ?string $userID = null,
     ): self {
         $self = new self;
 
+        $self['attributedListPrice'] = $attributedListPrice;
         $self['chatMetrics'] = $chatMetrics;
         $self['claudeCodeMetrics'] = $claudeCodeMetrics;
         $self['coworkMetrics'] = $coworkMetrics;
+        $self['currency'] = $currency;
         $self['distinctUserCount'] = $distinctUserCount;
+        $self['enableCount'] = $enableCount;
+        $self['estimatedOverageSpend'] = $estimatedOverageSpend;
+        $self['invocationCount'] = $invocationCount;
         $self['officeMetrics'] = $officeMetrics;
+        $self['shareStatus'] = $shareStatus;
+        $self['skillDisplayName'] = $skillDisplayName;
         $self['skillName'] = $skillName;
 
-        null !== $attributedListPrice && $self['attributedListPrice'] = $attributedListPrice;
         null !== $chatCoworkUnifiedMetrics && $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
-        null !== $currency && $self['currency'] = $currency;
-        null !== $enableCount && $self['enableCount'] = $enableCount;
-        null !== $estimatedOverageSpend && $self['estimatedOverageSpend'] = $estimatedOverageSpend;
-        null !== $invocationCount && $self['invocationCount'] = $invocationCount;
         null !== $product && $self['product'] = $product;
         null !== $rbacGroupID && $self['rbacGroupID'] = $rbacGroupID;
         null !== $rbacGroupName && $self['rbacGroupName'] = $rbacGroupName;
-        null !== $shareStatus && $self['shareStatus'] = $shareStatus;
-        null !== $skillDisplayName && $self['skillDisplayName'] = $skillDisplayName;
         null !== $userID && $self['userID'] = $userID;
+
+        return $self;
+    }
+
+    /**
+     * List-price (rate-card) value of the member requests attributed to this skill, as a decimal string in the minor unit of `currency` (cents for USD), from Claude Code, Cowork, and Office Agent request-level attribution — the value of requests that involved the skill, not the skill's incremental cost. Unlike `estimated_overage_spend` this reflects usage value regardless of how it was funded — seat-covered usage counts — but it is undiscounted and does not tie to billed spend or the organization's spend reporting. claude.ai chat usage carries no request-level attribution and contributes nothing: the field is null on `chat` product rows and on `office_agent` product cuts dated before 2026-06-18 (the Office Agent attribution data-start), and on ungrouped rows it covers the Claude Code + Cowork + Office Agent share only (null when no attributable usage exists). Also null under the same conditions as `estimated_overage_spend` (spend reporting not enabled for this organization, `office_agent` product cuts before the 2026-06-18 data-start). "0" means attributable usage existed but none was attributed to this skill. Addable across days: date-range rollup mode returns the window's sum. On `group_by[]` and `filter[]` shapes both amounts can total below the ungrouped value for the same skill over the same date or range: spend attributed to a member–skill pair with no counted usage on that day is excluded from those cuts.
+     */
+    public function withAttributedListPrice(?string $attributedListPrice): self
+    {
+        $self = clone $this;
+        $self['attributedListPrice'] = $attributedListPrice;
 
         return $self;
     }
@@ -288,73 +312,23 @@ final class AnalyticsSkillActivity implements BaseModel
     }
 
     /**
-     * Number of distinct users who used the skill on the requested day, or, in date-range mode, over the requested window — recomputed as an exact distinct count over the window's per-member daily rows, never a sum of per-day values. A skill counts as used only when it is explicitly activated — the model (or the user, via the skill's slash command) invokes it, reading its instructions into context as part of that activation. Skills that are merely installed or listed as available, or whose content reaches the context without an activation (preloaded, hook-injected, or read as a plain file), are not counted.
-     */
-    public function withDistinctUserCount(int $distinctUserCount): self
-    {
-        $self = clone $this;
-        $self['distinctUserCount'] = $distinctUserCount;
-
-        return $self;
-    }
-
-    /**
-     * Office Agent activity metrics for a single skill on a given day, broken out by Office product.
-     *
-     * @param AnalyticsSkillOfficeMetrics|AnalyticsSkillOfficeMetricsShape $officeMetrics
-     */
-    public function withOfficeMetrics(
-        AnalyticsSkillOfficeMetrics|array $officeMetrics
-    ): self {
-        $self = clone $this;
-        $self['officeMetrics'] = $officeMetrics;
-
-        return $self;
-    }
-
-    /**
-     * Name of the skill.
-     */
-    public function withSkillName(string $skillName): self
-    {
-        $self = clone $this;
-        $self['skillName'] = $skillName;
-
-        return $self;
-    }
-
-    /**
-     * List-price (rate-card) value of the member requests attributed to this skill, as a decimal string in the minor unit of `currency` (cents for USD), from Claude Code, Cowork, and Office Agent request-level attribution — the value of requests that involved the skill, not the skill's incremental cost. Unlike `estimated_overage_spend` this reflects usage value regardless of how it was funded — seat-covered usage counts — but it is undiscounted and does not tie to billed spend or the organization's spend reporting. claude.ai chat usage carries no request-level attribution and contributes nothing: the field is null on `chat` product rows and on `office_agent` product cuts dated before 2026-06-18 (the Office Agent attribution data-start), and on ungrouped rows it covers the Claude Code + Cowork + Office Agent share only (null when no attributable usage exists). Also null under the same conditions as `estimated_overage_spend` (spend reporting not enabled for this organization, `office_agent` product cuts before the 2026-06-18 data-start). "0" means attributable usage existed but none was attributed to this skill. Addable across days: date-range rollup mode returns the window's sum. On `group_by[]` and `filter[]` shapes both amounts can total below the ungrouped value for the same skill over the same date or range: spend attributed to a member–skill pair with no counted usage on that day is excluded from those cuts.
-     */
-    public function withAttributedListPrice(?string $attributedListPrice): self
-    {
-        $self = clone $this;
-        $self['attributedListPrice'] = $attributedListPrice;
-
-        return $self;
-    }
-
-    /**
-     * Skill use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
-     *
-     * @param ChatCoworkUnifiedMetrics|ChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
-     */
-    public function withChatCoworkUnifiedMetrics(
-        ChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
-    ): self {
-        $self = clone $this;
-        $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
-
-        return $self;
-    }
-
-    /**
      * Currency for this row's monetary fields (`estimated_overage_spend` and `attributed_list_price`), as an uppercase ISO-4217 code. Always "USD" when either amount is populated; null whenever both amounts are null.
      */
     public function withCurrency(?string $currency): self
     {
         $self = clone $this;
         $self['currency'] = $currency;
+
+        return $self;
+    }
+
+    /**
+     * Number of distinct users who used the skill on the requested day, or, in date-range mode, over the requested window — recomputed as an exact distinct count over the window's per-member daily rows, never a sum of per-day values. A skill counts as used only when it is explicitly activated — the model (or the user, via the skill's slash command) invokes it, reading its instructions into context as part of that activation. Skills that are merely installed or listed as available, or whose content reaches the context without an activation (preloaded, hook-injected, or read as a plain file), are not counted.
+     */
+    public function withDistinctUserCount(int $distinctUserCount): self
+    {
+        $self = clone $this;
+        $self['distinctUserCount'] = $distinctUserCount;
 
         return $self;
     }
@@ -394,6 +368,69 @@ final class AnalyticsSkillActivity implements BaseModel
     }
 
     /**
+     * Office Agent activity metrics for a single skill on a given day, broken out by Office product.
+     *
+     * @param AnalyticsSkillOfficeMetrics|AnalyticsSkillOfficeMetricsShape $officeMetrics
+     */
+    public function withOfficeMetrics(
+        AnalyticsSkillOfficeMetrics|array $officeMetrics
+    ): self {
+        $self = clone $this;
+        $self['officeMetrics'] = $officeMetrics;
+
+        return $self;
+    }
+
+    /**
+     * Skill share status (claude.ai only): one of `private`, `organization`, or `public`. Null for skills used only in Claude Code or Office (no per-skill share-status concept) and when share-status reporting is not yet available for the organization. Filterable via `filter[]=share_status:{value}`.
+     *
+     * @param ShareStatus|value-of<ShareStatus>|null $shareStatus
+     */
+    public function withShareStatus(ShareStatus|string|null $shareStatus): self
+    {
+        $self = clone $this;
+        $self['shareStatus'] = $shareStatus;
+
+        return $self;
+    }
+
+    /**
+     * Human-readable display name for rows whose `skill_name` is an opaque skill id (user/organization skill types and plugin-delivered skills, whose user-defined names usage reports generally withhold). Organization-shared skills and skills delivered by the organization's own plugins (its plugin marketplaces and its library) resolve; plugin skill names are shown without their 'plugin:' prefix. The literal 'unknown' bucket row gets a fixed 'Unknown skill' label. For a member's own skill (private or personal-plugin) it is null, except when the skill's owner used it from Claude Code or Cowork in the requested period: then it shows the name that client reported at the time. Apart from that, the names of members' own skills are not disclosed to analytics-key holders. Also null for Anthropic-provided plugin skills (not resolved), for an organization skill or plugin whose name can no longer be found (for example, one since deleted), when `skill_name` is already a display name, or when display-name resolution is not enabled for this organization.
+     */
+    public function withSkillDisplayName(?string $skillDisplayName): self
+    {
+        $self = clone $this;
+        $self['skillDisplayName'] = $skillDisplayName;
+
+        return $self;
+    }
+
+    /**
+     * Name of the skill
+     */
+    public function withSkillName(string $skillName): self
+    {
+        $self = clone $this;
+        $self['skillName'] = $skillName;
+
+        return $self;
+    }
+
+    /**
+     * Skill use recorded while members had Chat and Cowork unified (Cowork's features inside claude.ai chat) turned on, split into chat conversations and Cowork sessions. A count is null in date-range mode where it cannot be computed. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     *
+     * @param AnalyticsSkillChatCoworkUnifiedMetrics|AnalyticsSkillChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     */
+    public function withChatCoworkUnifiedMetrics(
+        AnalyticsSkillChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics
+    ): self {
+        $self = clone $this;
+        $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
+
+        return $self;
+    }
+
+    /**
      * Product that produced this row's activity: one of `chat`, `claude_code`, `cowork`, `office_agent`, or `chat_cowork_unified` (Chat and Cowork unified). These are the canonical Cost & Usage product names; an `office_agent` row's per-surface breakdown is in its `office_metrics`. On `/plugins` only `cowork`, `claude_code` and `chat_cowork_unified` occur (the only surfaces with plugin attribution); on `/artifacts` only `chat`, `claude_code`, `cowork` and `chat_cowork_unified` occur (the surfaces that create artifacts); `/apps/chat/projects` does not support the product dimension (a `product` entry in `group_by[]` or `filter[]` there is rejected). Present only when the request grouped by `product`.
      */
     public function withProduct(?string $product): self
@@ -422,30 +459,6 @@ final class AnalyticsSkillActivity implements BaseModel
     {
         $self = clone $this;
         $self['rbacGroupName'] = $rbacGroupName;
-
-        return $self;
-    }
-
-    /**
-     * Skill share status (claude.ai only): one of `private`, `organization`, or `public`. Null for skills used only in Claude Code or Office (no per-skill share-status concept) and when share-status reporting is not yet available for the organization. Filterable via `filter[]=share_status:{value}`.
-     *
-     * @param ShareStatus|value-of<ShareStatus>|null $shareStatus
-     */
-    public function withShareStatus(ShareStatus|string|null $shareStatus): self
-    {
-        $self = clone $this;
-        $self['shareStatus'] = $shareStatus;
-
-        return $self;
-    }
-
-    /**
-     * Human-readable display name for rows whose `skill_name` is an opaque skill id (user/organization skill types and plugin-delivered skills, whose user-defined names usage reports generally withhold). Organization-shared skills and skills delivered by the organization's own plugins (its plugin marketplaces and its library) resolve; plugin skill names are shown without their 'plugin:' prefix. The literal 'unknown' bucket row gets a fixed 'Unknown skill' label. For a member's own skill (private or personal-plugin) it is null, except when the skill's owner used it from Claude Code or Cowork in the requested period: then it shows the name that client reported at the time. Apart from that, the names of members' own skills are not disclosed to analytics-key holders. Also null for Anthropic-provided plugin skills (not resolved), for an organization skill or plugin whose name can no longer be found (for example, one since deleted), when `skill_name` is already a display name, or when display-name resolution is not enabled for this organization.
-     */
-    public function withSkillDisplayName(?string $skillDisplayName): self
-    {
-        $self = clone $this;
-        $self['skillDisplayName'] = $skillDisplayName;
 
         return $self;
     }

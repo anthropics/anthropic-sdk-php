@@ -21,7 +21,7 @@ interface UsersRawContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<OrganizationUser>
@@ -36,7 +36,7 @@ interface UsersRawContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array<string,mixed>|UserUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -68,7 +68,7 @@ interface UsersRawContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UserRemoveResponse>

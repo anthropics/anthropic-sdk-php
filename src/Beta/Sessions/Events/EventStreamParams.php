@@ -12,7 +12,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Stream Events.
+ * Stream Events
  *
  * @see Anthropic\Services\Beta\Sessions\EventsService::streamStream()
  *

@@ -107,7 +107,7 @@ interface TelemetryDestinationsRawContract
     /**
      * @api
      *
-     * @param string $destinationID ID of the destination to test (starts with `tdst_`)
+     * @param string $destinationID ID of the destination to test (starts with `tdst_`).
      * @param array<string,mixed>|TelemetryDestinationTestParams $params
      * @param RequestOpts|null $requestOptions
      *

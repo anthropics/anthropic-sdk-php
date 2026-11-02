@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create User Profile.
+ * Create User Profile
  *
  * @see Anthropic\Services\UserProfilesService::create()
  *

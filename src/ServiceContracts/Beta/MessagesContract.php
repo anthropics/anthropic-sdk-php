@@ -130,11 +130,11 @@ interface MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
      * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
-     * @param ContainerShape|null $container body param: Container identifier for reuse across requests
+     * @param ContainerShape|null $container Body param: Container identifier for reuse across requests.
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
@@ -162,8 +162,8 @@ interface MessagesContract
      * @param BetaFallbacksParamShape|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. Some models don't support fallbacks; on those models, a list of fallback models returns a 400 error. See [Server-side fallback](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback#server-side-fallback). The string "default" requests the requested model's server-defined default fallback configuration. On a model that doesn't support fallbacks, the request runs on the requested model alone, so a declined request stays declined.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
-     * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param BetaMetadata|BetaMetadataShape $metadata Body param: An object describing metadata about the request.
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -249,7 +249,7 @@ interface MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) for more details.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
@@ -349,11 +349,11 @@ interface MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
      * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
-     * @param ContainerShape|null $container body param: Container identifier for reuse across requests
+     * @param ContainerShape|null $container Body param: Container identifier for reuse across requests.
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement Body param: Context management configuration.
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
@@ -381,8 +381,8 @@ interface MessagesContract
      * @param BetaFallbacksParamShape|null $fallbacks Body param: Opt-in server-side retry on one or more substitute models when the requested model declines for policy reasons. Tried in order: if the first entry also declines, the second is tried, and so on. Some models don't support fallbacks; on those models, a list of fallback models returns a 400 error. See [Server-side fallback](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback#server-side-fallback). The string "default" requests the requested model's server-defined default fallback configuration. On a model that doesn't support fallbacks, the request runs on the requested model alone, so a declined request stays declined.
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
-     * @param BetaMetadata|BetaMetadataShape $metadata body param: An object describing metadata about the request
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param BetaMetadata|BetaMetadataShape $metadata Body param: An object describing metadata about the request.
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -468,14 +468,14 @@ interface MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) for more details.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseStream<BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent,>
+     * @return BaseStream<BetaRawMessageStartEvent|BetaRawMessageDeltaEvent|BetaRawMessageStopEvent|BetaRawContentBlockStartEvent|BetaRawContentBlockDeltaEvent|BetaRawContentBlockStopEvent>
      *
      * @throws APIException
      */
@@ -563,7 +563,7 @@ interface MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
-     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request
+     * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
      * When set on `POST /v1/messages`, the request is a compaction request: the conversation in `messages` is summarized and the response holds only the resulting `compaction` block (`stop_reason` `"compaction"`), which later requests send first in `messages` in place of the messages it summarizes. `POST /v1/messages/count_tokens` accepts this parameter and ignores it: the count it returns is for the conversation in `messages` as sent. Cannot be combined with `context_management`.
@@ -571,7 +571,7 @@ interface MessagesContract
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig body param: Configuration options for the model's output, such as the output format
+     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -648,7 +648,7 @@ interface MessagesContract
      * Tools can be used for workflows that include running client-side tools and functions, or more generally whenever you want the model to produce a particular JSON structure of output.
      *
      * See our [guide](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) for more details.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param string $userProfileID Header param: The user profile ID to attribute this request to. Use when acting on behalf of a party other than your organization.
      * @param string $workspaceID Header param: Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
      *

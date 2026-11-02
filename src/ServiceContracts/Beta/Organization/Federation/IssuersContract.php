@@ -23,12 +23,12 @@ interface IssuersContract
     /**
      * @api
      *
-     * @param string $issuerURL body param: The `iss` claim value to match against
+     * @param string $issuerURL Body param: The `iss` claim value to match against.
      * @param string $name Body param: Slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
      * @param bool|null $checkJTI Body param: Whether the jwt-bearer exchange enforces JTI single-use (replay protection) for tokens from this issuer. Defaults to true. Applies only to assertions carrying a `jti` claim; tokens without one are accepted without single-use enforcement.
      * @param JWKSShape $jwks Body param: How signing keys are obtained. Defaults to OIDC discovery.
      * @param int|null $maxJWTLifetimeSeconds Body param: Maximum allowed iat→exp spread for assertions from this issuer (1-176400 seconds, i.e. up to 49h). Defaults to 3600 (1h). Assertions must carry both `iat` and `exp`; a missing `iat` is rejected.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -46,8 +46,8 @@ interface IssuersContract
     /**
      * @api
      *
-     * @param string $federationIssuerID ID of the federation issuer
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $federationIssuerID ID of the federation issuer.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -61,14 +61,14 @@ interface IssuersContract
     /**
      * @api
      *
-     * @param string $federationIssuerID path param: ID of the federation issuer to update
+     * @param string $federationIssuerID Path param: ID of the federation issuer to update.
      * @param bool|null $checkJTI Body param: Whether the jwt-bearer exchange enforces JTI single-use (replay protection) for tokens from this issuer. Applies only to assertions carrying a `jti` claim; tokens without one are accepted without single-use enforcement.
      * @param string|null $issuerURL Body param: Replaces the `iss` claim value to match against. For discovery-mode issuers without a `discovery_base`, this is also the URL Anthropic fetches the OIDC discovery document and signing keys from, so changing it repoints the JWKS source. Changing the issuer URL to a well-known shared platform is rejected while any live rule under this issuer would not constrain tenant identity.
-     * @param JWKSShape1|null $jwks body param: Replaces the entire JWKS configuration
+     * @param JWKSShape1|null $jwks Body param: Replaces the entire JWKS configuration.
      * @param bool|null $jwksPollingDisabled Body param: Only `false` is accepted, to re-enable polling after the system pauses it. Polling is paused automatically; sending `true` is rejected.
      * @param int|null $maxJWTLifetimeSeconds Body param: Maximum allowed iat→exp spread for assertions from this issuer (1-176400 seconds, i.e. up to 49h). Assertions must carry both `iat` and `exp`; a missing `iat` is rejected.
      * @param string|null $name Body param: Replaces the slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -89,9 +89,9 @@ interface IssuersContract
      * @api
      *
      * @param bool $includeArchived Query param: Include archived resources. Defaults to false.
-     * @param int $limit query param: Number of results per page
-     * @param string|null $page query param: Opaque cursor from a previous response's `next_page`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: Optional header to specify the beta version(s) you want to use
+     * @param int $limit Query param: Number of results per page.
+     * @param string|null $page Query param: Opaque cursor from a previous response's `next_page`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaFederationIssuer>
@@ -109,8 +109,8 @@ interface IssuersContract
     /**
      * @api
      *
-     * @param string $federationIssuerID ID of the federation issuer to archive
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas optional header to specify the beta version(s) you want to use
+     * @param string $federationIssuerID ID of the federation issuer to archive.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -41,9 +41,9 @@ final class TargetsService implements TargetsContract
      *
      * Attach a Bundle to a Slack channel or a Slack workspace. A Bundle attached to a workspace can be used in the workspace and in every channel in it. Attaching a Bundle to a channel or workspace it is already attached to returns the existing Bundle Target. The channel or workspace must be set up: attaching never sets a channel up. A group direct message takes no Bundle and returns 400.
      *
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
      * @param BetaClaudeTagBundleTargetCreateShape $target Body param
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -68,8 +68,8 @@ final class TargetsService implements TargetsContract
      * Get one Bundle Target. Returns 404 when `target_id` is the identifier of another Bundle's Bundle Target, or the Bundle Target was detached.
      *
      * @param string $targetID Path param: The Bundle Target's identifier, starting with `btgt_`. Attach Bundle and List Bundle Targets return it. It is never the identifier of the channel or workspace.
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -93,13 +93,13 @@ final class TargetsService implements TargetsContract
      *
      * List the Slack channels and Slack workspaces a Bundle is attached to, newest first by `created_at`. Only channels and workspaces the organization owns are listed; a Bundle that is attached to anything else has no Bundle Target for it.
      *
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
      * @param int $limit Query param: Number of items to return per page, between 1 and 100. Defaults to 20.
-     * @param string $page query param: Opaque cursor from a previous response's `next_page`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param string $page Query param: Opaque cursor from a previous response's `next_page`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
-     * @return PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget,>
+     * @return PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
      * @throws APIException
      */
@@ -126,8 +126,8 @@ final class TargetsService implements TargetsContract
      * Detach a Bundle from a Slack channel or a Slack workspace. A repeated detach returns 404.
      *
      * @param string $targetID Path param: The Bundle Target's identifier, starting with `btgt_`. Attach Bundle and List Bundle Targets return it. It is never the identifier of the channel or workspace.
-     * @param string $bundleID path param: The Bundle's identifier, starting with `capp_`
-     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -12,7 +12,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\MapOf;
 
 /**
- * Update Session.
+ * Update Session
  *
  * @see Anthropic\Services\Beta\SessionsService::update()
  *

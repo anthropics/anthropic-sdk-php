@@ -34,7 +34,7 @@ final class UsersRawService implements UsersRawContract
      *
      * Retrieve a member of the organization by user ID.
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<OrganizationUser>
@@ -63,7 +63,7 @@ final class UsersRawService implements UsersRawContract
      *
      * Update a member's organization role.
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param array{role: Role|value-of<Role>}|UserUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -145,7 +145,7 @@ final class UsersRawService implements UsersRawContract
      *
      * Remove a member from the organization.
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UserRemoveResponse>

@@ -100,7 +100,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array{workspaceID?: string}|BatchRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -195,7 +195,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array{workspaceID?: string}|BatchDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -239,7 +239,7 @@ final class BatchesRawService implements BatchesRawContract
      *
      * Learn more about the Message Batches API in our [user guide](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array{workspaceID?: string}|BatchCancelParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -277,7 +277,7 @@ final class BatchesRawService implements BatchesRawContract
     /**
      * @api
      *
-     * @param string $messageBatchID ID of the Message Batch
+     * @param string $messageBatchID ID of the Message Batch.
      * @param array{workspaceID?: string}|BatchResultsParams $params
      * @param RequestOpts|null $requestOptions
      *

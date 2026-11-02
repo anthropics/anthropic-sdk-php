@@ -23,7 +23,7 @@ final class BetaContextManagementConfig implements BaseModel
     use SdkModel;
 
     /**
-     * List of context management edits to apply.
+     * List of context management edits to apply
      *
      * @var list<EditVariants>|null $edits
      */
@@ -52,7 +52,7 @@ final class BetaContextManagementConfig implements BaseModel
     }
 
     /**
-     * List of context management edits to apply.
+     * List of context management edits to apply
      *
      * @param list<EditShape> $edits
      */

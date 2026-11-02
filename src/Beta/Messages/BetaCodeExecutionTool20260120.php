@@ -65,7 +65,7 @@ final class BetaCodeExecutionTool20260120 implements BaseModel
     public ?bool $deferLoading;
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     #[Optional]
     public ?bool $strict;
@@ -162,7 +162,7 @@ final class BetaCodeExecutionTool20260120 implements BaseModel
     }
 
     /**
-     * When true, guarantees schema validation on tool names and inputs.
+     * When true, guarantees schema validation on tool names and inputs
      */
     public function withStrict(bool $strict): self
     {

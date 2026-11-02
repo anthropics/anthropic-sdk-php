@@ -39,7 +39,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
      * While `pending`, the response includes a live `spend_summary` for the
      * requester at the request's period.
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BetaSpendLimitIncreaseRequest>
@@ -126,7 +126,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
      * the member was blocked on. Anthropic emails the requester unless
      * `suppress_notification` is set.
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param array{
      *   amount: string,
      *   period?: SpendLimitPeriod|value-of<SpendLimitPeriod>|null,
@@ -177,7 +177,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
      * Idempotent on `denied`; denying an already-`approved` request returns
      * 400. Anthropic emails the requester unless `suppress_notification` is set.
      *
-     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request
+     * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param array{suppressNotification?: bool}|IncreaseRequestDenyParams $params
      * @param RequestOpts|null $requestOptions
      *

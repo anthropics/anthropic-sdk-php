@@ -105,7 +105,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
+     * @param string $webhookEndpointID ID of the webhook endpoint.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|WebhookRetrieveParams $params
@@ -152,7 +152,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID path param: ID of the webhook endpoint
+     * @param string $webhookEndpointID Path param: ID of the webhook endpoint.
      * @param array{
      *   description?: string,
      *   enabledEvents?: list<WebhookUpdateParams\EnabledEvent|value-of<WebhookUpdateParams\EnabledEvent>>,
@@ -270,7 +270,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
+     * @param string $webhookEndpointID ID of the webhook endpoint.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|WebhookDeleteParams $params
@@ -318,7 +318,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Every request must include the beta header `anthropic-beta: webhooks-2026-10-07`. A request without it returns `404`, exactly as if this API did not exist. Anthropic turns organization webhook endpoints on for each organization; until yours is on, requests also return `404`. Organization webhook endpoints are in beta and are not available to organizations with HIPAA readiness enabled.
      *
-     * @param string $webhookEndpointID ID of the webhook endpoint
+     * @param string $webhookEndpointID ID of the webhook endpoint.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|WebhookRegenerateSigningSecretParams $params

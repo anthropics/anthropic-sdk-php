@@ -39,7 +39,7 @@ interface SlackChannelsRawContract
     /**
      * @api
      *
-     * @param string $id path param: The channel's identifier, starting with `slch_`
+     * @param string $id Path param: The channel's identifier, starting with `slch_`.
      * @param array<string,mixed>|SlackChannelRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -56,7 +56,7 @@ interface SlackChannelsRawContract
     /**
      * @api
      *
-     * @param string $id path param: The channel's identifier, starting with `slch_`
+     * @param string $id Path param: The channel's identifier, starting with `slch_`.
      * @param array<string,mixed>|SlackChannelUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -88,7 +88,7 @@ interface SlackChannelsRawContract
     /**
      * @api
      *
-     * @param string $id the channel's identifier, starting with `slch_`
+     * @param string $id The channel's identifier, starting with `slch_`.
      * @param array<string,mixed>|SlackChannelDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *

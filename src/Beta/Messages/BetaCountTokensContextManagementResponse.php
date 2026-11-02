@@ -19,7 +19,7 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     use SdkModel;
 
     /**
-     * The original token count before context management was applied.
+     * The original token count before context management was applied
      */
     #[Required('original_input_tokens')]
     public int $originalInputTokens;
@@ -58,7 +58,7 @@ final class BetaCountTokensContextManagementResponse implements BaseModel
     }
 
     /**
-     * The original token count before context management was applied.
+     * The original token count before context management was applied
      */
     public function withOriginalInputTokens(int $originalInputTokens): self
     {

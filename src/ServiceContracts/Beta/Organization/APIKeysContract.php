@@ -18,7 +18,7 @@ interface APIKeysContract
     /**
      * @api
      *
-     * @param string $apiKeyID ID of the API key
+     * @param string $apiKeyID ID of the API key.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -31,9 +31,9 @@ interface APIKeysContract
     /**
      * @api
      *
-     * @param string $apiKeyID ID of the API key
-     * @param string|null $name name of the API key
-     * @param Status|value-of<Status>|null $status status of the API key
+     * @param string $apiKeyID ID of the API key.
+     * @param string|null $name Name of the API key.
+     * @param Status|value-of<Status>|null $status Status of the API key.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -50,12 +50,12 @@ interface APIKeysContract
      *
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
-     * @param string|null $createdByUserID filter by the ID of the User who created the object
+     * @param string|null $createdByUserID Filter by the ID of the User who created the object.
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
-     * @param \Anthropic\Beta\Organization\APIKeys\APIKeyListParams\Status|value-of<\Anthropic\Beta\Organization\APIKeys\APIKeyListParams\Status>|null $status filter by API key status
-     * @param string|null $workspaceID filter by Workspace ID
+     * @param \Anthropic\Beta\Organization\APIKeys\APIKeyListParams\Status|value-of<\Anthropic\Beta\Organization\APIKeys\APIKeyListParams\Status>|null $status Filter by API key status.
+     * @param string|null $workspaceID Filter by Workspace ID.
      * @param RequestOpts|null $requestOptions
      *
      * @return Page<APIKey>

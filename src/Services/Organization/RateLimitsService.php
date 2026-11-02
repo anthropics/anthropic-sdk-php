@@ -44,12 +44,12 @@ final class RateLimitsService implements RateLimitsContract
      * page; when `limit` truncates the result, follow `next_page` to fetch
      * the remaining entries.
      *
-     * @param GroupType|value-of<GroupType>|null $groupType filter by group type
+     * @param GroupType|value-of<GroupType>|null $groupType Filter by group type.
      * @param int|null $limit Maximum number of items to return per page. Ranges from `1` to `1000`.
      *
      * When omitted, every remaining entry is returned in a single page and `next_page` is `null`.
      * @param string|null $model Filter to the single entry containing this model. Accepts full model names and aliases. Returns 404 if the model is not found or has no rate limits for this organization.
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<OrganizationRateLimit>

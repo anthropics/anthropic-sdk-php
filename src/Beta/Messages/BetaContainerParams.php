@@ -23,13 +23,13 @@ final class BetaContainerParams implements BaseModel
     use SdkModel;
 
     /**
-     * Container id.
+     * Container id
      */
     #[Optional(nullable: true)]
     public ?string $id;
 
     /**
-     * List of skills to load in the container.
+     * List of skills to load in the container
      *
      * @var list<BetaSkillParams>|null $skills
      */
@@ -59,7 +59,7 @@ final class BetaContainerParams implements BaseModel
     }
 
     /**
-     * Container id.
+     * Container id
      */
     public function withID(?string $id): self
     {
@@ -70,7 +70,7 @@ final class BetaContainerParams implements BaseModel
     }
 
     /**
-     * List of skills to load in the container.
+     * List of skills to load in the container
      *
      * @param list<BetaSkillParams|BetaSkillParamsShape>|null $skills
      */

@@ -20,8 +20,8 @@ interface RateLimitsContract
     /**
      * @api
      *
-     * @param string $rateLimitID path param: The `id` of the organization's rate-limit entry to set overrides for
-     * @param string $workspaceID path param: The ID of the workspace
+     * @param string $rateLimitID Path param: The `id` of the organization's rate-limit entry to set overrides for.
+     * @param string $workspaceID Path param: The ID of the workspace.
      * @param list<BetaWorkspaceRateLimitUpdateValue|BetaWorkspaceRateLimitUpdateValueShape> $limits Body param: Limits to set or clear. Unspecified limit types are unchanged.
      * @param RequestOpts|null $requestOptions
      *
@@ -37,13 +37,13 @@ interface RateLimitsContract
     /**
      * @api
      *
-     * @param string $workspaceID the ID of the workspace
-     * @param GroupType|value-of<GroupType>|null $groupType filter by group type
-     * @param bool $includeInherited also list the limiter values the workspace inherits from the organization, including groups with no workspace-level override
+     * @param string $workspaceID The ID of the workspace.
+     * @param GroupType|value-of<GroupType>|null $groupType Filter by group type.
+     * @param bool $includeInherited Also list the limiter values the workspace inherits from the organization, including groups with no workspace-level override.
      * @param int|null $limit Maximum number of items to return per page. Ranges from `1` to `1000`.
      *
      * When omitted, every remaining entry is returned in a single page and `next_page` is `null`.
-     * @param string|null $page opaque cursor from a previous response's `next_page`
+     * @param string|null $page Opaque cursor from a previous response's `next_page`.
      * @param RequestOpts|null $requestOptions
      *
      * @return PageCursor<BetaWorkspaceRateLimit>

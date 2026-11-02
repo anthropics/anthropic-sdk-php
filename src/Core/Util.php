@@ -403,7 +403,7 @@ final class Util
     }
 
     /**
-     * @param bool|int|float|string|resource|\Traversable<mixed,>|array<string,mixed>|null $body
+     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,mixed>|null $body
      */
     public static function withSetBody(
         StreamFactoryInterface $factory,
@@ -452,7 +452,7 @@ final class Util
     /**
      * @internal
      *
-     * Whether any file part in the body reads from a stream that cannot seek back, so the body can be encoded and sent only once
+     * Whether any file part in the body reads from a stream that cannot seek back, so the body can be encoded and sent only once.
      */
     public static function hasNonSeekableFilePart(mixed $body): bool
     {
@@ -767,7 +767,7 @@ final class Util
     }
 
     /**
-     * @param bool|int|float|string|resource|\Traversable<mixed,>|array<string,mixed>|null $body
+     * @param bool|int|float|string|resource|\Traversable<mixed>|array<string,mixed>|null $body
      *
      * @return array{string, \Generator<string>}
      */

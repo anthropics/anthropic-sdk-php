@@ -20,8 +20,8 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
-     * @param string $workspaceID ID of the Workspace
+     * @param string $userID ID of the User.
+     * @param string $workspaceID ID of the Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -35,9 +35,9 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $userID path param: ID of the User
-     * @param string $workspaceID path param: ID of the Workspace
-     * @param WorkspaceRole|value-of<WorkspaceRole> $workspaceRole body param: New workspace role for the User
+     * @param string $userID Path param: ID of the User.
+     * @param string $workspaceID Path param: ID of the Workspace.
+     * @param WorkspaceRole|value-of<WorkspaceRole> $workspaceRole Body param: New workspace role for the User.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -52,7 +52,7 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
      * @param int $limit Number of items to return per page.
@@ -75,8 +75,8 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $workspaceID ID of the Workspace
-     * @param string $userID ID of the User
+     * @param string $workspaceID ID of the Workspace.
+     * @param string $userID ID of the User.
      * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Role of the new Workspace Member. Cannot be `workspace_billing`.
      * @param RequestOpts|null $requestOptions
      *
@@ -92,8 +92,8 @@ interface MembersContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
-     * @param string $workspaceID ID of the Workspace
+     * @param string $userID ID of the User.
+     * @param string $workspaceID ID of the Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

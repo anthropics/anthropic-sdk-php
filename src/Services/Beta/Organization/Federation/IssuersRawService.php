@@ -104,7 +104,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * Retrieve a federation issuer by its ID (`fdis_...`).
      *
-     * @param string $federationIssuerID ID of the federation issuer
+     * @param string $federationIssuerID ID of the federation issuer.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|IssuerRetrieveParams $params
@@ -159,7 +159,7 @@ final class IssuersRawService implements IssuersRawContract
      * `workspace:developer` or `workspace:inference` requires a Console
      * session.
      *
-     * @param string $federationIssuerID path param: ID of the federation issuer to update
+     * @param string $federationIssuerID Path param: ID of the federation issuer to update.
      * @param array{
      *   checkJTI?: bool|null,
      *   issuerURL?: string|null,
@@ -281,7 +281,7 @@ final class IssuersRawService implements IssuersRawContract
      * rule still references the issuer; archive those rules first (a rule's
      * issuer cannot be changed), or recreate them against another issuer.
      *
-     * @param string $federationIssuerID ID of the federation issuer to archive
+     * @param string $federationIssuerID ID of the federation issuer to archive.
      * @param array{
      *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
      * }|IssuerArchiveParams $params

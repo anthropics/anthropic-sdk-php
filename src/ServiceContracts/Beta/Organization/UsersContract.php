@@ -19,7 +19,7 @@ interface UsersContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -32,7 +32,7 @@ interface UsersContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param Role|value-of<Role> $role New role for the User.
      *
      * The accepted values depend on the organization type. Console and API organizations accept `user`, `developer`, `billing`, and `claude_code_user`; `admin` cannot be assigned through the API. Claude Enterprise organizations accept `user` and `managed`; changing a User's role to `managed` requires the `write:rbac_groups` scope in addition to `write:members`.
@@ -51,7 +51,7 @@ interface UsersContract
      *
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
-     * @param string $email filter by user email
+     * @param string $email Filter by user email.
      * @param int $limit Number of items to return per page.
      *
      * Defaults to `20`. Ranges from `1` to `1000`.
@@ -76,7 +76,7 @@ interface UsersContract
     /**
      * @api
      *
-     * @param string $userID ID of the User
+     * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

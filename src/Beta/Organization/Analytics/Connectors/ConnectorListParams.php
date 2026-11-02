@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Analytics\Connectors;
 
-use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams\GroupBy;
-use Anthropic\Beta\Organization\Analytics\Connectors\ConnectorListParams\Order;
+use Anthropic\Beta\Organization\Analytics\AnalyticsConnectorGroupBy;
+use Anthropic\Beta\Organization\Analytics\AnalyticsOrder;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -29,9 +29,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *   date?: string|null,
  *   endingDate?: string|null,
  *   filter?: list<string>|null,
- *   groupBy?: list<GroupBy|value-of<GroupBy>>|null,
+ *   groupBy?: list<AnalyticsConnectorGroupBy|value-of<AnalyticsConnectorGroupBy>>|null,
  *   limit?: int|null,
- *   order?: null|Order|value-of<Order>,
+ *   order?: null|AnalyticsOrder|value-of<AnalyticsOrder>,
  *   orderBy?: string|null,
  *   page?: string|null,
  *   startingDate?: string|null,
@@ -66,9 +66,9 @@ final class ConnectorListParams implements BaseModel
     /**
      * Dimensions to break results out by (e.g. `group_by[]=user_id`). Supported on this endpoint: `product`, `rbac_group_id`, `user_id`. Grouped rows carry the requested dimension values as additional fields and paginate like ungrouped responses via `next_page`; an unsupported dimension returns 400. `rbac_group_id` attributes a user to every group they held at any point during each covered UTC day, so grouped rows are not an exclusive partition and can sum above org-level totals. At most 100 entries.
      *
-     * @var list<value-of<GroupBy>>|null $groupBy
+     * @var list<value-of<AnalyticsConnectorGroupBy>>|null $groupBy
      */
-    #[Optional(list: GroupBy::class, nullable: true)]
+    #[Optional(list: AnalyticsConnectorGroupBy::class, nullable: true)]
     public ?array $groupBy;
 
     /**
@@ -80,9 +80,9 @@ final class ConnectorListParams implements BaseModel
     /**
      * Sort direction: `asc` or `desc`. Defaults to `asc` for the endpoint's sort column and to `desc` when `order_by` names a metric (a top-N ranking). Applies to `order_by`, or to the endpoint's default sort field when `order_by` is omitted.
      *
-     * @var value-of<Order>|null $order
+     * @var value-of<AnalyticsOrder>|null $order
      */
-    #[Optional(enum: Order::class, nullable: true)]
+    #[Optional(enum: AnalyticsOrder::class, nullable: true)]
     public ?string $order;
 
     /**
@@ -114,8 +114,8 @@ final class ConnectorListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $filter
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
-     * @param Order|value-of<Order>|null $order
+     * @param list<AnalyticsConnectorGroupBy|value-of<AnalyticsConnectorGroupBy>>|null $groupBy
+     * @param AnalyticsOrder|value-of<AnalyticsOrder>|null $order
      */
     public static function with(
         ?string $date = null,
@@ -123,7 +123,7 @@ final class ConnectorListParams implements BaseModel
         ?array $filter = null,
         ?array $groupBy = null,
         ?int $limit = null,
-        Order|string|null $order = null,
+        AnalyticsOrder|string|null $order = null,
         ?string $orderBy = null,
         ?string $page = null,
         ?string $startingDate = null,
@@ -181,7 +181,7 @@ final class ConnectorListParams implements BaseModel
     /**
      * Dimensions to break results out by (e.g. `group_by[]=user_id`). Supported on this endpoint: `product`, `rbac_group_id`, `user_id`. Grouped rows carry the requested dimension values as additional fields and paginate like ungrouped responses via `next_page`; an unsupported dimension returns 400. `rbac_group_id` attributes a user to every group they held at any point during each covered UTC day, so grouped rows are not an exclusive partition and can sum above org-level totals. At most 100 entries.
      *
-     * @param list<GroupBy|value-of<GroupBy>>|null $groupBy
+     * @param list<AnalyticsConnectorGroupBy|value-of<AnalyticsConnectorGroupBy>>|null $groupBy
      */
     public function withGroupBy(?array $groupBy): self
     {
@@ -205,9 +205,9 @@ final class ConnectorListParams implements BaseModel
     /**
      * Sort direction: `asc` or `desc`. Defaults to `asc` for the endpoint's sort column and to `desc` when `order_by` names a metric (a top-N ranking). Applies to `order_by`, or to the endpoint's default sort field when `order_by` is omitted.
      *
-     * @param Order|value-of<Order>|null $order
+     * @param AnalyticsOrder|value-of<AnalyticsOrder>|null $order
      */
-    public function withOrder(Order|string|null $order): self
+    public function withOrder(AnalyticsOrder|string|null $order): self
     {
         $self = clone $this;
         $self['order'] = $order;

@@ -43,6 +43,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *   displayColor?: string|null,
      *   externalKeyID?: string|null,
      *   tags?: array<string,string>|null,
+     *   userProfileID?: string|null,
      * }|WorkspaceCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -78,7 +79,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * Get Workspace
      *
-     * @param string $workspaceID ID of the Workspace
+     * @param string $workspaceID ID of the Workspace.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Workspace>
@@ -113,6 +114,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *   externalKeyID?: string,
      *   name?: string,
      *   tags?: array<string,string|null>|null,
+     *   userProfileID?: string,
      * }|WorkspaceUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

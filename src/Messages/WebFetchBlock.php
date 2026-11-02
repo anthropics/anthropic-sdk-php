@@ -32,13 +32,13 @@ final class WebFetchBlock implements BaseModel
     public DocumentBlock $content;
 
     /**
-     * ISO 8601 timestamp when the content was retrieved.
+     * ISO 8601 timestamp when the content was retrieved
      */
     #[Required('retrieved_at')]
     public ?string $retrievedAt;
 
     /**
-     * Fetched content URL.
+     * Fetched content URL
      */
     #[Required]
     public string $url;
@@ -95,7 +95,7 @@ final class WebFetchBlock implements BaseModel
     }
 
     /**
-     * ISO 8601 timestamp when the content was retrieved.
+     * ISO 8601 timestamp when the content was retrieved
      */
     public function withRetrievedAt(?string $retrievedAt): self
     {
@@ -117,7 +117,7 @@ final class WebFetchBlock implements BaseModel
     }
 
     /**
-     * Fetched content URL.
+     * Fetched content URL
      */
     public function withURL(string $url): self
     {

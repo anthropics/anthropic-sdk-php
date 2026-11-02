@@ -33,7 +33,7 @@ final class APIKeysRawService implements APIKeysRawContract
      *
      * Get API Key
      *
-     * @param string $apiKeyID ID of the API key
+     * @param string $apiKeyID ID of the API key.
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<APIKey>
@@ -64,7 +64,7 @@ final class APIKeysRawService implements APIKeysRawContract
      *
      * Update API Key
      *
-     * @param string $apiKeyID ID of the API key
+     * @param string $apiKeyID ID of the API key.
      * @param array{
      *   name?: string|null, status?: Status|value-of<Status>|null
      * }|APIKeyUpdateParams $params

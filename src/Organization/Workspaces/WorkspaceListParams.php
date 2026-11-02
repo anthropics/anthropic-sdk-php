@@ -10,7 +10,7 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List Workspaces.
+ * List Workspaces
  *
  * @see Anthropic\Services\Organization\WorkspacesService::list()
  *
@@ -41,13 +41,13 @@ final class WorkspaceListParams implements BaseModel
     public ?string $beforeID;
 
     /**
-     * Whether to include Workspaces that have been archived in the response.
+     * Whether to include Workspaces that have been archived in the response
      */
     #[Optional]
     public ?bool $includeArchived;
 
     /**
-     * Whether to include the organization's default Workspace in the response.
+     * Whether to include the organization's default Workspace in the response
      */
     #[Optional]
     public ?bool $includeDefault;
@@ -111,7 +111,7 @@ final class WorkspaceListParams implements BaseModel
     }
 
     /**
-     * Whether to include Workspaces that have been archived in the response.
+     * Whether to include Workspaces that have been archived in the response
      */
     public function withIncludeArchived(bool $includeArchived): self
     {
@@ -122,7 +122,7 @@ final class WorkspaceListParams implements BaseModel
     }
 
     /**
-     * Whether to include the organization's default Workspace in the response.
+     * Whether to include the organization's default Workspace in the response
      */
     public function withIncludeDefault(bool $includeDefault): self
     {
