@@ -118,7 +118,7 @@ final class CredentialsTest extends TestCase
             vaultID: 'vlt_011CZkZDLs7fYzm1hXNPeRjv',
             auth: [
                 'type' => 'mcp_oauth',
-                'accessToken' => 'x',
+                'accessToken' => 'access_token',
                 'expiresAt' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 'refresh' => [
                     'refreshToken' => 'x',

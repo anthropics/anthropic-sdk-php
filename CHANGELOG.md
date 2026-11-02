@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.1](https://github.com/anthropics/anthropic-sdk-php/compare/v1.4.0...v1.4.1) (2026-11-02)
+
+### Chores
+
+* **api:** update example values for pattern-constrained string fields
+
+
+### Documentation
+
+* **api:** show each field's own description for `speed`
+
 ## [1.4.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.3.0...v1.4.0) (2026-11-02)
 
 ### Features
@@ -32,7 +43,6 @@
 ### Documentation
 
 * add a description to the AnthropicBeta type
-* **api:** show each field's own description for `speed`
 * **examples:** use current model IDs
 * keep descriptions in docblocks as the API's spec has them
 * **readme:** point to the docs site for documentation
