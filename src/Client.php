@@ -186,13 +186,14 @@ class Client extends BaseClient
             openTelemetry: $openTelemetry
         );
 
-        // The services are built by __get() on first use. Building all of them here loaded about 250 classes on
-        // every request, most of them for APIs the caller never touches.
+        // __get() builds each service the first time it is read.
+        // Building all of them here loaded about 500 classes, even for an app that only uses messages.
         unset($this->messages, $this->models, $this->files, $this->skills, $this->userProfiles, $this->organization, $this->beta);
     }
 
     /**
-     * Builds a service the first time it is read, and stores it in its property so later reads skip this method.
+     * Builds a service the first time it is read.
+     * The service is then stored in its property, so later reads do not come here.
      */
     public function __get(string $name): mixed
     {
