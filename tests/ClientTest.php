@@ -203,4 +203,33 @@ class ClientTest extends TestCase
             $this->assertSame(400, $e->status);
         }
     }
+
+    public function testServicesAreBuiltOnFirstAccessAndKept(): void
+    {
+        $client = new \Anthropic\Client(apiKey: 'my-anthropic-api-key', requestOptions: ['transporter' => new Client]);
+
+        $this->assertSame($client->beta, $client->beta);
+        $this->assertSame($client->messages, $client->messages);
+    }
+
+    public function testReadingAnUnknownPropertyStillWarns(): void
+    {
+        $client = new \Anthropic\Client(apiKey: 'my-anthropic-api-key', requestOptions: ['transporter' => new Client]);
+
+        $warning = null;
+        set_error_handler(static function (int $errno, string $errstr) use (&$warning): bool {
+            $warning = $errstr;
+
+            return true;
+        });
+
+        try {
+            // @phpstan-ignore property.notFound
+            $this->assertNull($client->notAService);
+        } finally {
+            restore_error_handler();
+        }
+
+        $this->assertSame('Undefined property: Anthropic\Client::$notAService', $warning);
+    }
 }

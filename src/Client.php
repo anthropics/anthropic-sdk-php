@@ -186,13 +186,42 @@ class Client extends BaseClient
             openTelemetry: $openTelemetry
         );
 
-        $this->messages = new MessagesService($this);
-        $this->models = new ModelsService($this);
-        $this->files = new FilesService($this);
-        $this->skills = new SkillsService($this);
-        $this->userProfiles = new UserProfilesService($this);
-        $this->organization = new OrganizationService($this);
-        $this->beta = new BetaService($this);
+        // The services are built by __get() on first use. Building all of them here loaded about 250 classes on
+        // every request, most of them for APIs the caller never touches.
+        unset($this->messages, $this->models, $this->files, $this->skills, $this->userProfiles, $this->organization, $this->beta);
+    }
+
+    /**
+     * Builds a service the first time it is read, and stores it in its property so later reads skip this method.
+     */
+    public function __get(string $name): mixed
+    {
+        switch ($name) {
+            case 'messages':
+                return $this->messages = new MessagesService($this);
+
+            case 'models':
+                return $this->models = new ModelsService($this);
+
+            case 'files':
+                return $this->files = new FilesService($this);
+
+            case 'skills':
+                return $this->skills = new SkillsService($this);
+
+            case 'userProfiles':
+                return $this->userProfiles = new UserProfilesService($this);
+
+            case 'organization':
+                return $this->organization = new OrganizationService($this);
+
+            case 'beta':
+                return $this->beta = new BetaService($this);
+        }
+
+        trigger_error(sprintf('Undefined property: %s::$%s', static::class, $name), E_USER_WARNING);
+
+        return null;
     }
 
     public function close(): void
