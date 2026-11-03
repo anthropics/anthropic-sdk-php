@@ -5,6 +5,7 @@ namespace Tests\Core;
 use Anthropic\Aws\Client as AwsClient;
 use Anthropic\Bedrock\BedrockMiddleware;
 use Anthropic\Bedrock\Client as BedrockClient;
+use Anthropic\Bedrock\ReadFillStream;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Exceptions\APIStatusException;
@@ -12,12 +13,7 @@ use Anthropic\Messages\RawMessageDeltaEvent;
 use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
 use Anthropic\Vertex\Client as VertexClient;
-use Aws\Api\ApiProvider;
-use Aws\Api\Parser\EventParsingIterator;
-use Aws\Api\Parser\RestJsonParser;
-use Aws\Api\Service;
-use Aws\Api\StructureShape;
-use GuzzleHttp\Psr7\NoSeekStream;
+use GuzzleHttp\Psr7\FnStream;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -308,24 +304,14 @@ final class MiddlewareThirdPartyTest extends TestCase
     }
 
     #[Test]
-    public function testBedrockEventstreamEagerEofBodyYieldsEveryFrame(): void
+    #[DataProvider('bedrockEventstreamReadLengths')]
+    public function testBedrockEventstreamEagerEofBodyYieldsEveryFrame(int $maxReadLength): void
     {
         $bytes = $this->eventstreamChunk($this->messageStartJson())
             .$this->eventstreamChunk('{"type":"message_delta","delta":{},"usage":{}}')
             .$this->eventstreamChunk('{"type":"message_stop"}');
-
-        // Negative: the raw AWS decoder over an eager-EOF body drops the last
-        // frame because valid() = !eof() goes false right after parsing it.
-        $provider = ApiProvider::defaultProvider();
-        $service = new Service(ApiProvider::resolve($provider, 'api', 'bedrock-runtime', '2023-09-30'), $provider);
-        $shape = $service->getShapeMap()->resolve(['shape' => 'ResponseStream']);
-        assert($shape instanceof StructureShape);
-        $raw = new EventParsingIterator(new NoSeekStream($this->eagerEofStream($bytes)), $shape, new RestJsonParser($service));
-        $this->assertCount(2, iterator_to_array($raw, false));
-
-        // Positive: through BedrockMiddleware (which wraps the body in
-        // ReadFillStream), all three frames reach the SDK stream.
-        $transporter = $this->transporter($this->eventstreamResponse($bytes, eagerEof: true));
+        $body = $this->limitReads($this->eagerEofStream($bytes), $maxReadLength);
+        $transporter = $this->transporter($this->eventstreamResponse($body));
         $client = BedrockClient::withApiKey(
             apiKey: 'test-key',
             region: 'us-east-1',
@@ -341,6 +327,42 @@ final class MiddlewareThirdPartyTest extends TestCase
         $this->assertInstanceOf(RawMessageStartEvent::class, $events[0]);
         $this->assertInstanceOf(RawMessageDeltaEvent::class, $events[1]);
         $this->assertInstanceOf(RawMessageStopEvent::class, $events[2]);
+    }
+
+    /**
+     * @return iterable<string, array{int}>
+     */
+    public static function bedrockEventstreamReadLengths(): iterable
+    {
+        yield 'full reads' => [PHP_INT_MAX];
+
+        yield 'one byte per read' => [1];
+    }
+
+    #[Test]
+    public function testReadFillStreamReportsEofOnlyAfterAnEmptyRead(): void
+    {
+        $source = $this->eagerEofStream('abc');
+        $stream = $this->readFillStream($source);
+
+        $bytes = $stream->read(3);
+
+        $this->assertSame('abc', $bytes);
+        $this->assertTrue($source->eof());
+        $this->assertFalse($stream->eof());
+        $this->assertSame('', $stream->read(1));
+        $this->assertTrue($stream->eof());
+    }
+
+    #[Test]
+    public function testReadFillStreamFillsEachReadFromShortReads(): void
+    {
+        $source = $this->limitReads($this->eagerEofStream('abcde'), 1);
+        $stream = $this->readFillStream($source);
+
+        $this->assertSame('a', $source->read(3));
+        $this->assertSame('bcd', $stream->read(3));
+        $this->assertSame('e', $stream->read(3));
     }
 
     #[Test]
@@ -940,9 +962,9 @@ final class MiddlewareThirdPartyTest extends TestCase
         ;
     }
 
-    private function eventstreamResponse(string $body, bool $eagerEof = false): ResponseInterface
+    private function eventstreamResponse(StreamInterface|string $body): ResponseInterface
     {
-        $stream = $eagerEof ? $this->eagerEofStream($body) : Psr17FactoryDiscovery::findStreamFactory()->createStream($body);
+        $stream = is_string($body) ? Psr17FactoryDiscovery::findStreamFactory()->createStream($body) : $body;
 
         return Psr17FactoryDiscovery::findResponseFactory()
             ->createResponse(200)
@@ -1047,6 +1069,21 @@ final class MiddlewareThirdPartyTest extends TestCase
                 return $this->bytes;
             }
         };
+    }
+
+    private function limitReads(StreamInterface $source, int $maxLength): StreamInterface
+    {
+        return FnStream::decorate($source, [
+            'read' => static fn (int $length): string => $source->read(min($length, $maxLength)),
+        ]);
+    }
+
+    private function readFillStream(StreamInterface $source): ReadFillStream
+    {
+        // ReadFillStream shares BedrockMiddleware's file, so the autoloader cannot find it by name.
+        class_exists(BedrockMiddleware::class);
+
+        return new ReadFillStream($source);
     }
 
     private function lastRequest(MockClient $transporter): RequestInterface
