@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization\ClaudeTag;
+namespace Anthropic\Beta\Environments;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -12,13 +12,13 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * `settings.environment_id` names no Environment within the organization's reach.
  *
- * @phpstan-type EnvironmentNotFoundErrorDetailsShape = array{
+ * @phpstan-type BetaEnvironmentNotFoundErrorDetailsShape = array{
  *   errorCode: 'environment_not_found'
  * }
  */
-final class EnvironmentNotFoundErrorDetails implements BaseModel
+final class BetaEnvironmentNotFoundErrorDetails implements BaseModel
 {
-    /** @use SdkModel<EnvironmentNotFoundErrorDetailsShape> */
+    /** @use SdkModel<BetaEnvironmentNotFoundErrorDetailsShape> */
     use SdkModel;
 
     /** @var 'environment_not_found' $errorCode */

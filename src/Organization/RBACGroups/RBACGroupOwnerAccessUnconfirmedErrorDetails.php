@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Organization;
+namespace Anthropic\Organization\RBACGroups;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;

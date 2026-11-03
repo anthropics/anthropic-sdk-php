@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Messages;
+namespace Anthropic\Organization\ExternalKeys;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -10,20 +10,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The request comes from a Claude Code version older than the minimum that the requested model or the organization requires. Update Claude Code, then retry.
+ * The external key changed while the request was validating it. Send the request again.
  *
- * @phpstan-type ClaudeCodeVersionTooOldErrorDetailsShape = array{
- *   errorCode: 'claude_code_version_too_old'
+ * @phpstan-type ExternalKeyChangedErrorDetailsShape = array{
+ *   errorCode: 'external_key_changed'
  * }
  */
-final class ClaudeCodeVersionTooOldErrorDetails implements BaseModel
+final class ExternalKeyChangedErrorDetails implements BaseModel
 {
-    /** @use SdkModel<ClaudeCodeVersionTooOldErrorDetailsShape> */
+    /** @use SdkModel<ExternalKeyChangedErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'claude_code_version_too_old' $errorCode */
-    #[Required('error_code', type: new ConstantOf('claude_code_version_too_old'))]
-    public string $errorCode = 'claude_code_version_too_old';
+    /** @var 'external_key_changed' $errorCode */
+    #[Required('error_code', type: new ConstantOf('external_key_changed'))]
+    public string $errorCode = 'external_key_changed';
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ final class ClaudeCodeVersionTooOldErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'claude_code_version_too_old' $errorCode
+     * @param 'external_key_changed' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {

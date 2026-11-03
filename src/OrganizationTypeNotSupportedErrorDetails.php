@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Organization\Workspaces;
+namespace Anthropic;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -10,20 +10,23 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The external key changed while the request was validating it. Send the request again.
+ * The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
  *
- * @phpstan-type ExternalKeyChangedErrorDetailsShape = array{
- *   errorCode: 'external_key_changed'
+ * @phpstan-type OrganizationTypeNotSupportedErrorDetailsShape = array{
+ *   errorCode: 'organization_type_not_supported'
  * }
  */
-final class ExternalKeyChangedErrorDetails implements BaseModel
+final class OrganizationTypeNotSupportedErrorDetails implements BaseModel
 {
-    /** @use SdkModel<ExternalKeyChangedErrorDetailsShape> */
+    /** @use SdkModel<OrganizationTypeNotSupportedErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'external_key_changed' $errorCode */
-    #[Required('error_code', type: new ConstantOf('external_key_changed'))]
-    public string $errorCode = 'external_key_changed';
+    /** @var 'organization_type_not_supported' $errorCode */
+    #[Required(
+        'error_code',
+        type: new ConstantOf('organization_type_not_supported')
+    )]
+    public string $errorCode = 'organization_type_not_supported';
 
     public function __construct()
     {
@@ -41,7 +44,7 @@ final class ExternalKeyChangedErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'external_key_changed' $errorCode
+     * @param 'organization_type_not_supported' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {

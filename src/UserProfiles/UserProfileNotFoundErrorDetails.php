@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Organization;
+namespace Anthropic\UserProfiles;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -10,23 +10,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
+ * The request depends on a user profile that does not exist in the organization or is no longer active. The request either names this user profile by ID, or names a resource, such as an External Key, that is bound to it.
  *
- * @phpstan-type OrganizationTypeNotSupportedErrorDetailsShape = array{
- *   errorCode: 'organization_type_not_supported'
+ * @phpstan-type UserProfileNotFoundErrorDetailsShape = array{
+ *   errorCode: 'user_profile_not_found'
  * }
  */
-final class OrganizationTypeNotSupportedErrorDetails implements BaseModel
+final class UserProfileNotFoundErrorDetails implements BaseModel
 {
-    /** @use SdkModel<OrganizationTypeNotSupportedErrorDetailsShape> */
+    /** @use SdkModel<UserProfileNotFoundErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'organization_type_not_supported' $errorCode */
-    #[Required(
-        'error_code',
-        type: new ConstantOf('organization_type_not_supported')
-    )]
-    public string $errorCode = 'organization_type_not_supported';
+    /** @var 'user_profile_not_found' $errorCode */
+    #[Required('error_code', type: new ConstantOf('user_profile_not_found'))]
+    public string $errorCode = 'user_profile_not_found';
 
     public function __construct()
     {
@@ -44,7 +41,7 @@ final class OrganizationTypeNotSupportedErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'organization_type_not_supported' $errorCode
+     * @param 'user_profile_not_found' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {

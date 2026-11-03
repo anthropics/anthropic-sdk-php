@@ -10,20 +10,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The request depends on a user profile that does not exist in the organization or is no longer active. The request either names this user profile by ID, or names a resource, such as an External Key, that is bound to it.
+ * The organization has reached the member limit that Anthropic set for it. Pending invites count toward the limit.
  *
- * @phpstan-type UserProfileNotFoundErrorDetailsShape = array{
- *   errorCode: 'user_profile_not_found'
+ * @phpstan-type OrgMemberLimitExceededErrorDetailsShape = array{
+ *   errorCode: 'org_member_limit_exceeded'
  * }
  */
-final class UserProfileNotFoundErrorDetails implements BaseModel
+final class OrgMemberLimitExceededErrorDetails implements BaseModel
 {
-    /** @use SdkModel<UserProfileNotFoundErrorDetailsShape> */
+    /** @use SdkModel<OrgMemberLimitExceededErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'user_profile_not_found' $errorCode */
-    #[Required('error_code', type: new ConstantOf('user_profile_not_found'))]
-    public string $errorCode = 'user_profile_not_found';
+    /** @var 'org_member_limit_exceeded' $errorCode */
+    #[Required('error_code', type: new ConstantOf('org_member_limit_exceeded'))]
+    public string $errorCode = 'org_member_limit_exceeded';
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ final class UserProfileNotFoundErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'user_profile_not_found' $errorCode
+     * @param 'org_member_limit_exceeded' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {

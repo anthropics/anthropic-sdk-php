@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Organization\Invites;
+namespace Anthropic;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -10,20 +10,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The organization has reached the member limit that Anthropic set for it. Pending invites count toward the limit.
+ * The request comes from a Claude Code version older than the minimum that the requested model or the organization requires. Update Claude Code, then retry.
  *
- * @phpstan-type OrgMemberLimitExceededErrorDetailsShape = array{
- *   errorCode: 'org_member_limit_exceeded'
+ * @phpstan-type ClaudeCodeVersionTooOldErrorDetailsShape = array{
+ *   errorCode: 'claude_code_version_too_old'
  * }
  */
-final class OrgMemberLimitExceededErrorDetails implements BaseModel
+final class ClaudeCodeVersionTooOldErrorDetails implements BaseModel
 {
-    /** @use SdkModel<OrgMemberLimitExceededErrorDetailsShape> */
+    /** @use SdkModel<ClaudeCodeVersionTooOldErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'org_member_limit_exceeded' $errorCode */
-    #[Required('error_code', type: new ConstantOf('org_member_limit_exceeded'))]
-    public string $errorCode = 'org_member_limit_exceeded';
+    /** @var 'claude_code_version_too_old' $errorCode */
+    #[Required('error_code', type: new ConstantOf('claude_code_version_too_old'))]
+    public string $errorCode = 'claude_code_version_too_old';
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ final class OrgMemberLimitExceededErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'org_member_limit_exceeded' $errorCode
+     * @param 'claude_code_version_too_old' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {
