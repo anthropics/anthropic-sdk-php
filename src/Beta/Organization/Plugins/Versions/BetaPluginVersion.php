@@ -84,7 +84,7 @@ final class BetaPluginVersion implements BaseModel
     public PluginUserActor|PluginAPIActor|null $createdBy;
 
     /**
-     * The manifest's description; null when it declares none.
+     * The manifest's description; null when it declares none. If that description is the first 500 characters of exactly one distinct skill `description` in `components`, that skill `description` is returned instead.
      */
     #[Required]
     public ?string $description;
@@ -267,7 +267,7 @@ final class BetaPluginVersion implements BaseModel
     }
 
     /**
-     * The manifest's description; null when it declares none.
+     * The manifest's description; null when it declares none. If that description is the first 500 characters of exactly one distinct skill `description` in `components`, that skill `description` is returned instead.
      */
     public function withDescription(?string $description): self
     {
