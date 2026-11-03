@@ -185,6 +185,7 @@ final class WorkspacesService implements WorkspacesContract
      *
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param list<string> $ids Only the Workspaces with these IDs, at most 100. `include_archived` and `include_default` still apply, and IDs of Workspaces the caller can't list are left out.
      * @param bool $includeArchived Whether to include Workspaces that have been archived in the response
      * @param bool $includeDefault Whether to include the organization's default Workspace in the response
      * @param int $limit Number of items to return per page.
@@ -199,6 +200,7 @@ final class WorkspacesService implements WorkspacesContract
     public function list(
         ?string $afterID = null,
         ?string $beforeID = null,
+        ?array $ids = null,
         ?bool $includeArchived = null,
         ?bool $includeDefault = null,
         ?int $limit = null,
@@ -208,6 +210,7 @@ final class WorkspacesService implements WorkspacesContract
             [
                 'afterID' => $afterID,
                 'beforeID' => $beforeID,
+                'ids' => $ids,
                 'includeArchived' => $includeArchived,
                 'includeDefault' => $includeDefault,
                 'limit' => $limit,

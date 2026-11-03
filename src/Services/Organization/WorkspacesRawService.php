@@ -154,6 +154,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * @param array{
      *   afterID?: string,
      *   beforeID?: string,
+     *   ids?: list<string>,
      *   includeArchived?: bool,
      *   includeDefault?: bool,
      *   limit?: int,
@@ -192,6 +193,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 query: [
                     'after_id',
                     'before_id',
+                    'ids',
                     'include_archived',
                     'include_default',
                     'limit',
