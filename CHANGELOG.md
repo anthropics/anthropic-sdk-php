@@ -1,12 +1,13 @@
 # Changelog
 
-## [1.4.1](https://github.com/anthropics/anthropic-sdk-php/compare/v1.4.0...v1.4.1) (2026-11-02)
+## [1.4.1](https://github.com/anthropics/anthropic-sdk-php/compare/v1.4.0...v1.4.1) (2026-11-03)
 
 ### Chores
 
 * **api:** update example values for pattern-constrained string fields
 * **docs:** clarify some API field descriptions
 * **docs:** update the telemetry destination headers description
+* **tests:** check that a null path param is rejected
 
 
 ### Documentation

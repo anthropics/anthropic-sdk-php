@@ -128,8 +128,9 @@ class UtilTest extends TestCase
     {
         $this->assertSame('cards/0', Util::parsePath(['cards/%1$s', '0']));
 
-        foreach ([['cards/%1$s', ''], ['cards/%1$s/items', ''], ['cards/%1$s%2$s', '', 'x']] as $path) {
+        foreach ([['cards/%1$s', ''], ['cards/%1$s', null], ['cards/%1$s/items', ''], ['cards/%1$s%2$s', '', 'x']] as $path) {
             try {
+                // @phpstan-ignore argument.type
                 Util::parsePath($path);
                 $this->fail('Expected an empty value to be rejected: '.json_encode($path));
             } catch (\InvalidArgumentException) {
