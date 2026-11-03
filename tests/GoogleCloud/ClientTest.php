@@ -8,6 +8,7 @@ use Google\Auth\FetchAuthTokenInterface;
 use Google\Auth\ProjectIdProviderInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -309,6 +310,86 @@ final class ClientTest extends TestCase
             '/v1/projects/proj/locations/us-east5/workspaces/ws/invoke/v1/messages',
             $uri->getPath()
         );
+    }
+
+    #[DataProvider('derivedBaseUrls')]
+    public function testBaseUrlDerivedSendsEachValueAsOnePathSegment(string $project, string $location, string $workspaceId, string $locationPath, string $workspaceSegment): void
+    {
+        $client = new Client(
+            project: $project,
+            location: $location,
+            workspaceId: $workspaceId,
+            skipAuth: true,
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+
+        $client->messages->create(1024, [], 'claude-haiku-4-5');
+        $client->organization->retrieve();
+
+        $locationUrl = "https://claude.googleapis.com/v1/{$locationPath}";
+        $this->assertSame(
+            [
+                "{$locationUrl}/workspaces/{$workspaceSegment}/invoke/v1/messages",
+                "{$locationUrl}/claudeOrganization/invoke/v1/organizations/me",
+            ],
+            $this->requestedUrls()
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string, string, string}>
+     */
+    public static function derivedBaseUrls(): iterable
+    {
+        // Real values are sent exactly as given.
+        yield 'project id and global' => ['my-project', 'global', 'wrkspc_01AbCdEf', 'projects/my-project/locations/global', 'wrkspc_01AbCdEf'];
+
+        yield 'domain-scoped project id and a region' => ['example.com:my-project', 'us-central1', 'wrkspc_01AbCdEf', 'projects/example.com:my-project/locations/us-central1', 'wrkspc_01AbCdEf'];
+
+        yield 'colon in workspace id' => ['proj', 'global', 'a:b', 'projects/proj/locations/global', 'a:b'];
+
+        yield 'slash in project' => ['a/b', 'global', 'ws', 'projects/a%2Fb/locations/global', 'ws'];
+
+        yield 'slash in location' => ['proj', 'a/b', 'ws', 'projects/proj/locations/a%2Fb', 'ws'];
+
+        yield 'slashes and dots in workspace id' => ['proj', 'global', 'w/../../x', 'projects/proj/locations/global', 'w%2F..%2F..%2Fx'];
+    }
+
+    #[DataProvider('refusedBaseUrlValues')]
+    public function testBaseUrlDerivedRefusesDotSegmentsAndEmptyValues(string $project, string $location, string $workspaceId, string $message): void
+    {
+        try {
+            $client = new Client(
+                project: $project,
+                location: $location,
+                workspaceId: $workspaceId,
+                skipAuth: true,
+                requestOptions: ['transporter' => $this->transporter],
+            );
+            $client->messages->create(1024, [], 'claude-haiku-4-5');
+            $this->fail('expected the value to be refused');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString($message, $e->getMessage());
+        }
+
+        $this->assertSame([], $this->transporter->getRequests());
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string, string}>
+     */
+    public static function refusedBaseUrlValues(): iterable
+    {
+        foreach (['.' => 'dot segment "."', '..' => 'dot segment ".."', '' => 'empty path parameter'] as $value => $message) {
+            yield "project \"{$value}\"" => [$value, 'global', 'ws', $message];
+
+            yield "location \"{$value}\"" => ['proj', $value, 'ws', $message];
+
+            yield "workspace id \"{$value}\"" => ['proj', 'global', $value, $message];
+        }
     }
 
     public function testBaseUrlFromEnvVar(): void

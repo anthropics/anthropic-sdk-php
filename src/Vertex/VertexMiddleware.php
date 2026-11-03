@@ -7,6 +7,7 @@ namespace Anthropic\Vertex;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\RequestTransformer;
+use Anthropic\Core\Util;
 use Anthropic\Middleware;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -79,6 +80,7 @@ final class VertexMiddleware implements Middleware
 
     private function modelsPath(): string
     {
-        return sprintf('/projects/%s/locations/%s/publishers/anthropic/models', ($this->projectId)(), $this->location);
+        // ":" is put back because a domain-scoped project ID ("example.com:my-project") contains one.
+        return str_replace('%3A', ':', Util::parsePath(['/projects/%1$s/locations/%2$s/publishers/anthropic/models', ($this->projectId)(), $this->location]));
     }
 }
