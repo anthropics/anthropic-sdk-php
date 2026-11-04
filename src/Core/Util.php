@@ -34,6 +34,15 @@ final class Util
      */
     private const URI_WITH_AUTHORITY = '#^([A-Za-z][A-Za-z0-9+.-]*:)?//#';
 
+    /**
+     * Characters that rawurlencode() escapes but RFC 3986 section 3.3 allows in a path segment, keyed by their escaped form.
+     * `;` is left out: some servers cut a segment at `;`, so an unescaped `..;x` would reach them as the dot segment `..`.
+     */
+    private const PATH_PARAM_UNESCAPED = [
+        '%21' => '!', '%24' => '$', '%26' => '&', '%27' => '\'', '%28' => '(', '%29' => ')',
+        '%2A' => '*', '%2B' => '+', '%2C' => ',', '%3A' => ':', '%3D' => '=', '%40' => '@',
+    ];
+
     public static function getenv(string $key): ?string
     {
         if (array_key_exists($key, array: $_ENV)) {
@@ -220,7 +229,7 @@ final class Util
         }
 
         [$template] = $path;
-        $mapped = array_map(static fn ($s) => rawurlencode(self::strVal($s)), array: array_slice($path, 1));
+        $mapped = array_map(static fn ($s) => strtr(rawurlencode(self::strVal($s)), self::PATH_PARAM_UNESCAPED), array: array_slice($path, 1));
         $parsed = sprintf($template, ...$mapped);
 
         foreach ($mapped as $segment) {

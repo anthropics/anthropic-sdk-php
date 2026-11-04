@@ -109,6 +109,23 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testParsePathEscapesOnlyCharactersUnsafeInAPathSegment(): void
+    {
+        $cases = [
+            ['a@b+c&d:e', 'a@b+c&d:e'],
+            ['!$\'()*,=', '!$\'()*,='],
+            ['a/b?c#d%e f', 'a%2Fb%3Fc%23d%25e%20f'],
+            ['%3A%40', '%253A%2540'],
+            [';', '%3B'],
+            ['..;x', '..%3Bx'],
+        ];
+
+        foreach ($cases as [$value, $output]) {
+            $this->assertSame('cards/'.$output, Util::parsePath(['cards/%1$s', $value]));
+        }
+    }
+
+    #[Test]
     public function testParsePathRejectsDotSegments(): void
     {
         $this->assertSame('cards/..%2Fsecrets', Util::parsePath(['cards/%1$s', '../secrets']));
