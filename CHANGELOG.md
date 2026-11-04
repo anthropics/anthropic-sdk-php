@@ -1,18 +1,44 @@
 # Changelog
 
-## [1.5.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.4.0...v1.5.0) (2026-11-03)
+## [1.5.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.4.0...v1.5.0) (2026-11-04)
 
 ### Features
 
 * **api:** add error details types and new error type values
+* **api:** add ids filter to list workspaces
+* **client:** add exception classes for HTTP statuses and API error codes, and getType(), getAPIMessage(), getErrorCode() and getDetails() on APIStatusException
+* **foundry:** add files and skills to the Foundry client
+
+
+### Bug Fixes
+
+* **api:** capitalize CMEK in error details type names
+* **api:** move some error details types to the resource they describe
+* **bedrock:** throw when the model is "." or "..", which would send the request to a different URL
+* **client:** send ; unescaped in path params, reject "..;x" and ";x"
+* **client:** stop escaping : @ + & and similar characters in path params
+* **google-cloud:** percent-encode the project, location and workspace ID in the base URL, and throw when one is ".", ".." or empty
+* **helpers:** count structured output string length limits in characters, not bytes
+* **vertex:** percent-encode the project ID and region in the request path, and throw when one is ".", ".." or empty
 
 
 ### Chores
 
 * **api:** update example values for pattern-constrained string fields
+* **docs:** clarify plugin reach values
+* **docs:** clarify plugin version description and plugin reach
+* **docs:** clarify plugin version description length
 * **docs:** clarify some API field descriptions
+* **docs:** clarify three error descriptions
+* **docs:** clarify which blocks to send back around a fallback block
+* **docs:** correct Claude Tag direct message notes in usage reports
+* **docs:** reword Dream and RBAC role permission descriptions
 * **docs:** update the telemetry destination headers description
+* **docs:** use the Claude Platform name in analytics filter docs
+* **internal:** accept changelog entry files in the changelog check
+* **internal:** ignore changelog entry files
 * **tests:** check that a null path param is rejected
+* **tests:** stop a Bedrock stream test from depending on the AWS SDK version
 
 
 ### Documentation
