@@ -94,7 +94,7 @@ final class UsageListParams implements BaseModel
     public ?array $actorTypes;
 
     /**
-     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values. Claude Platform organizations only.
      *
      * @var list<string>|null $agentIDs
      */
@@ -102,7 +102,7 @@ final class UsageListParams implements BaseModel
     public ?array $agentIDs;
 
     /**
-     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`. Claude Developer Platform organizations only.
+     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`. Claude Platform organizations only.
      *
      * @var list<string>|null $apiKeyIDs
      */
@@ -134,7 +134,7 @@ final class UsageListParams implements BaseModel
     public ?array $contextWindows;
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values. Claude Platform organizations only.
      *
      * @var list<string>|null $deploymentIDs
      */
@@ -148,7 +148,7 @@ final class UsageListParams implements BaseModel
     public ?\DateTimeInterface $endingAt;
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values. Claude Platform organizations only.
      *
      * @var list<string>|null $environmentIDs
      */
@@ -230,7 +230,7 @@ final class UsageListParams implements BaseModel
     public ?array $rbacGroupIDs;
 
     /**
-     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values. Claude Developer Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
      *
      * @var list<value-of<AnalyticsServiceTier>>|null $serviceTiers
      */
@@ -238,7 +238,7 @@ final class UsageListParams implements BaseModel
     public ?array $serviceTiers;
 
     /**
-     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values. Claude Platform organizations only.
      *
      * @var list<string>|null $sessionIDs
      */
@@ -270,7 +270,7 @@ final class UsageListParams implements BaseModel
     public ?string $timeBucketWidth;
 
     /**
-     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values. Claude Developer Platform organizations only.
+     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values. Claude Platform organizations only.
      *
      * @var list<string>|null $userProfileIDs
      */
@@ -278,7 +278,7 @@ final class UsageListParams implements BaseModel
     public ?array $userProfileIDs;
 
     /**
-     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values. Claude Developer Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
      *
      * @var list<string>|null $workspaceIDs
      */
@@ -447,7 +447,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values. Claude Platform organizations only.
      *
      * @param list<string>|null $agentIDs
      */
@@ -460,7 +460,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`. Claude Developer Platform organizations only.
+     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`. Claude Platform organizations only.
      *
      * @param list<string>|null $apiKeyIDs
      */
@@ -512,7 +512,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values. Claude Platform organizations only.
      *
      * @param list<string>|null $deploymentIDs
      */
@@ -536,7 +536,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values. Claude Platform organizations only.
      *
      * @param list<string>|null $environmentIDs
      */
@@ -673,7 +673,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values. Claude Developer Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
      *
      * @param list<AnalyticsServiceTier|value-of<AnalyticsServiceTier>>|null $serviceTiers
      */
@@ -686,7 +686,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values. Claude Developer Platform organizations only.
+     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values. Claude Platform organizations only.
      *
      * @param list<string>|null $sessionIDs
      */
@@ -739,7 +739,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values. Claude Developer Platform organizations only.
+     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values. Claude Platform organizations only.
      *
      * @param list<string>|null $userProfileIDs
      */
@@ -752,7 +752,7 @@ final class UsageListParams implements BaseModel
     }
 
     /**
-     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values. Claude Developer Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
      *
      * @param list<string>|null $workspaceIDs
      */
