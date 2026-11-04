@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Environments;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Environments\BetaInvalidMetadataException;
+use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
 use Anthropic\Beta\Environments\Work\SelfHostedWork;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkHeartbeatResponse;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkQueueStats;
@@ -16,11 +18,13 @@ use Anthropic\Beta\Environments\Work\WorkRetrieveParams;
 use Anthropic\Beta\Environments\Work\WorkStatsParams;
 use Anthropic\Beta\Environments\Work\WorkStopParams;
 use Anthropic\Beta\Environments\Work\WorkUpdateParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Environments\WorkRawContract;
@@ -53,6 +57,8 @@ final class WorkRawService implements WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
      * @throws APIException
      */
     public function retrieve(
@@ -110,6 +116,9 @@ final class WorkRawService implements WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws BetaInvalidMetadataException `metadata` has too many keys, a key or value that is too long, or a reserved key. The message names each problem.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
      * @throws APIException
      */
     public function update(
@@ -281,6 +290,7 @@ final class WorkRawService implements WorkRawContract
      *
      * @return BaseResponse<SelfHostedWorkHeartbeatResponse>
      *
+     * @throws HeartbeatPreconditionFailedException `expected_last_heartbeat` does not match the stored heartbeat, so another worker may hold the lease.
      * @throws APIException
      */
     public function heartbeat(
@@ -410,6 +420,8 @@ final class WorkRawService implements WorkRawContract
      *
      * @return BaseResponse<SelfHostedWorkQueueStats>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
      * @throws APIException
      */
     public function stats(
@@ -462,6 +474,8 @@ final class WorkRawService implements WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
      * @throws APIException
      */
     public function stop(

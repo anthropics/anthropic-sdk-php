@@ -7,6 +7,7 @@ namespace Anthropic\ServiceContracts\Organization\SpendLimits;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Organization\SpendLimits\SpendSummary;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -26,6 +27,7 @@ interface EffectiveContract
      *
      * @return PageCursor<SpendSummary>
      *
+     * @throws OrganizationTypeNotSupportedException The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
      * @throws APIException
      */
     public function list(

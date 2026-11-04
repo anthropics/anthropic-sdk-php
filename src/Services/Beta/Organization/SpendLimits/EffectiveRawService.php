@@ -12,6 +12,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimits\EffectiveRawContract;
@@ -48,6 +49,7 @@ final class EffectiveRawService implements EffectiveRawContract
      *
      * @return BaseResponse<PageCursor<SpendSummary>>
      *
+     * @throws OrganizationTypeNotSupportedException The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
      * @throws APIException
      */
     public function list(

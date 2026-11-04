@@ -7,6 +7,8 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\Organization\ConcurrentMembershipChangeException;
+use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Organization\Users\OrganizationUser;
 use Anthropic\Organization\Users\UserRemoveResponse;
 use Anthropic\Organization\Users\UserUpdateParams\Role;
@@ -130,6 +132,8 @@ final class UsersService implements UsersContract
      * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws CannotRemoveLastMemberException The user is the organization's only member. Add another member before removing this one.
+     * @throws ConcurrentMembershipChangeException Another change to the organization's members is in progress. Retry the request once it completes.
      * @throws APIException
      */
     public function remove(

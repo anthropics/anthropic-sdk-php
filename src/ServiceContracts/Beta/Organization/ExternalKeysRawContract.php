@@ -12,8 +12,10 @@ use Anthropic\Beta\Organization\ExternalKeys\ExternalKeyUpdateParams;
 use Anthropic\Beta\Organization\ExternalKeys\ExternalKeyValidateResponse;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyInWorkspacePolicyException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -28,6 +30,7 @@ interface ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKey>
      *
+     * @throws UserProfileNotFoundException The request depends on a user profile that does not exist in the organization or is no longer active. The request either names this user profile by ID, or names a resource, such as an External Key, that is bound to it.
      * @throws APIException
      */
     public function create(
@@ -59,6 +62,7 @@ interface ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKey>
      *
+     * @throws ExternalKeyInWorkspacePolicyException The External Key can't be deleted or reconfigured while the organization's Workspace Policy lists it as an allowed key.
      * @throws APIException
      */
     public function update(
@@ -90,6 +94,7 @@ interface ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKeyDeleteResponse>
      *
+     * @throws ExternalKeyInWorkspacePolicyException The External Key can't be deleted or reconfigured while the organization's Workspace Policy lists it as an allowed key.
      * @throws APIException
      */
     public function delete(

@@ -12,12 +12,14 @@ use Anthropic\Organization\ExternalKeys\ExternalKey;
 use Anthropic\Organization\ExternalKeys\ExternalKeyCreateParams;
 use Anthropic\Organization\ExternalKeys\ExternalKeyCreateParams\Geo;
 use Anthropic\Organization\ExternalKeys\ExternalKeyDeleteResponse;
+use Anthropic\Organization\ExternalKeys\ExternalKeyInWorkspacePolicyException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyListParams;
 use Anthropic\Organization\ExternalKeys\ExternalKeyUpdateParams;
 use Anthropic\Organization\ExternalKeys\ExternalKeyValidateResponse;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\ExternalKeysRawContract;
+use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
  * @phpstan-import-type ProviderConfigShape from \Anthropic\Organization\ExternalKeys\ExternalKeyCreateParams\ProviderConfig
@@ -47,6 +49,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKey>
      *
+     * @throws UserProfileNotFoundException The request depends on a user profile that does not exist in the organization or is no longer active. The request either names this user profile by ID, or names a resource, such as an External Key, that is bound to it.
      * @throws APIException
      */
     public function create(
@@ -122,6 +125,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKey>
      *
+     * @throws ExternalKeyInWorkspacePolicyException The External Key can't be deleted or reconfigured while the organization's Workspace Policy lists it as an allowed key.
      * @throws APIException
      */
     public function update(
@@ -201,6 +205,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKeyDeleteResponse>
      *
+     * @throws ExternalKeyInWorkspacePolicyException The External Key can't be deleted or reconfigured while the organization's Workspace Policy lists it as an allowed key.
      * @throws APIException
      */
     public function delete(

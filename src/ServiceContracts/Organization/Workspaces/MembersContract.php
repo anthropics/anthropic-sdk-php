@@ -8,6 +8,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Organization\Workspaces\Members\MemberRemoveResponse;
 use Anthropic\Organization\Workspaces\NoBillingWorkspaceRole;
 use Anthropic\Organization\Workspaces\WorkspaceMember;
+use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Organization\Workspaces\WorkspaceRole;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -40,6 +41,7 @@ interface MembersContract
      * @param WorkspaceRole|value-of<WorkspaceRole> $workspaceRole Body param: New workspace role for the User.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
      * @throws APIException
      */
     public function update(
@@ -80,6 +82,7 @@ interface MembersContract
      * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Role of the new Workspace Member. Cannot be `workspace_billing`.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
      * @throws APIException
      */
     public function add(

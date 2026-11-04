@@ -9,7 +9,9 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Organization\RBACGroups\DeletedRBACGroup;
 use Anthropic\Organization\RBACGroups\RBACGroup;
 use Anthropic\Organization\RBACGroups\RBACGroupCreateParams;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupListParams;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Organization\RBACGroups\RBACGroupUpdateParams;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -89,6 +91,8 @@ interface RBACGroupsRawContract
      *
      * @return BaseResponse<DeletedRBACGroup>
      *
+     * @throws RBACGroupGrantsOwnerAccessException A role attached to an RBAC Group in the request grants owner access, so this API does not add members to that group (directly or through an invite), remove its members, or delete it. Make the change in the organization's admin settings in Claude.
+     * @throws RBACGroupOwnerAccessUnconfirmedException The API could not finish checking whether an RBAC Group in the request grants owner access, so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
      * @throws APIException
      */
     public function delete(

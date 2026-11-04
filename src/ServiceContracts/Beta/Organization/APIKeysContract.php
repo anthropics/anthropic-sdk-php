@@ -7,6 +7,8 @@ namespace Anthropic\ServiceContracts\Beta\Organization;
 use Anthropic\Beta\Organization\APIKeys\APIKey;
 use Anthropic\Beta\Organization\APIKeys\APIKeyUpdateParams\Status;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\APIKeys\OrgAPIKeyLimitExceededException;
+use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -36,6 +38,8 @@ interface APIKeysContract
      * @param Status|value-of<Status>|null $status Status of the API key.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws OrgAPIKeyLimitExceededException The organization has reached its limit of active API keys.
+     * @throws WorkspaceAPIKeyLimitExceededException The workspace has reached its limit of active API keys.
      * @throws APIException
      */
     public function update(
