@@ -113,11 +113,9 @@ class UtilTest extends TestCase
     {
         $cases = [
             ['a@b+c&d:e', 'a@b+c&d:e'],
-            ['!$\'()*,=', '!$\'()*,='],
+            ['!$\'()*,;=', '!$\'()*,;='],
             ['a/b?c#d%e f', 'a%2Fb%3Fc%23d%25e%20f'],
             ['%3A%40', '%253A%2540'],
-            [';', '%3B'],
-            ['..;x', '..%3Bx'],
         ];
 
         foreach ($cases as [$value, $output]) {
@@ -130,8 +128,10 @@ class UtilTest extends TestCase
     {
         $this->assertSame('cards/..%2Fsecrets', Util::parsePath(['cards/%1$s', '../secrets']));
         $this->assertSame('cards/%252e%252e', Util::parsePath(['cards/%1$s', '%2e%2e']));
+        $this->assertSame('cards/a;b', Util::parsePath(['cards/%1$s', 'a;b']));
+        $this->assertSame('cards/...;x', Util::parsePath(['cards/%1$s', '...;x']));
 
-        foreach ([['cards/%1$s', '.'], ['cards/%1$s', '..'], ['cards/%1$s/items', '..'], ['cards/%1$s?beta=true', '..'], ['cards/%1$s#top', '..']] as $path) {
+        foreach ([['cards/%1$s', '.'], ['cards/%1$s', '..'], ['cards/%1$s/items', '..'], ['cards/%1$s?beta=true', '..'], ['cards/%1$s#top', '..'], ['cards/%1$s', '..;x'], ['cards/%1$s', '.;x'], ['cards/%1$s', '..;']] as $path) {
             try {
                 Util::parsePath($path);
                 $this->fail('Expected a dot segment to be rejected: '.json_encode($path));
@@ -144,8 +144,9 @@ class UtilTest extends TestCase
     public function testParsePathRejectsEmptyValues(): void
     {
         $this->assertSame('cards/0', Util::parsePath(['cards/%1$s', '0']));
+        $this->assertSame('cards/a;', Util::parsePath(['cards/%1$s', 'a;']));
 
-        foreach ([['cards/%1$s', ''], ['cards/%1$s', null], ['cards/%1$s/items', ''], ['cards/%1$s%2$s', '', 'x']] as $path) {
+        foreach ([['cards/%1$s', ''], ['cards/%1$s', null], ['cards/%1$s/items', ''], ['cards/%1$s%2$s', '', 'x'], ['cards/%1$s', ';x'], ['cards/%1$s', ';']] as $path) {
             try {
                 // @phpstan-ignore argument.type
                 Util::parsePath($path);

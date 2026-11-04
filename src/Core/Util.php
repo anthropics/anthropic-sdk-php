@@ -36,11 +36,10 @@ final class Util
 
     /**
      * Characters that rawurlencode() escapes but RFC 3986 section 3.3 allows in a path segment, keyed by their escaped form.
-     * `;` is left out: some servers cut a segment at `;`, so an unescaped `..;x` would reach them as the dot segment `..`.
      */
     private const PATH_PARAM_UNESCAPED = [
         '%21' => '!', '%24' => '$', '%26' => '&', '%27' => '\'', '%28' => '(', '%29' => ')',
-        '%2A' => '*', '%2B' => '+', '%2C' => ',', '%3A' => ':', '%3D' => '=', '%40' => '@',
+        '%2A' => '*', '%2B' => '+', '%2C' => ',', '%3A' => ':', '%3B' => ';', '%3D' => '=', '%40' => '@',
     ];
 
     public static function getenv(string $key): ?string
@@ -233,11 +232,12 @@ final class Util
         $parsed = sprintf($template, ...$mapped);
 
         foreach ($mapped as $segment) {
-            if ('.' === $segment || '..' === $segment) {
-                throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..".', $parsed, $segment));
+            [$beforeSemicolon] = explode(';', $segment, 2);
+            if ('.' === $beforeSemicolon || '..' === $beforeSemicolon) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..", on its own or before a ";".', $parsed, $segment));
             }
-            if ('' === $segment) {
-                throw new \InvalidArgumentException(sprintf('The path "%s" has an empty path parameter, which would send the request to a different URL. A path parameter cannot be empty.', $parsed));
+            if ('' === $beforeSemicolon) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has an empty path parameter, which would send the request to a different URL. A path parameter cannot be empty, on its own or before a ";".', $parsed));
             }
         }
 
