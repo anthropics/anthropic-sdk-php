@@ -151,6 +151,11 @@ final class ErrorDetails implements ConverterSource
 
     public static function discriminator(): string
     {
+        return 'error_code';
+    }
+
+    public static function discriminatorProperty(): string
+    {
         return 'errorCode';
     }
 
