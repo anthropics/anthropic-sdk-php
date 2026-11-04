@@ -31,7 +31,7 @@ interface SpendLimitsContract
      * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function retrieve(
@@ -51,7 +51,7 @@ interface SpendLimitsContract
      *
      * @return PageCursor<SpendLimit>
      *
-     * @throws OrganizationTypeNotSupportedException The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(
@@ -69,8 +69,8 @@ interface SpendLimitsContract
      * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws BetaBillingFrozenException Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
-     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
+     * @throws BetaBillingFrozenException
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function delete(
@@ -87,8 +87,8 @@ interface SpendLimitsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws BetaBillingFrozenException Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
-     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
+     * @throws BetaBillingFrozenException
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function set(

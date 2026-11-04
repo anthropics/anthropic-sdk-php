@@ -27,7 +27,7 @@ interface EffectiveContract
      *
      * @return PageCursor<SpendSummary>
      *
-     * @throws OrganizationTypeNotSupportedException The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(

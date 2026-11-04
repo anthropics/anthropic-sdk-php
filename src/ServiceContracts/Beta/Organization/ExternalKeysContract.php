@@ -33,7 +33,7 @@ interface ExternalKeysContract
      * @param string|null $userProfileID ID of a user profile to bind the key to. Omit this field for a key that isn't bound to a user profile. Such a key can be attached to a Workspace whatever its user profile. The binding cannot be changed later. A key bound to a user profile can only be attached to a Workspace that has the same user profile.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws UserProfileNotFoundException The request depends on a user profile that does not exist in the organization or is no longer active. The request either names this user profile by ID, or names a resource, such as an External Key, that is bound to it.
+     * @throws UserProfileNotFoundException
      * @throws APIException
      */
     public function create(
@@ -66,7 +66,7 @@ interface ExternalKeysContract
      * @param ProviderConfigShape1|null $providerConfig KMS provider identity and auth coordinates.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws ExternalKeyInWorkspacePolicyException The External Key can't be deleted or reconfigured while the organization's Workspace Policy lists it as an allowed key.
+     * @throws ExternalKeyInWorkspacePolicyException
      * @throws APIException
      */
     public function update(
@@ -100,7 +100,7 @@ interface ExternalKeysContract
      * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws ExternalKeyInWorkspacePolicyException The External Key can't be deleted or reconfigured while the organization's Workspace Policy lists it as an allowed key.
+     * @throws ExternalKeyInWorkspacePolicyException
      * @throws APIException
      */
     public function delete(

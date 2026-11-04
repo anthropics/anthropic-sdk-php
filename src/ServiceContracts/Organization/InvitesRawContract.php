@@ -33,13 +33,13 @@ interface InvitesRawContract
      *
      * @return BaseResponse<OrganizationInvite>
      *
-     * @throws AlreadyMemberException The email address already belongs to a user in the organization. The message names the user.
-     * @throws CannotInviteEmailsWithUnverifiedDomainsException The email address's domain is not one of the verified domains of the organization's parent organization.
-     * @throws EmailDomainNotAllowedException The organization restricts invites to an allowed list of email domains, and the list is empty or does not include the email address's domain.
-     * @throws InviteAlreadyExistsException A pending invite already exists for the email address. The message names the invite.
-     * @throws OrgMemberLimitExceededException The organization has reached the member limit that Anthropic set for it. Pending invites count toward the limit.
-     * @throws RBACGroupGrantsOwnerAccessException A role attached to an RBAC Group in the request grants owner access, so this API does not add members to that group (directly or through an invite), remove its members, or delete it. Make the change in the organization's admin settings in Claude.
-     * @throws RBACGroupOwnerAccessUnconfirmedException The API could not finish checking whether an RBAC Group in the request grants owner access, so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
+     * @throws AlreadyMemberException
+     * @throws CannotInviteEmailsWithUnverifiedDomainsException
+     * @throws EmailDomainNotAllowedException
+     * @throws InviteAlreadyExistsException
+     * @throws OrgMemberLimitExceededException
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function create(

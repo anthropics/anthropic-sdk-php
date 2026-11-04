@@ -132,8 +132,8 @@ final class UsersService implements UsersContract
      * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws CannotRemoveLastMemberException The user is the organization's only member. Add another member before removing this one.
-     * @throws ConcurrentMembershipChangeException Another change to the organization's members is in progress. Retry the request once it completes.
+     * @throws CannotRemoveLastMemberException
+     * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */
     public function remove(

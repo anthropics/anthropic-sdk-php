@@ -48,7 +48,7 @@ interface MembersRawContract
      *
      * @return BaseResponse<WorkspaceMember>
      *
-     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
+     * @throws WorkspaceMemberLimitExceededException
      * @throws APIException
      */
     public function update(
@@ -83,7 +83,7 @@ interface MembersRawContract
      *
      * @return BaseResponse<WorkspaceMember>
      *
-     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
+     * @throws WorkspaceMemberLimitExceededException
      * @throws APIException
      */
     public function add(
