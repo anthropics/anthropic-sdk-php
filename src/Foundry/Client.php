@@ -8,6 +8,8 @@ use Anthropic\Core\BaseClient;
 use Anthropic\Core\Util;
 use Anthropic\Foundry\Services\MessagesService;
 use Anthropic\RequestOptions;
+use Anthropic\Services\FilesService;
+use Anthropic\Services\SkillsService;
 use Anthropic\Services\UserProfilesService;
 use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -30,6 +32,16 @@ final class Client extends BaseClient
      * @api
      */
     public MessagesService $messages;
+
+    /**
+     * @api
+     */
+    public FilesService $files;
+
+    /**
+     * @api
+     */
+    public SkillsService $skills;
 
     /**
      * @api
@@ -83,13 +95,17 @@ final class Client extends BaseClient
         );
 
         $this->messages = new MessagesService($this);
-        $this->userProfiles = new UserProfilesService(new ServiceClient(
+
+        $serviceClient = new ServiceClient(
             headers: $this->headers,
             baseUrl: $baseUrl,
             options: $options,
             authHeaders: $this->authHeaders(...),
             openTelemetry: $openTelemetry,
-        ));
+        );
+        $this->files = new FilesService($serviceClient);
+        $this->skills = new SkillsService($serviceClient);
+        $this->userProfiles = new UserProfilesService($serviceClient);
     }
 
     /**
