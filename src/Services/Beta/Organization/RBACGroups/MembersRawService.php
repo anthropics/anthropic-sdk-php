@@ -13,6 +13,8 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\RBACGroups\MembersRawContract;
@@ -84,6 +86,8 @@ final class MembersRawService implements MembersRawContract
      *
      * @return BaseResponse<BetaRBACGroupMember>
      *
+     * @throws RBACGroupGrantsOwnerAccessException A role attached to an RBAC Group in the request grants owner access, so this API does not add members to that group (directly or through an invite), remove its members, or delete it. Make the change in the organization's admin settings in Claude.
+     * @throws RBACGroupOwnerAccessUnconfirmedException The API could not finish checking whether an RBAC Group in the request grants owner access, so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
      * @throws APIException
      */
     public function add(
@@ -126,6 +130,8 @@ final class MembersRawService implements MembersRawContract
      *
      * @return BaseResponse<BetaDeletedRBACGroupMember>
      *
+     * @throws RBACGroupGrantsOwnerAccessException A role attached to an RBAC Group in the request grants owner access, so this API does not add members to that group (directly or through an invite), remove its members, or delete it. Make the change in the organization's admin settings in Claude.
+     * @throws RBACGroupOwnerAccessUnconfirmedException The API could not finish checking whether an RBAC Group in the request grants owner access, so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
      * @throws APIException
      */
     public function remove(

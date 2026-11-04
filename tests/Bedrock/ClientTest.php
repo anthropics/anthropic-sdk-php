@@ -7,6 +7,7 @@ use Anthropic\Core\Util;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -190,6 +191,71 @@ final class ClientTest extends TestCase
 
         $this->assertSame('/model/anthropic.claude-3-5-sonnet-20241022-v2:0/invoke', $request->getUri()->getPath());
         $this->assertSame($expected, $request->getUri()->getQuery());
+    }
+
+    public function testInferenceProfileArnIsSentAsOnePathSegment(): void
+    {
+        $client = Client::withApiKey(
+            apiKey: 'test-bedrock-api-key',
+            region: 'us-east-1',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->messages->create(
+            maxTokens: 1024,
+            messages: [['content' => 'Hello', 'role' => 'user']],
+            model: 'arn:aws:bedrock:us-east-1:123456789012:inference-profile/us.anthropic.claude-sonnet-4-20250514-v1:0',
+        );
+
+        $this->assertSame(
+            '/model/arn:aws:bedrock:us-east-1:123456789012:inference-profile%2Fus.anthropic.claude-sonnet-4-20250514-v1:0/invoke',
+            $this->getLastRequest()->getUri()->getPath(),
+        );
+    }
+
+    /**
+     * @param \Closure(Client, string): mixed $call
+     */
+    #[DataProvider('dotSegmentModelCalls')]
+    public function testDotSegmentModelThrowsBeforeAnyRequestIsSent(\Closure $call, string $model): void
+    {
+        $client = Client::withApiKey(
+            apiKey: 'test-bedrock-api-key',
+            region: 'us-east-1',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        try {
+            $call($client, $model);
+            $this->fail("expected the model \"{$model}\" to be refused");
+        } catch (\InvalidArgumentException $e) {
+            $this->assertStringContainsString("dot segment \"{$model}\"", $e->getMessage());
+        }
+
+        $this->assertSame([], $this->transporter->getRequests());
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client, string): mixed, string}>
+     */
+    public static function dotSegmentModelCalls(): iterable
+    {
+        foreach (['.', '..'] as $model) {
+            yield "create with {$model}" => [
+                static fn (Client $client, string $model) => $client->messages->create(maxTokens: 1024, messages: [], model: $model),
+                $model,
+            ];
+
+            yield "createStream with {$model}" => [
+                static fn (Client $client, string $model) => $client->messages->createStream(maxTokens: 1024, messages: [], model: $model),
+                $model,
+            ];
+
+            yield "countTokens with {$model}" => [
+                static fn (Client $client, string $model) => $client->messages->countTokens(messages: [], model: $model),
+                $model,
+            ];
+        }
     }
 
     private function getLastRequest(): RequestInterface

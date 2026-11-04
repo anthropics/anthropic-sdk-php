@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\ClaudeTag;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Environments\BetaEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagSettingsCreate;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagSettingsUpdate;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagSlackChannelIdentifiers;
+use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
+use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
+use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\BetaClaudeTagDeletedSlackChannel;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\BetaClaudeTagSlackChannel;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsConflictException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsRefusedException;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
@@ -48,6 +56,14 @@ final class SlackChannelsService implements SlackChannelsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SlackChannelSetUpSettingsRefusedException The request set the channel up, and `settings` was then refused. The channel stays set up with every setting unset.
+     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
+     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
+     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
+     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
+     * @throws BetaEnvironmentNotFoundException `settings.environment_id` names no Environment within the organization's reach.
+     * @throws SlackChannelSetUpEnvironmentNotFoundException `settings.environment_id` names no Environment within the organization's reach, and the request had set the channel up by then. The channel stays set up with every setting unset.
+     * @throws SlackChannelSetUpSettingsConflictException The request set the channel up, and something else then changed the channel or removed it. Nothing of `settings` was stored.
      * @throws APIException
      */
     public function create(
@@ -76,6 +92,10 @@ final class SlackChannelsService implements SlackChannelsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
+     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
+     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
+     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
      * @throws APIException
      */
     public function retrieve(
@@ -104,6 +124,13 @@ final class SlackChannelsService implements SlackChannelsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
+     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
+     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
+     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
+     * @throws BetaEnvironmentNotFoundException `settings.environment_id` names no Environment within the organization's reach.
+     * @throws SlackChannelSetUpEnvironmentNotFoundException `settings.environment_id` names no Environment within the organization's reach, and the request had set the channel up by then. The channel stays set up with every setting unset.
+     * @throws SlackChannelSetUpSettingsConflictException The request set the channel up, and something else then changed the channel or removed it. Nothing of `settings` was stored.
      * @throws APIException
      */
     public function update(
@@ -135,6 +162,10 @@ final class SlackChannelsService implements SlackChannelsContract
      *
      * @return PageCursor<BetaClaudeTagSlackChannel>
      *
+     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
+     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
+     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
+     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
      * @throws APIException
      */
     public function list(
@@ -172,6 +203,11 @@ final class SlackChannelsService implements SlackChannelsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
+     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
+     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
+     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
+     * @throws SlackChannelSetUpSettingsConflictException The request set the channel up, and something else then changed the channel or removed it. Nothing of `settings` was stored.
      * @throws APIException
      */
     public function delete(

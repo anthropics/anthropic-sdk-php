@@ -131,19 +131,19 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     public ?float $weeklyAdoptionRate;
 
     /**
-     * Number of users with activity in Chat and Cowork unified on the requested day. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     * Number of users with activity in Chat and Cowork unified on the requested day. Omitted from the response where Chat and Cowork unified is not available.
      */
     #[Optional('chat_cowork_unified_daily_active_user_count', nullable: true)]
     public ?int $chatCoworkUnifiedDailyActiveUserCount;
 
     /**
-     * Number of users with activity in Chat and Cowork unified in the 28-day rolling window (30 days when the request filters by `rbac_group_id`). Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     * Number of users with activity in Chat and Cowork unified in the 28-day rolling window (30 days when the request filters by `rbac_group_id`). Omitted from the response where Chat and Cowork unified is not available.
      */
     #[Optional('chat_cowork_unified_monthly_active_user_count', nullable: true)]
     public ?int $chatCoworkUnifiedMonthlyActiveUserCount;
 
     /**
-     * Number of users with activity in Chat and Cowork unified in the 7-day rolling window. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     * Number of users with activity in Chat and Cowork unified in the 7-day rolling window. Omitted from the response where Chat and Cowork unified is not available.
      */
     #[Optional('chat_cowork_unified_weekly_active_user_count', nullable: true)]
     public ?int $chatCoworkUnifiedWeeklyActiveUserCount;
@@ -516,7 +516,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with activity in Chat and Cowork unified on the requested day. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     * Number of users with activity in Chat and Cowork unified on the requested day. Omitted from the response where Chat and Cowork unified is not available.
      */
     public function withChatCoworkUnifiedDailyActiveUserCount(
         ?int $chatCoworkUnifiedDailyActiveUserCount
@@ -528,7 +528,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with activity in Chat and Cowork unified in the 28-day rolling window (30 days when the request filters by `rbac_group_id`). Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     * Number of users with activity in Chat and Cowork unified in the 28-day rolling window (30 days when the request filters by `rbac_group_id`). Omitted from the response where Chat and Cowork unified is not available.
      */
     public function withChatCoworkUnifiedMonthlyActiveUserCount(
         ?int $chatCoworkUnifiedMonthlyActiveUserCount
@@ -540,7 +540,7 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     }
 
     /**
-     * Number of users with activity in Chat and Cowork unified in the 7-day rolling window. Omitted from the response on deployments that do not offer Chat and Cowork unified.
+     * Number of users with activity in Chat and Cowork unified in the 7-day rolling window. Omitted from the response where Chat and Cowork unified is not available.
      */
     public function withChatCoworkUnifiedWeeklyActiveUserCount(
         ?int $chatCoworkUnifiedWeeklyActiveUserCount

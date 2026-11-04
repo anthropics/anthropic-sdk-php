@@ -11,12 +11,17 @@ use Anthropic\Beta\Skills\SkillCreateParams;
 use Anthropic\Beta\Skills\SkillDeleteParams;
 use Anthropic\Beta\Skills\SkillListParams;
 use Anthropic\Beta\Skills\SkillRetrieveParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
+use Anthropic\CMEKContextUnavailableException;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SkillsRawContract;
@@ -47,6 +52,11 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<BetaSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws CMEKKeyDisabledException The workspace's customer-managed encryption key is disabled or revoked. Re-enable the key, then retry.
+     * @throws CMEKKeyNetworkBlockedException The key management service's network access controls blocked the request to the workspace's customer-managed encryption key. The key itself may be healthy.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws CMEKContextUnavailableException The workspace's encryption settings could not be read, so the request was refused. Retry in a few minutes.
      * @throws APIException
      */
     public function create(
@@ -106,6 +116,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<BetaSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
      * @throws APIException
      */
     public function retrieve(
@@ -155,6 +167,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<PageCursor<BetaSkill>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
      * @throws APIException
      */
     public function list(
@@ -209,6 +223,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<BetaDeletedSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
+     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
      * @throws APIException
      */
     public function delete(

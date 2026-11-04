@@ -63,6 +63,9 @@ final class BedrockMiddleware implements Middleware
             if (!is_string($model) || '' === $model) {
                 throw new \InvalidArgumentException('Request body must contain a non-empty string `model`.');
             }
+            if ('.' === $model || '..' === $model) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..".', "{$prefix}/model/{$model}", $model));
+            }
             $model = str_replace(['%40', '%3A'], ['@', ':'], rawurlencode($model));
 
             if ($isCountTokens) {

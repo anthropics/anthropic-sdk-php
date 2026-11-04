@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\BetaUnsupportedCharsetException;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplace;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceListParams\OwnerType;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceListParams\Source;
@@ -88,6 +89,7 @@ interface PluginMarketplacesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws BetaUnsupportedCharsetException The request's `Content-Type` header names a charset other than UTF-8, ISO-8859-1 or US-ASCII. Send the request with no charset, or with one of these.
      * @throws APIException
      */
     public function validateArchive(

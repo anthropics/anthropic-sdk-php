@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\BetaUnsupportedCharsetException;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplace;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceListParams;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceListParams\OwnerType;
@@ -260,6 +261,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
      *
      * @return BaseResponse<PluginMarketplaceValidationReport>
      *
+     * @throws BetaUnsupportedCharsetException The request's `Content-Type` header names a charset other than UTF-8, ISO-8859-1 or US-ASCII. Send the request with no charset, or with one of these.
      * @throws APIException
      */
     public function validateArchive(

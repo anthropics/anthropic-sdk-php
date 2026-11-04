@@ -10,6 +10,8 @@ use Anthropic\Beta\Organization\Users\UserRemoveResponse;
 use Anthropic\Beta\Organization\Users\UserUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\ConcurrentMembershipChangeException;
+use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -73,6 +75,8 @@ interface UsersRawContract
      *
      * @return BaseResponse<UserRemoveResponse>
      *
+     * @throws CannotRemoveLastMemberException The user is the organization's only member. Add another member before removing this one.
+     * @throws ConcurrentMembershipChangeException Another change to the organization's members is in progress. Retry the request once it completes.
      * @throws APIException
      */
     public function remove(

@@ -5,17 +5,20 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Organization\BetaBillingFrozenException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams\ScopeType;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitsAdminAPIWritesNotEnabledException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimitsRawContract;
@@ -42,6 +45,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
      * @throws APIException
      */
     public function retrieve(
@@ -86,6 +90,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<PageCursor<SpendLimit>>
      *
+     * @throws OrganizationTypeNotSupportedException The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
      * @throws APIException
      */
     public function list(
@@ -145,6 +150,8 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimitDeleteResponse>
      *
+     * @throws BetaBillingFrozenException Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
      * @throws APIException
      */
     public function delete(
@@ -189,6 +196,8 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
+     * @throws BetaBillingFrozenException Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
      * @throws APIException
      */
     public function set(

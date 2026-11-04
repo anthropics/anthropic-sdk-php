@@ -13,6 +13,8 @@ use Anthropic\Organization\APIKeys\APIKey;
 use Anthropic\Organization\APIKeys\APIKeyListParams;
 use Anthropic\Organization\APIKeys\APIKeyUpdateParams;
 use Anthropic\Organization\APIKeys\APIKeyUpdateParams\Status;
+use Anthropic\Organization\APIKeys\OrgAPIKeyLimitExceededException;
+use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\APIKeysRawContract;
@@ -70,6 +72,8 @@ final class APIKeysRawService implements APIKeysRawContract
      *
      * @return BaseResponse<APIKey>
      *
+     * @throws OrgAPIKeyLimitExceededException The organization has reached its limit of active API keys.
+     * @throws WorkspaceAPIKeyLimitExceededException The workspace has reached its limit of active API keys.
      * @throws APIException
      */
     public function update(

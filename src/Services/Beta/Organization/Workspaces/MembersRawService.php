@@ -18,6 +18,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\Workspaces\MembersRawContract;
@@ -91,6 +92,7 @@ final class MembersRawService implements MembersRawContract
      *
      * @return BaseResponse<WorkspaceMember>
      *
+     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
      * @throws APIException
      */
     public function update(
@@ -185,6 +187,7 @@ final class MembersRawService implements MembersRawContract
      *
      * @return BaseResponse<WorkspaceMember>
      *
+     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
      * @throws APIException
      */
     public function add(

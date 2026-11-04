@@ -95,13 +95,15 @@ final class Client extends \Anthropic\Client
                 );
             }
 
-            $locationUrl = "https://claude.googleapis.com/v1/projects/{$project}/locations/{$location}";
+            // Each value is one encoded path segment. ":" is put back because a
+            // domain-scoped project ID ("example.com:my-project") contains one.
+            $locationUrl = 'https://claude.googleapis.com'.str_replace('%3A', ':', Util::parsePath(['/v1/projects/%1$s/locations/%2$s', $project, $location]));
             $this->organizationBaseUrl = "{$locationUrl}/claudeOrganization/invoke";
             // Without a workspace ID only organization routes are reachable;
             // buildRequest() rejects every other route before it is sent.
             $baseUrl = null === $workspaceId
                 ? $this->organizationBaseUrl
-                : "{$locationUrl}/workspaces/{$workspaceId}/invoke";
+                : $locationUrl.str_replace('%3A', ':', Util::parsePath(['/workspaces/%1$s/invoke', $workspaceId]));
         }
 
         // Pass '' for apiKey to suppress ANTHROPIC_API_KEY,

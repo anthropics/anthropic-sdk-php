@@ -1,5 +1,6 @@
 *.php diff=php
 
+/.changelog                    export-ignore
 /.github                       export-ignore
 /bin                           export-ignore
 /scripts                       export-ignore
