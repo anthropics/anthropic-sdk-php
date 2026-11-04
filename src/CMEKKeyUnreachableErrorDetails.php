@@ -12,13 +12,13 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * The workspace's customer-managed encryption key could not be reached. Retry the request; if this continues, check that the key is available in your key management service, or contact Anthropic support.
  *
- * @phpstan-type CmekKeyUnreachableErrorDetailsShape = array{
+ * @phpstan-type CMEKKeyUnreachableErrorDetailsShape = array{
  *   errorCode: 'cmek_key_unreachable'
  * }
  */
-final class CmekKeyUnreachableErrorDetails implements BaseModel
+final class CMEKKeyUnreachableErrorDetails implements BaseModel
 {
-    /** @use SdkModel<CmekKeyUnreachableErrorDetailsShape> */
+    /** @use SdkModel<CMEKKeyUnreachableErrorDetailsShape> */
     use SdkModel;
 
     /** @var 'cmek_key_unreachable' $errorCode */

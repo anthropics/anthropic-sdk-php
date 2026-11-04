@@ -10,20 +10,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The request's workspace encryption context could not be resolved, so the request was refused. Retry in a few minutes.
+ * The workspace's customer-managed encryption key is disabled or revoked. Re-enable the key, then retry.
  *
- * @phpstan-type CmekContextUnavailableErrorDetailsShape = array{
- *   errorCode: 'cmek_context_unavailable'
+ * @phpstan-type CMEKKeyDisabledErrorDetailsShape = array{
+ *   errorCode: 'cmek_key_disabled'
  * }
  */
-final class CmekContextUnavailableErrorDetails implements BaseModel
+final class CMEKKeyDisabledErrorDetails implements BaseModel
 {
-    /** @use SdkModel<CmekContextUnavailableErrorDetailsShape> */
+    /** @use SdkModel<CMEKKeyDisabledErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'cmek_context_unavailable' $errorCode */
-    #[Required('error_code', type: new ConstantOf('cmek_context_unavailable'))]
-    public string $errorCode = 'cmek_context_unavailable';
+    /** @var 'cmek_key_disabled' $errorCode */
+    #[Required('error_code', type: new ConstantOf('cmek_key_disabled'))]
+    public string $errorCode = 'cmek_key_disabled';
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ final class CmekContextUnavailableErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'cmek_context_unavailable' $errorCode
+     * @param 'cmek_key_disabled' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {

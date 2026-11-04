@@ -10,20 +10,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The key management service's network access controls blocked the request to the workspace's customer-managed encryption key. The key itself may be healthy.
+ * The request's workspace encryption context could not be resolved, so the request was refused. Retry in a few minutes.
  *
- * @phpstan-type CmekKeyNetworkBlockedErrorDetailsShape = array{
- *   errorCode: 'cmek_key_network_blocked'
+ * @phpstan-type CMEKContextUnavailableErrorDetailsShape = array{
+ *   errorCode: 'cmek_context_unavailable'
  * }
  */
-final class CmekKeyNetworkBlockedErrorDetails implements BaseModel
+final class CMEKContextUnavailableErrorDetails implements BaseModel
 {
-    /** @use SdkModel<CmekKeyNetworkBlockedErrorDetailsShape> */
+    /** @use SdkModel<CMEKContextUnavailableErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'cmek_key_network_blocked' $errorCode */
-    #[Required('error_code', type: new ConstantOf('cmek_key_network_blocked'))]
-    public string $errorCode = 'cmek_key_network_blocked';
+    /** @var 'cmek_context_unavailable' $errorCode */
+    #[Required('error_code', type: new ConstantOf('cmek_context_unavailable'))]
+    public string $errorCode = 'cmek_context_unavailable';
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ final class CmekKeyNetworkBlockedErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'cmek_key_network_blocked' $errorCode
+     * @param 'cmek_context_unavailable' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {
