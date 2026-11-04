@@ -34,12 +34,10 @@ final class SSEStream implements BaseStream
                 case 'error':
                     if ($data = $row['data'] ?? '') {
                         $json = json_decode($data, associative: true) ?? $data;
-                        $message = Util::prettyEncodeJson($json);
 
                         throw APIStatusException::from(
                             request: $this->request,
                             response: $this->response,
-                            message: $message,
                             body: $json,
                         );
                     }

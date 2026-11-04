@@ -75,6 +75,20 @@ class SSEStreamTest extends TestCase
         $this->assertSame(1, $this->closes);
     }
 
+    public function testErrorEventIsInTheMessageOnce(): void
+    {
+        $stream = $this->stream("event: error\ndata: {\"detail\":\"out of fuel\"}\n\n");
+        $message = '';
+
+        try {
+            foreach ($stream as $_);
+        } catch (\Throwable $error) {
+            $message = $error->getMessage();
+        }
+
+        $this->assertSame(1, substr_count($message, 'out of fuel'));
+    }
+
     public function testHeldStreamStaysOpen(): void
     {
         $stream = $this->stream();
