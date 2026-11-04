@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The API could not finish checking whether an RBAC Group in the request grants owner access (the check reached a fixed limit), so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
+ * The API could not finish checking whether an RBAC Group in the request grants owner access, so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
  *
  * @phpstan-type RBACGroupOwnerAccessUnconfirmedErrorDetailsShape = array{
  *   errorCode: 'rbac_group_owner_access_unconfirmed'

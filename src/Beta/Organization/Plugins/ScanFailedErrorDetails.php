@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The content scan of the version in `plugin_version_id` failed, errored or reached no verdict, so the version cannot be served.
+ * The version in `plugin_version_id` did not pass its content scan, so it cannot be served.
  *
  * @phpstan-type ScanFailedErrorDetailsShape = array{
  *   errorCode: 'scan_failed', pluginVersionID: string

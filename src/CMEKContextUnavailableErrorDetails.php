@@ -10,7 +10,7 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * The request's workspace encryption context could not be resolved, so the request was refused. Retry in a few minutes.
+ * The workspace's encryption settings could not be read, so the request was refused. Retry in a few minutes.
  *
  * @phpstan-type CMEKContextUnavailableErrorDetailsShape = array{
  *   errorCode: 'cmek_context_unavailable'
