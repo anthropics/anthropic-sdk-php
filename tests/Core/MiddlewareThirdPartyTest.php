@@ -295,8 +295,7 @@ final class MiddlewareThirdPartyTest extends TestCase
             }
             $this->fail('expected APIStatusException');
         } catch (APIStatusException $e) {
-            $this->assertStringContainsString("\"type\": \"{$errorType}\"", $e->getMessage());
-            $this->assertStringContainsString("\"message\": \"{$errorMessage}\"", $e->getMessage());
+            $this->assertSame(['type' => 'error', 'error' => ['type' => $errorType, 'message' => $errorMessage]], $e->body);
         }
 
         $this->assertCount(1, $events);
