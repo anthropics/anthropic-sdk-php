@@ -124,6 +124,20 @@ enum ErrorCode: string
 
     case INVALID_METADATA = 'invalid_metadata';
 
+    case CANNOT_SIGN_OUT_PRIMARY_OWNER = 'cannot_sign_out_primary_owner';
+
+    case CANNOT_SIGN_OUT_SELF = 'cannot_sign_out_self';
+
+    case ORGANIZATION_NOT_ENROLLED_IN_BETA = 'organization_not_enrolled_in_beta';
+
+    case CANNOT_SIGN_OUT_MANAGED_MEMBER = 'cannot_sign_out_managed_member';
+
+    case CANNOT_SIGN_OUT_MEMBERSHIP_ADMIN = 'cannot_sign_out_membership_admin';
+
+    case CANNOT_SIGN_OUT_OWNER = 'cannot_sign_out_owner';
+
+    case CANNOT_SIGN_OUT_PRIVILEGED_MEMBER = 'cannot_sign_out_privileged_member';
+
     case BILLING_FROZEN = 'billing_frozen';
 
     case SPEND_LIMITS_ADMIN_API_WRITES_NOT_ENABLED = 'spend_limits_admin_api_writes_not_enabled';

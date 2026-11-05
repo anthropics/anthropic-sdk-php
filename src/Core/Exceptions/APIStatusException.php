@@ -2,6 +2,7 @@
 
 namespace Anthropic\Core\Exceptions;
 
+use Anthropic\Beta\BetaOrganizationNotEnrolledInBetaException;
 use Anthropic\Beta\BetaUnsupportedCharsetException;
 use Anthropic\Beta\Environments\BetaEnvironmentArchivedException;
 use Anthropic\Beta\Environments\BetaEnvironmentCreateDisabledException;
@@ -24,6 +25,12 @@ use Anthropic\Beta\Organization\Plugins\ScanFailedException;
 use Anthropic\Beta\Organization\Plugins\ScanPendingException;
 use Anthropic\Beta\Organization\Plugins\SkillNameTakenException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitsAdminAPIWritesNotEnabledException;
+use Anthropic\Beta\Organization\Users\CannotSignOutManagedMemberException;
+use Anthropic\Beta\Organization\Users\CannotSignOutMembershipAdminException;
+use Anthropic\Beta\Organization\Users\CannotSignOutOwnerException;
+use Anthropic\Beta\Organization\Users\CannotSignOutPrimaryOwnerException;
+use Anthropic\Beta\Organization\Users\CannotSignOutPrivilegedMemberException;
+use Anthropic\Beta\Organization\Users\CannotSignOutSelfException;
 use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\ClaudeCodeVersionTooOldException;
 use Anthropic\CMEKContextUnavailableException;
@@ -113,6 +120,8 @@ class APIStatusException extends APIException
         '400 available_tools_limit_exceeded' => AvailableToolsLimitExceededException::class,
         '400 cannot_invite_emails_with_unverified_domains' => CannotInviteEmailsWithUnverifiedDomainsException::class,
         '400 cannot_remove_last_member' => CannotRemoveLastMemberException::class,
+        '400 cannot_sign_out_primary_owner' => CannotSignOutPrimaryOwnerException::class,
+        '400 cannot_sign_out_self' => CannotSignOutSelfException::class,
         '400 claude_code_key_creator_not_member' => ClaudeCodeKeyCreatorNotMemberException::class,
         '400 claude_code_version_too_old' => ClaudeCodeVersionTooOldException::class,
         '400 cmek_key_disabled' => CMEKKeyDisabledException::class,
@@ -137,6 +146,7 @@ class APIStatusException extends APIException
         '400 key_profile_mismatch' => KeyProfileMismatchException::class,
         '400 org_api_key_limit_exceeded' => OrgAPIKeyLimitExceededException::class,
         '400 org_member_limit_exceeded' => OrgMemberLimitExceededException::class,
+        '400 organization_not_enrolled_in_beta' => BetaOrganizationNotEnrolledInBetaException::class,
         '400 organization_on_hold' => OrganizationOnHoldException::class,
         '400 organization_type_not_supported' => OrganizationTypeNotSupportedException::class,
         '400 rbac_group_grants_owner_access' => RBACGroupGrantsOwnerAccessException::class,
@@ -159,6 +169,10 @@ class APIStatusException extends APIException
         '400 workspace_policy_violation' => WorkspacePolicyViolationException::class,
         '403 api_key_scope_missing' => APIKeyScopeMissingException::class,
         '403 billing_frozen' => BetaBillingFrozenException::class,
+        '403 cannot_sign_out_managed_member' => CannotSignOutManagedMemberException::class,
+        '403 cannot_sign_out_membership_admin' => CannotSignOutMembershipAdminException::class,
+        '403 cannot_sign_out_owner' => CannotSignOutOwnerException::class,
+        '403 cannot_sign_out_privileged_member' => CannotSignOutPrivilegedMemberException::class,
         '403 claude_tag_writes_not_enabled' => ClaudeTagWritesNotEnabledException::class,
         '403 compliance_configuration_restricted' => ComplianceConfigurationRestrictedException::class,
         '403 environment_create_disabled' => BetaEnvironmentCreateDisabledException::class,

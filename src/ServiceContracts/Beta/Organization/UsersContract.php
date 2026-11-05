@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
+use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\BetaOrganizationNotEnrolledInBetaException;
+use Anthropic\Beta\Organization\Users\CannotSignOutManagedMemberException;
+use Anthropic\Beta\Organization\Users\CannotSignOutMembershipAdminException;
+use Anthropic\Beta\Organization\Users\CannotSignOutOwnerException;
+use Anthropic\Beta\Organization\Users\CannotSignOutPrimaryOwnerException;
+use Anthropic\Beta\Organization\Users\CannotSignOutPrivilegedMemberException;
+use Anthropic\Beta\Organization\Users\CannotSignOutSelfException;
 use Anthropic\Beta\Organization\Users\OrganizationUser;
 use Anthropic\Beta\Organization\Users\UserRemoveResponse;
 use Anthropic\Beta\Organization\Users\UserUpdateParams\Role;
@@ -89,4 +97,26 @@ interface UsersContract
         string $userID,
         RequestOptions|array|null $requestOptions = null
     ): UserRemoveResponse;
+
+    /**
+     * @api
+     *
+     * @param string $userID ID of the User.
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `admin-user-sign-out-2026-10-08` in this header.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws CannotSignOutPrimaryOwnerException
+     * @throws CannotSignOutSelfException
+     * @throws BetaOrganizationNotEnrolledInBetaException
+     * @throws CannotSignOutManagedMemberException
+     * @throws CannotSignOutMembershipAdminException
+     * @throws CannotSignOutOwnerException
+     * @throws CannotSignOutPrivilegedMemberException
+     * @throws APIException
+     */
+    public function signOut(
+        string $userID,
+        ?array $betas = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): OrganizationUser;
 }
