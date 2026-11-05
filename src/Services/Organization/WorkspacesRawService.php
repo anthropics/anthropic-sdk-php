@@ -10,6 +10,8 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationFailedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationTimedOutException;
 use Anthropic\Organization\Workspaces\DataResidencyCreateConfig;
 use Anthropic\Organization\Workspaces\DataResidencyUpdateConfig;
 use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
@@ -53,6 +55,8 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<Workspace>
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException
@@ -128,6 +132,8 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<Workspace>
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException

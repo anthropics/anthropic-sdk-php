@@ -60,6 +60,8 @@ use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
 use Anthropic\Organization\ConcurrentMembershipChangeException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyInWorkspacePolicyException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationFailedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationTimedOutException;
 use Anthropic\Organization\Invites\AlreadyMemberException;
 use Anthropic\Organization\Invites\CannotInviteEmailsWithUnverifiedDomainsException;
 use Anthropic\Organization\Invites\EmailDomainNotAllowedException;
@@ -126,6 +128,8 @@ class APIStatusException extends APIException
         '400 email_domain_not_allowed' => EmailDomainNotAllowedException::class,
         '400 environment_archived' => BetaEnvironmentArchivedException::class,
         '400 external_key_in_workspace_policy' => ExternalKeyInWorkspacePolicyException::class,
+        '400 external_key_validation_failed' => ExternalKeyValidationFailedException::class,
+        '400 external_key_validation_timed_out' => ExternalKeyValidationTimedOutException::class,
         '400 file_not_downloadable' => FileNotDownloadableException::class,
         '400 invalid_config_type_change' => BetaInvalidConfigTypeChangeException::class,
         '400 invalid_metadata' => BetaInvalidMetadataException::class,

@@ -6,6 +6,8 @@ namespace Anthropic\ServiceContracts\Organization;
 
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationFailedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationTimedOutException;
 use Anthropic\Organization\Workspaces\DataResidencyCreateConfig;
 use Anthropic\Organization\Workspaces\DataResidencyUpdateConfig;
 use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
@@ -43,6 +45,8 @@ interface WorkspacesContract
      * @param string|null $userProfileID ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. The user profile can't be replaced or removed later; only deleting the user profile clears it.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException
@@ -93,6 +97,8 @@ interface WorkspacesContract
      * @param string $userProfileID ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. Once set, it can't be replaced or removed (sending the same ID again changes nothing); only deleting the user profile clears it. The default Workspace can't have a user profile.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException

@@ -98,6 +98,10 @@ enum ErrorCode: string
 
     case CONCURRENT_MEMBERSHIP_CHANGE = 'concurrent_membership_change';
 
+    case EXTERNAL_KEY_VALIDATION_FAILED = 'external_key_validation_failed';
+
+    case EXTERNAL_KEY_VALIDATION_TIMED_OUT = 'external_key_validation_timed_out';
+
     case KEY_PROFILE_MISMATCH = 'key_profile_mismatch';
 
     case WORKSPACE_POLICY_VIOLATION = 'workspace_policy_violation';
