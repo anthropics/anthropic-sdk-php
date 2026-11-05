@@ -46,6 +46,7 @@ use Psr\Http\Message\UriInterface;
  *   startTime: int|float,
  *   response?: ResponseInterface,
  *   data?: mixed,
+ *   decoded?: mixed,
  *   error?: \Throwable,
  *   cancelled?: bool,
  *   events?: \Generator<mixed>,
@@ -91,6 +92,96 @@ class Tracing
 
     /** The `url.scheme` attribute: the scheme of the URL of the first request. */
     public const URL_SCHEME = 'url.scheme';
+
+    /**
+     * The attributes that every call span starts with, each with its value, unless what starts the span gives the attribute another value.
+     *
+     * @var array<non-empty-string,string>
+     */
+    protected const CLIENT_ATTRIBUTES = ['gen_ai.provider.name' => 'anthropic'];
+
+    /**
+     * The attributes that a call span gets from the headers of the final response, or of the error response its call failed with, each with its header.
+     *
+     * @var array<non-empty-string,string>
+     */
+    protected const RESPONSE_HEADERS_BY_ATTRIBUTE = [
+        'anthropic.request.id' => 'request-id',
+        'anthropic.organization.id' => 'anthropic-organization-id',
+        'anthropic.workspace.id' => 'anthropic-workspace-id',
+    ];
+
+    /**
+     * By span name, the attributes that the call spans of that name get from their request and their response. `constants` has each attribute with its value. `request` and `response` have each attribute with the path of a field of that body, and the type of the attribute's value. `requestHeaders` has each attribute with a request header, in lower case, and that type. `stream` is the attribute that is true on the span of a call that streams its response.
+     *
+     * @var array<string,array{constants: array<non-empty-string,bool|float|int|string>, request: array<non-empty-string,array{list<string>,string}>, requestHeaders: array<non-empty-string,array{string,string}>, stream: non-empty-string|null, response: array<non-empty-string,array{list<string>,string}>}>
+     */
+    protected const SPAN_ATTRIBUTES = [
+        'anthropic.messages.create' => [
+            'constants' => ['gen_ai.operation.name' => 'chat'],
+            'request' => [
+                'gen_ai.request.model' => [['model'], 'string'],
+                'gen_ai.request.max_tokens' => [['max_tokens'], 'integer'],
+                'gen_ai.request.reasoning.level' => [
+                    ['output_config', 'effort'], 'string',
+                ],
+                'anthropic.request.service_tier' => [['service_tier'], 'string'],
+                'anthropic.thinking.type' => [['thinking', 'type'], 'string'],
+                'anthropic.thinking.budget_tokens' => [
+                    ['thinking', 'budget_tokens'], 'integer',
+                ],
+            ],
+            'requestHeaders' => ['anthropic.beta' => ['anthropic-beta', 'string[]']],
+            'stream' => 'gen_ai.request.stream',
+            'response' => [
+                'gen_ai.response.id' => [['id'], 'string'],
+                'gen_ai.response.model' => [['model'], 'string'],
+                'gen_ai.usage.cache_write.input_tokens' => [
+                    ['usage', 'cache_creation_input_tokens'], 'integer',
+                ],
+                'gen_ai.usage.cache_read.input_tokens' => [
+                    ['usage', 'cache_read_input_tokens'], 'integer',
+                ],
+                'anthropic.usage.cache_creation.ephemeral_5m_input_tokens' => [
+                    ['usage', 'cache_creation', 'ephemeral_5m_input_tokens'], 'integer',
+                ],
+                'anthropic.usage.cache_creation.ephemeral_1h_input_tokens' => [
+                    ['usage', 'cache_creation', 'ephemeral_1h_input_tokens'], 'integer',
+                ],
+                'anthropic.response.service_tier' => [
+                    ['usage', 'service_tier'], 'string',
+                ],
+                'gen_ai.usage.output_tokens' => [['usage', 'output_tokens'], 'integer'],
+                'gen_ai.usage.reasoning.output_tokens' => [
+                    ['usage', 'output_tokens_details', 'thinking_tokens'], 'integer',
+                ],
+                'anthropic.message.stop_reason' => [['stop_reason'], 'string'],
+            ],
+        ],
+        'anthropic.messages.count_tokens' => [
+            'constants' => [],
+            'request' => ['gen_ai.request.model' => [['model'], 'string']],
+            'requestHeaders' => [],
+            'stream' => null,
+            'response' => [
+                'anthropic.message.count_tokens.input_tokens' => [
+                    ['input_tokens'], 'integer',
+                ],
+            ],
+        ],
+        'anthropic.sessions.create' => [
+            'constants' => [],
+            'request' => [
+                'anthropic.session.environment.id' => [['environment_id'], 'string'],
+            ],
+            'requestHeaders' => [],
+            'stream' => null,
+            'response' => [
+                'gen_ai.agent.name' => [['agent', 'name'], 'string'],
+                'gen_ai.request.model' => [['agent', 'model', 'id'], 'string'],
+            ],
+        ],
+    ];
 
     /**
      * The query parameters whose value is content: one that filters like a search, or one whose value comes from stored content. A query that has one of them is content, and so is the URL with that query.
@@ -226,7 +317,7 @@ class Tracing
     }
 
     /**
-     * Starts the call span of an API call named `$name`, as a child of the current span, with `$attributes`: what is known of the call before it starts, such as the resource IDs in the request's path, as the SDK method named them. A sampler sees only the attributes a span starts with. Returns null when the request was not made through an SDK method and so has no span name, or when the span neither records nor propagates a trace context: such a span has no effect, so the API call runs as if tracing were off. It runs so too when starting the span throws. For a client whose requests carry no trace context (`$propagates` is false) the propagator is not asked, and a span that does not record is dropped only when its context is not valid: one with a valid context is still the current span while the attempts run, so that the application's HTTP instrumentation, which propagates for such a client, continues its trace with its sampling decision.
+     * Starts the call span of an API call named `$name`, as a child of the current span, with `$attributes`: what is known of the call before it starts, such as the resource IDs in the request's path, as the SDK method named them. It also starts with each of {@see self::CLIENT_ATTRIBUTES} that `$attributes` do not have. A sampler sees only the attributes a span starts with. Returns null when the request was not made through an SDK method and so has no span name, or when the span neither records nor propagates a trace context: such a span has no effect, so the API call runs as if tracing were off. It runs so too when starting the span throws. For a client whose requests carry no trace context (`$propagates` is false) the propagator is not asked, and a span that does not record is dropped only when its context is not valid: one with a valid context is still the current span while the attempts run, so that the application's HTTP instrumentation, which propagates for such a client, continues its trace with its sampling decision.
      *
      * @param array<non-empty-string,mixed> $attributes
      */
@@ -235,8 +326,8 @@ class Tracing
         if (is_null($name) || '' === $name) {
             return null;
         }
-        // An attribute holds a string, an integer, a float, a boolean or a list of strings: anything else is left out.
-        $attributes = array_filter($attributes, static fn (mixed $value): bool => is_scalar($value) || (is_array($value) && array_is_list($value) && $value === array_filter($value, 'is_string')));
+        // An attribute holds a string, an integer, a float, a boolean or a list of those: anything else is left out.
+        $attributes = array_filter([...static::CLIENT_ATTRIBUTES, ...$attributes], static fn (mixed $value): bool => is_scalar($value) || (is_array($value) && array_is_list($value) && $value === array_filter($value, 'is_scalar')));
 
         try {
             $span = $tracer->spanBuilder($name)->setSpanKind(SpanKind::KIND_CLIENT)->setAttributes($attributes)->startSpan();
@@ -272,6 +363,68 @@ class Tracing
     public static function requestAttributes(string $method, ?string $route): array
     {
         return [self::HTTP_REQUEST_METHOD => strtoupper($method), ...(is_null($route) ? [] : [self::HTTP_ROUTE => $route])];
+    }
+
+    /**
+     * The attributes that the call span named `$name` starts with from its request, as {@see self::SPAN_ATTRIBUTES} has them: the constants, the fields of `$body`, which is the request's body in the API's shape, the headers among `$headers`, which are the request's headers by name, and the stream attribute of a call that streams its response (`$stream`). A field or a header that the request lacks, or whose value is not of the attribute's type, gives no attribute. Never throws.
+     *
+     * @param array<array-key,mixed> $headers
+     *
+     * @return array<non-empty-string,bool|float|int|string|list<bool|float|int|string>>
+     */
+    public static function spanRequestAttributes(?string $name, mixed $body, array $headers = [], bool $stream = false): array
+    {
+        $table = static::SPAN_ATTRIBUTES[$name ?? ''] ?? null;
+        if (is_null($table)) {
+            return [];
+        }
+        $attributes = $table['constants'];
+
+        try {
+            foreach ($table['request'] as $attribute => [$path, $type]) {
+                $value = self::attributeValue(self::dig($body, $path), $type);
+                if (!is_null($value)) {
+                    $attributes[$attribute] = $value;
+                }
+            }
+            $headers = array_change_key_case($headers);
+            foreach ($table['requestHeaders'] as $attribute => [$header, $type]) {
+                $value = self::headerValue($headers[$header] ?? null, $type);
+                if (!is_null($value)) {
+                    $attributes[$attribute] = $value;
+                }
+            }
+        } catch (\Throwable) {
+            // A body that cannot be read, such as a model that throws when it is serialized, must not fail the API call.
+        }
+        if ($stream && !is_null($table['stream'])) {
+            $attributes[$table['stream']] = true;
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * The attributes that the call span named `$name` gets from `$response`, the body of its response in the API's shape, as {@see self::SPAN_ATTRIBUTES} has them. A field that the response lacks, or whose value is an empty string or not of the attribute's type, gives no attribute. Never throws.
+     *
+     * @return array<non-empty-string,bool|float|int|string|list<bool|float|int|string>>
+     */
+    public static function spanResponseAttributes(?string $name, mixed $response): array
+    {
+        $attributes = [];
+
+        try {
+            foreach (static::SPAN_ATTRIBUTES[$name ?? '']['response'] ?? [] as $attribute => [$path, $type]) {
+                $value = self::attributeValue(self::dig($response, $path), $type);
+                if (!is_null($value) && '' !== $value) {
+                    $attributes[$attribute] = $value;
+                }
+            }
+        } catch (\Throwable) {
+            // A body that cannot be read must not fail the API call.
+        }
+
+        return $attributes;
     }
 
     /**
@@ -384,6 +537,8 @@ class Tracing
      *
      * A method that creates one object names the attribute of that object's ID (the `createdId` of the API call that `$result['options']` name), which the span gets from the `id` of `$result['data']`, or from the field the method names with it. A call that failed has no `$result['data']`, and so no such attribute.
      *
+     * The span also gets the attributes of {@see self::RESPONSE_HEADERS_BY_ATTRIBUTE} from the headers of the response, and those that {@see self::SPAN_ATTRIBUTES} has for the response of its span name from `$result['decoded']`, the decoded body that `$result['data']` was parsed from. A streamed body sets none of the latter by itself.
+     *
      * Does nothing to a span that is not recording, such as one that already ended. Never throws, so that it can run just before the API call returns or throws, or while PHP frees a response.
      *
      * @param ApiCallResult $result
@@ -402,8 +557,27 @@ class Tracing
             $response = $result['response'] ?? ($error instanceof APIException ? $error->response : null);
             if (!is_null($response)) {
                 $span->setAttribute(self::HTTP_RESPONSE_STATUS_CODE, $response->getStatusCode());
+
+                try {
+                    foreach (static::RESPONSE_HEADERS_BY_ATTRIBUTE as $attribute => $header) {
+                        $value = $response->getHeaderLine($header);
+                        if ('' !== $value) {
+                            $span->setAttribute($attribute, $value);
+                        }
+                    }
+                } catch (\Throwable) {
+                    // A header that cannot be read, or an attribute the span refuses, must not keep the span from ending.
+                }
             }
-            $createdId = $result['options']->apiCall()?->createdId;
+            $call = $result['options']->apiCall();
+            if (array_key_exists('decoded', $result)) {
+                try {
+                    $span->setAttributes(self::spanResponseAttributes($call?->name, $result['decoded']));
+                } catch (\Throwable) {
+                    // An attribute of the response's body that the span refuses must not keep the span from ending.
+                }
+            }
+            $createdId = $call?->createdId;
             if (!is_null($createdId) && $data instanceof BaseModel) {
                 // A membership, such as a workspace member, has the ID in a field like `user_id`.
                 [$attribute, $field] = is_array($createdId) ? [array_key_first($createdId), current($createdId)] : [$createdId, 'id'];
@@ -542,6 +716,81 @@ class Tracing
                 throw $error;
             }
         })();
+    }
+
+    /**
+     * The value at `$path` of `$data`, a body in the API's shape: an array or an object, where a model counts as what it serializes to. Null when `$data` has no such field.
+     *
+     * @param list<string> $path
+     */
+    private static function dig(mixed $data, array $path): mixed
+    {
+        foreach ($path as $name) {
+            if ($data instanceof \JsonSerializable) {
+                $data = $data->jsonSerialize();
+            }
+            if (is_object($data)) {
+                $data = get_object_vars($data);
+            }
+            if (!is_array($data)) {
+                return null;
+            }
+            $data = $data[$name] ?? null;
+        }
+
+        return $data;
+    }
+
+    /**
+     * `$value` as an attribute of `$type` holds it, or null when it is of another type, so that a body this version of the SDK does not know sets no attribute instead of a wrong one. `number` takes an integer too, as a float, and `any` takes a string, an integer, a float or a boolean. A type that ends in `[]` takes a list whose items are all of that type.
+     *
+     * @return bool|float|int|string|list<bool|float|int|string>|null
+     */
+    private static function attributeValue(mixed $value, string $type): array|bool|float|int|string|null
+    {
+        if (str_ends_with($type, '[]')) {
+            if (!is_array($value) || !array_is_list($value)) {
+                return null;
+            }
+            $items = [];
+            foreach ($value as $item) {
+                $item = self::attributeValue($item, substr($type, 0, -2));
+                if (is_null($item) || is_array($item)) {
+                    return null;
+                }
+                $items[] = $item;
+            }
+
+            return $items;
+        }
+
+        return match (true) {
+            is_string($value) => in_array($type, ['string', 'any'], strict: true) ? $value : null,
+            is_int($value) => match ($type) {
+                'integer', 'any' => $value,
+                'number' => (float) $value,
+                default => null,
+            },
+            is_float($value) => in_array($type, ['number', 'any'], strict: true) ? $value : null,
+            is_bool($value) => in_array($type, ['boolean', 'any'], strict: true) ? $value : null,
+            default => null,
+        };
+    }
+
+    /**
+     * A request header's `$value`, a string or a list of them, as an attribute of `$type` holds it: for a type that ends in `[]`, what the header lists between commas, and else the header as it is sent. Null for a header that the request lacks, or that lists nothing.
+     *
+     * @return string|list<string>|null
+     */
+    private static function headerValue(mixed $value, string $type): string|array|null
+    {
+        $line = implode(',', array_map('strval', array_filter(is_array($value) ? $value : [$value], 'is_scalar')));
+        $items = array_values(array_filter(array_map('trim', explode(',', $line)), static fn (string $item): bool => '' !== $item));
+        if ([] === $items) {
+            return null;
+        }
+
+        return str_ends_with($type, '[]') ? $items : $line;
     }
 
     /**

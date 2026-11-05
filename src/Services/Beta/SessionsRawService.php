@@ -98,7 +98,6 @@ final class SessionsRawService implements SessionsRawContract
                 route: '/v1/sessions',
                 attributes: [
                     'gen_ai.agent.id' => is_array($agent) ? ($agent['id'] ?? null) : $agent,
-                    'anthropic.session.environment.id' => $parsed['environment_id'] ?? null,
                 ],
                 createdId: 'anthropic.session.id',
             )),

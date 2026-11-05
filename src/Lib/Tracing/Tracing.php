@@ -7,18 +7,14 @@ namespace Anthropic\Lib\Tracing;
 use Anthropic\Aws;
 use Anthropic\Bedrock;
 use Anthropic\Beta\Messages\BetaMessage;
-use Anthropic\Beta\Messages\BetaMessageTokensCount;
 use Anthropic\Beta\Messages\BetaRawMessageStartEvent;
-use Anthropic\Beta\Sessions\BetaManagedAgentsSession;
 use Anthropic\Core\BaseClient;
 use Anthropic\Core\Contracts\BaseStream;
-use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\Foundry;
 use Anthropic\GoogleCloud;
 use Anthropic\Lib\Streaming\MessageAccumulator;
 use Anthropic\Messages\Message;
-use Anthropic\Messages\MessageTokensCount;
 use Anthropic\RequestOptions;
 use Anthropic\Vertex;
 use OpenTelemetry\API\Behavior\LogsMessagesTrait;
@@ -48,11 +44,16 @@ final class Tracing extends \Anthropic\Core\Tracing
     /** The headers of the W3C trace context and baggage, which no signature covers whatever propagator is registered. */
     private const TRACE_CONTEXT_HEADERS = ['traceparent', 'tracestate', 'baggage'];
 
-    /** The attributes that come from response headers, each with its header. */
-    private const RESPONSE_HEADER_ATTRIBUTES = [
-        TraceAttributes::ANTHROPIC_REQUEST_ID => 'request-id',
-        TraceAttributes::ANTHROPIC_ORGANIZATION_ID => 'anthropic-organization-id',
-        TraceAttributes::ANTHROPIC_WORKSPACE_ID => 'anthropic-workspace-id',
+    /**
+     * The paths of the fields of a Message that are final only from `message_delta` on: `message_start` has a
+     * placeholder for each. A streamed Message sets no attribute from them until `message_delta` was read.
+     *
+     * @var list<list<string>>
+     */
+    private const FINAL_FROM_MESSAGE_DELTA = [
+        ['stop_reason'],
+        ['usage', 'output_tokens'],
+        ['usage', 'output_tokens_details', 'thinking_tokens'],
     ];
 
     /**
@@ -241,8 +242,8 @@ final class Tracing extends \Anthropic\Core\Tracing
      * {@see BaseClient::request()} with the request options. Null when the client's spans are disabled, or when the span would have no effect.
      * A sampler sees only what a span starts with, so the span starts with everything the method knows of its call:
      * the HTTP method, which is POST for both methods, and `$route`, the attributes of
-     * {@see self::apiCallSpanAttributes()}, the model of `$body` and, for `messages.create`, the request attributes and
-     * the beta names of the request headers.
+     * {@see self::apiCallSpanAttributes()}, those that {@see self::spanRequestAttributes()} reads from `$body` and from
+     * the request headers, and the output type of `messages.create`.
      *
      * @param 'anthropic.messages.count_tokens'|'anthropic.messages.create' $name
      * @param '/v1/messages'|'/v1/messages/count_tokens' $route the endpoint's path as the API description gives it, on every platform
@@ -266,33 +267,21 @@ final class Tracing extends \Anthropic\Core\Tracing
             ...self::requestAttributes('POST', $route),
             // The conversation may come from the client's own request options, which `$options` do not have yet.
             ...self::apiCallSpanAttributes($client, $client->mergedOptions($options)),
-            TraceAttributes::GEN_AI_OPERATION_NAME => 'anthropic.messages.create' === $name ? TraceAttributeValues::GEN_AI_OPERATION_NAME_VALUE_CHAT : null,
-            TraceAttributes::GEN_AI_REQUEST_MODEL => $body['model'] ?? null,
         ];
-        if ('anthropic.messages.create' === $name) {
-            try {
-                // The header as the client builds it for the attempts: its own headers, then the call's.
-                $headers = Util::array_transform_keys(array_intersect_key($body, $headerParams), $headerParams);
-                $betas = $client->mergedHeaders($headers, $options)['anthropic-beta'] ?? null;
-                $attributes += [
-                    TraceAttributes::GEN_AI_REQUEST_MAX_TOKENS => $body['max_tokens'] ?? null,
-                    // An integer is a valid temperature or `top_p`, and both attributes are doubles.
-                    TraceAttributes::GEN_AI_REQUEST_TEMPERATURE => is_int($body['temperature'] ?? null) ? (float) $body['temperature'] : ($body['temperature'] ?? null),
-                    TraceAttributes::GEN_AI_REQUEST_TOP_P => is_int($body['top_p'] ?? null) ? (float) $body['top_p'] : ($body['top_p'] ?? null),
-                    TraceAttributes::GEN_AI_REQUEST_TOP_K => $body['top_k'] ?? null,
-                    TraceAttributes::GEN_AI_REQUEST_STREAM => true === ($body['stream'] ?? null) ? true : null,
-                    TraceAttributes::GEN_AI_REQUEST_REASONING_LEVEL => self::field($body['output_config'] ?? null, 'effort'),
-                    TraceAttributes::GEN_AI_OUTPUT_TYPE => self::setsJsonOutputFormat($body) ? TraceAttributeValues::GEN_AI_OUTPUT_TYPE_VALUE_JSON : null,
-                    TraceAttributes::ANTHROPIC_REQUEST_SERVICE_TIER => $body['service_tier'] ?? null,
-                    TraceAttributes::ANTHROPIC_THINKING_TYPE => self::field($body['thinking'] ?? null, 'type'),
-                    TraceAttributes::ANTHROPIC_THINKING_BUDGET_TOKENS => self::field($body['thinking'] ?? null, 'budget_tokens'),
-                    TraceAttributes::ANTHROPIC_BETA => array_values(array_filter(array_map('trim', explode(',', implode(',', (array) $betas))), static fn (string $beta) => '' !== $beta)),
-                ];
-            } catch (\Throwable $problem) {
-                // A failure to record telemetry must not fail the API call.
-                self::logDebug('could not record the request on its span', ['exception' => $problem]);
+
+        $headers = [];
+
+        try {
+            // The headers as the client builds them for the attempts: its own, then the call's.
+            $headers = $client->mergedHeaders(Util::array_transform_keys(array_intersect_key($body, $headerParams), $headerParams), $options);
+            if ('anthropic.messages.create' === $name && self::setsJsonOutputFormat($body)) {
+                $attributes[TraceAttributes::GEN_AI_OUTPUT_TYPE] = TraceAttributeValues::GEN_AI_OUTPUT_TYPE_VALUE_JSON;
             }
+        } catch (\Throwable $problem) {
+            // A failure to record telemetry must not fail the API call.
+            self::logDebug('could not record the request on its span', ['exception' => $problem]);
         }
+        $attributes += self::spanRequestAttributes($name, $body, $headers, true === ($body['stream'] ?? null));
         // An empty string or an empty list says nothing. `startApiCallSpan` leaves out what no attribute can hold.
         $span = self::startApiCallSpan($tracer, $name, array_filter($attributes, static fn (mixed $value): bool => '' !== $value && [] !== $value), $client->propagates());
 
@@ -326,10 +315,11 @@ final class Tracing extends \Anthropic\Core\Tracing
     }
 
     /**
-     * Sets on the call span that a `messages.create` method started what comes from `$message`, the parsed response
-     * to the request `$body`: the response attributes and, in content mode, the response's content. The content is
-     * written together with the request's, so that the size limit counts both. Returns `$message`, and records
-     * nothing of a body that did not parse to a Message.
+     * Sets on the call span that a `messages.create` method started what the SDK works out from `$message`, the parsed
+     * response to the request `$body`: the token sums and, in content mode, the response's content.
+     * {@see self::endApiCallSpan()} sets the attributes that are fields of the response. The content is written together
+     * with the request's, so that the size limit counts both. Returns `$message`, and records nothing of a body that did
+     * not parse to a Message.
      *
      * @template TParsed
      *
@@ -347,9 +337,9 @@ final class Tracing extends \Anthropic\Core\Tracing
         }
 
         try {
-            // The attributes come from the decoded body: serializing the model back to it costs more than everything
-            // else the span records.
-            self::setMessageResponseAttributes($span, $decoded, $decoded['usage'] ?? null, true);
+            // The sums come from the decoded body: serializing the model back to it costs more than everything else
+            // the span records.
+            self::setUsageSums($span, $decoded['usage'] ?? null, true);
             if (self::recordsContent($client)) {
                 Content::setMessageContent($span, $body, self::messageContentBlocks($decoded), self::contentLimit($client));
             }
@@ -372,30 +362,6 @@ final class Tracing extends \Anthropic\Core\Tracing
         $format = $body['output_format'] ?? self::field($body['output_config'] ?? null, 'format');
 
         return 'json_schema' === self::field($format, 'type');
-    }
-
-    /**
-     * Sets on the call span that a `messages.countTokens` method started the token count of its parsed response.
-     * Returns `$count`.
-     *
-     * @template TParsed
-     *
-     * @param TParsed $count
-     *
-     * @return TParsed
-     */
-    public static function recordMessagesCountTokensResponse(?ApiCallSpan $callSpan, mixed $count): mixed
-    {
-        try {
-            if ($count instanceof MessageTokensCount || $count instanceof BetaMessageTokensCount) {
-                $callSpan?->span->setAttribute(TraceAttributes::ANTHROPIC_MESSAGE_COUNT_TOKENS_INPUT_TOKENS, $count->inputTokens);
-            }
-        } catch (\Throwable $problem) {
-            // A failure to record telemetry must not fail the API call.
-            self::logDebug('could not record the response on its span', ['exception' => $problem]);
-        }
-
-        return $count;
     }
 
     /**
@@ -525,7 +491,6 @@ final class Tracing extends \Anthropic\Core\Tracing
     }
 
     /**
-     * Sets on `$span` the attributes that every API call has from `$result`: the IDs in the response headers.
      * Returns `$result`, whose `events`, when `data` is a streamed Message, is a generator that reads its events and
      * records the Message as it is read, whose `isComplete` then says whether the stream was read to its end and
      * `message_stop` was among its events, and whose `beforeEnd` records the Message of a stream that ends before
@@ -540,16 +505,6 @@ final class Tracing extends \Anthropic\Core\Tracing
         $request = $result['request'];
         $name = $result['options']->apiCall()?->name;
         $data = $result['data'] ?? null;
-        $error = $result['error'] ?? null;
-        $response = $result['response'] ?? ($error instanceof APIException ? $error->response : null);
-        if (null !== $response) {
-            foreach (self::RESPONSE_HEADER_ATTRIBUTES as $attribute => $header) {
-                $value = $response->getHeaderLine($header);
-                if ('' !== $value) {
-                    $span->setAttribute($attribute, $value);
-                }
-            }
-        }
 
         // What a method knows of its own request and response it sets itself. A streamed Message is recorded as the
         // application reads it: only the call's result has it.
@@ -575,12 +530,6 @@ final class Tracing extends \Anthropic\Core\Tracing
                 $body = self::wire($request['body']);
                 Content::setMessageContent($span, is_array($body) ? $body : [], null, self::contentLimit($client));
             }
-        }
-
-        // The Session has the model it resolved for its agent. The request may name none, or an override.
-        if ('anthropic.sessions.create' === $name && $data instanceof BetaManagedAgentsSession) {
-            $span->setAttribute(TraceAttributes::GEN_AI_AGENT_NAME, $data->agent->name);
-            $span->setAttribute(TraceAttributes::GEN_AI_REQUEST_MODEL, $data->agent->model->id);
         }
 
         return $result;
@@ -636,7 +585,7 @@ final class Tracing extends \Anthropic\Core\Tracing
                         }
                     }
                     if ($changesMessage && $recorded->add($wire) && null !== $recorded->message) {
-                        self::setMessageResponseAttributes($span, $recorded->message, $recorded->usage, $recorded->finalized || $recorded->stopped);
+                        self::setStreamedMessageAttributes($span, $recorded->message, $recorded->usage, $recorded->finalized || $recorded->stopped);
                         if ($recorded->stopped && null !== $recorded->accumulator) {
                             Content::setMessageContent($span, $body, self::messageContentBlocks($recorded->accumulator->message()), $limit);
                         }
@@ -701,16 +650,36 @@ final class Tracing extends \Anthropic\Core\Tracing
     }
 
     /**
-     * Sets the attributes that come from a Message. The stop reason, the output tokens and the compaction tokens are
-     * set only when `$complete` is true: of a streamed Message, once `message_delta` has brought them, so that a stream
-     * that ends after it and before `message_stop` keeps them, and one that ends before it has none.
+     * Sets the response attributes of a streamed Message as far as it has been read. The fields of
+     * {@see self::FINAL_FROM_MESSAGE_DELTA} are placeholders in `message_start`, so their attributes are left out unless
+     * `$complete` is true: once `message_delta` has brought them, so that a stream that ends after it keeps them, and one
+     * that ends before it has none.
      *
      * @param array<mixed> $message
+     * @param array<mixed> $usage
      */
-    private static function setMessageResponseAttributes(SpanInterface $span, array $message, mixed $usage, bool $complete): void
+    private static function setStreamedMessageAttributes(SpanInterface $span, array $message, array $usage, bool $complete): void
     {
-        self::set($span, TraceAttributes::GEN_AI_RESPONSE_ID, $message['id'] ?? null);
-        self::set($span, TraceAttributes::GEN_AI_RESPONSE_MODEL, $message['model'] ?? null);
+        $attributes = self::spanResponseAttributes('anthropic.messages.create', [...$message, 'usage' => $usage]);
+        if (!$complete) {
+            foreach (self::SPAN_ATTRIBUTES['anthropic.messages.create']['response'] as $attribute => [$path]) {
+                if (in_array($path, self::FINAL_FROM_MESSAGE_DELTA, true)) {
+                    unset($attributes[$attribute]);
+                }
+            }
+        }
+        foreach ($attributes as $attribute => $value) {
+            self::set($span, $attribute, $value);
+        }
+        self::setUsageSums($span, $usage, $complete);
+    }
+
+    /**
+     * Sets the attributes that are sums over the usage of a Message: the input tokens and, only when `$complete` is
+     * true, the compaction tokens, which a streamed Message has once `message_delta` has brought them.
+     */
+    private static function setUsageSums(SpanInterface $span, mixed $usage, bool $complete): void
+    {
         $usage = self::wire($usage);
         if (!is_array($usage)) {
             return;
@@ -718,18 +687,9 @@ final class Tracing extends \Anthropic\Core\Tracing
         if (is_int($usage['input_tokens'] ?? null)) {
             $span->setAttribute(TraceAttributes::GEN_AI_USAGE_INPUT_TOKENS, $usage['input_tokens'] + self::int($usage['cache_read_input_tokens'] ?? null) + self::int($usage['cache_creation_input_tokens'] ?? null));
         }
-        self::set($span, TraceAttributes::GEN_AI_USAGE_CACHE_WRITE_INPUT_TOKENS, $usage['cache_creation_input_tokens'] ?? null);
-        self::set($span, TraceAttributes::GEN_AI_USAGE_CACHE_READ_INPUT_TOKENS, $usage['cache_read_input_tokens'] ?? null);
-        $cacheCreation = $usage['cache_creation'] ?? null;
-        self::set($span, TraceAttributes::ANTHROPIC_USAGE_CACHE_CREATION_EPHEMERAL_5M_INPUT_TOKENS, self::field($cacheCreation, 'ephemeral_5m_input_tokens'));
-        self::set($span, TraceAttributes::ANTHROPIC_USAGE_CACHE_CREATION_EPHEMERAL_1H_INPUT_TOKENS, self::field($cacheCreation, 'ephemeral_1h_input_tokens'));
-        self::set($span, TraceAttributes::ANTHROPIC_RESPONSE_SERVICE_TIER, $usage['service_tier'] ?? null);
         if (!$complete) {
             return;
         }
-        self::set($span, TraceAttributes::GEN_AI_USAGE_OUTPUT_TOKENS, $usage['output_tokens'] ?? null);
-        self::set($span, TraceAttributes::GEN_AI_USAGE_REASONING_OUTPUT_TOKENS, self::field($usage['output_tokens_details'] ?? null, 'thinking_tokens'));
-        self::set($span, TraceAttributes::ANTHROPIC_MESSAGE_STOP_REASON, $message['stop_reason'] ?? null);
         // The usage above leaves out the compactions, which `iterations` lists among the response's sampling steps.
         $compactionInput = $compactionOutput = null;
         foreach (is_array($usage['iterations'] ?? null) ? $usage['iterations'] : [] as $iteration) {

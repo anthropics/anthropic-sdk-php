@@ -12,9 +12,6 @@ namespace Anthropic\Lib\Tracing;
  */
 final class TraceAttributeValues
 {
-    /** `gen_ai.operation.name` of a Messages create call. */
-    public const GEN_AI_OPERATION_NAME_VALUE_CHAT = 'chat';
-
     /** `gen_ai.operation.name` of one run of a tool. */
     public const GEN_AI_OPERATION_NAME_VALUE_EXECUTE_TOOL = 'execute_tool';
 

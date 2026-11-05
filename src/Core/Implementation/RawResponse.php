@@ -137,7 +137,7 @@ class RawResponse implements BaseResponse
             throw $e;
         }
 
-        return Tracing::endApiCallSpan($this->client, $span, [...$result, 'data' => $data]);
+        return Tracing::endApiCallSpan($this->client, $span, [...$result, 'data' => $data, 'decoded' => $this->getDecoded()]);
     }
 
     private function getDecoded(): mixed
