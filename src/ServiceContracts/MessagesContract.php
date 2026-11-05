@@ -54,6 +54,7 @@ use Anthropic\Messages\ToolChoiceTool;
 use Anthropic\Messages\ToolNameConflictException;
 use Anthropic\Messages\ToolReferenceUnresolvedException;
 use Anthropic\OrganizationOnHoldException;
+use Anthropic\RampLimitExceededException;
 use Anthropic\RequestBodyEncodingInvalidException;
 use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
@@ -257,6 +258,7 @@ interface MessagesContract
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
      * @throws EnforcedSpendLimitReachedException
+     * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
      * @throws CompactionUnavailableException
      * @throws APIException
@@ -465,6 +467,7 @@ interface MessagesContract
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
      * @throws EnforcedSpendLimitReachedException
+     * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
      * @throws CompactionUnavailableException
      * @throws APIException

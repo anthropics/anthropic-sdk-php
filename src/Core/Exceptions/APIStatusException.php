@@ -73,6 +73,7 @@ use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\OrganizationOnHoldException;
 use Anthropic\OrganizationTypeNotSupportedException;
+use Anthropic\RampLimitExceededException;
 use Anthropic\RequestBodyEncodingInvalidException;
 use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
@@ -174,6 +175,7 @@ class APIStatusException extends APIException
         '412 heartbeat_precondition_failed' => HeartbeatPreconditionFailedException::class,
         '413 request_body_too_large_after_decoding' => RequestBodyTooLargeAfterDecodingException::class,
         '429 enforced_spend_limit_reached' => EnforcedSpendLimitReachedException::class,
+        '429 ramp_limit_exceeded' => RampLimitExceededException::class,
         '503 cmek_context_unavailable' => CMEKContextUnavailableException::class,
         '503 cmek_key_unreachable' => CMEKKeyUnreachableException::class,
         '503 registration_pending' => RegistrationPendingException::class,

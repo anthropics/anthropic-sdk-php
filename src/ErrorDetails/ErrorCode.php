@@ -58,6 +58,8 @@ enum ErrorCode: string
 
     case ENFORCED_SPEND_LIMIT_REACHED = 'enforced_spend_limit_reached';
 
+    case RAMP_LIMIT_EXCEEDED = 'ramp_limit_exceeded';
+
     case CMEK_KEY_UNREACHABLE = 'cmek_key_unreachable';
 
     case COMPACTION_UNAVAILABLE = 'compaction_unavailable';
