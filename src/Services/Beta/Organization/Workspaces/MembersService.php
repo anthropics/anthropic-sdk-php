@@ -68,7 +68,7 @@ final class MembersService implements MembersContract
      * @param WorkspaceRole|value-of<WorkspaceRole> $workspaceRole Body param: New workspace role for the User.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
+     * @throws WorkspaceMemberLimitExceededException
      * @throws APIException
      */
     public function update(
@@ -131,7 +131,7 @@ final class MembersService implements MembersContract
      * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Role of the new Workspace Member. Cannot be `workspace_billing`.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws WorkspaceMemberLimitExceededException The workspace has reached the member limit that Anthropic set for it.
+     * @throws WorkspaceMemberLimitExceededException
      * @throws APIException
      */
     public function add(

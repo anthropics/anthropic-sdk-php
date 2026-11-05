@@ -19,10 +19,17 @@ final class InvalidRequestError implements BaseModel
     /** @use SdkModel<InvalidRequestErrorShape> */
     use SdkModel;
 
-    /** @var 'invalid_request_error' $type */
+    /**
+     * The broad category of the error.
+     *
+     * @var 'invalid_request_error' $type
+     */
     #[Required(type: new ConstantOf('invalid_request_error'))]
     public string $type = 'invalid_request_error';
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     #[Required]
     public string $message;
 
@@ -59,6 +66,9 @@ final class InvalidRequestError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
@@ -68,6 +78,8 @@ final class InvalidRequestError implements BaseModel
     }
 
     /**
+     * The broad category of the error.
+     *
      * @param 'invalid_request_error' $type
      */
     public function withType(string $type): self

@@ -38,8 +38,8 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -57,9 +57,9 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws BetaInvalidMetadataException `metadata` has too many keys, a key or value that is too long, or a reserved key. The message names each problem.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws BetaInvalidMetadataException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function update(
@@ -111,7 +111,7 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWorkHeartbeatResponse>
      *
-     * @throws HeartbeatPreconditionFailedException `expected_last_heartbeat` does not match the stored heartbeat, so another worker may hold the lease.
+     * @throws HeartbeatPreconditionFailedException
      * @throws APIException
      */
     public function heartbeat(
@@ -145,8 +145,8 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWorkQueueStats>
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function stats(
@@ -164,8 +164,8 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function stop(

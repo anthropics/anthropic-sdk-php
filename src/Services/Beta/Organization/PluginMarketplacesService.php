@@ -192,7 +192,7 @@ final class PluginMarketplacesService implements PluginMarketplacesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws BetaUnsupportedCharsetException The request's `Content-Type` header names a charset other than UTF-8, ISO-8859-1 or US-ASCII. Send the request with no charset, or with one of these.
+     * @throws BetaUnsupportedCharsetException
      * @throws APIException
      */
     public function validateArchive(

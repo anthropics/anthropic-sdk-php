@@ -19,10 +19,17 @@ final class AuthenticationError implements BaseModel
     /** @use SdkModel<AuthenticationErrorShape> */
     use SdkModel;
 
-    /** @var 'authentication_error' $type */
+    /**
+     * The broad category of the error.
+     *
+     * @var 'authentication_error' $type
+     */
     #[Required(type: new ConstantOf('authentication_error'))]
     public string $type = 'authentication_error';
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     #[Required]
     public string $message;
 
@@ -59,6 +66,9 @@ final class AuthenticationError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
@@ -68,6 +78,8 @@ final class AuthenticationError implements BaseModel
     }
 
     /**
+     * The broad category of the error.
+     *
      * @param 'authentication_error' $type
      */
     public function withType(string $type): self

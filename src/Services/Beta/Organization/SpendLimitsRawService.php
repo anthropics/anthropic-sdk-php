@@ -45,7 +45,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
-     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function retrieve(
@@ -90,7 +90,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<PageCursor<SpendLimit>>
      *
-     * @throws OrganizationTypeNotSupportedException The endpoint does not support the organization's type. Each endpoint's description says which organization types it supports.
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(
@@ -150,8 +150,8 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimitDeleteResponse>
      *
-     * @throws BetaBillingFrozenException Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
-     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
+     * @throws BetaBillingFrozenException
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function delete(
@@ -196,8 +196,8 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
-     * @throws BetaBillingFrozenException Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
-     * @throws SpendLimitsAdminAPIWritesNotEnabledException The organization cannot retrieve, set or delete spend limits with an Admin API credential.
+     * @throws BetaBillingFrozenException
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function set(

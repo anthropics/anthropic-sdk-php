@@ -47,8 +47,8 @@ final class ModelsRawService implements ModelsRawContract
      *
      * @return BaseResponse<BetaModelInfo>
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -101,8 +101,8 @@ final class ModelsRawService implements ModelsRawContract
      *
      * @return BaseResponse<Page<BetaModelInfo>>
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(

@@ -34,10 +34,10 @@ interface TargetsRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
-     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
-     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
-     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
-     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function create(
@@ -55,10 +55,10 @@ interface TargetsRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
-     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
-     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
-     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
-     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function retrieve(
@@ -76,10 +76,10 @@ interface TargetsRawContract
      *
      * @return BaseResponse<PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>>
      *
-     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
-     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
-     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
-     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function list(
@@ -97,10 +97,10 @@ interface TargetsRawContract
      *
      * @return BaseResponse<BetaClaudeTagDeletedBundleTarget>
      *
-     * @throws APIKeyScopeMissingException The API key lacks the scope the request needs: `read:claude_tag` for a read, `write:claude_tag` for a change.
-     * @throws ClaudeTagWritesNotEnabledException Changes through the Claude Tag API are not enabled for the organization.
-     * @throws ComplianceConfigurationRestrictedException The organization's compliance configuration does not let Claude Tag store anything new.
-     * @throws OrganizationLevelScopedAPIKeyRequiredException The credential is not a scoped API key that is bound at the organization level.
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function delete(

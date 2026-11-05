@@ -19,10 +19,17 @@ final class GatewayTimeoutError implements BaseModel
     /** @use SdkModel<GatewayTimeoutErrorShape> */
     use SdkModel;
 
-    /** @var 'timeout_error' $type */
+    /**
+     * The broad category of the error.
+     *
+     * @var 'timeout_error' $type
+     */
     #[Required(type: new ConstantOf('timeout_error'))]
     public string $type = 'timeout_error';
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     #[Required]
     public string $message;
 
@@ -59,6 +66,9 @@ final class GatewayTimeoutError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
@@ -68,6 +78,8 @@ final class GatewayTimeoutError implements BaseModel
     }
 
     /**
+     * The broad category of the error.
+     *
      * @param 'timeout_error' $type
      */
     public function withType(string $type): self

@@ -72,8 +72,8 @@ final class APIKeysRawService implements APIKeysRawContract
      *
      * @return BaseResponse<APIKey>
      *
-     * @throws OrgAPIKeyLimitExceededException The organization has reached its limit of active API keys.
-     * @throws WorkspaceAPIKeyLimitExceededException The workspace has reached its limit of active API keys.
+     * @throws OrgAPIKeyLimitExceededException
+     * @throws WorkspaceAPIKeyLimitExceededException
      * @throws APIException
      */
     public function update(

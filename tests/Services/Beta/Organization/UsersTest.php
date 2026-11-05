@@ -94,4 +94,16 @@ final class UsersTest extends TestCase
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UserRemoveResponse::class, $result);
     }
+
+    #[Test]
+    public function testSignOut(): void
+    {
+        $result = $this->client->beta->organization->users->signOut(
+            'user_id',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(OrganizationUser::class, $result);
+    }
 }

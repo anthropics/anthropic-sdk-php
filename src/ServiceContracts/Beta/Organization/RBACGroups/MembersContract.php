@@ -45,8 +45,8 @@ interface MembersContract
      * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws RBACGroupGrantsOwnerAccessException A role attached to an RBAC Group in the request grants owner access, so this API does not add members to that group (directly or through an invite), remove its members, or delete it. Make the change in the organization's admin settings in Claude.
-     * @throws RBACGroupOwnerAccessUnconfirmedException The API could not finish checking whether an RBAC Group in the request grants owner access, so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function add(
@@ -62,8 +62,8 @@ interface MembersContract
      * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws RBACGroupGrantsOwnerAccessException A role attached to an RBAC Group in the request grants owner access, so this API does not add members to that group (directly or through an invite), remove its members, or delete it. Make the change in the organization's admin settings in Claude.
-     * @throws RBACGroupOwnerAccessUnconfirmedException The API could not finish checking whether an RBAC Group in the request grants owner access, so it made no change. Retrying the same request will not help. Make the change in the organization's admin settings in Claude.
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function remove(

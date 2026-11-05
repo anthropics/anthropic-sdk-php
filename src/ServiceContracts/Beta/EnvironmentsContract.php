@@ -41,9 +41,9 @@ interface EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
-     * @throws BetaEnvironmentCreateDisabledException Anthropic has turned off creating environments for this organization. Existing environments still work.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentCreateDisabledException
      * @throws APIException
      */
     public function create(
@@ -66,8 +66,8 @@ interface EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -92,11 +92,11 @@ interface EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws BetaEnvironmentArchivedException The environment is archived, so it cannot be updated.
-     * @throws BetaInvalidConfigTypeChangeException `config.type` differs from the environment's stored type, which cannot change after creation.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
-     * @throws BetaEnvironmentUpdateDisabledException Anthropic has turned off updating environments for this organization. Existing environments still work as they are.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws BetaEnvironmentArchivedException
+     * @throws BetaInvalidConfigTypeChangeException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentUpdateDisabledException
      * @throws APIException
      */
     public function update(
@@ -125,8 +125,8 @@ interface EnvironmentsContract
      *
      * @return PageCursor<BetaEnvironment>
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -147,8 +147,8 @@ interface EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(
@@ -167,8 +167,8 @@ interface EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws ClaudeCodeKeyCreatorNotMemberException The API key belongs to the Claude Code workspace, and the user who created it is no longer a member of the organization or of that workspace.
-     * @throws OrganizationOnHoldException Anthropic has disabled the organization for trust and safety reasons. An organization disabled for any other reason, such as billing, does not get this code. `appeal_url`, when present, is where the organization can appeal.
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function archive(

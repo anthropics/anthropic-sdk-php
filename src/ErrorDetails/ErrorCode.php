@@ -58,6 +58,8 @@ enum ErrorCode: string
 
     case ENFORCED_SPEND_LIMIT_REACHED = 'enforced_spend_limit_reached';
 
+    case RAMP_LIMIT_EXCEEDED = 'ramp_limit_exceeded';
+
     case CMEK_KEY_UNREACHABLE = 'cmek_key_unreachable';
 
     case COMPACTION_UNAVAILABLE = 'compaction_unavailable';
@@ -96,6 +98,10 @@ enum ErrorCode: string
 
     case CONCURRENT_MEMBERSHIP_CHANGE = 'concurrent_membership_change';
 
+    case EXTERNAL_KEY_VALIDATION_FAILED = 'external_key_validation_failed';
+
+    case EXTERNAL_KEY_VALIDATION_TIMED_OUT = 'external_key_validation_timed_out';
+
     case KEY_PROFILE_MISMATCH = 'key_profile_mismatch';
 
     case WORKSPACE_POLICY_VIOLATION = 'workspace_policy_violation';
@@ -117,6 +123,20 @@ enum ErrorCode: string
     case HEARTBEAT_PRECONDITION_FAILED = 'heartbeat_precondition_failed';
 
     case INVALID_METADATA = 'invalid_metadata';
+
+    case CANNOT_SIGN_OUT_PRIMARY_OWNER = 'cannot_sign_out_primary_owner';
+
+    case CANNOT_SIGN_OUT_SELF = 'cannot_sign_out_self';
+
+    case ORGANIZATION_NOT_ENROLLED_IN_BETA = 'organization_not_enrolled_in_beta';
+
+    case CANNOT_SIGN_OUT_MANAGED_MEMBER = 'cannot_sign_out_managed_member';
+
+    case CANNOT_SIGN_OUT_MEMBERSHIP_ADMIN = 'cannot_sign_out_membership_admin';
+
+    case CANNOT_SIGN_OUT_OWNER = 'cannot_sign_out_owner';
+
+    case CANNOT_SIGN_OUT_PRIVILEGED_MEMBER = 'cannot_sign_out_privileged_member';
 
     case BILLING_FROZEN = 'billing_frozen';
 

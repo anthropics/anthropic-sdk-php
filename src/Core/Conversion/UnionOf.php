@@ -20,11 +20,12 @@ final class UnionOf implements Converter
     public function __construct(
         private readonly array $variants,
         private readonly ?string $discriminator = null,
+        private readonly ?string $discriminatorProperty = null,
     ) {}
 
     public function coerce(mixed $value, CoerceState $state): mixed
     {
-        if (!is_null($target = $this->resolveVariant(value: $value))) {
+        if (!is_null($target = $this->resolveVariant(value: $value, translateNames: $state->translateNames))) {
             return Conversion::coerce($target, value: $value, state: $state);
         }
 
@@ -65,7 +66,7 @@ final class UnionOf implements Converter
 
     public function dump(mixed $value, DumpState $state): mixed
     {
-        if (!is_null($target = $this->resolveVariant(value: $value))) {
+        if (!is_null($target = $this->resolveVariant(value: $value, translateNames: false))) {
             return Conversion::dump($target, value: $value, state: $state);
         }
 
@@ -109,17 +110,20 @@ final class UnionOf implements Converter
 
     private function resolveVariant(
         mixed $value,
+        bool $translateNames,
     ): Converter|ConverterSource|string|null {
         if ($value instanceof BaseModel) {
             return $value::class;
         }
 
+        $key = $translateNames ? $this->discriminator : ($this->discriminatorProperty ?? $this->discriminator);
+
         if (
-            null !== $this->discriminator
+            null !== $key
             && is_array($value)
-            && array_key_exists($this->discriminator, array: $value)
+            && array_key_exists($key, array: $value)
         ) {
-            $discriminator = $value[$this->discriminator];
+            $discriminator = $value[$key];
             if ($discriminator instanceof \BackedEnum) {
                 $discriminator = $discriminator->value;
             }
