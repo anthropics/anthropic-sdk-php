@@ -19,10 +19,17 @@ final class RateLimitError implements BaseModel
     /** @use SdkModel<RateLimitErrorShape> */
     use SdkModel;
 
-    /** @var 'rate_limit_error' $type */
+    /**
+     * The broad category of the error.
+     *
+     * @var 'rate_limit_error' $type
+     */
     #[Required(type: new ConstantOf('rate_limit_error'))]
     public string $type = 'rate_limit_error';
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     #[Required]
     public string $message;
 
@@ -59,6 +66,9 @@ final class RateLimitError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
@@ -68,6 +78,8 @@ final class RateLimitError implements BaseModel
     }
 
     /**
+     * The broad category of the error.
+     *
      * @param 'rate_limit_error' $type
      */
     public function withType(string $type): self

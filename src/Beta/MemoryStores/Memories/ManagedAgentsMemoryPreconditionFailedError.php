@@ -30,9 +30,6 @@ final class ManagedAgentsMemoryPreconditionFailedError implements BaseModel
     #[Required(type: new ConstantOf('memory_precondition_failed_error'))]
     public string $type = 'memory_precondition_failed_error';
 
-    /**
-     * A human-readable explanation of why the precondition failed.
-     */
     #[Optional]
     public ?string $message;
 
@@ -66,9 +63,6 @@ final class ManagedAgentsMemoryPreconditionFailedError implements BaseModel
         return $self;
     }
 
-    /**
-     * A human-readable explanation of why the precondition failed.
-     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
