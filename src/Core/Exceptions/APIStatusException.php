@@ -11,7 +11,6 @@ use Anthropic\Beta\Environments\BetaEnvironmentUpdateDisabledException;
 use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\BetaInvalidMetadataException;
 use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
-use Anthropic\Beta\Organization\BetaBillingFrozenException;
 use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
 use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
@@ -168,7 +167,6 @@ class APIStatusException extends APIException
         '400 workspace_member_limit_exceeded' => WorkspaceMemberLimitExceededException::class,
         '400 workspace_policy_violation' => WorkspacePolicyViolationException::class,
         '403 api_key_scope_missing' => APIKeyScopeMissingException::class,
-        '403 billing_frozen' => BetaBillingFrozenException::class,
         '403 cannot_sign_out_managed_member' => CannotSignOutManagedMemberException::class,
         '403 cannot_sign_out_membership_admin' => CannotSignOutMembershipAdminException::class,
         '403 cannot_sign_out_owner' => CannotSignOutOwnerException::class,

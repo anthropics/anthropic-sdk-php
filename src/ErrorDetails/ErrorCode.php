@@ -138,8 +138,6 @@ enum ErrorCode: string
 
     case CANNOT_SIGN_OUT_PRIVILEGED_MEMBER = 'cannot_sign_out_privileged_member';
 
-    case BILLING_FROZEN = 'billing_frozen';
-
     case SPEND_LIMITS_ADMIN_API_WRITES_NOT_ENABLED = 'spend_limits_admin_api_writes_not_enabled';
 
     case UNSUPPORTED_CHARSET = 'unsupported_charset';

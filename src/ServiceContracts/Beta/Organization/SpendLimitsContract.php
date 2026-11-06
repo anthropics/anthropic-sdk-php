@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Organization\BetaBillingFrozenException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams\ScopeType;
@@ -69,7 +68,6 @@ interface SpendLimitsContract
      * @param string $spendLimitID ID of the Spend Limit.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws BetaBillingFrozenException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
@@ -87,7 +85,6 @@ interface SpendLimitsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
-     * @throws BetaBillingFrozenException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */

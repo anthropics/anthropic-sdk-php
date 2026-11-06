@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization;
 
 use Anthropic\Beta\AnthropicBeta;
-use Anthropic\Beta\Organization\BetaBillingFrozenException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams;
@@ -150,7 +149,6 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimitDeleteResponse>
      *
-     * @throws BetaBillingFrozenException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
@@ -196,7 +194,6 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
-     * @throws BetaBillingFrozenException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
