@@ -222,22 +222,6 @@ final class SchemaInference
     }
 
     /**
-     * Converts PHP type to JSON schema type.
-     */
-    private static function phpTypeToJsonType(string $phpType): string
-    {
-        return match ($phpType) {
-            'int' => 'integer',
-            'float' => 'number',
-            'bool' => 'boolean',
-            'array' => 'array',
-            'string' => 'string',
-            'null' => 'null',
-            default => 'object',
-        };
-    }
-
-    /**
      * Infers the array item class from PHPDoc @var annotation.
      *
      * Supports patterns like:
@@ -246,7 +230,7 @@ final class SchemaInference
      *
      * @return class-string|null The fully qualified class name, or null if not found
      */
-    private static function inferItemClassFromDocComment(\ReflectionProperty $property): ?string
+    public static function inferItemClassFromDocComment(\ReflectionProperty $property): ?string
     {
         $docComment = $property->getDocComment();
         if (false === $docComment) {
@@ -265,6 +249,22 @@ final class SchemaInference
         }
 
         return null;
+    }
+
+    /**
+     * Converts PHP type to JSON schema type.
+     */
+    private static function phpTypeToJsonType(string $phpType): string
+    {
+        return match ($phpType) {
+            'int' => 'integer',
+            'float' => 'number',
+            'bool' => 'boolean',
+            'array' => 'array',
+            'string' => 'string',
+            'null' => 'null',
+            default => 'object',
+        };
     }
 
     /**
