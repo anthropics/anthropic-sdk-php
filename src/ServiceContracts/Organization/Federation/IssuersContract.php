@@ -11,6 +11,7 @@ use Anthropic\Organization\Federation\Issuers\JWKSExplicitURL;
 use Anthropic\Organization\Federation\Issuers\JWKSInline;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type JWKSShape from \Anthropic\Organization\Federation\Issuers\IssuerCreateParams\JWKS
@@ -29,6 +30,7 @@ interface IssuersContract
      * @param int|null $maxJWTLifetimeSeconds Maximum allowed iat→exp spread for assertions from this issuer (1-176400 seconds, i.e. up to 49h). Defaults to 3600 (1h). Assertions must carry both `iat` and `exp`; a missing `iat` is rejected.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -65,6 +67,7 @@ interface IssuersContract
      * @param string|null $name Replaces the slug identifier (lowercase, digits, hyphens). Unique within the organization; a duplicate name returns 409.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -103,6 +106,7 @@ interface IssuersContract
      * @param string $federationIssuerID ID of the federation issuer to archive.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

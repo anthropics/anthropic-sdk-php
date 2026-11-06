@@ -11,6 +11,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Organization\ComplianceSettings\ComplianceSettingUpdateParams;
 use Anthropic\Organization\ComplianceSettings\OrganizationComplianceSettings;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\ComplianceSettingsRawContract;
 
 /**
@@ -84,6 +85,7 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
      *
      * @return BaseResponse<OrganizationComplianceSettings>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

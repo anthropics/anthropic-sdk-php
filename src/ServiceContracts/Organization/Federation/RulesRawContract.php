@@ -12,6 +12,7 @@ use Anthropic\Organization\Federation\Rules\RuleListParams;
 use Anthropic\Organization\Federation\Rules\RuleUpdateParams;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -26,6 +27,7 @@ interface RulesRawContract
      *
      * @return BaseResponse<FederationRule>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -57,6 +59,7 @@ interface RulesRawContract
      *
      * @return BaseResponse<FederationRule>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -88,6 +91,7 @@ interface RulesRawContract
      *
      * @return BaseResponse<FederationRule>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

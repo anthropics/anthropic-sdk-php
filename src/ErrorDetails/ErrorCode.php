@@ -76,6 +76,8 @@ enum ErrorCode: string
 
     case WORKSPACE_API_KEY_LIMIT_EXCEEDED = 'workspace_api_key_limit_exceeded';
 
+    case SANDBOX_EGRESS_RESTRICTED = 'sandbox_egress_restricted';
+
     case USER_PROFILE_NOT_FOUND = 'user_profile_not_found';
 
     case EXTERNAL_KEY_IN_WORKSPACE_POLICY = 'external_key_in_workspace_policy';

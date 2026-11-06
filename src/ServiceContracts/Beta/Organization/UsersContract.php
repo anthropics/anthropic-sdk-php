@@ -20,6 +20,7 @@ use Anthropic\Organization\ConcurrentMembershipChangeException;
 use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -48,6 +49,7 @@ interface UsersContract
      * The accepted values depend on the organization type. Console and API organizations accept `user`, `developer`, `billing`, and `claude_code_user`; `admin` cannot be assigned through the API. Claude Enterprise organizations accept `user` and `managed`; changing a User's role to `managed` requires the `write:rbac_groups` scope in addition to `write:members`.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -90,6 +92,7 @@ interface UsersContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws CannotRemoveLastMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */
@@ -112,6 +115,7 @@ interface UsersContract
      * @throws CannotSignOutMembershipAdminException
      * @throws CannotSignOutOwnerException
      * @throws CannotSignOutPrivilegedMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function signOut(

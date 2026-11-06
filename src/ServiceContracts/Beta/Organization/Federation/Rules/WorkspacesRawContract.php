@@ -13,6 +13,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -45,6 +46,7 @@ interface WorkspacesRawContract
      *
      * @return BaseResponse<BetaFederationRuleWorkspace>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -62,6 +64,7 @@ interface WorkspacesRawContract
      *
      * @return BaseResponse<WorkspaceRemoveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

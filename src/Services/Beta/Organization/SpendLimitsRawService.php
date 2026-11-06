@@ -20,6 +20,7 @@ use Anthropic\Core\Util;
 use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimitsRawContract;
 
 /**
@@ -149,6 +150,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimitDeleteResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
@@ -194,6 +196,7 @@ final class SpendLimitsRawService implements SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */

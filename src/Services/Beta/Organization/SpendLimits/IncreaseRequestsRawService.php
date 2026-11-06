@@ -18,6 +18,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimits\IncreaseRequestsRawContract;
 
 /**
@@ -136,6 +137,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
      *
      * @return BaseResponse<IncreaseRequestApproveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function approve(
@@ -183,6 +185,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
      *
      * @return BaseResponse<BetaSpendLimitIncreaseRequest>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function deny(

@@ -18,6 +18,7 @@ use Anthropic\Organization\Users\UserUpdateParams;
 use Anthropic\Organization\Users\UserUpdateParams\Role;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\UsersRawContract;
 
 /**
@@ -71,6 +72,7 @@ final class UsersRawService implements UsersRawContract
      *
      * @return BaseResponse<OrganizationUser>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -153,6 +155,7 @@ final class UsersRawService implements UsersRawContract
      * @return BaseResponse<UserRemoveResponse>
      *
      * @throws CannotRemoveLastMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */

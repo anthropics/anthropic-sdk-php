@@ -18,6 +18,7 @@ use Anthropic\Organization\SpendLimits\IncreaseRequests\SpendLimitIncreaseReques
 use Anthropic\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\SpendLimits\IncreaseRequestsRawContract;
 
 /**
@@ -132,6 +133,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
      *
      * @return BaseResponse<IncreaseRequestApproveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function approve(
@@ -177,6 +179,7 @@ final class IncreaseRequestsRawService implements IncreaseRequestsRawContract
      *
      * @return BaseResponse<SpendLimitIncreaseRequest>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function deny(

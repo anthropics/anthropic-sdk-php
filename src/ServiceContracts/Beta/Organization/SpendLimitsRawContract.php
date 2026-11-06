@@ -14,6 +14,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -60,6 +61,7 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimitDeleteResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
@@ -76,6 +78,7 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */

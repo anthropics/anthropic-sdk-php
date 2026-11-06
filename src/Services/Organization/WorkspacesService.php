@@ -17,6 +17,7 @@ use Anthropic\Organization\Workspaces\Workspace;
 use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\WorkspacesContract;
 use Anthropic\Services\Organization\Workspaces\MembersService;
 use Anthropic\Services\Organization\Workspaces\RateLimitsService;
@@ -89,6 +90,7 @@ final class WorkspacesService implements WorkspacesContract
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException
+     * @throws SandboxEgressRestrictedException
      * @throws ExternalKeyChangedException
      * @throws APIException
      */
@@ -166,6 +168,7 @@ final class WorkspacesService implements WorkspacesContract
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException
+     * @throws SandboxEgressRestrictedException
      * @throws ExternalKeyChangedException
      * @throws APIException
      */
@@ -248,6 +251,7 @@ final class WorkspacesService implements WorkspacesContract
      *
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

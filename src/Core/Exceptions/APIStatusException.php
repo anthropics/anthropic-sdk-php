@@ -85,6 +85,7 @@ use Anthropic\RampLimitExceededException;
 use Anthropic\RequestBodyEncodingInvalidException;
 use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 use Psr\Http\Message\RequestInterface;
@@ -176,6 +177,7 @@ class APIStatusException extends APIException
         '403 environment_create_disabled' => BetaEnvironmentCreateDisabledException::class,
         '403 environment_update_disabled' => BetaEnvironmentUpdateDisabledException::class,
         '403 organization_level_scoped_api_key_required' => OrganizationLevelScopedAPIKeyRequiredException::class,
+        '403 sandbox_egress_restricted' => SandboxEgressRestrictedException::class,
         '403 spend_limits_admin_api_writes_not_enabled' => SpendLimitsAdminAPIWritesNotEnabledException::class,
         '404 environment_not_found' => BetaEnvironmentNotFoundException::class,
         '404 file_expired' => FileExpiredException::class,

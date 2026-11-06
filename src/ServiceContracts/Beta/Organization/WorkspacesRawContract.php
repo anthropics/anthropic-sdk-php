@@ -17,6 +17,7 @@ use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
 use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
@@ -37,6 +38,7 @@ interface WorkspacesRawContract
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException
+     * @throws SandboxEgressRestrictedException
      * @throws ExternalKeyChangedException
      * @throws APIException
      */
@@ -73,6 +75,7 @@ interface WorkspacesRawContract
      * @throws KeyProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException
+     * @throws SandboxEgressRestrictedException
      * @throws ExternalKeyChangedException
      * @throws APIException
      */
@@ -104,6 +107,7 @@ interface WorkspacesRawContract
      *
      * @return BaseResponse<Workspace>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

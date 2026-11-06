@@ -17,6 +17,7 @@ use Anthropic\Organization\Federation\Rules\RuleUpdateParams;
 use Anthropic\Organization\Federation\Rules\ServiceAccountTarget;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\Federation\RulesRawContract;
 
 /**
@@ -68,6 +69,7 @@ final class RulesRawService implements RulesRawContract
      *
      * @return BaseResponse<FederationRule>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -164,6 +166,7 @@ final class RulesRawService implements RulesRawContract
      *
      * @return BaseResponse<FederationRule>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -261,6 +264,7 @@ final class RulesRawService implements RulesRawContract
      *
      * @return BaseResponse<FederationRule>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

@@ -27,6 +27,7 @@ use Anthropic\Organization\ConcurrentMembershipChangeException;
 use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\UsersRawContract;
 
 /**
@@ -82,6 +83,7 @@ final class UsersRawService implements UsersRawContract
      *
      * @return BaseResponse<OrganizationUser>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -168,6 +170,7 @@ final class UsersRawService implements UsersRawContract
      * @return BaseResponse<UserRemoveResponse>
      *
      * @throws CannotRemoveLastMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */
@@ -216,6 +219,7 @@ final class UsersRawService implements UsersRawContract
      * @throws CannotSignOutMembershipAdminException
      * @throws CannotSignOutOwnerException
      * @throws CannotSignOutPrivilegedMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function signOut(

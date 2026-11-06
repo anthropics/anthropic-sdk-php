@@ -17,6 +17,7 @@ use Anthropic\Organization\APIKeys\OrgAPIKeyLimitExceededException;
 use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\APIKeysRawContract;
 
 /**
@@ -74,6 +75,7 @@ final class APIKeysRawService implements APIKeysRawContract
      *
      * @throws OrgAPIKeyLimitExceededException
      * @throws WorkspaceAPIKeyLimitExceededException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

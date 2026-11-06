@@ -11,6 +11,7 @@ use Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateDisabledPar
 use Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateEnabledParam;
 use Anthropic\Organization\ComplianceSettings\OrganizationComplianceSettings;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\ComplianceSettingsContract;
 
 /**
@@ -79,6 +80,7 @@ final class ComplianceSettingsService implements ComplianceSettingsContract
      * @param ComplianceSettingsStateParamShape $state Desired state. Accepts the string shorthand "enabled" or "disabled" in place of the object form; the response always returns the canonical object form.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

@@ -11,6 +11,7 @@ use Anthropic\Organization\SpendLimits\IncreaseRequests\SpendLimitIncreaseReques
 use Anthropic\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -58,6 +59,7 @@ interface IncreaseRequestsContract
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod>|null $period
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function approve(
@@ -74,6 +76,7 @@ interface IncreaseRequestsContract
      * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function deny(

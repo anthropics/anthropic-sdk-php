@@ -9,6 +9,7 @@ use Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateDisabledPar
 use Anthropic\Organization\ComplianceSettings\ComplianceSettingsStateEnabledParam;
 use Anthropic\Organization\ComplianceSettings\OrganizationComplianceSettings;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -33,6 +34,7 @@ interface ComplianceSettingsContract
      * @param ComplianceSettingsStateParamShape $state Desired state. Accepts the string shorthand "enabled" or "disabled" in place of the object form; the response always returns the canonical object form.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

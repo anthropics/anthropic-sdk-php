@@ -14,6 +14,7 @@ use Anthropic\Organization\Users\UserRemoveResponse;
 use Anthropic\Organization\Users\UserUpdateParams;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -44,6 +45,7 @@ interface UsersRawContract
      *
      * @return BaseResponse<OrganizationUser>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -76,6 +78,7 @@ interface UsersRawContract
      * @return BaseResponse<UserRemoveResponse>
      *
      * @throws CannotRemoveLastMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */

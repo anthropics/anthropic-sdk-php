@@ -12,6 +12,7 @@ use Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimit;
 use Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimitUpdateValue;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\Workspaces\RateLimitsContract;
 
 /**
@@ -53,6 +54,7 @@ final class RateLimitsService implements RateLimitsContract
      * @param list<WorkspaceRateLimitUpdateValue|WorkspaceRateLimitUpdateValueShape> $limits Body param: Limits to set or clear. Unspecified limit types are unchanged.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

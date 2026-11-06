@@ -13,6 +13,7 @@ use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\RBACGroupsContract;
 use Anthropic\Services\Beta\Organization\RBACGroups\MembersService;
 
@@ -50,6 +51,7 @@ final class RBACGroupsService implements RBACGroupsContract
      * @param string $name Name of the RBAC Group. Not uniqueness-enforced.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -97,6 +99,7 @@ final class RBACGroupsService implements RBACGroupsContract
      * @param string|null $name Name of the RBAC Group. Not uniqueness-enforced.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -154,6 +157,7 @@ final class RBACGroupsService implements RBACGroupsContract
      *
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

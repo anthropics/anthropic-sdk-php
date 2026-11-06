@@ -11,6 +11,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -26,6 +27,7 @@ interface RateLimitsRawContract
      *
      * @return BaseResponse<BetaWorkspaceRateLimit>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

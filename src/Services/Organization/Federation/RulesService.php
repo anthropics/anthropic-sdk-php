@@ -12,6 +12,7 @@ use Anthropic\Organization\Federation\Rules\FederationRuleMatch;
 use Anthropic\Organization\Federation\Rules\ServiceAccountTarget;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\Federation\RulesContract;
 use Anthropic\Services\Organization\Federation\Rules\WorkspacesService;
 
@@ -73,6 +74,7 @@ final class RulesService implements RulesContract
      * @param string|null $workspaceID Tagged ID of the workspace to enable this rule for. Required unless `applies_to_all_workspaces` is true. Additional workspaces can be added via the `/federation_rules/{federation_rule_id}/workspaces` sub-resource.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -163,6 +165,7 @@ final class RulesService implements RulesContract
      * @param string|null $workspaceID Replaces the existing single workspace enablement (the previous one is removed). Rejected with 400 if the rule is enabled for more than one workspace; use the `/federation_rules/{federation_rule_id}/workspaces` sub-resource instead.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -256,6 +259,7 @@ final class RulesService implements RulesContract
      * @param string $federationRuleID ID of the federation rule to archive.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(
