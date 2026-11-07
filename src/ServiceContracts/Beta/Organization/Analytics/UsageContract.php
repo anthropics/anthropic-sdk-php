@@ -47,6 +47,7 @@ interface UsageContract
      * @param list<string>|null $models Query param: Models to include. Defaults to all models. Use `group_by[]=model` to break out per-model values.
      * @param AnalyticsUsageCostSortOrder|value-of<AnalyticsUsageCostSortOrder> $order Query param: Sort direction of the `order_by` metric, or of the time buckets when `order_by` is `time` and `time_bucket_width` is set. Defaults to `desc`.
      * @param BetaAnalyticsUsageOrderBy|value-of<BetaAnalyticsUsageOrderBy> $orderBy Query param: Row order. A metric ranks rows by that metric in the `order` direction. `time` orders rows by time bucket in the `order` direction (newest first by default) and, within a bucket, by `total_tokens`, highest first. `time` takes effect only with `time_bucket_width`; without it, `time` is the same as `total_tokens`. Defaults to `total_tokens`.
+     * @param list<string>|null $organizationIDs Query param: Filter a parent organization's report to specific child organizations, by organization UUID or `org_` ID; an ID that is not one of its child organizations matches nothing. Requires an API key created at the parent organization level. Use `group_by[]=organization_id` to break out per-organization values.
      * @param string|null $page Query param: Opaque cursor from a previous response's `next_page` field.
      * @param list<AnalyticsUsageCostProductFilter|value-of<AnalyticsUsageCostProductFilter>>|null $products Query param: Product surfaces to include. Defaults to all products.
      * @param list<string>|null $rbacGroupIDs Query param: Filter to usage attributed to specific RBAC groups. Accepts tagged RBAC group IDs (`rbac_group_...`) or bare group UUIDs. A row matches when the user belonged to any of the listed groups on the (UTC) day the usage occurred; usage with no group attribution never matches.
@@ -83,6 +84,7 @@ interface UsageContract
         ?array $models = null,
         AnalyticsUsageCostSortOrder|string|null $order = null,
         BetaAnalyticsUsageOrderBy|string|null $orderBy = null,
+        ?array $organizationIDs = null,
         ?string $page = null,
         ?array $products = null,
         ?array $rbacGroupIDs = null,

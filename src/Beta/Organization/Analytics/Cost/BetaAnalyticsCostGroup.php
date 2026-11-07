@@ -41,6 +41,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   environmentID: string|null,
  *   inferenceGeo: null|AnalyticsUsageCostInferenceGeo|value-of<AnalyticsUsageCostInferenceGeo>,
  *   model: string|null,
+ *   organizationID: string|null,
  *   product: string|null,
  *   rbacGroupID: string|null,
  *   serviceTier: null|AnalyticsServiceTier|value-of<AnalyticsServiceTier>,
@@ -142,6 +143,12 @@ final class BetaAnalyticsCostGroup implements BaseModel
     public ?string $model;
 
     /**
+     * UUID of the child organization the usage belongs to, on a parent organization's report across its children. Null unless `organization_id` is in `group_by[]`.
+     */
+    #[Required('organization_id')]
+    public ?string $organizationID;
+
+    /**
      * Product surface that produced the usage or cost. Null unless product is in `group_by[]`; it can also be null on grouped rows whose usage cannot be attributed to a known surface. Values include `chat`, `claude_code`, `cowork`, `office_agent`, `claude_in_chrome`, `claude_design`, `claude_tag`, and `chat_cowork_unified`. `claude_tag` is Claude Tag, the Claude product in Slack. `chat_cowork_unified` is Chat and Cowork unified, Cowork's features inside claude.ai chat: chat and Cowork usage by a member who has it turned on is reported under this value instead of `chat` or `cowork`. It is accepted as a filter only where Chat and Cowork unified is available. Some unattributed usage is reported as "other".
      */
     #[Required]
@@ -219,6 +226,7 @@ final class BetaAnalyticsCostGroup implements BaseModel
      *   environmentID: ...,
      *   inferenceGeo: ...,
      *   model: ...,
+     *   organizationID: ...,
      *   product: ...,
      *   rbacGroupID: ...,
      *   serviceTier: ...,
@@ -247,6 +255,7 @@ final class BetaAnalyticsCostGroup implements BaseModel
      *   ->withEnvironmentID(...)
      *   ->withInferenceGeo(...)
      *   ->withModel(...)
+     *   ->withOrganizationID(...)
      *   ->withProduct(...)
      *   ->withRBACGroupID(...)
      *   ->withServiceTier(...)
@@ -291,6 +300,7 @@ final class BetaAnalyticsCostGroup implements BaseModel
         ?string $environmentID,
         AnalyticsUsageCostInferenceGeo|string|null $inferenceGeo,
         ?string $model,
+        ?string $organizationID,
         ?string $product,
         ?string $rbacGroupID,
         AnalyticsServiceTier|string|null $serviceTier,
@@ -315,6 +325,7 @@ final class BetaAnalyticsCostGroup implements BaseModel
         $self['environmentID'] = $environmentID;
         $self['inferenceGeo'] = $inferenceGeo;
         $self['model'] = $model;
+        $self['organizationID'] = $organizationID;
         $self['product'] = $product;
         $self['rbacGroupID'] = $rbacGroupID;
         $self['serviceTier'] = $serviceTier;
@@ -474,6 +485,17 @@ final class BetaAnalyticsCostGroup implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * UUID of the child organization the usage belongs to, on a parent organization's report across its children. Null unless `organization_id` is in `group_by[]`.
+     */
+    public function withOrganizationID(?string $organizationID): self
+    {
+        $self = clone $this;
+        $self['organizationID'] = $organizationID;
 
         return $self;
     }

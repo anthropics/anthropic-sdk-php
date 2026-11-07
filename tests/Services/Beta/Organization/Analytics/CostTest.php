@@ -79,6 +79,7 @@ final class CostTest extends TestCase
             models: ['string'],
             order: AnalyticsUsageCostSortOrder::ASC,
             orderBy: BetaAnalyticsCostOrderBy::AMOUNT,
+            organizationIDs: ['12345678-1234-5678-1234-567812345678'],
             page: 'page',
             products: [AnalyticsUsageCostProductFilter::CHAT],
             rbacGroupIDs: ['rbac_group_012rppKaSVsmTo6NqRDXQXNF'],
