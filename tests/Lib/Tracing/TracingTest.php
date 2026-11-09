@@ -416,6 +416,129 @@ final class TracingTest extends TestCase
     }
 
     /**
+     * `message_start` has a placeholder for each field of `Tracing::FINAL_FROM_MESSAGE_DELTA`, so a stream that ends
+     * right after it has none of their attributes, and has those of the fields that `message_start` knows.
+     */
+    public function testStreamThatEndsRightAfterMessageStartHasNoAttributeOfAFieldThatIsFinalOnlyFromMessageDelta(): void
+    {
+        $message = [...self::MESSAGE, 'content' => []];
+        $gated = [];
+        foreach (self::messagesCreateResponseRows() as $attribute => [$path, $type]) {
+            if (!in_array($path, self::finalFromMessageDelta(), true)) {
+                continue;
+            }
+            $gated[] = $attribute;
+            // A placeholder that the attribute could hold, so that only the gate keeps it off the span.
+            $placeholder = 'integer' === $type ? 1 : 'placeholder';
+            foreach (array_reverse($path) as $name) {
+                $placeholder = [$name => $placeholder];
+            }
+            $message = array_replace_recursive($message, (array) $placeholder);
+        }
+        $this->assertCount(count(self::finalFromMessageDelta()), $gated);
+        $messages = [['role' => 'user', 'content' => 'Hello']];
+        $client = $this->client();
+        $start = ['type' => 'message_start', 'message' => $message];
+        // A stream that goes on to a `message_delta` that changes none of them has them all: each placeholder is a
+        // value its attribute holds.
+        $this->transporter->addResponse(self::sse([$start, ['type' => 'message_delta', 'delta' => ['stop_reason' => null, 'stop_sequence' => null], 'usage' => ['output_tokens' => null]], ['type' => 'message_stop']]));
+        foreach ($client->messages->createStream(maxTokens: 16, messages: $messages, model: 'claude-test') as $event);
+        $this->assertSame([], array_diff($gated, array_keys($this->onlySpan()->getAttributes()->toArray())));
+        $this->exporter->getStorage()->exchangeArray([]);
+
+        foreach ([$client->messages, $client->beta->messages] as $service) {
+            // The server ends the stream.
+            $this->transporter->addResponse(self::sse([$start]));
+            foreach ($service->createStream(maxTokens: 16, messages: $messages, model: 'claude-test') as $event);
+            // The application closes it.
+            $this->transporter->addResponse(self::sse([$start, ...array_slice(self::streamEvents(), 1)]));
+            $stream = $service->createStream(maxTokens: 16, messages: $messages, model: 'claude-test');
+            foreach ($stream as $event) {
+                $stream->close();
+
+                break;
+            }
+        }
+
+        $spans = $this->spans();
+        $this->assertCount(4, $spans);
+        foreach ($spans as $span) {
+            $attributes = $span->getAttributes()->toArray();
+            $this->assertSame('msg_1', $attributes['gen_ai.response.id']);
+            $this->assertSame(15, $attributes['gen_ai.usage.input_tokens']);
+            $this->assertSame(1, $attributes['anthropic.usage.cache_creation.ephemeral_5m_input_tokens']);
+            foreach ($gated as $attribute) {
+                $this->assertArrayNotHasKey($attribute, $attributes);
+            }
+        }
+    }
+
+    /**
+     * Compares `Tracing::FINAL_FROM_MESSAGE_DELTA` with `SPAN_ATTRIBUTES`, which it was written from: every response
+     * field of `anthropic.messages.create` is either final only from `message_delta` on, and listed there, or known at
+     * `message_start`, and listed here. A new row is in neither list, and a row that left the table is still in one.
+     */
+    public function testEveryResponseFieldOfMessagesCreateIsClassifiedAsFinalFromMessageStartOrFromMessageDelta(): void
+    {
+        $knownAtMessageStart = [
+            ['id'],
+            ['model'],
+            ['usage', 'cache_creation_input_tokens'],
+            ['usage', 'cache_read_input_tokens'],
+            ['usage', 'cache_creation', 'ephemeral_5m_input_tokens'],
+            ['usage', 'cache_creation', 'ephemeral_1h_input_tokens'],
+            ['usage', 'service_tier'],
+        ];
+        $finalFromMessageDelta = self::finalFromMessageDelta();
+        $paths = array_values(array_map(static fn (array $row): array => $row[0], self::messagesCreateResponseRows()));
+        $update = 'Update '.Tracing::class.'::FINAL_FROM_MESSAGE_DELTA, which keeps the placeholders of `message_start` off the span of a stream that ends early, or $knownAtMessageStart of this test.';
+
+        $this->assertNotSame([], $paths);
+        foreach ($paths as $path) {
+            $field = implode('.', $path);
+            $this->assertSame(
+                1,
+                (int) in_array($path, $finalFromMessageDelta, true) + (int) in_array($path, $knownAtMessageStart, true),
+                "The response field `{$field}` of `SPAN_ATTRIBUTES['anthropic.messages.create']` is not in exactly one of the two lists. Is its value in `message_start` a placeholder that only `message_delta` replaces? {$update}",
+            );
+        }
+        foreach ([...$finalFromMessageDelta, ...$knownAtMessageStart] as $path) {
+            $field = implode('.', $path);
+            $this->assertContains($path, $paths, "The response field `{$field}` is listed, and `SPAN_ATTRIBUTES['anthropic.messages.create']` no longer has it. {$update}");
+        }
+    }
+
+    /**
+     * An empty string says nothing: a field of the response that is one sets no attribute, streamed or not.
+     */
+    public function testResponseFieldThatIsAnEmptyStringSetsNoAttribute(): void
+    {
+        $message = [...self::MESSAGE, 'id' => '', 'model' => '', 'stop_reason' => '', 'usage' => [...self::MESSAGE['usage'], 'service_tier' => '']];
+        $messages = [['role' => 'user', 'content' => 'Hello']];
+        $client = $this->client();
+        foreach ([$client->messages, $client->beta->messages] as $service) {
+            $this->transporter->addResponse(self::json($message));
+            $service->create(maxTokens: 16, messages: $messages, model: 'claude-test');
+            $this->transporter->addResponse(self::sse([
+                ['type' => 'message_start', 'message' => [...$message, 'content' => [], 'stop_reason' => null]],
+                ['type' => 'message_delta', 'delta' => ['stop_reason' => '', 'stop_sequence' => null], 'usage' => ['output_tokens' => 5]],
+                ['type' => 'message_stop'],
+            ]));
+            foreach ($service->createStream(maxTokens: 16, messages: $messages, model: 'claude-test') as $event);
+        }
+
+        $spans = $this->spans();
+        $this->assertCount(4, $spans);
+        foreach ($spans as $span) {
+            $attributes = $span->getAttributes()->toArray();
+            $this->assertSame(5, $attributes['gen_ai.usage.output_tokens']);
+            foreach (['gen_ai.response.id', 'gen_ai.response.model', 'anthropic.message.stop_reason', 'anthropic.response.service_tier'] as $attribute) {
+                $this->assertArrayNotHasKey($attribute, $attributes);
+            }
+        }
+    }
+
+    /**
      * An event stream has no end event, so neither the server ending it nor the application closing it completes the call.
      */
     public function testEventStreamEndedByTheServerOrClosedEarlyIsUnset(): void
@@ -1006,6 +1129,77 @@ final class TracingTest extends TestCase
         foreach (['sampler', 'processor on start', 'processor on end', 'propagator', 'tracer provider', 'span'] as $where) {
             yield $where => [$where];
         }
+    }
+
+    /**
+     * A response header that cannot be read, or an attribute from a header or from the body that the span refuses, costs
+     * the span attributes and nothing else: the span still ends, and that of a stream when the stream has been read.
+     *
+     * @param list<string> $refused the attributes that the spans refuse
+     */
+    #[DataProvider('responsesThatCannotBeRecorded')]
+    public function testCallSpanEndsWhenItsResponseCannotBeRecorded(?string $unreadableHeader, array $refused): void
+    {
+        /** @var \ArrayObject<int, string> $ended */
+        $ended = new \ArrayObject;
+        $client = $this->client(['tracerProvider' => $this->tracerProviderWhoseSpansRefuse($refused, $ended)]);
+        $params = ['maxTokens' => 16, 'messages' => [['role' => 'user', 'content' => 'Hello']], 'model' => 'claude-test'];
+        $respond = function (ResponseInterface $response) use ($unreadableHeader): void {
+            $this->transporter->addResponse(self::withUnreadableHeader($response->withHeader('request-id', 'req_1')->withHeader('anthropic-organization-id', 'org_1'), $unreadableHeader));
+        };
+
+        $respond(self::json(self::MESSAGE));
+        $this->assertSame('msg_1', $client->messages->create(...$params)->id);
+        $respond(self::json(['input_tokens' => 7]));
+        $this->assertSame(7, $client->messages->countTokens(messages: $params['messages'], model: 'claude-test')->inputTokens);
+        $this->assertSame([StatusCode::STATUS_OK, StatusCode::STATUS_OK], $ended->getArrayCopy());
+
+        $respond(self::json(['type' => 'error', 'error' => ['type' => 'not_found_error', 'message' => 'no such thing']], status: 404));
+
+        try {
+            $client->messages->create(...$params);
+            $this->fail('expected a NotFoundException');
+        } catch (NotFoundException) {
+        }
+        $this->assertSame(StatusCode::STATUS_ERROR, $ended[2] ?? null);
+
+        $respond(self::json(self::MESSAGE));
+        $response = $client->messages->raw->create($params);
+        unset($response);
+        $this->assertSame(StatusCode::STATUS_OK, $ended[3] ?? null);
+
+        // The span of a stream is still open when the method returns, and reading the stream ends it.
+        $respond(self::sse(self::streamEvents()));
+        $stream = $client->messages->createStream(...$params);
+        $this->assertCount(4, $ended);
+        $this->assertCount(6, iterator_to_array($stream, false));
+        $this->assertSame(StatusCode::STATUS_OK, $ended[4] ?? null);
+        $this->assertCount(5, $ended);
+    }
+
+    /**
+     * @return iterable<string, array{string|null, list<string>}>
+     */
+    public static function responsesThatCannotBeRecorded(): iterable
+    {
+        yield 'a header that cannot be read' => ['anthropic-organization-id', []];
+
+        yield 'an attribute from a header' => [null, ['anthropic.request.id']];
+
+        yield 'an attribute from the body' => [null, ['gen_ai.response.id', 'anthropic.message.count_tokens.input_tokens']];
+    }
+
+    /**
+     * A span starts with a list of strings, integers, floats or booleans, and without what no attribute can hold.
+     */
+    public function testCallSpanStartsWithListsOfScalars(): void
+    {
+        $lists = ['strings' => ['a', 'b'], 'integers' => [1, 2], 'floats' => [0.5], 'booleans' => [true, false]];
+
+        $span = Tracing::startApiCallSpan($this->tracerProvider->getTracer('test'), 'anthropic.test', [...$lists, 'nested' => [[1]], 'map' => ['a' => 1], 'null' => null]);
+        $span?->end();
+
+        $this->assertSame(['gen_ai.provider.name' => 'anthropic', ...$lists], $this->onlySpan()->getAttributes()->toArray());
     }
 
     public function testClientWhoseRequestMethodReturnsAnotherResponseGetsThatResponseBack(): void
@@ -1850,9 +2044,8 @@ final class TracingTest extends TestCase
         );
         $this->transporter->addResponse(self::sse(self::streamEvents()));
         foreach ($client->messages->createStream(maxTokens: 16, messages: $messages, model: 'claude-test', requestOptions: [...$conversation, 'extraHeaders' => ['anthropic-beta' => 'beta-b']]) as $event);
-        // A raw method sends its parameters as they are given: an integer temperature or `top_p` is a double on the span.
         $this->transporter->addResponse(self::json(self::MESSAGE));
-        $client->messages->raw->create(['maxTokens' => 16, 'messages' => $messages, 'model' => 'claude-test', 'temperature' => 0, 'top_p' => 1, 'top_k' => 5], $conversation);
+        $client->messages->raw->create(['maxTokens' => 16, 'messages' => $messages, 'model' => 'claude-test'], $conversation);
         $this->transporter->addResponse(self::json(['input_tokens' => 12]));
         $client->messages->countTokens(messages: $messages, model: 'claude-test', requestOptions: $conversation);
         // A later page of a list is a call with the options of the first.
@@ -1890,7 +2083,7 @@ final class TracingTest extends TestCase
                 'gen_ai.request.reasoning.level' => 'low',
             ]],
             ['anthropic.messages.create', ['anthropic.beta' => ['beta-b'], ...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test', 'gen_ai.request.stream' => true]],
-            ['anthropic.messages.create', [...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test', 'gen_ai.request.temperature' => 0.0, 'gen_ai.request.top_k' => 5, 'gen_ai.request.top_p' => 1.0]],
+            ['anthropic.messages.create', [...$everySpan, ...$post, 'gen_ai.operation.name' => 'chat', 'gen_ai.request.max_tokens' => 16, 'gen_ai.request.model' => 'claude-test']],
             ['anthropic.messages.count_tokens', [...$everySpan, 'http.request.method' => 'POST', 'http.route' => '/v1/messages/count_tokens', 'gen_ai.request.model' => 'claude-test']],
             ['anthropic.messages.batches.list', [...$everySpan, ...$listBatches]],
             ['anthropic.messages.batches.list', [...$everySpan, ...$listBatches]],
@@ -1908,6 +2101,34 @@ final class TracingTest extends TestCase
             // The order of a span's attributes says nothing.
             ksort($attributes);
             $this->assertSame([$name, $attributes], $started->spans[$index]);
+        }
+    }
+
+    /**
+     * The SDK does not model `temperature`, `top_p` and `top_k`. A raw method sends them as they are given, and its span
+     * has no attribute for them.
+     */
+    public function testSamplingFieldsThatTheSdkDoesNotModelHaveNoAttribute(): void
+    {
+        $params = ['maxTokens' => 16, 'messages' => [['role' => 'user', 'content' => 'Hello']], 'model' => 'claude-test', 'temperature' => 0, 'top_p' => 1, 'top_k' => 5];
+        $client = $this->client();
+        $this->transporter->addResponse(self::json(self::MESSAGE));
+        $client->messages->raw->create($params)->parse();
+        $this->transporter->addResponse(self::json(self::MESSAGE));
+        $client->beta->messages->raw->create($params)->parse();
+
+        foreach ($this->transporter->getRequests() as $request) {
+            $sent = self::decode((string) $request->getBody());
+            $this->assertSame([0, 1, 5], [$sent['temperature'] ?? null, $sent['top_p'] ?? null, $sent['top_k'] ?? null]);
+        }
+        $spans = $this->spans();
+        $this->assertCount(2, $spans);
+        foreach ($spans as $span) {
+            $attributes = $span->getAttributes()->toArray();
+            $this->assertSame(16, $attributes['gen_ai.request.max_tokens']);
+            foreach (['gen_ai.request.temperature', 'gen_ai.request.top_p', 'gen_ai.request.top_k'] as $attribute) {
+                $this->assertArrayNotHasKey($attribute, $attributes);
+            }
         }
     }
 
@@ -2443,7 +2664,7 @@ final class TracingTest extends TestCase
             $attributes = $span->getAttributes()->toArray();
             $this->assertStringNotContainsString('SENTINEL', json_encode($attributes, JSON_THROW_ON_ERROR), $span->getName());
             $this->assertSame([], array_diff(array_keys($attributes), [
-                'gen_ai.operation.name', 'gen_ai.provider.name', 'gen_ai.request.model', 'gen_ai.request.max_tokens', 'gen_ai.request.temperature', 'gen_ai.request.stream', 'gen_ai.output.type',
+                'gen_ai.operation.name', 'gen_ai.provider.name', 'gen_ai.request.model', 'gen_ai.request.max_tokens', 'gen_ai.request.stream', 'gen_ai.output.type',
                 'anthropic.thinking.type', 'anthropic.thinking.budget_tokens', 'anthropic.beta', 'server.address', 'server.port', 'http.response.status_code', 'error.type',
                 'http.request.method', 'http.route', 'url.scheme', 'url.path', 'url.full',
             ]), $span->getName());
@@ -5293,6 +5514,99 @@ final class TracingTest extends TestCase
         $this->assertCount(2, $requests);
 
         return [$requests[0], $requests[1]];
+    }
+
+    /**
+     * A tracer provider whose spans record and throw when they are given one of the attributes `$refused`. Each span adds
+     * its status to `$ended` when it ends.
+     *
+     * @param list<string> $refused
+     * @param \ArrayObject<int, string> $ended
+     */
+    private function tracerProviderWhoseSpansRefuse(array $refused, \ArrayObject $ended): TracerProviderInterface
+    {
+        $builder = $this->createStub(SpanBuilderInterface::class);
+        $builder->method('setSpanKind')->willReturnSelf();
+        $builder->method('setAttributes')->willReturnSelf();
+        $builder->method('startSpan')->willReturnCallback(function () use ($refused, $ended): SpanInterface {
+            $span = $this->createStub(SpanInterface::class);
+            $state = new \ArrayObject(['recording' => true, 'status' => StatusCode::STATUS_UNSET]);
+            $set = static function (iterable $attributes) use ($span, $refused): SpanInterface {
+                foreach ($attributes as $key => $value) {
+                    in_array($key, $refused, true) && throw new \RuntimeException('telemetry failed');
+                }
+
+                return $span;
+            };
+            $span->method('isRecording')->willReturnCallback(static fn (): bool => true === $state['recording']);
+            $span->method('setAttribute')->willReturnCallback(static fn (string $key): SpanInterface => $set([$key => null]));
+            $span->method('setAttributes')->willReturnCallback($set);
+            $span->method('setStatus')->willReturnCallback(static function (string $code) use ($span, $state): SpanInterface {
+                $state['status'] = $code;
+
+                return $span;
+            });
+            $span->method('end')->willReturnCallback(static function () use ($state, $ended): void {
+                $state['recording'] = false;
+                $ended->append((string) $state['status']);
+            });
+
+            return $span;
+        });
+        $tracer = $this->createStub(TracerInterface::class);
+        $tracer->method('spanBuilder')->willReturn($builder);
+        $provider = $this->createStub(TracerProviderInterface::class);
+        $provider->method('getTracer')->willReturn($tracer);
+
+        return $provider;
+    }
+
+    /**
+     * `$response`, which throws when its header `$name` is read.
+     */
+    private static function withUnreadableHeader(ResponseInterface $response, ?string $name): ResponseInterface
+    {
+        return new class($response, $name) implements ResponseInterface {
+            use ResponseProxy;
+
+            public function __construct(ResponseInterface $response, private ?string $unreadable)
+            {
+                $this->response = $response;
+            }
+
+            public function getHeaderLine(string $name): string
+            {
+                strtolower($name) === $this->unreadable && throw new \RuntimeException('header failed');
+
+                return $this->response->getHeaderLine($name);
+            }
+        };
+    }
+
+    /**
+     * The response rows of `anthropic.messages.create` in `SPAN_ATTRIBUTES`: by attribute, the path of the field and
+     * the type of the attribute's value.
+     *
+     * @return array<string, array{list<string>, string}>
+     */
+    private static function messagesCreateResponseRows(): array
+    {
+        /** @var array<string, array{response: array<string, array{list<string>, string}>}> $table */
+        $table = (new \ReflectionClassConstant(\Anthropic\Core\Tracing::class, 'SPAN_ATTRIBUTES'))->getValue();
+
+        return $table['anthropic.messages.create']['response'];
+    }
+
+    /**
+     * @return list<list<string>>
+     */
+    private static function finalFromMessageDelta(): array
+    {
+        /** @var list<list<string>> $paths */
+        $paths = (new \ReflectionClassConstant(Tracing::class, 'FINAL_FROM_MESSAGE_DELTA'))->getValue();
+        self::assertNotSame([], $paths);
+
+        return $paths;
     }
 
     /**

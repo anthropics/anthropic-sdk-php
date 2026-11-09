@@ -19,6 +19,7 @@ use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -40,6 +41,7 @@ interface InvitesRawContract
      * @throws OrgMemberLimitExceededException
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -85,6 +87,7 @@ interface InvitesRawContract
      *
      * @return BaseResponse<InviteDeleteResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

@@ -16,6 +16,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\Workspaces\RateLimitsRawContract;
 
 /**
@@ -54,6 +55,7 @@ final class RateLimitsRawService implements RateLimitsRawContract
      *
      * @return BaseResponse<BetaWorkspaceRateLimit>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

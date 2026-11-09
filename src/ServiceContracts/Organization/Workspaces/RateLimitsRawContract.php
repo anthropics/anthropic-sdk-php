@@ -11,6 +11,7 @@ use Anthropic\Organization\Workspaces\RateLimits\RateLimitUpdateParams;
 use Anthropic\Organization\Workspaces\RateLimits\WorkspaceRateLimit;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -26,6 +27,7 @@ interface RateLimitsRawContract
      *
      * @return BaseResponse<WorkspaceRateLimit>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

@@ -9,6 +9,7 @@ use Anthropic\Organization\Federation\Rules\FederationRuleWorkspace;
 use Anthropic\Organization\Federation\Rules\Workspaces\WorkspaceRemoveResponse;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -41,6 +42,7 @@ interface WorkspacesContract
      * @param string $workspaceID Tagged ID of the workspace to enable this rule for.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -56,6 +58,7 @@ interface WorkspacesContract
      * @param string $federationRuleID ID of the federation rule.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

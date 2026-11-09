@@ -18,6 +18,7 @@ use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -41,6 +42,7 @@ interface InvitesContract
      * @throws OrgMemberLimitExceededException
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -98,6 +100,7 @@ interface InvitesContract
      * @param string $inviteID ID of the Invite.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

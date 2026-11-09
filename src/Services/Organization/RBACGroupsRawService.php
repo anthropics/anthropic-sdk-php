@@ -17,6 +17,7 @@ use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Organization\RBACGroups\RBACGroupUpdateParams;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\RBACGroupsRawContract;
 
 /**
@@ -42,6 +43,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
      *
      * @return BaseResponse<RBACGroup>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -111,6 +113,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
      *
      * @return BaseResponse<RBACGroup>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -189,6 +192,7 @@ final class RBACGroupsRawService implements RBACGroupsRawContract
      *
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

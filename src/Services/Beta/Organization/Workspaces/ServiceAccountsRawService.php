@@ -20,6 +20,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\Workspaces\ServiceAccountsRawContract;
 
 /**
@@ -120,6 +121,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccountWorkspaceMember>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -253,6 +255,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccountWorkspaceMember>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -314,6 +317,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccountRemoveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

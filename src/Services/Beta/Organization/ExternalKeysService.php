@@ -17,6 +17,7 @@ use Anthropic\Core\Util;
 use Anthropic\Organization\ExternalKeys\ExternalKeyInWorkspacePolicyException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\ExternalKeysContract;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 
@@ -52,6 +53,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws UserProfileNotFoundException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -112,6 +114,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws ExternalKeyInWorkspacePolicyException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -175,6 +178,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws ExternalKeyInWorkspacePolicyException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(
@@ -200,6 +204,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validate(

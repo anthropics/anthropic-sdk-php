@@ -12,6 +12,7 @@ use Anthropic\Organization\ServiceAccounts\Workspaces\WorkspaceRemoveResponse;
 use Anthropic\Organization\Workspaces\NoBillingWorkspaceRole;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\ServiceAccounts\WorkspacesContract;
 
 /**
@@ -95,6 +96,7 @@ final class WorkspacesService implements WorkspacesContract
      * @param NoBillingWorkspaceRole|value-of<NoBillingWorkspaceRole> $workspaceRole Role to assign to the service account in this workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -132,6 +134,7 @@ final class WorkspacesService implements WorkspacesContract
      * @param string $serviceAccountID ID of the service account.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

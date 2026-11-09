@@ -15,6 +15,7 @@ use Anthropic\Beta\Organization\Webhooks\WebhookUpdateParams\State;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -112,6 +113,7 @@ interface WebhooksContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(
@@ -127,6 +129,7 @@ interface WebhooksContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `webhooks-2026-10-07` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function regenerateSigningSecret(

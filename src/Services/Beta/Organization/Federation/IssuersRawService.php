@@ -18,6 +18,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\Federation\IssuersRawContract;
 
 /**
@@ -62,6 +63,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * @return BaseResponse<BetaFederationIssuer>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -173,6 +175,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * @return BaseResponse<BetaFederationIssuer>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -289,6 +292,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * @return BaseResponse<BetaFederationIssuer>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

@@ -13,6 +13,7 @@ use Anthropic\Organization\SpendLimits\IncreaseRequests\IncreaseRequestListParam
 use Anthropic\Organization\SpendLimits\IncreaseRequests\SpendLimitIncreaseRequest;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -58,6 +59,7 @@ interface IncreaseRequestsRawContract
      *
      * @return BaseResponse<IncreaseRequestApproveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function approve(
@@ -75,6 +77,7 @@ interface IncreaseRequestsRawContract
      *
      * @return BaseResponse<SpendLimitIncreaseRequest>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function deny(

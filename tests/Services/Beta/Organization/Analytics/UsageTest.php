@@ -79,6 +79,7 @@ final class UsageTest extends TestCase
             models: ['string'],
             order: AnalyticsUsageCostSortOrder::ASC,
             orderBy: BetaAnalyticsUsageOrderBy::OUTPUT_TOKENS,
+            organizationIDs: ['12345678-1234-5678-1234-567812345678'],
             page: 'page',
             products: [AnalyticsUsageCostProductFilter::CHAT],
             rbacGroupIDs: ['rbac_group_012rppKaSVsmTo6NqRDXQXNF'],

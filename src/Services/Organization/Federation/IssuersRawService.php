@@ -15,6 +15,7 @@ use Anthropic\Organization\Federation\Issuers\IssuerListParams;
 use Anthropic\Organization\Federation\Issuers\IssuerUpdateParams;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\Federation\IssuersRawContract;
 
 /**
@@ -58,6 +59,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * @return BaseResponse<FederationIssuer>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -143,6 +145,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * @return BaseResponse<FederationIssuer>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -233,6 +236,7 @@ final class IssuersRawService implements IssuersRawContract
      *
      * @return BaseResponse<FederationIssuer>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

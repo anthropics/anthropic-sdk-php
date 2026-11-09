@@ -76,6 +76,8 @@ enum ErrorCode: string
 
     case WORKSPACE_API_KEY_LIMIT_EXCEEDED = 'workspace_api_key_limit_exceeded';
 
+    case SANDBOX_EGRESS_RESTRICTED = 'sandbox_egress_restricted';
+
     case USER_PROFILE_NOT_FOUND = 'user_profile_not_found';
 
     case EXTERNAL_KEY_IN_WORKSPACE_POLICY = 'external_key_in_workspace_policy';
@@ -137,8 +139,6 @@ enum ErrorCode: string
     case CANNOT_SIGN_OUT_OWNER = 'cannot_sign_out_owner';
 
     case CANNOT_SIGN_OUT_PRIVILEGED_MEMBER = 'cannot_sign_out_privileged_member';
-
-    case BILLING_FROZEN = 'billing_frozen';
 
     case SPEND_LIMITS_ADMIN_API_WRITES_NOT_ENABLED = 'spend_limits_admin_api_writes_not_enabled';
 

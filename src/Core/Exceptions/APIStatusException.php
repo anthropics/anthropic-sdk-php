@@ -11,7 +11,6 @@ use Anthropic\Beta\Environments\BetaEnvironmentUpdateDisabledException;
 use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\BetaInvalidMetadataException;
 use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
-use Anthropic\Beta\Organization\BetaBillingFrozenException;
 use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
 use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
@@ -86,6 +85,7 @@ use Anthropic\RampLimitExceededException;
 use Anthropic\RequestBodyEncodingInvalidException;
 use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 use Psr\Http\Message\RequestInterface;
@@ -168,7 +168,6 @@ class APIStatusException extends APIException
         '400 workspace_member_limit_exceeded' => WorkspaceMemberLimitExceededException::class,
         '400 workspace_policy_violation' => WorkspacePolicyViolationException::class,
         '403 api_key_scope_missing' => APIKeyScopeMissingException::class,
-        '403 billing_frozen' => BetaBillingFrozenException::class,
         '403 cannot_sign_out_managed_member' => CannotSignOutManagedMemberException::class,
         '403 cannot_sign_out_membership_admin' => CannotSignOutMembershipAdminException::class,
         '403 cannot_sign_out_owner' => CannotSignOutOwnerException::class,
@@ -178,6 +177,7 @@ class APIStatusException extends APIException
         '403 environment_create_disabled' => BetaEnvironmentCreateDisabledException::class,
         '403 environment_update_disabled' => BetaEnvironmentUpdateDisabledException::class,
         '403 organization_level_scoped_api_key_required' => OrganizationLevelScopedAPIKeyRequiredException::class,
+        '403 sandbox_egress_restricted' => SandboxEgressRestrictedException::class,
         '403 spend_limits_admin_api_writes_not_enabled' => SpendLimitsAdminAPIWritesNotEnabledException::class,
         '404 environment_not_found' => BetaEnvironmentNotFoundException::class,
         '404 file_expired' => FileExpiredException::class,

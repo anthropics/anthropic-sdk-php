@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization;
+namespace Anthropic;
 
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\AnthropicException;
@@ -10,21 +10,21 @@ use Anthropic\Core\Exceptions\PermissionDeniedException;
 use Anthropic\Core\Util;
 
 /**
- * Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
+ * The request came from a Claude sandbox with restricted network access, which is not allowed to make this change. Send it from outside the sandbox, or from a sandbox with unrestricted network access.
  */
-final class BetaBillingFrozenException extends PermissionDeniedException
+final class SandboxEgressRestrictedException extends PermissionDeniedException
 {
     /** @var string */
-    protected const DESC = 'Anthropic Beta Billing Frozen Exception';
+    protected const DESC = 'Anthropic Sandbox Egress Restricted Exception';
 
     /**
      * `error.details.error_code` from the response body.
      *
-     * @return 'billing_frozen'
+     * @return 'sandbox_egress_restricted'
      */
     public function getErrorCode(): string
     {
-        return 'billing_frozen';
+        return 'sandbox_egress_restricted';
     }
 
     /**
@@ -32,14 +32,14 @@ final class BetaBillingFrozenException extends PermissionDeniedException
      *
      * @throws AnthropicException
      */
-    public function getDetails(): BetaBillingFrozenErrorDetails
+    public function getDetails(): SandboxEgressRestrictedErrorDetails
     {
         $details = Conversion::coerce(
-            BetaBillingFrozenErrorDetails::class,
+            SandboxEgressRestrictedErrorDetails::class,
             value: Util::dig(Util::dig($this->body, 'error'), 'details'),
         );
 
-        if (!$details instanceof BetaBillingFrozenErrorDetails) {
+        if (!$details instanceof SandboxEgressRestrictedErrorDetails) {
             throw new AnthropicException('The response body has no `error.details` object.');
         }
 

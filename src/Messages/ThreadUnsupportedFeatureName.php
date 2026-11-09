@@ -17,6 +17,4 @@ enum ThreadUnsupportedFeatureName: string
     case INFERENCE_HOOKS = 'inference_hooks';
 
     case THINKING = 'thinking';
-
-    case ZDR = 'zdr';
 }

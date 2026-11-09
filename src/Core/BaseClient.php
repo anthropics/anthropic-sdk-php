@@ -252,7 +252,7 @@ abstract class BaseClient
 
             if (is_null($span)) {
                 $tracer = $this->tracer();
-                $span = is_null($tracer) ? null : Tracing::startApiCallSpan($tracer, $call?->name, [...Tracing::requestAttributes($method, $call?->route), ...($call->attributes ?? []), ...Tracing::apiCallSpanAttributes($this, $opts)], $this->propagates);
+                $span = is_null($tracer) ? null : Tracing::startApiCallSpan($tracer, $call?->name, [...Tracing::requestAttributes($method, $call?->route), ...($call->attributes ?? []), ...Tracing::apiCallSpanAttributes($this, $opts), ...Tracing::spanRequestAttributes($call?->name, $data, $headers, stream: !is_null($stream))], $this->propagates);
             }
 
             // The call span is the current span while the attempts run, so that the application's HTTP instrumentation parents their spans to it.

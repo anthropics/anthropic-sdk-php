@@ -16,6 +16,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -49,6 +50,7 @@ interface MembersRawContract
      * @return BaseResponse<WorkspaceMember>
      *
      * @throws WorkspaceMemberLimitExceededException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -84,6 +86,7 @@ interface MembersRawContract
      * @return BaseResponse<WorkspaceMember>
      *
      * @throws WorkspaceMemberLimitExceededException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -101,6 +104,7 @@ interface MembersRawContract
      *
      * @return BaseResponse<MemberRemoveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

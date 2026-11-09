@@ -14,6 +14,7 @@ use Anthropic\Organization\Users\UserRemoveResponse;
 use Anthropic\Organization\Users\UserUpdateParams\Role;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\UsersContract;
 
 /**
@@ -65,6 +66,7 @@ final class UsersService implements UsersContract
      * The accepted values depend on the organization type. Console and API organizations accept `user`, `developer`, `billing`, and `claude_code_user`; `admin` cannot be assigned through the API. Claude Enterprise organizations accept `user` and `managed`; changing a User's role to `managed` requires the `write:rbac_groups` scope in addition to `write:members`.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -133,6 +135,7 @@ final class UsersService implements UsersContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws CannotRemoveLastMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */

@@ -15,6 +15,7 @@ use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -49,6 +50,7 @@ interface MembersRawContract
      *
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -68,6 +70,7 @@ interface MembersRawContract
      *
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

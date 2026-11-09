@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
-use Anthropic\Beta\Organization\BetaBillingFrozenException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams;
@@ -15,6 +14,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -61,7 +61,7 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimitDeleteResponse>
      *
-     * @throws BetaBillingFrozenException
+     * @throws SandboxEgressRestrictedException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
@@ -78,7 +78,7 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
-     * @throws BetaBillingFrozenException
+     * @throws SandboxEgressRestrictedException
      * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */

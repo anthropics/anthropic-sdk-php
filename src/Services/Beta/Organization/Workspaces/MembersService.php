@@ -14,6 +14,7 @@ use Anthropic\Core\Util;
 use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\Workspaces\MembersContract;
 
 /**
@@ -69,6 +70,7 @@ final class MembersService implements MembersContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws WorkspaceMemberLimitExceededException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -132,6 +134,7 @@ final class MembersService implements MembersContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws WorkspaceMemberLimitExceededException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -159,6 +162,7 @@ final class MembersService implements MembersContract
      * @param string $workspaceID ID of the Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -36,6 +37,7 @@ interface ComplianceSettingsRawContract
      *
      * @return BaseResponse<ComplianceSettings>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

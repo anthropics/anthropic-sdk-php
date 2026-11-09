@@ -13,6 +13,7 @@ use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\RBACGroups\MembersContract;
 
 /**
@@ -78,6 +79,7 @@ final class MembersService implements MembersContract
      *
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -106,6 +108,7 @@ final class MembersService implements MembersContract
      *
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

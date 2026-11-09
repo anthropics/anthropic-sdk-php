@@ -15,6 +15,7 @@ use Anthropic\Organization\Federation\Rules\Workspaces\WorkspaceRemoveParams;
 use Anthropic\Organization\Federation\Rules\Workspaces\WorkspaceRemoveResponse;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\Federation\Rules\WorkspacesRawContract;
 
 /**
@@ -101,6 +102,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<FederationRuleWorkspace>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -152,6 +154,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<WorkspaceRemoveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

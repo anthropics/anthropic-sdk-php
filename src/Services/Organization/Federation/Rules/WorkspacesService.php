@@ -11,6 +11,7 @@ use Anthropic\Organization\Federation\Rules\FederationRuleWorkspace;
 use Anthropic\Organization\Federation\Rules\Workspaces\WorkspaceRemoveResponse;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\Federation\Rules\WorkspacesContract;
 
 /**
@@ -87,6 +88,7 @@ final class WorkspacesService implements WorkspacesContract
      * @param string $workspaceID Tagged ID of the workspace to enable this rule for.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -118,6 +120,7 @@ final class WorkspacesService implements WorkspacesContract
      * @param string $federationRuleID ID of the federation rule.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

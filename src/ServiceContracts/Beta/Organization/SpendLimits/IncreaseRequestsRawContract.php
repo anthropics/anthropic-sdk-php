@@ -13,6 +13,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -58,6 +59,7 @@ interface IncreaseRequestsRawContract
      *
      * @return BaseResponse<IncreaseRequestApproveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function approve(
@@ -75,6 +77,7 @@ interface IncreaseRequestsRawContract
      *
      * @return BaseResponse<BetaSpendLimitIncreaseRequest>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function deny(

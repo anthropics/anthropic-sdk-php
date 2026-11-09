@@ -13,6 +13,7 @@ use Anthropic\Organization\APIKeys\OrgAPIKeyLimitExceededException;
 use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -45,6 +46,7 @@ interface APIKeysRawContract
      *
      * @throws OrgAPIKeyLimitExceededException
      * @throws WorkspaceAPIKeyLimitExceededException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

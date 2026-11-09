@@ -18,6 +18,7 @@ use Anthropic\Organization\ExternalKeys\ExternalKeyUpdateParams;
 use Anthropic\Organization\ExternalKeys\ExternalKeyValidateResponse;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\ExternalKeysRawContract;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 
@@ -50,6 +51,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      * @return BaseResponse<ExternalKey>
      *
      * @throws UserProfileNotFoundException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -126,6 +128,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      * @return BaseResponse<ExternalKey>
      *
      * @throws ExternalKeyInWorkspacePolicyException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -206,6 +209,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      * @return BaseResponse<ExternalKeyDeleteResponse>
      *
      * @throws ExternalKeyInWorkspacePolicyException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(
@@ -242,6 +246,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKeyValidateResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validate(

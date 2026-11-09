@@ -52,6 +52,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   models?: list<string>|null,
  *   order?: null|AnalyticsUsageCostSortOrder|value-of<AnalyticsUsageCostSortOrder>,
  *   orderBy?: null|BetaAnalyticsUsageOrderBy|value-of<BetaAnalyticsUsageOrderBy>,
+ *   organizationIDs?: list<string>|null,
  *   page?: string|null,
  *   products?: list<AnalyticsUsageCostProductFilter|value-of<AnalyticsUsageCostProductFilter>>|null,
  *   rbacGroupIDs?: list<string>|null,
@@ -208,6 +209,14 @@ final class UsageListParams implements BaseModel
     public ?string $orderBy;
 
     /**
+     * Filter a parent organization's report to specific child organizations, by organization UUID or `org_` ID; an ID that is not one of its child organizations matches nothing. Requires an API key created at the parent organization level. Use `group_by[]=organization_id` to break out per-organization values.
+     *
+     * @var list<string>|null $organizationIDs
+     */
+    #[Optional(list: 'string', nullable: true)]
+    public ?array $organizationIDs;
+
+    /**
      * Opaque cursor from a previous response's `next_page` field.
      */
     #[Optional(nullable: true)]
@@ -331,6 +340,7 @@ final class UsageListParams implements BaseModel
      * @param list<string>|null $models
      * @param AnalyticsUsageCostSortOrder|value-of<AnalyticsUsageCostSortOrder>|null $order
      * @param BetaAnalyticsUsageOrderBy|value-of<BetaAnalyticsUsageOrderBy>|null $orderBy
+     * @param list<string>|null $organizationIDs
      * @param list<AnalyticsUsageCostProductFilter|value-of<AnalyticsUsageCostProductFilter>>|null $products
      * @param list<string>|null $rbacGroupIDs
      * @param list<AnalyticsServiceTier|value-of<AnalyticsServiceTier>>|null $serviceTiers
@@ -361,6 +371,7 @@ final class UsageListParams implements BaseModel
         ?array $models = null,
         AnalyticsUsageCostSortOrder|string|null $order = null,
         BetaAnalyticsUsageOrderBy|string|null $orderBy = null,
+        ?array $organizationIDs = null,
         ?string $page = null,
         ?array $products = null,
         ?array $rbacGroupIDs = null,
@@ -394,6 +405,7 @@ final class UsageListParams implements BaseModel
         null !== $models && $self['models'] = $models;
         null !== $order && $self['order'] = $order;
         null !== $orderBy && $self['orderBy'] = $orderBy;
+        null !== $organizationIDs && $self['organizationIDs'] = $organizationIDs;
         null !== $page && $self['page'] = $page;
         null !== $products && $self['products'] = $products;
         null !== $rbacGroupIDs && $self['rbacGroupIDs'] = $rbacGroupIDs;
@@ -631,6 +643,19 @@ final class UsageListParams implements BaseModel
     {
         $self = clone $this;
         $self['orderBy'] = $orderBy;
+
+        return $self;
+    }
+
+    /**
+     * Filter a parent organization's report to specific child organizations, by organization UUID or `org_` ID; an ID that is not one of its child organizations matches nothing. Requires an API key created at the parent organization level. Use `group_by[]=organization_id` to break out per-organization values.
+     *
+     * @param list<string>|null $organizationIDs
+     */
+    public function withOrganizationIDs(?array $organizationIDs): self
+    {
+        $self = clone $this;
+        $self['organizationIDs'] = $organizationIDs;
 
         return $self;
     }

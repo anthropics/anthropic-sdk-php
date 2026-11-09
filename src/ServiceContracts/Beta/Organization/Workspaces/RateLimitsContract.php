@@ -10,6 +10,7 @@ use Anthropic\Beta\Organization\Workspaces\RateLimits\RateLimitListParams\GroupT
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type BetaWorkspaceRateLimitUpdateValueShape from \Anthropic\Beta\Organization\Workspaces\RateLimits\BetaWorkspaceRateLimitUpdateValue
@@ -25,6 +26,7 @@ interface RateLimitsContract
      * @param list<BetaWorkspaceRateLimitUpdateValue|BetaWorkspaceRateLimitUpdateValueShape> $limits Body param: Limits to set or clear. Unspecified limit types are unchanged.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(

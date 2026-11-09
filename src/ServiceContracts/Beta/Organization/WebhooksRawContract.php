@@ -18,6 +18,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -97,6 +98,7 @@ interface WebhooksRawContract
      *
      * @return BaseResponse<DeletedOrganizationWebhookEndpoint>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(
@@ -114,6 +116,7 @@ interface WebhooksRawContract
      *
      * @return BaseResponse<OrganizationWebhookEndpointSigningSecret>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function regenerateSigningSecret(

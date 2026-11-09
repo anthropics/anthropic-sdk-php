@@ -16,6 +16,7 @@ use Anthropic\Organization\ServiceAccounts\Workspaces\WorkspaceRemoveResponse;
 use Anthropic\Organization\Workspaces\NoBillingWorkspaceRole;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\ServiceAccounts\WorkspacesRawContract;
 
 /**
@@ -110,6 +111,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<ServiceAccountWorkspaceMember>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -164,6 +166,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<WorkspaceRemoveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

@@ -13,6 +13,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimits\IncreaseRequestsContract;
 
 /**
@@ -110,6 +111,7 @@ final class IncreaseRequestsService implements IncreaseRequestsContract
      * @param SpendLimitPeriod|value-of<SpendLimitPeriod>|null $period
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function approve(
@@ -144,6 +146,7 @@ final class IncreaseRequestsService implements IncreaseRequestsContract
      * @param string $spendLimitIncreaseRequestID ID of the spend limit increase request.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function deny(

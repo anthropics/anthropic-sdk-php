@@ -25,6 +25,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\WebhooksRawContract;
 
 /**
@@ -278,6 +279,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * @return BaseResponse<DeletedOrganizationWebhookEndpoint>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(
@@ -326,6 +328,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * @return BaseResponse<OrganizationWebhookEndpointSigningSecret>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function regenerateSigningSecret(

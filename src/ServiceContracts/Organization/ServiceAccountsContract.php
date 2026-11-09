@@ -9,6 +9,7 @@ use Anthropic\Organization\ServiceAccounts\ServiceAccount;
 use Anthropic\Organization\ServiceAccounts\ServiceAccountCreateParams\OrganizationRole;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -23,6 +24,7 @@ interface ServiceAccountsContract
      * @param OrganizationRole|value-of<OrganizationRole> $organizationRole Org-level role. Defaults to `developer`.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -53,6 +55,7 @@ interface ServiceAccountsContract
      * @param \Anthropic\Organization\ServiceAccounts\ServiceAccountUpdateParams\OrganizationRole|value-of<\Anthropic\Organization\ServiceAccounts\ServiceAccountUpdateParams\OrganizationRole>|null $organizationRole Replaces the org-level role. Omit or send `null` to leave unchanged.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -87,6 +90,7 @@ interface ServiceAccountsContract
      * @param string $serviceAccountID ID of the service account to archive.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

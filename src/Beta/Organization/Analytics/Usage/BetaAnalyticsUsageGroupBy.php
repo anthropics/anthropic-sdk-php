@@ -28,6 +28,8 @@ enum BetaAnalyticsUsageGroupBy: string
 
     case MODEL = 'model';
 
+    case ORGANIZATION_ID = 'organization_id';
+
     case PRODUCT = 'product';
 
     case RBAC_GROUP_ID = 'rbac_group_id';

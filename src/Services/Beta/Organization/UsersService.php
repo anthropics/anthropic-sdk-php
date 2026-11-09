@@ -22,6 +22,7 @@ use Anthropic\Organization\ConcurrentMembershipChangeException;
 use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\UsersContract;
 
 /**
@@ -73,6 +74,7 @@ final class UsersService implements UsersContract
      * The accepted values depend on the organization type. Console and API organizations accept `user`, `developer`, `billing`, and `claude_code_user`; `admin` cannot be assigned through the API. Claude Enterprise organizations accept `user` and `managed`; changing a User's role to `managed` requires the `write:rbac_groups` scope in addition to `write:members`.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -141,6 +143,7 @@ final class UsersService implements UsersContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws CannotRemoveLastMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */
@@ -163,7 +166,7 @@ final class UsersService implements UsersContract
      *
      * You cannot sign out the organization's primary owner or the person your API key or token acts for, and a request to sign out another owner, a member with owner permissions, or a membership admin may be refused. A refused request returns a `400` or `403` error that says why. If the request returns `503`, send it again to finish; anything already ended stays ended.
      *
-     * Every request must include the beta header `anthropic-beta: admin-user-sign-out-2026-10-08`. A request without it returns `400`. Sign-out is in beta. Anthropic turns it on for each organization and has turned it on for every Claude Enterprise organization; until yours is on, requests also return `400`. In a Claude Enterprise organization, an API key needs the `write:members` scope; a key without it gets `403`.
+     * Every request must include the beta header `anthropic-beta: admin-user-sign-out-2026-10-08`. A request without it returns `400`. Sign-out is in beta for Claude Enterprise organizations. In an organization where it is not enabled, a request returns `400` with `error_code` `organization_not_enrolled_in_beta`. In a Claude Enterprise organization, an API key needs the `write:members` scope; a key without it gets `403`.
      *
      * @param string $userID ID of the User.
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas This endpoint is in beta: requests must send `admin-user-sign-out-2026-10-08` in this header.
@@ -176,6 +179,7 @@ final class UsersService implements UsersContract
      * @throws CannotSignOutMembershipAdminException
      * @throws CannotSignOutOwnerException
      * @throws CannotSignOutPrivilegedMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function signOut(

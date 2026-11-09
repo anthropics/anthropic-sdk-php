@@ -22,6 +22,7 @@ use Anthropic\Organization\ConcurrentMembershipChangeException;
 use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -52,6 +53,7 @@ interface UsersRawContract
      *
      * @return BaseResponse<OrganizationUser>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -84,6 +86,7 @@ interface UsersRawContract
      * @return BaseResponse<UserRemoveResponse>
      *
      * @throws CannotRemoveLastMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */
@@ -108,6 +111,7 @@ interface UsersRawContract
      * @throws CannotSignOutMembershipAdminException
      * @throws CannotSignOutOwnerException
      * @throws CannotSignOutPrivilegedMemberException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function signOut(

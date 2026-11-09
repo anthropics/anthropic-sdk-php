@@ -24,6 +24,7 @@ use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\InvitesRawContract;
 
 /**
@@ -58,6 +59,7 @@ final class InvitesRawService implements InvitesRawContract
      * @throws OrgMemberLimitExceededException
      * @throws RBACGroupGrantsOwnerAccessException
      * @throws RBACGroupOwnerAccessUnconfirmedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -174,6 +176,7 @@ final class InvitesRawService implements InvitesRawContract
      *
      * @return BaseResponse<InviteDeleteResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

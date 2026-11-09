@@ -18,6 +18,7 @@ use Anthropic\Organization\Workspaces\ServiceAccounts\ServiceAccountRetrievePara
 use Anthropic\Organization\Workspaces\ServiceAccounts\ServiceAccountUpdateParams;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\Workspaces\ServiceAccountsRawContract;
 
 /**
@@ -107,6 +108,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccountWorkspaceMember>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -214,6 +216,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccountWorkspaceMember>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function add(
@@ -262,6 +265,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccountRemoveResponse>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(

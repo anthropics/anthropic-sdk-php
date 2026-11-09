@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Anthropic\Beta\Organization;
+namespace Anthropic;
 
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
@@ -10,20 +10,20 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * Anthropic has temporarily disabled billing changes for the user account the credential belongs to. Contact support.
+ * The request came from a Claude sandbox with restricted network access, which is not allowed to make this change. Send it from outside the sandbox, or from a sandbox with unrestricted network access.
  *
- * @phpstan-type BetaBillingFrozenErrorDetailsShape = array{
- *   errorCode: 'billing_frozen'
+ * @phpstan-type SandboxEgressRestrictedErrorDetailsShape = array{
+ *   errorCode: 'sandbox_egress_restricted'
  * }
  */
-final class BetaBillingFrozenErrorDetails implements BaseModel
+final class SandboxEgressRestrictedErrorDetails implements BaseModel
 {
-    /** @use SdkModel<BetaBillingFrozenErrorDetailsShape> */
+    /** @use SdkModel<SandboxEgressRestrictedErrorDetailsShape> */
     use SdkModel;
 
-    /** @var 'billing_frozen' $errorCode */
-    #[Required('error_code', type: new ConstantOf('billing_frozen'))]
-    public string $errorCode = 'billing_frozen';
+    /** @var 'sandbox_egress_restricted' $errorCode */
+    #[Required('error_code', type: new ConstantOf('sandbox_egress_restricted'))]
+    public string $errorCode = 'sandbox_egress_restricted';
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ final class BetaBillingFrozenErrorDetails implements BaseModel
     }
 
     /**
-     * @param 'billing_frozen' $errorCode
+     * @param 'sandbox_egress_restricted' $errorCode
      */
     public function withErrorCode(string $errorCode): self
     {

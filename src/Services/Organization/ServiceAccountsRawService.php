@@ -16,6 +16,7 @@ use Anthropic\Organization\ServiceAccounts\ServiceAccountListParams;
 use Anthropic\Organization\ServiceAccounts\ServiceAccountUpdateParams;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Organization\ServiceAccountsRawContract;
 
 /**
@@ -53,6 +54,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccount>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function create(
@@ -132,6 +134,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccount>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -224,6 +227,7 @@ final class ServiceAccountsRawService implements ServiceAccountsRawContract
      *
      * @return BaseResponse<ServiceAccount>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function archive(

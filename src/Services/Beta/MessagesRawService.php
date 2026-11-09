@@ -390,7 +390,8 @@ final class MessagesRawService implements MessagesRawContract
 
         $callSpan = Tracing::startCallSpan($this->client, 'anthropic.messages.count_tokens', '/v1/messages/count_tokens', $parsed, $options, $header_params);
 
-        $response = $this->client->request(
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
             method: 'post',
             path: 'v1/messages/count_tokens',
             headers: Util::array_transform_keys(
@@ -409,9 +410,5 @@ final class MessagesRawService implements MessagesRawContract
             )),
             convert: BetaMessageTokensCount::class,
         );
-
-        // Only the response that the SDK's own `request()` returns records on the span: any other is returned as it is.
-        // @phpstan-ignore-next-line return.type
-        return $response instanceof RawResponse ? $response->thenUnwrap(static fn (mixed $count): mixed => Tracing::recordMessagesCountTokensResponse($callSpan, $count)) : $response;
     }
 }
