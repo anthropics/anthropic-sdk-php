@@ -13,9 +13,13 @@ use Anthropic\Beta\Messages\Batches\BatchRetrieveParams;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
+use Anthropic\CMEKKeyDisabledException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\EnforcedSpendLimitReachedException;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -32,6 +36,10 @@ interface BatchesRawContract
      *
      * @return BaseResponse<MessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws OrganizationOnHoldException
+     * @throws EnforcedSpendLimitReachedException
      * @throws APIException
      */
     public function create(
@@ -48,6 +56,8 @@ interface BatchesRawContract
      *
      * @return BaseResponse<MessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -64,6 +74,8 @@ interface BatchesRawContract
      *
      * @return BaseResponse<Page<MessageBatch>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -80,6 +92,8 @@ interface BatchesRawContract
      *
      * @return BaseResponse<DeletedMessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(
@@ -97,6 +111,8 @@ interface BatchesRawContract
      *
      * @return BaseResponse<MessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function cancel(
@@ -114,6 +130,9 @@ interface BatchesRawContract
      *
      * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function resultsStream(

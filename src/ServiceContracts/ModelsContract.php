@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts;
 
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams\Lifecycle;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -24,6 +26,8 @@ interface ModelsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -48,6 +52,8 @@ interface ModelsContract
      *
      * @return Page<ModelInfo>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(

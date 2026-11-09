@@ -640,6 +640,28 @@ class StructuredOutputTest extends TestCase
     }
 
     #[Test]
+    public function testMinLengthCountsCharactersNotBytes(): void
+    {
+        $twoCharactersSixBytes = '山田';
+        $data = ['age' => 25, 'username' => $twoCharactersSixBytes, 'score' => 10.0];
+
+        $violations = StructuredOutput::validateAgainstConstraints($data, ModelWithUnsupportedConstraints::class);
+
+        $this->assertSame(['username' => 'String length 2 is less than minimum 3'], $violations);
+    }
+
+    #[Test]
+    public function testMaxLengthCountsCharactersNotBytes(): void
+    {
+        $eightCharactersTwentyFourBytes = '山田太郎山田太郎';
+        $data = ['age' => 25, 'username' => $eightCharactersTwentyFourBytes, 'score' => 10.0];
+
+        $violations = StructuredOutput::validateAgainstConstraints($data, ModelWithUnsupportedConstraints::class);
+
+        $this->assertSame([], $violations);
+    }
+
+    #[Test]
     public function testValidateMultipleOfConstraint(): void
     {
         StructuredOutput::toJsonSchema(ModelWithUnsupportedConstraints::class);

@@ -9,6 +9,8 @@ use Anthropic\Beta\Organization\APIKeys\APIKeyListParams;
 use Anthropic\Beta\Organization\APIKeys\APIKeyUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\APIKeys\OrgAPIKeyLimitExceededException;
+use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -41,6 +43,8 @@ interface APIKeysRawContract
      *
      * @return BaseResponse<APIKey>
      *
+     * @throws OrgAPIKeyLimitExceededException
+     * @throws WorkspaceAPIKeyLimitExceededException
      * @throws APIException
      */
     public function update(

@@ -16,9 +16,15 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationFailedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationTimedOutException;
+use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
+use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\WorkspacesRawContract;
+use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyCreateConfig
@@ -51,6 +57,12 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<Workspace>
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
+     * @throws KeyProfileMismatchException
+     * @throws UserProfileNotFoundException
+     * @throws WorkspacePolicyViolationException
+     * @throws ExternalKeyChangedException
      * @throws APIException
      */
     public function create(
@@ -134,6 +146,12 @@ final class WorkspacesRawService implements WorkspacesRawContract
      *
      * @return BaseResponse<Workspace>
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
+     * @throws KeyProfileMismatchException
+     * @throws UserProfileNotFoundException
+     * @throws WorkspacePolicyViolationException
+     * @throws ExternalKeyChangedException
      * @throws APIException
      */
     public function update(
@@ -170,6 +188,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
      * @param array{
      *   afterID?: string,
      *   beforeID?: string,
+     *   ids?: list<string>,
      *   includeArchived?: bool,
      *   includeDefault?: bool,
      *   limit?: int,
@@ -210,6 +229,7 @@ final class WorkspacesRawService implements WorkspacesRawContract
                 query: [
                     'after_id',
                     'before_id',
+                    'ids',
                     'include_archived',
                     'include_default',
                     'limit',

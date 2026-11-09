@@ -11,6 +11,8 @@ use Anthropic\Beta\Organization\RBACGroups\RBACGroupListParams;
 use Anthropic\Beta\Organization\RBACGroups\RBACGroupUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -89,6 +91,8 @@ interface RBACGroupsRawContract
      *
      * @return BaseResponse<DeletedRBACGroup>
      *
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function delete(

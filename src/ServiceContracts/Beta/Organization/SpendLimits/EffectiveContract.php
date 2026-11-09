@@ -7,6 +7,7 @@ namespace Anthropic\ServiceContracts\Beta\Organization\SpendLimits;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Beta\Organization\SpendLimits\SpendSummary;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -26,6 +27,7 @@ interface EffectiveContract
      *
      * @return PageCursor<SpendSummary>
      *
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(

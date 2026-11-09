@@ -11,6 +11,8 @@ use Anthropic\Beta\Organization\RBACGroups\Members\MemberListParams;
 use Anthropic\Beta\Organization\RBACGroups\Members\MemberRemoveParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -45,6 +47,8 @@ interface MembersRawContract
      *
      * @return BaseResponse<BetaRBACGroupMember>
      *
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function add(
@@ -62,6 +66,8 @@ interface MembersRawContract
      *
      * @return BaseResponse<BetaDeletedRBACGroupMember>
      *
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function remove(

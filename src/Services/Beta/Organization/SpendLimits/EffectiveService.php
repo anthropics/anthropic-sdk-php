@@ -9,6 +9,7 @@ use Anthropic\Beta\Organization\SpendLimits\SpendSummary;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\SpendLimits\EffectiveContract;
@@ -50,6 +51,7 @@ final class EffectiveService implements EffectiveContract
      *
      * @return PageCursor<SpendSummary>
      *
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(

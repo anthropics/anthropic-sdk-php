@@ -13,6 +13,8 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\RBACGroups\MembersRawContract;
@@ -84,6 +86,8 @@ final class MembersRawService implements MembersRawContract
      *
      * @return BaseResponse<BetaRBACGroupMember>
      *
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function add(
@@ -126,6 +130,8 @@ final class MembersRawService implements MembersRawContract
      *
      * @return BaseResponse<BetaDeletedRBACGroupMember>
      *
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function remove(

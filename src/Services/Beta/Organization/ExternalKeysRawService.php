@@ -15,9 +15,11 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Organization\ExternalKeys\ExternalKeyInWorkspacePolicyException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\ExternalKeysRawContract;
+use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
  * @phpstan-import-type ProviderConfigShape from \Anthropic\Beta\Organization\ExternalKeys\ExternalKeyCreateParams\ProviderConfig
@@ -47,6 +49,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKey>
      *
+     * @throws UserProfileNotFoundException
      * @throws APIException
      */
     public function create(
@@ -126,6 +129,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKey>
      *
+     * @throws ExternalKeyInWorkspacePolicyException
      * @throws APIException
      */
     public function update(
@@ -209,6 +213,7 @@ final class ExternalKeysRawService implements ExternalKeysRawContract
      *
      * @return BaseResponse<ExternalKeyDeleteResponse>
      *
+     * @throws ExternalKeyInWorkspacePolicyException
      * @throws APIException
      */
     public function delete(

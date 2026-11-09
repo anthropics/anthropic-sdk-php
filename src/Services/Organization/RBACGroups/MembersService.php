@@ -9,6 +9,8 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
 use Anthropic\Organization\RBACGroups\Members\DeletedRBACGroupMember;
 use Anthropic\Organization\RBACGroups\Members\RBACGroupMember;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\RBACGroups\MembersContract;
@@ -74,6 +76,8 @@ final class MembersService implements MembersContract
      * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function add(
@@ -100,6 +104,8 @@ final class MembersService implements MembersContract
      * @param string $rbacGroupID ID of the RBAC Group.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function remove(

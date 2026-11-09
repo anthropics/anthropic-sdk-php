@@ -13,6 +13,7 @@ use Anthropic\Organization\Workspaces\Members\MemberRemoveResponse;
 use Anthropic\Organization\Workspaces\Members\MemberRetrieveParams;
 use Anthropic\Organization\Workspaces\Members\MemberUpdateParams;
 use Anthropic\Organization\Workspaces\WorkspaceMember;
+use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -47,6 +48,7 @@ interface MembersRawContract
      *
      * @return BaseResponse<WorkspaceMember>
      *
+     * @throws WorkspaceMemberLimitExceededException
      * @throws APIException
      */
     public function update(
@@ -81,6 +83,7 @@ interface MembersRawContract
      *
      * @return BaseResponse<WorkspaceMember>
      *
+     * @throws WorkspaceMemberLimitExceededException
      * @throws APIException
      */
     public function add(

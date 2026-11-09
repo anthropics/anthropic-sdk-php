@@ -11,8 +11,13 @@ use Anthropic\Beta\Skills\Versions\VersionDeleteParams;
 use Anthropic\Beta\Skills\Versions\VersionDownloadParams;
 use Anthropic\Beta\Skills\Versions\VersionListParams;
 use Anthropic\Beta\Skills\Versions\VersionRetrieveParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
+use Anthropic\CMEKContextUnavailableException;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -32,6 +37,11 @@ interface VersionsRawContract
      *
      * @return BaseResponse<SkillVersion>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
+     * @throws CMEKContextUnavailableException
      * @throws APIException
      */
     public function create(
@@ -51,6 +61,8 @@ interface VersionsRawContract
      *
      * @return BaseResponse<SkillVersion>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -70,6 +82,8 @@ interface VersionsRawContract
      *
      * @return BaseResponse<PageCursor<SkillVersion>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -89,6 +103,8 @@ interface VersionsRawContract
      *
      * @return BaseResponse<DeletedSkillVersion>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(

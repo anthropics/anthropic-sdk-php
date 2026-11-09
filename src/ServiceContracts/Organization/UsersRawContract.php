@@ -6,6 +6,8 @@ namespace Anthropic\ServiceContracts\Organization;
 
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\ConcurrentMembershipChangeException;
+use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Organization\Users\OrganizationUser;
 use Anthropic\Organization\Users\UserListParams;
 use Anthropic\Organization\Users\UserRemoveResponse;
@@ -73,6 +75,8 @@ interface UsersRawContract
      *
      * @return BaseResponse<UserRemoveResponse>
      *
+     * @throws CannotRemoveLastMemberException
+     * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */
     public function remove(

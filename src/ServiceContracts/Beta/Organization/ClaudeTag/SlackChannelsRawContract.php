@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization\ClaudeTag;
 
+use Anthropic\Beta\Environments\BetaEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
+use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
+use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
+use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\BetaClaudeTagDeletedSlackChannel;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\BetaClaudeTagSlackChannel;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\SlackChannelCreateParams;
@@ -11,6 +16,9 @@ use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\SlackChannelDeleteParams
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\SlackChannelListParams;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\SlackChannelRetrieveParams;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannels\SlackChannelUpdateParams;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsConflictException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsRefusedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
@@ -29,6 +37,14 @@ interface SlackChannelsRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackChannel>
      *
+     * @throws SlackChannelSetUpSettingsRefusedException
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
+     * @throws BetaEnvironmentNotFoundException
+     * @throws SlackChannelSetUpEnvironmentNotFoundException
+     * @throws SlackChannelSetUpSettingsConflictException
      * @throws APIException
      */
     public function create(
@@ -45,6 +61,10 @@ interface SlackChannelsRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackChannel>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function retrieve(
@@ -62,6 +82,13 @@ interface SlackChannelsRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackChannel>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
+     * @throws BetaEnvironmentNotFoundException
+     * @throws SlackChannelSetUpEnvironmentNotFoundException
+     * @throws SlackChannelSetUpSettingsConflictException
      * @throws APIException
      */
     public function update(
@@ -78,6 +105,10 @@ interface SlackChannelsRawContract
      *
      * @return BaseResponse<PageCursor<BetaClaudeTagSlackChannel>>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function list(
@@ -94,6 +125,11 @@ interface SlackChannelsRawContract
      *
      * @return BaseResponse<BetaClaudeTagDeletedSlackChannel>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
+     * @throws SlackChannelSetUpSettingsConflictException
      * @throws APIException
      */
     public function delete(

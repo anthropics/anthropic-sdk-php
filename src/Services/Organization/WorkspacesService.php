@@ -7,15 +7,21 @@ namespace Anthropic\Services\Organization;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationFailedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationTimedOutException;
 use Anthropic\Organization\Workspaces\DataResidencyCreateConfig;
 use Anthropic\Organization\Workspaces\DataResidencyUpdateConfig;
+use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
 use Anthropic\Organization\Workspaces\Workspace;
+use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\WorkspacesContract;
 use Anthropic\Services\Organization\Workspaces\MembersService;
 use Anthropic\Services\Organization\Workspaces\RateLimitsService;
 use Anthropic\Services\Organization\Workspaces\ServiceAccountsService;
+use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Organization\Workspaces\DataResidencyCreateConfig
@@ -78,6 +84,12 @@ final class WorkspacesService implements WorkspacesContract
      * @param string|null $userProfileID ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. The user profile can't be replaced or removed later; only deleting the user profile clears it.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
+     * @throws KeyProfileMismatchException
+     * @throws UserProfileNotFoundException
+     * @throws WorkspacePolicyViolationException
+     * @throws ExternalKeyChangedException
      * @throws APIException
      */
     public function create(
@@ -149,6 +161,12 @@ final class WorkspacesService implements WorkspacesContract
      * @param string $userProfileID ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. Once set, it can't be replaced or removed (sending the same ID again changes nothing); only deleting the user profile clears it. The default Workspace can't have a user profile.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
+     * @throws KeyProfileMismatchException
+     * @throws UserProfileNotFoundException
+     * @throws WorkspacePolicyViolationException
+     * @throws ExternalKeyChangedException
      * @throws APIException
      */
     public function update(
@@ -185,6 +203,7 @@ final class WorkspacesService implements WorkspacesContract
      *
      * @param string $afterID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately after this object.
      * @param string $beforeID ID of the object to use as a cursor for pagination. When provided, returns the page of results immediately before this object.
+     * @param list<string> $ids Only the Workspaces with these IDs, at most 100. `include_archived` and `include_default` still apply, and IDs of Workspaces the caller can't list are left out.
      * @param bool $includeArchived Whether to include Workspaces that have been archived in the response
      * @param bool $includeDefault Whether to include the organization's default Workspace in the response
      * @param int $limit Number of items to return per page.
@@ -199,6 +218,7 @@ final class WorkspacesService implements WorkspacesContract
     public function list(
         ?string $afterID = null,
         ?string $beforeID = null,
+        ?array $ids = null,
         ?bool $includeArchived = null,
         ?bool $includeDefault = null,
         ?int $limit = null,
@@ -208,6 +228,7 @@ final class WorkspacesService implements WorkspacesContract
             [
                 'afterID' => $afterID,
                 'beforeID' => $beforeID,
+                'ids' => $ids,
                 'includeArchived' => $includeArchived,
                 'includeDefault' => $includeDefault,
                 'limit' => $limit,

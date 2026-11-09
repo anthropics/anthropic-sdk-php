@@ -19,10 +19,17 @@ final class OverloadedError implements BaseModel
     /** @use SdkModel<OverloadedErrorShape> */
     use SdkModel;
 
-    /** @var 'overloaded_error' $type */
+    /**
+     * The broad category of the error.
+     *
+     * @var 'overloaded_error' $type
+     */
     #[Required(type: new ConstantOf('overloaded_error'))]
     public string $type = 'overloaded_error';
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     #[Required]
     public string $message;
 
@@ -59,6 +66,9 @@ final class OverloadedError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
@@ -68,6 +78,8 @@ final class OverloadedError implements BaseModel
     }
 
     /**
+     * The broad category of the error.
+     *
      * @param 'overloaded_error' $type
      */
     public function withType(string $type): self

@@ -10,8 +10,13 @@ use Anthropic\Beta\Skills\SkillCreateParams;
 use Anthropic\Beta\Skills\SkillDeleteParams;
 use Anthropic\Beta\Skills\SkillListParams;
 use Anthropic\Beta\Skills\SkillRetrieveParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
+use Anthropic\CMEKContextUnavailableException;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -28,6 +33,11 @@ interface SkillsRawContract
      *
      * @return BaseResponse<BetaSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
+     * @throws CMEKContextUnavailableException
      * @throws APIException
      */
     public function create(
@@ -46,6 +56,8 @@ interface SkillsRawContract
      *
      * @return BaseResponse<BetaSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -62,6 +74,8 @@ interface SkillsRawContract
      *
      * @return BaseResponse<PageCursor<BetaSkill>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -80,6 +94,8 @@ interface SkillsRawContract
      *
      * @return BaseResponse<BetaDeletedSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(

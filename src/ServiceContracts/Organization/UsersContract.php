@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Organization;
 
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\ConcurrentMembershipChangeException;
+use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Organization\Users\OrganizationUser;
 use Anthropic\Organization\Users\UserRemoveResponse;
 use Anthropic\Organization\Users\UserUpdateParams\Role;
@@ -79,6 +81,8 @@ interface UsersContract
      * @param string $userID ID of the User.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws CannotRemoveLastMemberException
+     * @throws ConcurrentMembershipChangeException
      * @throws APIException
      */
     public function remove(

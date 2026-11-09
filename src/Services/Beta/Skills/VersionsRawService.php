@@ -12,12 +12,17 @@ use Anthropic\Beta\Skills\Versions\VersionDeleteParams;
 use Anthropic\Beta\Skills\Versions\VersionDownloadParams;
 use Anthropic\Beta\Skills\Versions\VersionListParams;
 use Anthropic\Beta\Skills\Versions\VersionRetrieveParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
+use Anthropic\CMEKContextUnavailableException;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Skills\VersionsRawContract;
@@ -50,6 +55,11 @@ final class VersionsRawService implements VersionsRawContract
      *
      * @return BaseResponse<SkillVersion>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
+     * @throws CMEKContextUnavailableException
      * @throws APIException
      */
     public function create(
@@ -112,6 +122,8 @@ final class VersionsRawService implements VersionsRawContract
      *
      * @return BaseResponse<SkillVersion>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -168,6 +180,8 @@ final class VersionsRawService implements VersionsRawContract
      *
      * @return BaseResponse<PageCursor<SkillVersion>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -225,6 +239,8 @@ final class VersionsRawService implements VersionsRawContract
      *
      * @return BaseResponse<DeletedSkillVersion>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(

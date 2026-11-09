@@ -12,11 +12,13 @@ use Anthropic\Organization\ExternalKeys\AzureExternalKeyConfigParam;
 use Anthropic\Organization\ExternalKeys\ExternalKey;
 use Anthropic\Organization\ExternalKeys\ExternalKeyCreateParams\Geo;
 use Anthropic\Organization\ExternalKeys\ExternalKeyDeleteResponse;
+use Anthropic\Organization\ExternalKeys\ExternalKeyInWorkspacePolicyException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyValidateResponse;
 use Anthropic\Organization\ExternalKeys\GCPExternalKeyConfig;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\ExternalKeysContract;
+use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
  * @phpstan-import-type ProviderConfigShape from \Anthropic\Organization\ExternalKeys\ExternalKeyCreateParams\ProviderConfig
@@ -49,6 +51,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * @param string|null $userProfileID ID of a user profile to bind the key to. Omit this field for a key that isn't bound to a user profile. Such a key can be attached to a Workspace whatever its user profile. The binding cannot be changed later. A key bound to a user profile can only be attached to a Workspace that has the same user profile.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws UserProfileNotFoundException
      * @throws APIException
      */
     public function create(
@@ -108,6 +111,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * @param ProviderConfigShape1|null $providerConfig KMS provider identity and auth coordinates.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ExternalKeyInWorkspacePolicyException
      * @throws APIException
      */
     public function update(
@@ -170,6 +174,7 @@ final class ExternalKeysService implements ExternalKeysContract
      * @param string $externalKeyID ID of the External Key.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ExternalKeyInWorkspacePolicyException
      * @throws APIException
      */
     public function delete(

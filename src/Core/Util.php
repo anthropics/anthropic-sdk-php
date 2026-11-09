@@ -34,6 +34,14 @@ final class Util
      */
     private const URI_WITH_AUTHORITY = '#^([A-Za-z][A-Za-z0-9+.-]*:)?//#';
 
+    /**
+     * Characters that rawurlencode() escapes but RFC 3986 section 3.3 allows in a path segment, keyed by their escaped form.
+     */
+    private const PATH_PARAM_UNESCAPED = [
+        '%21' => '!', '%24' => '$', '%26' => '&', '%27' => '\'', '%28' => '(', '%29' => ')',
+        '%2A' => '*', '%2B' => '+', '%2C' => ',', '%3A' => ':', '%3B' => ';', '%3D' => '=', '%40' => '@',
+    ];
+
     public static function getenv(string $key): ?string
     {
         if (array_key_exists($key, array: $_ENV)) {
@@ -220,15 +228,16 @@ final class Util
         }
 
         [$template] = $path;
-        $mapped = array_map(static fn ($s) => rawurlencode(self::strVal($s)), array: array_slice($path, 1));
+        $mapped = array_map(static fn ($s) => strtr(rawurlencode(self::strVal($s)), self::PATH_PARAM_UNESCAPED), array: array_slice($path, 1));
         $parsed = sprintf($template, ...$mapped);
 
         foreach ($mapped as $segment) {
-            if ('.' === $segment || '..' === $segment) {
-                throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..".', $parsed, $segment));
+            [$beforeSemicolon] = explode(';', $segment, 2);
+            if ('.' === $beforeSemicolon || '..' === $beforeSemicolon) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..", on its own or before a ";".', $parsed, $segment));
             }
-            if ('' === $segment) {
-                throw new \InvalidArgumentException(sprintf('The path "%s" has an empty path parameter, which would send the request to a different URL. A path parameter cannot be empty.', $parsed));
+            if ('' === $beforeSemicolon) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has an empty path parameter, which would send the request to a different URL. A path parameter cannot be empty, on its own or before a ";".', $parsed));
             }
         }
 

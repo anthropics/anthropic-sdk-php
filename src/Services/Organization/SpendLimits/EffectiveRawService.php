@@ -12,6 +12,7 @@ use Anthropic\Core\Util;
 use Anthropic\Organization\SpendLimits\Effective\EffectiveListParams;
 use Anthropic\Organization\SpendLimits\SpendLimitPeriod;
 use Anthropic\Organization\SpendLimits\SpendSummary;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\SpendLimits\EffectiveRawContract;
@@ -48,6 +49,7 @@ final class EffectiveRawService implements EffectiveRawContract
      *
      * @return BaseResponse<PageCursor<SpendSummary>>
      *
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(

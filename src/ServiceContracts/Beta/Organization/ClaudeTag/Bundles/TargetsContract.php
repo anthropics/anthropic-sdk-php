@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta\Organization\ClaudeTag\Bundles;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagDeletedBundleTarget;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagSlackChannelBundleTarget;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagSlackChannelBundleTargetCreate;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagSlackWorkspaceBundleTarget;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagSlackWorkspaceBundleTargetCreate;
+use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
+use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
+use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
@@ -28,6 +32,10 @@ interface TargetsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function create(
@@ -45,6 +53,10 @@ interface TargetsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function retrieve(
@@ -65,6 +77,10 @@ interface TargetsContract
      *
      * @return PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function list(
@@ -83,6 +99,10 @@ interface TargetsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `experimental-claude-tag-2026-10-21` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function delete(

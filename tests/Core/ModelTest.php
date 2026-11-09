@@ -8,8 +8,10 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion;
+use Anthropic\Core\Conversion\CoerceState;
 use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
+use Anthropic\Core\Conversion\DumpState;
 use Anthropic\Core\Conversion\ListOf;
 use Anthropic\Core\Conversion\UnionOf;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -213,6 +215,60 @@ class Routine implements BaseModel
     public function __construct()
     {
         $this->initialize();
+    }
+}
+
+class Swim implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Required('outing_type', type: new ConstantOf('swim'))]
+    public string $outingType = 'swim';
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+}
+
+class Walk implements BaseModel
+{
+    /** @use SdkModel<array<string, mixed>> */
+    use SdkModel;
+
+    #[Required('outing_type', type: new ConstantOf('walk'))]
+    public string $outingType = 'walk';
+
+    #[Required]
+    public int $miles;
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+}
+
+final class Outing implements ConverterSource
+{
+    use SdkUnion;
+
+    public static function discriminator(): string
+    {
+        return 'outing_type';
+    }
+
+    public static function discriminatorProperty(): string
+    {
+        return 'outingType';
+    }
+
+    /**
+     * @return array<string, class-string<BaseModel>>
+     */
+    public static function variants(): array
+    {
+        return ['swim' => Swim::class, 'walk' => Walk::class];
     }
 }
 
@@ -466,5 +522,24 @@ class ModelTest extends TestCase
 
         $this->assertInstanceOf(Fetch::class, $fromValue->command);
         $this->assertEquals($fromValue->command, $fromEnum->command);
+    }
+
+    #[Test]
+    public function testDiscriminatorIsReadUnderTheNameTheArrayIsKeyedBy(): void
+    {
+        // Without its required `miles`, only the discriminator says this is a `Walk`.
+        foreach (['outing_type' => true, 'outingType' => false] as $key => $translateNames) {
+            $this->assertInstanceOf(
+                Walk::class,
+                Conversion::coerce(Outing::class, value: [$key => 'walk'], state: new CoerceState(translateNames: $translateNames))
+            );
+        }
+
+        $state = new DumpState;
+        $this->assertEquals(
+            ['outing_type' => 'walk'],
+            Conversion::dump(Outing::class, value: ['outingType' => 'walk'], state: $state)
+        );
+        $this->assertSame(0, $state->branched);
     }
 }

@@ -4,9 +4,25 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts;
 
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
+use Anthropic\ClaudeCodeVersionTooOldException;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
+use Anthropic\CMEKKeyUnreachableException;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\EnforcedSpendLimitReachedException;
+use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CacheControlEphemeral;
+use Anthropic\Messages\CompactionBlockAmbiguousException;
+use Anthropic\Messages\CompactionBlockMisplacedException;
+use Anthropic\Messages\CompactionContentMismatchException;
+use Anthropic\Messages\CompactionIncompleteTurnException;
+use Anthropic\Messages\CompactionNothingToSummarizeException;
+use Anthropic\Messages\CompactionSignatureInvalidException;
+use Anthropic\Messages\CompactionToolChangesMismatchException;
+use Anthropic\Messages\CompactionTooManyToolReferencesException;
+use Anthropic\Messages\CompactionUnavailableException;
 use Anthropic\Messages\ContainerParams;
 use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
@@ -26,11 +42,24 @@ use Anthropic\Messages\ThinkingConfigAdaptive;
 use Anthropic\Messages\ThinkingConfigBetweenTools;
 use Anthropic\Messages\ThinkingConfigDisabled;
 use Anthropic\Messages\ThinkingConfigEnabled;
+use Anthropic\Messages\ThreadAlreadyContinuedException;
+use Anthropic\Messages\ThreadContinueInFlightException;
+use Anthropic\Messages\ThreadFingerprintMismatchException;
+use Anthropic\Messages\ThreadNotFoundException;
+use Anthropic\Messages\ThreadUnsupportedRequestException;
 use Anthropic\Messages\ToolChoiceAny;
 use Anthropic\Messages\ToolChoiceAuto;
 use Anthropic\Messages\ToolChoiceNone;
 use Anthropic\Messages\ToolChoiceTool;
+use Anthropic\Messages\ToolNameConflictException;
+use Anthropic\Messages\ToolReferenceUnresolvedException;
+use Anthropic\OrganizationOnHoldException;
+use Anthropic\RampLimitExceededException;
+use Anthropic\RequestBodyEncodingInvalidException;
+use Anthropic\RequestBodyEncodingUnsupportedException;
+use Anthropic\RequestBodyTooLargeAfterDecodingException;
 use Anthropic\RequestOptions;
+use Anthropic\Skills\SkillReadBlockedUndecryptableException;
 
 /**
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
@@ -203,6 +232,35 @@ interface MessagesContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws AvailableToolsLimitExceededException
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws ClaudeCodeVersionTooOldException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws CompactionBlockAmbiguousException
+     * @throws CompactionBlockMisplacedException
+     * @throws CompactionContentMismatchException
+     * @throws CompactionIncompleteTurnException
+     * @throws CompactionNothingToSummarizeException
+     * @throws CompactionSignatureInvalidException
+     * @throws CompactionTooManyToolReferencesException
+     * @throws CompactionToolChangesMismatchException
+     * @throws OrganizationOnHoldException
+     * @throws RequestBodyEncodingInvalidException
+     * @throws RequestBodyEncodingUnsupportedException
+     * @throws ThreadAlreadyContinuedException
+     * @throws ThreadContinueInFlightException
+     * @throws ThreadFingerprintMismatchException
+     * @throws ThreadUnsupportedRequestException
+     * @throws ToolNameConflictException
+     * @throws ToolReferenceUnresolvedException
+     * @throws ThreadNotFoundException
+     * @throws SkillReadBlockedUndecryptableException
+     * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws EnforcedSpendLimitReachedException
+     * @throws RampLimitExceededException
+     * @throws CMEKKeyUnreachableException
+     * @throws CompactionUnavailableException
      * @throws APIException
      */
     public function create(
@@ -383,6 +441,35 @@ interface MessagesContract
      *
      * @return BaseStream<RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent>
      *
+     * @throws AvailableToolsLimitExceededException
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws ClaudeCodeVersionTooOldException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws CompactionBlockAmbiguousException
+     * @throws CompactionBlockMisplacedException
+     * @throws CompactionContentMismatchException
+     * @throws CompactionIncompleteTurnException
+     * @throws CompactionNothingToSummarizeException
+     * @throws CompactionSignatureInvalidException
+     * @throws CompactionTooManyToolReferencesException
+     * @throws CompactionToolChangesMismatchException
+     * @throws OrganizationOnHoldException
+     * @throws RequestBodyEncodingInvalidException
+     * @throws RequestBodyEncodingUnsupportedException
+     * @throws ThreadAlreadyContinuedException
+     * @throws ThreadContinueInFlightException
+     * @throws ThreadFingerprintMismatchException
+     * @throws ThreadUnsupportedRequestException
+     * @throws ToolNameConflictException
+     * @throws ToolReferenceUnresolvedException
+     * @throws ThreadNotFoundException
+     * @throws SkillReadBlockedUndecryptableException
+     * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws EnforcedSpendLimitReachedException
+     * @throws RampLimitExceededException
+     * @throws CMEKKeyUnreachableException
+     * @throws CompactionUnavailableException
      * @throws APIException
      */
     public function createStream(
@@ -542,6 +629,22 @@ interface MessagesContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws AvailableToolsLimitExceededException
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CompactionBlockAmbiguousException
+     * @throws CompactionBlockMisplacedException
+     * @throws CompactionContentMismatchException
+     * @throws CompactionNothingToSummarizeException
+     * @throws CompactionSignatureInvalidException
+     * @throws CompactionToolChangesMismatchException
+     * @throws OrganizationOnHoldException
+     * @throws RequestBodyEncodingInvalidException
+     * @throws RequestBodyEncodingUnsupportedException
+     * @throws ToolNameConflictException
+     * @throws ToolReferenceUnresolvedException
+     * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws EnforcedSpendLimitReachedException
+     * @throws CompactionUnavailableException
      * @throws APIException
      */
     public function countTokens(

@@ -9,12 +9,19 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\Organization\Invites\AlreadyMemberException;
+use Anthropic\Organization\Invites\CannotInviteEmailsWithUnverifiedDomainsException;
+use Anthropic\Organization\Invites\EmailDomainNotAllowedException;
+use Anthropic\Organization\Invites\InviteAlreadyExistsException;
 use Anthropic\Organization\Invites\InviteCreateParams;
 use Anthropic\Organization\Invites\InviteCreateParams\Role;
 use Anthropic\Organization\Invites\InviteDeleteResponse;
 use Anthropic\Organization\Invites\InviteListParams;
 use Anthropic\Organization\Invites\InviteListParams\Status;
 use Anthropic\Organization\Invites\OrganizationInvite;
+use Anthropic\Organization\OrgMemberLimitExceededException;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\InvitesRawContract;
@@ -44,6 +51,13 @@ final class InvitesRawService implements InvitesRawContract
      *
      * @return BaseResponse<OrganizationInvite>
      *
+     * @throws AlreadyMemberException
+     * @throws CannotInviteEmailsWithUnverifiedDomainsException
+     * @throws EmailDomainNotAllowedException
+     * @throws InviteAlreadyExistsException
+     * @throws OrgMemberLimitExceededException
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function create(

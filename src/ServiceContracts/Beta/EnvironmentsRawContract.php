@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta;
 
 use Anthropic\Beta\Environments\BetaEnvironment;
+use Anthropic\Beta\Environments\BetaEnvironmentArchivedException;
+use Anthropic\Beta\Environments\BetaEnvironmentCreateDisabledException;
 use Anthropic\Beta\Environments\BetaEnvironmentDeleteResponse;
+use Anthropic\Beta\Environments\BetaEnvironmentUpdateDisabledException;
+use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\EnvironmentArchiveParams;
 use Anthropic\Beta\Environments\EnvironmentCreateParams;
 use Anthropic\Beta\Environments\EnvironmentDeleteParams;
 use Anthropic\Beta\Environments\EnvironmentListParams;
 use Anthropic\Beta\Environments\EnvironmentRetrieveParams;
 use Anthropic\Beta\Environments\EnvironmentUpdateParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -30,6 +36,9 @@ interface EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentCreateDisabledException
      * @throws APIException
      */
     public function create(
@@ -45,6 +54,8 @@ interface EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -62,6 +73,11 @@ interface EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws BetaEnvironmentArchivedException
+     * @throws BetaInvalidConfigTypeChangeException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentUpdateDisabledException
      * @throws APIException
      */
     public function update(
@@ -78,6 +94,8 @@ interface EnvironmentsRawContract
      *
      * @return BaseResponse<PageCursor<BetaEnvironment>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -93,6 +111,8 @@ interface EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironmentDeleteResponse>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(
@@ -109,6 +129,8 @@ interface EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function archive(

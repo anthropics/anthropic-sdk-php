@@ -4,15 +4,31 @@ declare(strict_types=1);
 
 namespace Anthropic\Services;
 
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
+use Anthropic\ClaudeCodeVersionTooOldException;
 use Anthropic\Client;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
+use Anthropic\CMEKKeyUnreachableException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Implementation\RawResponse;
 use Anthropic\Core\Util;
+use Anthropic\EnforcedSpendLimitReachedException;
 use Anthropic\Lib\Tracing\Tracing;
+use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CacheControlEphemeral;
+use Anthropic\Messages\CompactionBlockAmbiguousException;
+use Anthropic\Messages\CompactionBlockMisplacedException;
+use Anthropic\Messages\CompactionContentMismatchException;
+use Anthropic\Messages\CompactionIncompleteTurnException;
+use Anthropic\Messages\CompactionNothingToSummarizeException;
+use Anthropic\Messages\CompactionSignatureInvalidException;
+use Anthropic\Messages\CompactionToolChangesMismatchException;
+use Anthropic\Messages\CompactionTooManyToolReferencesException;
+use Anthropic\Messages\CompactionUnavailableException;
 use Anthropic\Messages\DiagnosticsParam;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
@@ -30,8 +46,21 @@ use Anthropic\Messages\RawMessageDeltaEvent;
 use Anthropic\Messages\RawMessageStartEvent;
 use Anthropic\Messages\RawMessageStopEvent;
 use Anthropic\Messages\RawMessageStreamEvent;
+use Anthropic\Messages\ThreadAlreadyContinuedException;
+use Anthropic\Messages\ThreadContinueInFlightException;
+use Anthropic\Messages\ThreadFingerprintMismatchException;
+use Anthropic\Messages\ThreadNotFoundException;
+use Anthropic\Messages\ThreadUnsupportedRequestException;
+use Anthropic\Messages\ToolNameConflictException;
+use Anthropic\Messages\ToolReferenceUnresolvedException;
+use Anthropic\OrganizationOnHoldException;
+use Anthropic\RampLimitExceededException;
+use Anthropic\RequestBodyEncodingInvalidException;
+use Anthropic\RequestBodyEncodingUnsupportedException;
+use Anthropic\RequestBodyTooLargeAfterDecodingException;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\MessagesRawContract;
+use Anthropic\Skills\SkillReadBlockedUndecryptableException;
 use Anthropic\SSEStream;
 
 /**
@@ -90,6 +119,35 @@ final class MessagesRawService implements MessagesRawContract
      *
      * @return BaseResponse<Message>
      *
+     * @throws AvailableToolsLimitExceededException
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws ClaudeCodeVersionTooOldException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws CompactionBlockAmbiguousException
+     * @throws CompactionBlockMisplacedException
+     * @throws CompactionContentMismatchException
+     * @throws CompactionIncompleteTurnException
+     * @throws CompactionNothingToSummarizeException
+     * @throws CompactionSignatureInvalidException
+     * @throws CompactionTooManyToolReferencesException
+     * @throws CompactionToolChangesMismatchException
+     * @throws OrganizationOnHoldException
+     * @throws RequestBodyEncodingInvalidException
+     * @throws RequestBodyEncodingUnsupportedException
+     * @throws ThreadAlreadyContinuedException
+     * @throws ThreadContinueInFlightException
+     * @throws ThreadFingerprintMismatchException
+     * @throws ThreadUnsupportedRequestException
+     * @throws ToolNameConflictException
+     * @throws ToolReferenceUnresolvedException
+     * @throws ThreadNotFoundException
+     * @throws SkillReadBlockedUndecryptableException
+     * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws EnforcedSpendLimitReachedException
+     * @throws RampLimitExceededException
+     * @throws CMEKKeyUnreachableException
+     * @throws CompactionUnavailableException
      * @throws APIException
      */
     public function create(
@@ -158,6 +216,35 @@ final class MessagesRawService implements MessagesRawContract
      *
      * @return BaseResponse<BaseStream<RawMessageStartEvent|RawMessageDeltaEvent|RawMessageStopEvent|RawContentBlockStartEvent|RawContentBlockDeltaEvent|RawContentBlockStopEvent>>
      *
+     * @throws AvailableToolsLimitExceededException
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws ClaudeCodeVersionTooOldException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws CompactionBlockAmbiguousException
+     * @throws CompactionBlockMisplacedException
+     * @throws CompactionContentMismatchException
+     * @throws CompactionIncompleteTurnException
+     * @throws CompactionNothingToSummarizeException
+     * @throws CompactionSignatureInvalidException
+     * @throws CompactionTooManyToolReferencesException
+     * @throws CompactionToolChangesMismatchException
+     * @throws OrganizationOnHoldException
+     * @throws RequestBodyEncodingInvalidException
+     * @throws RequestBodyEncodingUnsupportedException
+     * @throws ThreadAlreadyContinuedException
+     * @throws ThreadContinueInFlightException
+     * @throws ThreadFingerprintMismatchException
+     * @throws ThreadUnsupportedRequestException
+     * @throws ToolNameConflictException
+     * @throws ToolReferenceUnresolvedException
+     * @throws ThreadNotFoundException
+     * @throws SkillReadBlockedUndecryptableException
+     * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws EnforcedSpendLimitReachedException
+     * @throws RampLimitExceededException
+     * @throws CMEKKeyUnreachableException
+     * @throws CompactionUnavailableException
      * @throws APIException
      */
     public function createStream(
@@ -230,6 +317,22 @@ final class MessagesRawService implements MessagesRawContract
      *
      * @return BaseResponse<MessageTokensCount>
      *
+     * @throws AvailableToolsLimitExceededException
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CompactionBlockAmbiguousException
+     * @throws CompactionBlockMisplacedException
+     * @throws CompactionContentMismatchException
+     * @throws CompactionNothingToSummarizeException
+     * @throws CompactionSignatureInvalidException
+     * @throws CompactionToolChangesMismatchException
+     * @throws OrganizationOnHoldException
+     * @throws RequestBodyEncodingInvalidException
+     * @throws RequestBodyEncodingUnsupportedException
+     * @throws ToolNameConflictException
+     * @throws ToolReferenceUnresolvedException
+     * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws EnforcedSpendLimitReachedException
+     * @throws CompactionUnavailableException
      * @throws APIException
      */
     public function countTokens(

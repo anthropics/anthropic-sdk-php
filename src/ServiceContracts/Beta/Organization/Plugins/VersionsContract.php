@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta\Organization\Plugins;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\BetaUnsupportedCharsetException;
+use Anthropic\Beta\Organization\Plugins\RegistrationPendingException;
+use Anthropic\Beta\Organization\Plugins\SkillNameTakenException;
 use Anthropic\Beta\Organization\Plugins\Versions\BetaPluginVersion;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\PageCursor;
@@ -25,6 +30,11 @@ interface VersionsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws BetaUnsupportedCharsetException
+     * @throws SkillNameTakenException
+     * @throws RegistrationPendingException
      * @throws APIException
      */
     public function create(
@@ -88,6 +98,8 @@ interface VersionsContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
      * @throws APIException
      */
     public function download(

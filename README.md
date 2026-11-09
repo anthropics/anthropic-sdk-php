@@ -1,8 +1,8 @@
-# Claude SDK for PHP
+# Anthropic SDK for PHP
 
 [![Packagist Version](https://img.shields.io/packagist/v/anthropic-ai/sdk.svg)](https://packagist.org/packages/anthropic-ai/sdk)
 
-The Claude SDK for PHP provides access to the [Claude API](https://docs.anthropic.com/en/api/) from PHP applications.
+The Anthropic SDK for PHP provides access to the [Claude API](https://docs.anthropic.com/en/api/) from PHP applications.
 
 ## Documentation
 
@@ -13,7 +13,7 @@ Full documentation is available at **[platform.claude.com/docs/en/api/sdks/php](
 <!-- x-release-please-start-version -->
 
 ```sh
-composer require "anthropic-ai/sdk:^1.4.0"
+composer require "anthropic-ai/sdk:^1.6.0"
 ```
 
 <!-- x-release-please-end -->

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\ClaudeTag\Bundles;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagBundleTarget;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagDeletedBundleTarget;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\BetaClaudeTagSlackChannelBundleTarget;
@@ -13,6 +14,9 @@ use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\TargetCreateParams;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\TargetDeleteParams;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\TargetListParams;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\Targets\TargetRetrieveParams;
+use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
+use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
+use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -48,6 +52,10 @@ final class TargetsRawService implements TargetsRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function create(
@@ -100,6 +108,10 @@ final class TargetsRawService implements TargetsRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function retrieve(
@@ -160,6 +172,10 @@ final class TargetsRawService implements TargetsRawContract
      *
      * @return BaseResponse<PageCursor<BetaClaudeTagSlackChannelBundleTarget|BetaClaudeTagSlackWorkspaceBundleTarget>>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function list(
@@ -218,6 +234,10 @@ final class TargetsRawService implements TargetsRawContract
      *
      * @return BaseResponse<BetaClaudeTagDeletedBundleTarget>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function delete(

@@ -6,12 +6,18 @@ namespace Anthropic\ServiceContracts\Organization;
 
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationFailedException;
+use Anthropic\Organization\ExternalKeys\ExternalKeyValidationTimedOutException;
+use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
 use Anthropic\Organization\Workspaces\Workspace;
 use Anthropic\Organization\Workspaces\WorkspaceCreateParams;
 use Anthropic\Organization\Workspaces\WorkspaceListParams;
+use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\Organization\Workspaces\WorkspaceUpdateParams;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\UserProfiles\UserProfileNotFoundException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -26,6 +32,12 @@ interface WorkspacesRawContract
      *
      * @return BaseResponse<Workspace>
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
+     * @throws KeyProfileMismatchException
+     * @throws UserProfileNotFoundException
+     * @throws WorkspacePolicyViolationException
+     * @throws ExternalKeyChangedException
      * @throws APIException
      */
     public function create(
@@ -56,6 +68,12 @@ interface WorkspacesRawContract
      *
      * @return BaseResponse<Workspace>
      *
+     * @throws ExternalKeyValidationFailedException
+     * @throws ExternalKeyValidationTimedOutException
+     * @throws KeyProfileMismatchException
+     * @throws UserProfileNotFoundException
+     * @throws WorkspacePolicyViolationException
+     * @throws ExternalKeyChangedException
      * @throws APIException
      */
     public function update(

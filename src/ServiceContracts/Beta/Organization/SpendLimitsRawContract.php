@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
+use Anthropic\Beta\Organization\BetaBillingFrozenException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimit;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitDeleteResponse;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitListParams;
+use Anthropic\Beta\Organization\SpendLimits\SpendLimitsAdminAPIWritesNotEnabledException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitSetParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -26,6 +29,7 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function retrieve(
@@ -41,6 +45,7 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<PageCursor<SpendLimit>>
      *
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(
@@ -56,6 +61,8 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimitDeleteResponse>
      *
+     * @throws BetaBillingFrozenException
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function delete(
@@ -71,6 +78,8 @@ interface SpendLimitsRawContract
      *
      * @return BaseResponse<SpendLimit>
      *
+     * @throws BetaBillingFrozenException
+     * @throws SpendLimitsAdminAPIWritesNotEnabledException
      * @throws APIException
      */
     public function set(

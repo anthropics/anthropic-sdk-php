@@ -7,12 +7,18 @@ namespace Anthropic\Services\Beta;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Environments\BetaCloudConfigParams;
 use Anthropic\Beta\Environments\BetaEnvironment;
+use Anthropic\Beta\Environments\BetaEnvironmentArchivedException;
+use Anthropic\Beta\Environments\BetaEnvironmentCreateDisabledException;
 use Anthropic\Beta\Environments\BetaEnvironmentDeleteResponse;
+use Anthropic\Beta\Environments\BetaEnvironmentUpdateDisabledException;
+use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\BetaSelfHostedConfigParams;
 use Anthropic\Beta\Environments\EnvironmentCreateParams\Scope;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\EnvironmentsContract;
@@ -60,6 +66,9 @@ final class EnvironmentsService implements EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentCreateDisabledException
      * @throws APIException
      */
     public function create(
@@ -101,6 +110,8 @@ final class EnvironmentsService implements EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -136,6 +147,11 @@ final class EnvironmentsService implements EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws BetaEnvironmentArchivedException
+     * @throws BetaInvalidConfigTypeChangeException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentUpdateDisabledException
      * @throws APIException
      */
     public function update(
@@ -183,6 +199,8 @@ final class EnvironmentsService implements EnvironmentsContract
      *
      * @return PageCursor<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -220,6 +238,8 @@ final class EnvironmentsService implements EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(
@@ -249,6 +269,8 @@ final class EnvironmentsService implements EnvironmentsContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function archive(

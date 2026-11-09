@@ -9,11 +9,13 @@ use Anthropic\Beta\Models\BetaModelInfo;
 use Anthropic\Beta\Models\ModelListParams;
 use Anthropic\Beta\Models\ModelListParams\Lifecycle;
 use Anthropic\Beta\Models\ModelRetrieveParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\ModelsRawContract;
@@ -45,6 +47,8 @@ final class ModelsRawService implements ModelsRawContract
      *
      * @return BaseResponse<BetaModelInfo>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -97,6 +101,8 @@ final class ModelsRawService implements ModelsRawContract
      *
      * @return BaseResponse<Page<BetaModelInfo>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(

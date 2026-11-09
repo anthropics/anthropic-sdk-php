@@ -4,6 +4,7 @@ namespace Tests\Vertex;
 
 use Anthropic\Core\Util;
 use Anthropic\Vertex\Client;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -94,6 +95,79 @@ class ClientTest extends TestCase
 
         $this->assertSame('/v1/projects/p/locations/us-east5/publishers/anthropic/models/m@v:rawPredict', $sent->getUri()->getPath());
         $this->assertSame($expected, $sent->getUri()->getQuery());
+    }
+
+    /**
+     * @dataProvider modelsPathProvider
+     */
+    public function testProjectIdAndRegionAreEachSentAsOnePathSegment(string $projectId, string $region, ?string $baseUrl, string $expected): void
+    {
+        $transporter = new \Http\Mock\Client;
+        $transporter->addResponse(new Response(200, ['Content-Type' => 'application/json'], '{}'));
+        $transporter->addResponse(new Response(200, ['Content-Type' => 'application/json'], '{}'));
+
+        $client = $this->createClientWithLocation($region, $projectId, $baseUrl, $transporter);
+        $client->messages->create(maxTokens: 1, messages: [], model: 'm@v');
+        $client->messages->countTokens(messages: [], model: 'm@v');
+
+        $this->assertSame(
+            [
+                "{$expected}/publishers/anthropic/models/m@v:rawPredict",
+                "{$expected}/publishers/anthropic/models/count-tokens:rawPredict",
+            ],
+            array_map(static fn ($request) => (string) $request->getUri(), array_values($transporter->getRequests())),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string|null, string}>
+     */
+    public static function modelsPathProvider(): iterable
+    {
+        // Real values are sent exactly as given.
+        yield 'project id and a region' => ['my-project', 'us-east5', null, 'https://us-east5-aiplatform.googleapis.com/v1/projects/my-project/locations/us-east5'];
+
+        yield 'domain-scoped project id and global' => ['example.com:my-project', 'global', null, 'https://aiplatform.googleapis.com/v1/projects/example.com:my-project/locations/global'];
+
+        yield 'slash in project id' => ['a/b', 'us-east5', null, 'https://us-east5-aiplatform.googleapis.com/v1/projects/a%2Fb/locations/us-east5'];
+
+        yield 'slash in region' => ['p', 'a/b', 'https://example.com/v1', 'https://example.com/v1/projects/p/locations/a%2Fb'];
+    }
+
+    /**
+     * @dataProvider refusedPathValueProvider
+     */
+    public function testProjectIdAndRegionRefuseDotSegmentsAndEmptyValues(string $projectId, string $region, string $message): void
+    {
+        $transporter = new \Http\Mock\Client;
+        $client = $this->createClientWithLocation($region, $projectId, 'https://example.com/v1', $transporter);
+
+        $calls = [
+            static fn () => $client->messages->create(maxTokens: 1, messages: [], model: 'm@v'),
+            static fn () => $client->messages->countTokens(messages: [], model: 'm@v'),
+        ];
+        foreach ($calls as $call) {
+            try {
+                $call();
+                $this->fail('expected the value to be refused');
+            } catch (\InvalidArgumentException $e) {
+                $this->assertStringContainsString($message, $e->getMessage());
+            }
+        }
+
+        $this->assertSame([], $transporter->getRequests());
+    }
+
+    /**
+     * @return iterable<string, array{string, string, string}>
+     */
+    public static function refusedPathValueProvider(): iterable
+    {
+        foreach (['.' => 'dot segment "."', '..' => 'dot segment ".."', '' => 'empty path parameter'] as $value => $message) {
+            yield "project id \"{$value}\"" => [$value, 'us-east5', $message];
+
+            yield "region \"{$value}\"" => ['p', $value, $message];
+        }
     }
 
     /**
@@ -192,7 +266,11 @@ class ClientTest extends TestCase
         };
     }
 
-    private function createClientWithLocation(string $location): Client
+    /**
+     * Calls the private constructor, which takes values the factories' types rule out, such as "".
+     * Credentials are only available when a transporter is given.
+     */
+    private function createClientWithLocation(string $location, string $projectId = 'test-project', ?string $baseUrl = null, ?\Http\Mock\Client $transporter = null): Client
     {
         $reflection = new \ReflectionClass(Client::class);
         $constructor = $reflection->getConstructor();
@@ -200,11 +278,12 @@ class ClientTest extends TestCase
 
         $client = $reflection->newInstanceWithoutConstructor();
 
-        $credentialsProvider = function () {
-            throw new \RuntimeException('Should not be called in tests');
+        $credentialsProvider = function () use ($transporter) {
+            return null !== $transporter ? self::fakeCreds() : throw new \RuntimeException('Should not be called in tests');
         };
+        $requestOptions = null !== $transporter ? ['transporter' => $transporter] : null;
 
-        $constructor->invoke($client, $credentialsProvider, $location, 'test-project');
+        $constructor->invoke($client, $credentialsProvider, $location, $projectId, $baseUrl, $requestOptions);
 
         return $client;
     }

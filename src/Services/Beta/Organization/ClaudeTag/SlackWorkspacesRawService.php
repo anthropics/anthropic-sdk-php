@@ -5,7 +5,14 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Organization\ClaudeTag;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Environments\BetaEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagSettingsUpdate;
+use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
+use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
+use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsConflictException;
 use Anthropic\Beta\Organization\ClaudeTag\SlackWorkspaces\BetaClaudeTagSlackWorkspace;
 use Anthropic\Beta\Organization\ClaudeTag\SlackWorkspaces\SlackWorkspaceListParams;
 use Anthropic\Beta\Organization\ClaudeTag\SlackWorkspaces\SlackWorkspaceRetrieveParams;
@@ -45,6 +52,10 @@ final class SlackWorkspacesRawService implements SlackWorkspacesRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackWorkspace>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function retrieve(
@@ -106,6 +117,13 @@ final class SlackWorkspacesRawService implements SlackWorkspacesRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackWorkspace>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
+     * @throws BetaEnvironmentNotFoundException
+     * @throws SlackChannelSetUpEnvironmentNotFoundException
+     * @throws SlackChannelSetUpSettingsConflictException
      * @throws APIException
      */
     public function update(
@@ -165,6 +183,10 @@ final class SlackWorkspacesRawService implements SlackWorkspacesRawContract
      *
      * @return BaseResponse<PageCursor<BetaClaudeTagSlackWorkspace>>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function list(

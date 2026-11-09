@@ -7,8 +7,10 @@ namespace Anthropic\ServiceContracts\Beta;
 use Anthropic\Beta\Models\BetaModelInfo;
 use Anthropic\Beta\Models\ModelListParams;
 use Anthropic\Beta\Models\ModelRetrieveParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -26,6 +28,8 @@ interface ModelsRawContract
      *
      * @return BaseResponse<BetaModelInfo>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -42,6 +46,8 @@ interface ModelsRawContract
      *
      * @return BaseResponse<Page<BetaModelInfo>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(

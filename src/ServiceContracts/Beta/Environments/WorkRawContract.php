@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Environments;
 
+use Anthropic\Beta\Environments\BetaInvalidMetadataException;
+use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
 use Anthropic\Beta\Environments\Work\SelfHostedWork;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkHeartbeatResponse;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkQueueStats;
@@ -15,8 +17,10 @@ use Anthropic\Beta\Environments\Work\WorkRetrieveParams;
 use Anthropic\Beta\Environments\Work\WorkStatsParams;
 use Anthropic\Beta\Environments\Work\WorkStopParams;
 use Anthropic\Beta\Environments\Work\WorkUpdateParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -34,6 +38,8 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -51,6 +57,9 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws BetaInvalidMetadataException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function update(
@@ -102,6 +111,7 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWorkHeartbeatResponse>
      *
+     * @throws HeartbeatPreconditionFailedException
      * @throws APIException
      */
     public function heartbeat(
@@ -135,6 +145,8 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWorkQueueStats>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function stats(
@@ -152,6 +164,8 @@ interface WorkRawContract
      *
      * @return BaseResponse<SelfHostedWork>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function stop(

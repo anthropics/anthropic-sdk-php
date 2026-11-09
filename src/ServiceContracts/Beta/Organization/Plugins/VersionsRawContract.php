@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization\Plugins;
 
+use Anthropic\Beta\BetaUnsupportedCharsetException;
+use Anthropic\Beta\Organization\Plugins\RegistrationPendingException;
+use Anthropic\Beta\Organization\Plugins\SkillNameTakenException;
 use Anthropic\Beta\Organization\Plugins\Versions\BetaPluginVersion;
 use Anthropic\Beta\Organization\Plugins\Versions\VersionCreateParams;
 use Anthropic\Beta\Organization\Plugins\Versions\VersionDownloadParams;
 use Anthropic\Beta\Organization\Plugins\Versions\VersionListParams;
 use Anthropic\Beta\Organization\Plugins\Versions\VersionRetrieveParams;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
@@ -28,6 +33,11 @@ interface VersionsRawContract
      *
      * @return BaseResponse<BetaPluginVersion>
      *
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws BetaUnsupportedCharsetException
+     * @throws SkillNameTakenException
+     * @throws RegistrationPendingException
      * @throws APIException
      */
     public function create(
@@ -79,6 +89,8 @@ interface VersionsRawContract
      *
      * @return BaseResponse<string>
      *
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
      * @throws APIException
      */
     public function download(

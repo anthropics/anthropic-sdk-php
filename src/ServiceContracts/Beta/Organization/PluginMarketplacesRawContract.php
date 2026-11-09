@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
+use Anthropic\Beta\BetaUnsupportedCharsetException;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplace;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceListParams;
 use Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceRetrieveParams;
@@ -78,6 +79,7 @@ interface PluginMarketplacesRawContract
      *
      * @return BaseResponse<PluginMarketplaceValidationReport>
      *
+     * @throws BetaUnsupportedCharsetException
      * @throws APIException
      */
     public function validateArchive(

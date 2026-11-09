@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta\Environments;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Environments\BetaInvalidMetadataException;
+use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
 use Anthropic\Beta\Environments\Work\SelfHostedWork;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkHeartbeatResponse;
 use Anthropic\Beta\Environments\Work\SelfHostedWorkQueueStats;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Environments\WorkContract;
@@ -48,6 +52,8 @@ final class WorkService implements WorkContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -87,6 +93,9 @@ final class WorkService implements WorkContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws BetaInvalidMetadataException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function update(
@@ -190,6 +199,7 @@ final class WorkService implements WorkContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: Optional header to specify the beta version(s) you want to use.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws HeartbeatPreconditionFailedException
      * @throws APIException
      */
     public function heartbeat(
@@ -265,6 +275,8 @@ final class WorkService implements WorkContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function stats(
@@ -299,6 +311,8 @@ final class WorkService implements WorkContract
      * Only needed for credentials that can act on more than one Workspace. A credential that belongs to a specific Workspace may omit it; if sent, it must match that Workspace.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function stop(

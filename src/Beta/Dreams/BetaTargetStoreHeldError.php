@@ -28,9 +28,6 @@ final class BetaTargetStoreHeldError implements BaseModel
     #[Required(type: new ConstantOf('conflict_error'))]
     public string $type = 'conflict_error';
 
-    /**
-     * A human-readable explanation of why the memory store can't be used yet, with the ID of the dream that is using it when the server can identify it.
-     */
     #[Optional]
     public ?string $message;
 
@@ -64,9 +61,6 @@ final class BetaTargetStoreHeldError implements BaseModel
         return $self;
     }
 
-    /**
-     * A human-readable explanation of why the memory store can't be used yet, with the ID of the dream that is using it when the server can identify it.
-     */
     public function withMessage(string $message): self
     {
         $self = clone $this;

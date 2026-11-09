@@ -11,12 +11,17 @@ use Anthropic\Beta\Skills\SkillCreateParams;
 use Anthropic\Beta\Skills\SkillDeleteParams;
 use Anthropic\Beta\Skills\SkillListParams;
 use Anthropic\Beta\Skills\SkillRetrieveParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
+use Anthropic\CMEKContextUnavailableException;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\SkillsRawContract;
@@ -47,6 +52,11 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<BetaSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
+     * @throws CMEKContextUnavailableException
      * @throws APIException
      */
     public function create(
@@ -106,6 +116,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<BetaSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -155,6 +167,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<PageCursor<BetaSkill>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -209,6 +223,8 @@ final class SkillsRawService implements SkillsRawContract
      *
      * @return BaseResponse<BetaDeletedSkill>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(

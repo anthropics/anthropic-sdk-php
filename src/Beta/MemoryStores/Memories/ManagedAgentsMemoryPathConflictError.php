@@ -15,6 +15,8 @@ use Anthropic\Core\Conversion\ConstantOf;
  *
  * Two paths overlap when one is an ancestor of the other, such as `/notes` and `/notes/todo.md`. To free the path, rename or delete the memory that `conflicting_memory_id` references, then retry. To change that memory instead of creating a new one, update it.
  *
+ * To handle the error in code, use `conflicting_path` and `conflicting_memory_id` instead of `message`.
+ *
  * @phpstan-type ManagedAgentsMemoryPathConflictErrorShape = array{
  *   type: 'memory_path_conflict_error',
  *   conflictingMemoryID?: string|null,
@@ -45,9 +47,6 @@ final class ManagedAgentsMemoryPathConflictError implements BaseModel
     #[Optional('conflicting_path')]
     public ?string $conflictingPath;
 
-    /**
-     * A human-readable explanation of the conflict. To handle the error in code, use `conflicting_path` and `conflicting_memory_id` instead.
-     */
     #[Optional]
     public ?string $message;
 
@@ -110,9 +109,6 @@ final class ManagedAgentsMemoryPathConflictError implements BaseModel
         return $self;
     }
 
-    /**
-     * A human-readable explanation of the conflict. To handle the error in code, use `conflicting_path` and `conflicting_memory_id` instead.
-     */
     public function withMessage(string $message): self
     {
         $self = clone $this;

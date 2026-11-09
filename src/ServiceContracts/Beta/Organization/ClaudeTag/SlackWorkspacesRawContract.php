@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization\ClaudeTag;
 
+use Anthropic\Beta\Environments\BetaEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
+use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
+use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
+use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpEnvironmentNotFoundException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsConflictException;
 use Anthropic\Beta\Organization\ClaudeTag\SlackWorkspaces\BetaClaudeTagSlackWorkspace;
 use Anthropic\Beta\Organization\ClaudeTag\SlackWorkspaces\SlackWorkspaceListParams;
 use Anthropic\Beta\Organization\ClaudeTag\SlackWorkspaces\SlackWorkspaceRetrieveParams;
@@ -27,6 +34,10 @@ interface SlackWorkspacesRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackWorkspace>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function retrieve(
@@ -44,6 +55,13 @@ interface SlackWorkspacesRawContract
      *
      * @return BaseResponse<BetaClaudeTagSlackWorkspace>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
+     * @throws BetaEnvironmentNotFoundException
+     * @throws SlackChannelSetUpEnvironmentNotFoundException
+     * @throws SlackChannelSetUpSettingsConflictException
      * @throws APIException
      */
     public function update(
@@ -60,6 +78,10 @@ interface SlackWorkspacesRawContract
      *
      * @return BaseResponse<PageCursor<BetaClaudeTagSlackWorkspace>>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function list(

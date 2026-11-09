@@ -5,10 +5,17 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Organization;
 
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\Invites\AlreadyMemberException;
+use Anthropic\Organization\Invites\CannotInviteEmailsWithUnverifiedDomainsException;
+use Anthropic\Organization\Invites\EmailDomainNotAllowedException;
+use Anthropic\Organization\Invites\InviteAlreadyExistsException;
 use Anthropic\Organization\Invites\InviteCreateParams\Role;
 use Anthropic\Organization\Invites\InviteDeleteResponse;
 use Anthropic\Organization\Invites\InviteListParams\Status;
 use Anthropic\Organization\Invites\OrganizationInvite;
+use Anthropic\Organization\OrgMemberLimitExceededException;
+use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
+use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 
@@ -27,6 +34,13 @@ interface InvitesContract
      * @param list<string> $rbacGroupIDs RBAC group IDs to assign to the User when the Invite is accepted. A non-empty array is accepted only for a Claude Enterprise organization with RBAC groups, and requires the key to carry the `write:rbac_groups` scope.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws AlreadyMemberException
+     * @throws CannotInviteEmailsWithUnverifiedDomainsException
+     * @throws EmailDomainNotAllowedException
+     * @throws InviteAlreadyExistsException
+     * @throws OrgMemberLimitExceededException
+     * @throws RBACGroupGrantsOwnerAccessException
+     * @throws RBACGroupOwnerAccessUnconfirmedException
      * @throws APIException
      */
     public function create(

@@ -8,6 +8,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Organization\SpendLimits\Effective\EffectiveListParams;
 use Anthropic\Organization\SpendLimits\SpendSummary;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 
@@ -24,6 +25,7 @@ interface EffectiveRawContract
      *
      * @return BaseResponse<PageCursor<SpendSummary>>
      *
+     * @throws OrganizationTypeNotSupportedException
      * @throws APIException
      */
     public function list(

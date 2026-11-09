@@ -12,12 +12,19 @@ use Anthropic\Beta\Files\FileDownloadParams;
 use Anthropic\Beta\Files\FileListParams;
 use Anthropic\Beta\Files\FileRetrieveMetadataParams;
 use Anthropic\Beta\Files\FileUploadParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
+use Anthropic\CMEKKeyDisabledException;
+use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\Files\FileExpiredException;
+use Anthropic\Files\FileNotDownloadableException;
+use Anthropic\Files\StorageQuotaExceededException;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\FilesRawContract;
@@ -50,6 +57,10 @@ final class FilesRawService implements FilesRawContract
      *
      * @return BaseResponse<PageCursor<BetaFileMetadata>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -105,6 +116,10 @@ final class FilesRawService implements FilesRawContract
      *
      * @return BaseResponse<BetaDeletedFile>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(
@@ -152,6 +167,12 @@ final class FilesRawService implements FilesRawContract
      *
      * @return BaseResponse<string>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws FileNotDownloadableException
+     * @throws OrganizationOnHoldException
+     * @throws FileExpiredException
      * @throws APIException
      */
     public function download(
@@ -199,6 +220,10 @@ final class FilesRawService implements FilesRawContract
      *
      * @return BaseResponse<BetaFileMetadata>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieveMetadata(
@@ -247,6 +272,11 @@ final class FilesRawService implements FilesRawContract
      *
      * @return BaseResponse<BetaFileMetadata>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws CMEKKeyNetworkBlockedException
+     * @throws OrganizationOnHoldException
+     * @throws StorageQuotaExceededException
      * @throws APIException
      */
     public function upload(

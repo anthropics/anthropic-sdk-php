@@ -17,10 +17,17 @@ final class BillingError implements BaseModel
     /** @use SdkModel<BillingErrorShape> */
     use SdkModel;
 
-    /** @var 'billing_error' $type */
+    /**
+     * The broad category of the error.
+     *
+     * @var 'billing_error' $type
+     */
     #[Required(type: new ConstantOf('billing_error'))]
     public string $type = 'billing_error';
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     #[Required]
     public string $message;
 
@@ -57,6 +64,9 @@ final class BillingError implements BaseModel
         return $self;
     }
 
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
     public function withMessage(string $message): self
     {
         $self = clone $this;
@@ -66,6 +76,8 @@ final class BillingError implements BaseModel
     }
 
     /**
+     * The broad category of the error.
+     *
      * @param 'billing_error' $type
      */
     public function withType(string $type): self

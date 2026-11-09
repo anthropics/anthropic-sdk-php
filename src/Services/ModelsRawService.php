@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Services;
 
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -13,6 +14,7 @@ use Anthropic\Models\ModelInfo;
 use Anthropic\Models\ModelListParams;
 use Anthropic\Models\ModelListParams\Lifecycle;
 use Anthropic\Models\ModelRetrieveParams;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\ModelsRawContract;
@@ -41,6 +43,8 @@ final class ModelsRawService implements ModelsRawContract
      *
      * @return BaseResponse<ModelInfo>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -88,6 +92,8 @@ final class ModelsRawService implements ModelsRawContract
      *
      * @return BaseResponse<Page<ModelInfo>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(

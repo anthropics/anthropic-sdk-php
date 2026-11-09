@@ -2,6 +2,7 @@
 
 namespace Tests\Foundry;
 
+use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\Foundry\Client;
 use Anthropic\Foundry\ServiceClient;
@@ -143,11 +144,16 @@ final class ClientTest extends TestCase
     }
 
     /**
+     * These calls check routing only: where the request goes and which credential it carries. Which of these
+     * endpoints a deployment serves is the platform's answer, not the client's.
+     *
      * @param \Closure(Client): mixed $call
      * @param array<string, mixed>|null $body
      */
+    #[DataProvider('filesCalls')]
+    #[DataProvider('skillsCalls')]
     #[DataProvider('userProfilesCalls')]
-    public function testUserProfilesRequestsGoToTheFoundryBaseUrlWithTheApiKey(\Closure $call, string $method, string $path, ?array $body): void
+    public function testFirstPartyServiceRequestsGoToTheFoundryBaseUrlWithTheApiKey(\Closure $call, string $method, string $path, ?array $body = null): void
     {
         $call($this->makeClient(apiKey: 'test-key'));
         $request = $this->getLastRequest();
@@ -160,53 +166,163 @@ final class ClientTest extends TestCase
     }
 
     /**
-     * These calls check routing only: where the request goes and which credential it carries. Which of these
-     * endpoints a deployment serves is the platform's answer, not the client's.
-     *
+     * @return iterable<string, array{\Closure(Client): mixed, string, string}>
+     */
+    public static function filesCalls(): iterable
+    {
+        yield 'files list' => [
+            static fn (Client $client) => $client->files->list(limit: 2),
+            'GET',
+            '/v1/files?limit=2',
+        ];
+
+        yield 'files delete' => [
+            static fn (Client $client) => $client->files->delete('file_1'),
+            'DELETE',
+            '/v1/files/file_1',
+        ];
+
+        yield 'files download' => [
+            static fn (Client $client) => $client->files->raw->download('file_1', []),
+            'GET',
+            '/v1/files/file_1/content',
+        ];
+
+        yield 'files retrieveMetadata' => [
+            static fn (Client $client) => $client->files->retrieveMetadata('file_1'),
+            'GET',
+            '/v1/files/file_1',
+        ];
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client): mixed, string, string}>
+     */
+    public static function skillsCalls(): iterable
+    {
+        yield 'skills retrieve' => [
+            static fn (Client $client) => $client->skills->retrieve('skill_1'),
+            'GET',
+            '/v1/skills/skill_1',
+        ];
+
+        yield 'skills list' => [
+            static fn (Client $client) => $client->skills->list(limit: 2),
+            'GET',
+            '/v1/skills?limit=2',
+        ];
+
+        yield 'skills delete' => [
+            static fn (Client $client) => $client->skills->delete('skill_1'),
+            'DELETE',
+            '/v1/skills/skill_1',
+        ];
+
+        yield 'skills versions retrieve' => [
+            static fn (Client $client) => $client->skills->versions->retrieve('1', skillID: 'skill_1'),
+            'GET',
+            '/v1/skills/skill_1/versions/1',
+        ];
+
+        yield 'skills versions list' => [
+            static fn (Client $client) => $client->skills->versions->list('skill_1', limit: 2),
+            'GET',
+            '/v1/skills/skill_1/versions?limit=2',
+        ];
+
+        yield 'skills versions delete' => [
+            static fn (Client $client) => $client->skills->versions->delete('1', skillID: 'skill_1'),
+            'DELETE',
+            '/v1/skills/skill_1/versions/1',
+        ];
+    }
+
+    /**
      * @return iterable<string, array{\Closure(Client): mixed, string, string, array<string, mixed>|null}>
      */
     public static function userProfilesCalls(): iterable
     {
-        yield 'create' => [
+        yield 'userProfiles create' => [
             static fn (Client $client) => $client->userProfiles->create(name: 'Example'),
             'POST',
             '/v1/user_profiles',
             ['name' => 'Example'],
         ];
 
-        yield 'retrieve' => [
+        yield 'userProfiles retrieve' => [
             static fn (Client $client) => $client->userProfiles->retrieve('uprof_1'),
             'GET',
             '/v1/user_profiles/uprof_1',
             null,
         ];
 
-        yield 'update' => [
+        yield 'userProfiles update' => [
             static fn (Client $client) => $client->userProfiles->update('uprof_1', name: 'Example'),
             'POST',
             '/v1/user_profiles/uprof_1',
             ['name' => 'Example'],
         ];
 
-        yield 'list' => [
+        yield 'userProfiles list' => [
             static fn (Client $client) => $client->userProfiles->list(limit: 2),
             'GET',
             '/v1/user_profiles?limit=2',
             null,
         ];
 
-        yield 'delete' => [
+        yield 'userProfiles delete' => [
             static fn (Client $client) => $client->userProfiles->delete('uprof_1'),
             'DELETE',
             '/v1/user_profiles/uprof_1',
             null,
         ];
 
-        yield 'actionURLs create' => [
+        yield 'userProfiles actionURLs create' => [
             static fn (Client $client) => $client->userProfiles->actionURLs->create('uprof_1', action: ['type' => 'enroll_end_user']),
             'POST',
             '/v1/user_profiles/uprof_1/action_urls',
             ['action' => ['type' => 'enroll_end_user']],
+        ];
+    }
+
+    /**
+     * @param \Closure(Client): mixed $call
+     */
+    #[DataProvider('uploadCalls')]
+    public function testUploadsGoToTheFoundryBaseUrlAsMultipartWithTheApiKey(\Closure $call, string $path, string $part): void
+    {
+        $call($this->makeClient(apiKey: 'test-key'));
+        $request = $this->getLastRequest();
+
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame(self::BASE_URL.$path, (string) $request->getUri());
+        $this->assertSame('test-key', $request->getHeaderLine('x-api-key'));
+        $this->assertFalse($request->hasHeader('Authorization'));
+        $this->assertStringStartsWith('multipart/form-data; boundary=', $request->getHeaderLine('Content-Type'));
+        $this->assertStringContainsString($part, (string) $request->getBody());
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client): mixed, string, string}>
+     */
+    public static function uploadCalls(): iterable
+    {
+        yield 'files upload' => [
+            static fn (Client $client) => $client->files->upload(FileParam::fromString('hello', 'hello.txt', 'text/plain')),
+            '/v1/files',
+            "name=\"file\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n\r\nhello\r\n",
+        ];
+
+        yield 'skills create' => [
+            static fn (Client $client) => $client->skills->create([FileParam::fromString('hello', 'example/SKILL.md', 'text/markdown')]),
+            '/v1/skills',
+            "name=\"files[]\"; filename=\"example/SKILL.md\"\r\nContent-Type: text/markdown\r\n\r\nhello\r\n",
+        ];
+
+        yield 'skills versions create' => [
+            static fn (Client $client) => $client->skills->versions->create('skill_1', [FileParam::fromString('hello', 'example/SKILL.md', 'text/markdown')]),
+            '/v1/skills/skill_1/versions',
+            "name=\"files[]\"; filename=\"example/SKILL.md\"\r\nContent-Type: text/markdown\r\n\r\nhello\r\n",
         ];
     }
 
@@ -229,36 +345,69 @@ final class ClientTest extends TestCase
         $this->assertSame('rotated-key', $this->getLastRequest()->getHeaderLine('x-api-key'));
     }
 
-    public function testUserProfilesNextPageGoesToTheFoundryBaseUrlWithTheApiKey(): void
+    /**
+     * @param \Closure(Client): mixed $call
+     */
+    #[DataProvider('nextPageCalls')]
+    public function testNextPageGoesToTheFoundryBaseUrlWithTheApiKey(\Closure $call, string $path): void
     {
-        $this->transporter->addResponse(self::json('{"data":[{"id":"uprof_1","type":"user_profile"}],"next_page":"page_2"}'));
+        $this->transporter->addResponse(self::json('{"data":[{"id":"item_1"}],"next_page":"page_2"}'));
 
-        $this->makeClient(apiKey: 'test-key')->userProfiles->list(limit: 1)->getNextPage();
+        $call($this->makeClient(apiKey: 'test-key'));
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::BASE_URL.'/v1/user_profiles?limit=1&page=page_2', (string) $request->getUri());
+        $this->assertSame(self::BASE_URL.$path.'?limit=1&page=page_2', (string) $request->getUri());
         $this->assertSame('test-key', $request->getHeaderLine('x-api-key'));
     }
 
     /**
+     * @return iterable<string, array{\Closure(Client): mixed, string}>
+     */
+    public static function nextPageCalls(): iterable
+    {
+        yield 'files' => [static fn (Client $client) => $client->files->list(limit: 1)->getNextPage(), '/v1/files'];
+
+        yield 'skills' => [static fn (Client $client) => $client->skills->list(limit: 1)->getNextPage(), '/v1/skills'];
+
+        yield 'skills versions' => [static fn (Client $client) => $client->skills->versions->list('skill_1', limit: 1)->getNextPage(), '/v1/skills/skill_1/versions'];
+
+        yield 'userProfiles' => [static fn (Client $client) => $client->userProfiles->list(limit: 1)->getNextPage(), '/v1/user_profiles'];
+    }
+
+    /**
+     * @param \Closure(Client): mixed $call
      * @param array{apiKey?: string, authToken?: string} $credentials
      * @param array<string, string> $expected
      * @param list<string> $absent
      */
-    #[DataProvider('foundryCredentials')]
-    public function testUserProfilesRequestsIgnoreTheFirstPartyEnvironment(array $credentials, array $expected, array $absent): void
+    #[DataProvider('retrieveCallsWithFoundryCredentials')]
+    public function testFirstPartyServiceRequestsIgnoreTheFirstPartyEnvironment(\Closure $call, string $path, array $credentials, array $expected, array $absent): void
     {
         $this->setFirstPartyEnv();
 
-        $this->makeClient(...$credentials)->userProfiles->retrieve('uprof_1');
+        $call($this->makeClient(...$credentials));
         $request = $this->getLastRequest();
 
-        $this->assertSame(self::BASE_URL.'/v1/user_profiles/uprof_1', (string) $request->getUri());
+        $this->assertSame(self::BASE_URL.$path, (string) $request->getUri());
         foreach ($expected as $header => $value) {
             $this->assertSame($value, $request->getHeaderLine($header));
         }
         foreach ([...$absent, 'x-first-party'] as $header) {
             $this->assertFalse($request->hasHeader($header), "expected no {$header} header");
+        }
+    }
+
+    /**
+     * @return iterable<string, array{\Closure(Client): mixed, string, array{apiKey?: string, authToken?: string}, array<string, string>, list<string>}>
+     */
+    public static function retrieveCallsWithFoundryCredentials(): iterable
+    {
+        foreach (self::foundryCredentials() as $name => $case) {
+            yield "files with {$name}" => [static fn (Client $client) => $client->files->retrieveMetadata('file_1'), '/v1/files/file_1', ...$case];
+
+            yield "skills with {$name}" => [static fn (Client $client) => $client->skills->retrieve('skill_1'), '/v1/skills/skill_1', ...$case];
+
+            yield "userProfiles with {$name}" => [static fn (Client $client) => $client->userProfiles->retrieve('uprof_1'), '/v1/user_profiles/uprof_1', ...$case];
         }
     }
 
@@ -272,16 +421,18 @@ final class ClientTest extends TestCase
         yield 'auth token' => [['authToken' => 'test-token'], ['Authorization' => 'Bearer test-token'], ['x-api-key']];
     }
 
-    public function testUserProfilesClientKeepsNoFirstPartyAuthToken(): void
+    public function testFirstPartyServiceClientKeepsNoFirstPartyCredential(): void
     {
         $this->setFirstPartyEnv();
 
         $client = $this->makeClient(apiKey: 'test-key');
         $serviceClient = (new \ReflectionProperty($client->userProfiles, 'client'))->getValue($client->userProfiles);
+        $dump = print_r($client, true);
 
         $this->assertInstanceOf(ServiceClient::class, $serviceClient);
         $this->assertSame('', $serviceClient->authToken);
-        $this->assertStringNotContainsString(self::FIRST_PARTY_ENV['ANTHROPIC_AUTH_TOKEN'], print_r($client, true));
+        $this->assertStringNotContainsString(self::FIRST_PARTY_ENV['ANTHROPIC_API_KEY'], $dump);
+        $this->assertStringNotContainsString(self::FIRST_PARTY_ENV['ANTHROPIC_AUTH_TOKEN'], $dump);
     }
 
     private function setFirstPartyEnv(): void

@@ -7,7 +7,6 @@ use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Exceptions\APIStatusException;
 use Anthropic\Core\Util;
-use Anthropic\ErrorType;
 
 /**
  * @template TItem
@@ -34,17 +33,12 @@ final class SSEStream implements BaseStream
 
                 case 'error':
                     if ($data = $row['data'] ?? '') {
-                        $json = Util::decodeJson($data);
-                        $message = Util::prettyEncodeJson($json);
-
-                        $errorType = Util::dig(Util::dig($json, 'error'), 'type');
-                        $type = is_string($errorType) ? ErrorType::tryFrom($errorType) : null;
+                        $json = json_decode($data, associative: true) ?? $data;
 
                         throw APIStatusException::from(
                             request: $this->request,
                             response: $this->response,
-                            message: $message,
-                            type: $type,
+                            body: $json,
                         );
                     }
 

@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization\ClaudeTag;
 
+use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BetaClaudeTagBundle;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleListParams;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleRetrieveParams;
+use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
+use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
+use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
@@ -26,6 +30,10 @@ interface BundlesRawContract
      *
      * @return BaseResponse<BetaClaudeTagBundle>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function retrieve(
@@ -42,6 +50,10 @@ interface BundlesRawContract
      *
      * @return BaseResponse<PageCursor<BetaClaudeTagBundle>>
      *
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
      * @throws APIException
      */
     public function list(

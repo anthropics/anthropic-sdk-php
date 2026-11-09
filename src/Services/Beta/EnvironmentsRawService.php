@@ -6,7 +6,11 @@ namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Environments\BetaEnvironment;
+use Anthropic\Beta\Environments\BetaEnvironmentArchivedException;
+use Anthropic\Beta\Environments\BetaEnvironmentCreateDisabledException;
 use Anthropic\Beta\Environments\BetaEnvironmentDeleteResponse;
+use Anthropic\Beta\Environments\BetaEnvironmentUpdateDisabledException;
+use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\EnvironmentArchiveParams;
 use Anthropic\Beta\Environments\EnvironmentCreateParams;
 use Anthropic\Beta\Environments\EnvironmentCreateParams\Scope;
@@ -14,11 +18,13 @@ use Anthropic\Beta\Environments\EnvironmentDeleteParams;
 use Anthropic\Beta\Environments\EnvironmentListParams;
 use Anthropic\Beta\Environments\EnvironmentRetrieveParams;
 use Anthropic\Beta\Environments\EnvironmentUpdateParams;
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\EnvironmentsRawContract;
@@ -54,6 +60,9 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentCreateDisabledException
      * @throws APIException
      */
     public function create(
@@ -105,6 +114,8 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -158,6 +169,11 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws BetaEnvironmentArchivedException
+     * @throws BetaInvalidConfigTypeChangeException
+     * @throws OrganizationOnHoldException
+     * @throws BetaEnvironmentUpdateDisabledException
      * @throws APIException
      */
     public function update(
@@ -213,6 +229,8 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @return BaseResponse<PageCursor<BetaEnvironment>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -268,6 +286,8 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironmentDeleteResponse>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(
@@ -315,6 +335,8 @@ final class EnvironmentsRawService implements EnvironmentsRawContract
      *
      * @return BaseResponse<BetaEnvironment>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function archive(

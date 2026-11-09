@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Messages;
 
+use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\Client;
+use Anthropic\CMEKKeyDisabledException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\EnforcedSpendLimitReachedException;
 use Anthropic\JsonLStream;
 use Anthropic\Messages\Batches\BatchCancelParams;
 use Anthropic\Messages\Batches\BatchCreateParams;
@@ -21,6 +24,7 @@ use Anthropic\Messages\Batches\BatchRetrieveParams;
 use Anthropic\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Messages\Batches\MessageBatch;
 use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
+use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Messages\BatchesRawContract;
@@ -55,6 +59,10 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @return BaseResponse<MessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws OrganizationOnHoldException
+     * @throws EnforcedSpendLimitReachedException
      * @throws APIException
      */
     public function create(
@@ -106,6 +114,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @return BaseResponse<MessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function retrieve(
@@ -149,6 +159,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @return BaseResponse<Page<MessageBatch>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function list(
@@ -201,6 +213,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @return BaseResponse<DeletedMessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function delete(
@@ -245,6 +259,8 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @return BaseResponse<MessageBatch>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function cancel(
@@ -283,6 +299,9 @@ final class BatchesRawService implements BatchesRawContract
      *
      * @return BaseResponse<BaseStream<MessageBatchIndividualResponse>>
      *
+     * @throws ClaudeCodeKeyCreatorNotMemberException
+     * @throws CMEKKeyDisabledException
+     * @throws OrganizationOnHoldException
      * @throws APIException
      */
     public function resultsStream(

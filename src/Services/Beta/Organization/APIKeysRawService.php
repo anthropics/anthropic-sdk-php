@@ -13,6 +13,8 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
+use Anthropic\Organization\APIKeys\OrgAPIKeyLimitExceededException;
+use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\APIKeysRawContract;
@@ -72,6 +74,8 @@ final class APIKeysRawService implements APIKeysRawContract
      *
      * @return BaseResponse<APIKey>
      *
+     * @throws OrgAPIKeyLimitExceededException
+     * @throws WorkspaceAPIKeyLimitExceededException
      * @throws APIException
      */
     public function update(
