@@ -52,9 +52,15 @@ final class VertexMiddleware implements Middleware
             $r->setBodyParamDefault('anthropic_version', Client::ANTHROPIC_API_VERSION);
 
             $model = $r->takeBodyParam('model');
-            if (!is_string($model) || '' === $model) {
+            // Some servers drop ";" and what follows it from a segment before routing, so ";x" can be read as "" and "..;x" as "..".
+            if (!is_string($model) || '' === $model || str_starts_with($model, ';')) {
                 throw new \InvalidArgumentException('Request body must contain a non-empty string `model`.');
             }
+            // Without a ";" the method name ends the segment, so "..:rawPredict" is not a dot segment.
+            if (in_array(strstr($model, ';', true), ['.', '..'], true)) {
+                throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..".', "/publishers/anthropic/models/{$model}", $model));
+            }
+            // ";" stays escaped: the method name follows it in the same segment, so a server that drops ";x" would drop the method name too.
             $model = str_replace(['%40', '%3A'], ['@', ':'], rawurlencode($model));
             $method = (bool) $r->getBodyParam('stream') ? 'streamRawPredict' : 'rawPredict';
 
@@ -80,7 +86,6 @@ final class VertexMiddleware implements Middleware
 
     private function modelsPath(): string
     {
-        // ":" is put back because a domain-scoped project ID ("example.com:my-project") contains one.
-        return str_replace('%3A', ':', Util::parsePath(['/projects/%1$s/locations/%2$s/publishers/anthropic/models', ($this->projectId)(), $this->location]));
+        return Util::parsePath(['/projects/%1$s/locations/%2$s/publishers/anthropic/models', ($this->projectId)(), $this->location]);
     }
 }

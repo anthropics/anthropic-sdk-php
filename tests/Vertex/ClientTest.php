@@ -4,6 +4,8 @@ namespace Tests\Vertex;
 
 use Anthropic\Core\Util;
 use Anthropic\Vertex\Client;
+use Anthropic\Vertex\VertexMiddleware;
+use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
@@ -132,6 +134,10 @@ class ClientTest extends TestCase
         yield 'slash in project id' => ['a/b', 'us-east5', null, 'https://us-east5-aiplatform.googleapis.com/v1/projects/a%2Fb/locations/us-east5'];
 
         yield 'slash in region' => ['p', 'a/b', 'https://example.com/v1', 'https://example.com/v1/projects/p/locations/a%2Fb'];
+
+        yield 'semicolon in project id' => ['a;b', 'us-east5', null, 'https://us-east5-aiplatform.googleapis.com/v1/projects/a;b/locations/us-east5'];
+
+        yield 'semicolon in region' => ['p', 'a;b', 'https://example.com/v1', 'https://example.com/v1/projects/p/locations/a;b'];
     }
 
     /**
@@ -163,11 +169,117 @@ class ClientTest extends TestCase
      */
     public static function refusedPathValueProvider(): iterable
     {
-        foreach (['.' => 'dot segment "."', '..' => 'dot segment ".."', '' => 'empty path parameter'] as $value => $message) {
+        $refused = [
+            '.' => 'dot segment "."',
+            '..' => 'dot segment ".."',
+            '' => 'empty path parameter',
+            '.;x' => 'dot segment ".;x"',
+            '..;x' => 'dot segment "..;x"',
+            ';x' => 'empty path parameter',
+        ];
+        foreach ($refused as $value => $message) {
             yield "project id \"{$value}\"" => [$value, 'us-east5', $message];
 
             yield "region \"{$value}\"" => ['p', $value, $message];
         }
+    }
+
+    /**
+     * @dataProvider refusedModelProvider
+     */
+    public function testModelThatIsEmptyOrADotSegmentBeforeItsSemicolonThrowsBeforeAnyRequestIsSent(string $model, string $message): void
+    {
+        $transporter = new \Http\Mock\Client;
+        $client = Client::withAccessToken('static-token', region: 'us-east5', projectId: 'p', requestOptions: ['transporter' => $transporter]);
+
+        $calls = [
+            static fn () => $client->messages->create(maxTokens: 1, messages: [], model: $model),
+            static fn () => $client->messages->createStream(maxTokens: 1, messages: [], model: $model),
+        ];
+        foreach ($calls as $call) {
+            try {
+                $call();
+                $this->fail("expected the model \"{$model}\" to be refused");
+            } catch (\InvalidArgumentException $e) {
+                $this->assertStringContainsString($message, $e->getMessage());
+            }
+        }
+
+        $this->assertSame([], $transporter->getRequests());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function refusedModelProvider(): iterable
+    {
+        foreach (['', ';', ';x', ';a=b', ';..'] as $model) {
+            yield "\"{$model}\"" => [$model, 'non-empty string `model`'];
+        }
+
+        foreach (['.;x', '..;x', '..;', '.;a=b'] as $model) {
+            yield "\"{$model}\"" => [$model, "/publishers/anthropic/models/{$model}\" has the dot segment \"{$model}\""];
+        }
+    }
+
+    public function testRefusedModelThrowsWithoutResolvingTheProjectId(): void
+    {
+        $factory = new HttpFactory;
+        $middleware = new VertexMiddleware(
+            $factory,
+            'us-east5',
+            static fn () => throw new \LogicException('the project ID was resolved'),
+            static fn ($request) => $request,
+        );
+        $request = $factory->createRequest('POST', 'https://example.com/v1/messages')->withBody($factory->createStream('{"model":"..;x"}'));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('dot segment "..;x"');
+
+        $middleware->handle($request, static fn () => throw new \LogicException('the request was sent'));
+    }
+
+    /**
+     * @dataProvider sentModelProvider
+     */
+    public function testAnyOtherModelIsSentAsOnePathSegment(string $model, string $segment): void
+    {
+        $transporter = new \Http\Mock\Client;
+        $transporter->addResponse(new Response(200, ['Content-Type' => 'application/json'], '{}'));
+        $transporter->addResponse(new Response(200, ['Content-Type' => 'text/event-stream'], ''));
+
+        $client = Client::withAccessToken('static-token', region: 'us-east5', projectId: 'p', requestOptions: ['transporter' => $transporter]);
+        $client->messages->create(maxTokens: 1, messages: [], model: $model);
+        $client->messages->createStream(maxTokens: 1, messages: [], model: $model);
+
+        $this->assertSame(
+            [
+                "/v1/projects/p/locations/us-east5/publishers/anthropic/models/{$segment}:rawPredict",
+                "/v1/projects/p/locations/us-east5/publishers/anthropic/models/{$segment}:streamRawPredict",
+            ],
+            array_map(static fn ($request) => $request->getUri()->getPath(), array_values($transporter->getRequests())),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function sentModelProvider(): iterable
+    {
+        yield 'a;b' => ['a;b', 'a%3Bb'];
+
+        yield '...;x' => ['...;x', '...%3Bx'];
+
+        yield '..x;y' => ['..x;y', '..x%3By'];
+
+        yield 'x;..' => ['x;..', 'x%3B..'];
+
+        yield 'a;b/c' => ['a;b/c', 'a%3Bb%2Fc'];
+
+        // The method name shares the model's segment, so neither of these is a dot segment.
+        yield '.' => ['.', '.'];
+
+        yield '..' => ['..', '..'];
     }
 
     /**
