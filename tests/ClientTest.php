@@ -212,6 +212,15 @@ class ClientTest extends TestCase
         $this->assertSame($client->messages, $client->messages);
     }
 
+    public function testServicesAreSetBeforeFirstAccess(): void
+    {
+        $client = new \Anthropic\Client(apiKey: 'my-anthropic-api-key', requestOptions: ['transporter' => new Client]);
+
+        $this->assertTrue(isset($client->messages));
+        $this->assertTrue(isset($client->beta));
+        $this->assertFalse(isset($client->notAService));
+    }
+
     public function testReadingAnUnknownPropertyStillWarns(): void
     {
         $client = new \Anthropic\Client(apiKey: 'my-anthropic-api-key', requestOptions: ['transporter' => new Client]);

@@ -33,6 +33,9 @@ class Client extends BaseClient
     /** @internal */
     public const ANTHROPIC_API_VERSION = '2026-10-21';
 
+    /** The services that __get() builds the first time they are read. */
+    private const LAZY_SERVICES = ['messages', 'models', 'files', 'skills', 'userProfiles', 'organization', 'beta'];
+
     public string $apiKey;
 
     public string $authToken;
@@ -188,7 +191,9 @@ class Client extends BaseClient
 
         // __get() builds each service the first time it is read.
         // Building all of them here loaded about 500 classes, even for an app that only uses messages.
-        unset($this->messages, $this->models, $this->files, $this->skills, $this->userProfiles, $this->organization, $this->beta);
+        foreach (self::LAZY_SERVICES as $service) {
+            unset($this->{$service});
+        }
     }
 
     /**
@@ -223,6 +228,15 @@ class Client extends BaseClient
         trigger_error(sprintf('Undefined property: %s::$%s', static::class, $name), E_USER_WARNING);
 
         return null;
+    }
+
+    /**
+     * Tells isset() that a service exists before it is built.
+     * Without this, isset($client->messages) is false until the first read, because the property is unset.
+     */
+    public function __isset(string $name): bool
+    {
+        return in_array($name, self::LAZY_SERVICES, true);
     }
 
     public function close(): void
