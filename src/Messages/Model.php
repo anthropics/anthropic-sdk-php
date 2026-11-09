@@ -18,12 +18,12 @@ enum Model: string
     // Anthropic model identifiers
 
     /**
-     * Frontier intelligence for ambitious tasks across coding, scientific discovery, and enterprise workflows
+     * Frontier intelligence for ambitious work in coding, enterprise workflows, and the sciences
      */
     case CLAUDE_FABLE_5_2 = 'claude-fable-5-2';
 
     /**
-     * Our most capable model for cybersecurity and biology research, available through trusted access programs
+     * Frontier intelligence for cybersecurity and life sciences research, available through verification programs
      */
     case CLAUDE_MYTHOS_5_2 = 'claude-mythos-5-2';
 
