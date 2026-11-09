@@ -62,8 +62,24 @@ final class AgentsTest extends TestCase
             ],
             metadata: ['foo' => 'bar'],
             multiagent: [
-                'agents' => ['agent_011CZkYqphY8vELVzwCUpqiQ', ['type' => 'self']],
-                'type' => 'coordinator',
+                'type' => 'multiagent_20261001',
+                'advisor' => ['type' => 'disabled'],
+                'subagents' => [
+                    'type' => 'enabled',
+                    'inlineAgents' => ['type' => 'disabled'],
+                    'predefinedAgents' => ['agent_011CZkYqphY8vELVzwCUpqiQ'],
+                ],
+                'workflows' => [
+                    'type' => 'enabled',
+                    'inlineAgents' => ['type' => 'disabled'],
+                    'predefinedAgents' => [
+                        [
+                            'id' => 'agent_011CZkYqphY8vELVzwCUpqiQ',
+                            'type' => 'agent',
+                            'version' => 1,
+                        ],
+                    ],
+                ],
             ],
             skills: [['skillID' => 'xlsx', 'type' => 'anthropic', 'version' => '1']],
             system: 'You are a general-purpose agent that can research, write code, run commands, and use connected tools to complete the user\'s task end to end.',
