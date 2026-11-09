@@ -9,10 +9,12 @@ use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Claude Tag settings. Without `include_inherited`, a setting that is null is not set on the settings level and is inherited. With it, `enabled` and `guest_policy` are never null, and `instructions`, `model` and `environment_id` are null when no settings level sets them.
+ * Claude Tag settings. Without `include_inherited`, a setting that is null is not set on the settings level and is inherited. With it, `enabled` and `guest_policy` are never null, `instructions`, `model` and `environment_id` are null when no settings level sets them, and `reply_mode` is null unless the channel itself stores one.
  *
  * @phpstan-import-type ClaudeTagGuestPolicyShape from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagGuestPolicy
+ * @phpstan-import-type ClaudeTagReplyModeShape from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagReplyMode
  * @phpstan-import-type ClaudeTagGuestPolicyVariants from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagGuestPolicy
+ * @phpstan-import-type ClaudeTagReplyModeVariants from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagReplyMode
  *
  * @phpstan-type ClaudeTagSettingsShape = array{
  *   enabled: bool|null,
@@ -20,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   guestPolicy: ClaudeTagGuestPolicyShape|null,
  *   instructions: string|null,
  *   model: string|null,
+ *   replyMode: ClaudeTagReplyModeShape|null,
  * }
  */
 final class ClaudeTagSettings implements BaseModel
@@ -60,6 +63,14 @@ final class ClaudeTagSettings implements BaseModel
     public ?string $model;
 
     /**
+     * How Claude takes part in the channel. Only a channel stores one, and no settings level passes one on, so it is always null on a workspace. Null on a channel means the channel stores none yet: Claude then follows the reply mode chosen in Slack, if one was, else `automatic`. A stored reply mode can be changed but never cleared.
+     *
+     * @var ClaudeTagReplyModeVariants|null $replyMode
+     */
+    #[Required('reply_mode', union: ClaudeTagReplyMode::class)]
+    public ClaudeTagReplyModeAutomatic|ClaudeTagReplyModeMentionOnly|ClaudeTagReplyModeAlwaysAwake|ClaudeTagReplyModeThread|null $replyMode;
+
+    /**
      * `new ClaudeTagSettings()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -70,6 +81,7 @@ final class ClaudeTagSettings implements BaseModel
      *   guestPolicy: ...,
      *   instructions: ...,
      *   model: ...,
+     *   replyMode: ...,
      * )
      * ```
      *
@@ -82,6 +94,7 @@ final class ClaudeTagSettings implements BaseModel
      *   ->withGuestPolicy(...)
      *   ->withInstructions(...)
      *   ->withModel(...)
+     *   ->withReplyMode(...)
      * ```
      */
     public function __construct()
@@ -95,6 +108,7 @@ final class ClaudeTagSettings implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ClaudeTagGuestPolicyShape|null $guestPolicy
+     * @param ClaudeTagReplyModeShape|null $replyMode
      */
     public static function with(
         ?bool $enabled,
@@ -102,6 +116,7 @@ final class ClaudeTagSettings implements BaseModel
         ClaudeTagGuestPolicyAllow|array|ClaudeTagGuestPolicyRestrict|ClaudeTagGuestPolicyChannelOnly|null $guestPolicy,
         ?string $instructions,
         ?string $model,
+        ClaudeTagReplyModeAutomatic|array|ClaudeTagReplyModeMentionOnly|ClaudeTagReplyModeAlwaysAwake|ClaudeTagReplyModeThread|null $replyMode,
     ): self {
         $self = new self;
 
@@ -110,6 +125,7 @@ final class ClaudeTagSettings implements BaseModel
         $self['guestPolicy'] = $guestPolicy;
         $self['instructions'] = $instructions;
         $self['model'] = $model;
+        $self['replyMode'] = $replyMode;
 
         return $self;
     }
@@ -168,6 +184,20 @@ final class ClaudeTagSettings implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * How Claude takes part in the channel. Only a channel stores one, and no settings level passes one on, so it is always null on a workspace. Null on a channel means the channel stores none yet: Claude then follows the reply mode chosen in Slack, if one was, else `automatic`. A stored reply mode can be changed but never cleared.
+     *
+     * @param ClaudeTagReplyModeShape|null $replyMode
+     */
+    public function withReplyMode(
+        ClaudeTagReplyModeAutomatic|array|ClaudeTagReplyModeMentionOnly|ClaudeTagReplyModeAlwaysAwake|ClaudeTagReplyModeThread|null $replyMode,
+    ): self {
+        $self = clone $this;
+        $self['replyMode'] = $replyMode;
 
         return $self;
     }

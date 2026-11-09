@@ -12,7 +12,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * The settings to change. A setting left out is unchanged. A setting sent as null is cleared, so it is inherited.
  *
  * @phpstan-import-type ClaudeTagGuestPolicyShape from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagGuestPolicy
+ * @phpstan-import-type ClaudeTagReplyModeShape from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagReplyMode
  * @phpstan-import-type ClaudeTagGuestPolicyVariants from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagGuestPolicy
+ * @phpstan-import-type ClaudeTagReplyModeVariants from \Anthropic\Beta\Organization\ClaudeTag\ClaudeTagReplyMode
  *
  * @phpstan-type ClaudeTagSettingsUpdateShape = array{
  *   enabled?: bool|null,
@@ -20,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   guestPolicy?: ClaudeTagGuestPolicyShape|null,
  *   instructions?: string|null,
  *   model?: string|null,
+ *   replyMode?: ClaudeTagReplyModeShape|null,
  * }
  */
 final class ClaudeTagSettingsUpdate implements BaseModel
@@ -63,6 +66,14 @@ final class ClaudeTagSettingsUpdate implements BaseModel
     #[Optional(nullable: true)]
     public ?string $model;
 
+    /**
+     * How Claude takes part in the channel: `automatic`, `mention_only`, `always_awake` or `thread`. Only a channel takes one: an update of a workspace that sends a value is refused, and one that sends null changes nothing. Null never clears it: sent to a channel that stores none it changes nothing, and sent to a channel that stores one it is refused, because a stored reply mode can be changed but never cleared; a caller that wants Claude's default behavior sends `automatic`.
+     *
+     * @var ClaudeTagReplyModeVariants|null $replyMode
+     */
+    #[Optional('reply_mode', union: ClaudeTagReplyMode::class, nullable: true)]
+    public ClaudeTagReplyModeAutomatic|ClaudeTagReplyModeMentionOnly|ClaudeTagReplyModeAlwaysAwake|ClaudeTagReplyModeThread|null $replyMode;
+
     public function __construct()
     {
         $this->initialize();
@@ -74,6 +85,7 @@ final class ClaudeTagSettingsUpdate implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ClaudeTagGuestPolicyShape|null $guestPolicy
+     * @param ClaudeTagReplyModeShape|null $replyMode
      */
     public static function with(
         ?bool $enabled = null,
@@ -81,6 +93,7 @@ final class ClaudeTagSettingsUpdate implements BaseModel
         ClaudeTagGuestPolicyAllow|array|ClaudeTagGuestPolicyRestrict|ClaudeTagGuestPolicyChannelOnly|null $guestPolicy = null,
         ?string $instructions = null,
         ?string $model = null,
+        ClaudeTagReplyModeAutomatic|array|ClaudeTagReplyModeMentionOnly|ClaudeTagReplyModeAlwaysAwake|ClaudeTagReplyModeThread|null $replyMode = null,
     ): self {
         $self = new self;
 
@@ -89,6 +102,7 @@ final class ClaudeTagSettingsUpdate implements BaseModel
         null !== $guestPolicy && $self['guestPolicy'] = $guestPolicy;
         null !== $instructions && $self['instructions'] = $instructions;
         null !== $model && $self['model'] = $model;
+        null !== $replyMode && $self['replyMode'] = $replyMode;
 
         return $self;
     }
@@ -147,6 +161,20 @@ final class ClaudeTagSettingsUpdate implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * How Claude takes part in the channel: `automatic`, `mention_only`, `always_awake` or `thread`. Only a channel takes one: an update of a workspace that sends a value is refused, and one that sends null changes nothing. Null never clears it: sent to a channel that stores none it changes nothing, and sent to a channel that stores one it is refused, because a stored reply mode can be changed but never cleared; a caller that wants Claude's default behavior sends `automatic`.
+     *
+     * @param ClaudeTagReplyModeShape|null $replyMode
+     */
+    public function withReplyMode(
+        ClaudeTagReplyModeAutomatic|array|ClaudeTagReplyModeMentionOnly|ClaudeTagReplyModeAlwaysAwake|ClaudeTagReplyModeThread|null $replyMode,
+    ): self {
+        $self = clone $this;
+        $self['replyMode'] = $replyMode;
 
         return $self;
     }

@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   guestPolicy: ClaudeTagSettingSourceShape|null,
  *   instructions: list<ClaudeTagSettingSourceShape>,
  *   model: ClaudeTagSettingSourceShape|null,
+ *   replyMode: ClaudeTagSettingSourceShape|null,
  * }
  */
 final class ClaudeTagSettingSources implements BaseModel
@@ -68,6 +69,14 @@ final class ClaudeTagSettingSources implements BaseModel
     public ClaudeTagSlackChannelSettingSource|ClaudeTagSlackWorkspaceSettingSource|ClaudeTagSlackParentChannelSettingSource|ClaudeTagSlackDefaultSettingSource|ClaudeTagDefaultSettingSource|ClaudeTagSlackGridChannelSettingSource|null $model;
 
     /**
+     * The settings level `reply_mode` comes from: the channel when it stores one. With `include_inherited=true` and no stored mode it is `default`.
+     *
+     * @var ClaudeTagSettingSourceVariants|null $replyMode
+     */
+    #[Required('reply_mode', union: ClaudeTagSettingSource::class)]
+    public ClaudeTagSlackChannelSettingSource|ClaudeTagSlackWorkspaceSettingSource|ClaudeTagSlackParentChannelSettingSource|ClaudeTagSlackDefaultSettingSource|ClaudeTagDefaultSettingSource|ClaudeTagSlackGridChannelSettingSource|null $replyMode;
+
+    /**
      * `new ClaudeTagSettingSources()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -78,6 +87,7 @@ final class ClaudeTagSettingSources implements BaseModel
      *   guestPolicy: ...,
      *   instructions: ...,
      *   model: ...,
+     *   replyMode: ...,
      * )
      * ```
      *
@@ -90,6 +100,7 @@ final class ClaudeTagSettingSources implements BaseModel
      *   ->withGuestPolicy(...)
      *   ->withInstructions(...)
      *   ->withModel(...)
+     *   ->withReplyMode(...)
      * ```
      */
     public function __construct()
@@ -107,6 +118,7 @@ final class ClaudeTagSettingSources implements BaseModel
      * @param ClaudeTagSettingSourceShape|null $guestPolicy
      * @param list<ClaudeTagSettingSourceShape> $instructions
      * @param ClaudeTagSettingSourceShape|null $model
+     * @param ClaudeTagSettingSourceShape|null $replyMode
      */
     public static function with(
         ClaudeTagSlackChannelSettingSource|array|ClaudeTagSlackWorkspaceSettingSource|ClaudeTagSlackParentChannelSettingSource|ClaudeTagSlackDefaultSettingSource|ClaudeTagDefaultSettingSource|ClaudeTagSlackGridChannelSettingSource|null $enabled,
@@ -114,6 +126,7 @@ final class ClaudeTagSettingSources implements BaseModel
         ClaudeTagSlackChannelSettingSource|array|ClaudeTagSlackWorkspaceSettingSource|ClaudeTagSlackParentChannelSettingSource|ClaudeTagSlackDefaultSettingSource|ClaudeTagDefaultSettingSource|ClaudeTagSlackGridChannelSettingSource|null $guestPolicy,
         array $instructions,
         ClaudeTagSlackChannelSettingSource|array|ClaudeTagSlackWorkspaceSettingSource|ClaudeTagSlackParentChannelSettingSource|ClaudeTagSlackDefaultSettingSource|ClaudeTagDefaultSettingSource|ClaudeTagSlackGridChannelSettingSource|null $model,
+        ClaudeTagSlackChannelSettingSource|array|ClaudeTagSlackWorkspaceSettingSource|ClaudeTagSlackParentChannelSettingSource|ClaudeTagSlackDefaultSettingSource|ClaudeTagDefaultSettingSource|ClaudeTagSlackGridChannelSettingSource|null $replyMode,
     ): self {
         $self = new self;
 
@@ -122,6 +135,7 @@ final class ClaudeTagSettingSources implements BaseModel
         $self['guestPolicy'] = $guestPolicy;
         $self['instructions'] = $instructions;
         $self['model'] = $model;
+        $self['replyMode'] = $replyMode;
 
         return $self;
     }
@@ -191,6 +205,20 @@ final class ClaudeTagSettingSources implements BaseModel
     ): self {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * The settings level `reply_mode` comes from: the channel when it stores one. With `include_inherited=true` and no stored mode it is `default`.
+     *
+     * @param ClaudeTagSettingSourceShape|null $replyMode
+     */
+    public function withReplyMode(
+        ClaudeTagSlackChannelSettingSource|array|ClaudeTagSlackWorkspaceSettingSource|ClaudeTagSlackParentChannelSettingSource|ClaudeTagSlackDefaultSettingSource|ClaudeTagDefaultSettingSource|ClaudeTagSlackGridChannelSettingSource|null $replyMode,
+    ): self {
+        $self = clone $this;
+        $self['replyMode'] = $replyMode;
 
         return $self;
     }
