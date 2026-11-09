@@ -29,10 +29,9 @@ use Anthropic\Core\FileParam;
  * returns a 409 with `error_code` `plugin_name_taken` and, when a Plugin holds it,
  * that Plugin's ID in `details.plugin_id`. A Plugin going into the organization's
  * library marketplace is also refused with a 409 when one of its skills has the name of
- * an organization skill (a skill an administrator uploaded for the whole organization
- * in claude.ai): `error_code` `skill_name_taken`, with that name in
- * `details.skill_name`; rename the skill, or remove the organization skill in
- * claude.ai. A 503 with `error_code`
+ * an organization skill that this API does not list: `error_code`
+ * `skill_name_taken`, with that name in `details.skill_name`; rename the skill, or
+ * remove the organization skill in claude.ai. A 503 with `error_code`
  * `registration_pending` means the Plugin and its version were stored (their IDs are
  * in `details`) but are not yet usable in claude.ai: do not retry the create (the
  * retry would return `plugin_name_taken`); create a version on the stored Plugin
