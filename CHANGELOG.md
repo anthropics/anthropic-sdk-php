@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.7.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.6.0...v1.7.0) (2026-11-09)
+
+### Features
+
+* **api:** accept user_profile.program_status_updated on organization webhook endpoints
+* **api:** add claude-fable-5-2 and claude-mythos-5-2
+* **api:** add parent organization filtering and grouping to the usage and cost reports
+* **api:** add the sandbox_egress_restricted error to Admin API write methods
+* **api:** add the user_profile.program_status_updated webhook event
+
+
+### Chores
+
+* **api:** remove some error detail types and update descriptions
+* **client:** stop recording sampling parameters on OpenTelemetry spans
+* **docs:** say when a work heartbeat does not compare its value
+* **docs:** update model descriptions
+* **tests:** check a Bedrock stream error's body instead of its message text
+
 ## [1.6.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.5.0...v1.6.0) (2026-11-05)
 
 ### Features
