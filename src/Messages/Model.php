@@ -17,6 +17,16 @@ enum Model: string
 {
     // Anthropic model identifiers
 
+    /**
+     * Frontier intelligence for ambitious tasks across coding, scientific discovery, and enterprise workflows
+     */
+    case CLAUDE_FABLE_5_2 = 'claude-fable-5-2';
+
+    /**
+     * Our most capable model for cybersecurity and biology research, available through trusted access programs
+     */
+    case CLAUDE_MYTHOS_5_2 = 'claude-mythos-5-2';
+
     /** Fastest model for high-volume, real-time tasks */
     case CLAUDE_HAIKU_5_5 = 'claude-haiku-5-5';
 
