@@ -216,8 +216,8 @@ final class ClientTest extends TestCase
     /**
      * @param \Closure(Client, string): mixed $call
      */
-    #[DataProvider('dotSegmentModelCalls')]
-    public function testDotSegmentModelThrowsBeforeAnyRequestIsSent(\Closure $call, string $model): void
+    #[DataProvider('refusedModelCalls')]
+    public function testModelThatIsEmptyOrADotSegmentBeforeItsSemicolonThrowsBeforeAnyRequestIsSent(\Closure $call, string $model, string $message): void
     {
         $client = Client::withApiKey(
             apiKey: 'test-bedrock-api-key',
@@ -229,33 +229,73 @@ final class ClientTest extends TestCase
             $call($client, $model);
             $this->fail("expected the model \"{$model}\" to be refused");
         } catch (\InvalidArgumentException $e) {
-            $this->assertStringContainsString("dot segment \"{$model}\"", $e->getMessage());
+            $this->assertStringContainsString($message, $e->getMessage());
         }
 
         $this->assertSame([], $this->transporter->getRequests());
     }
 
     /**
-     * @return iterable<string, array{\Closure(Client, string): mixed, string}>
+     * @return iterable<string, array{\Closure(Client, string): mixed, string, string}>
      */
-    public static function dotSegmentModelCalls(): iterable
+    public static function refusedModelCalls(): iterable
     {
-        foreach (['.', '..'] as $model) {
-            yield "create with {$model}" => [
+        $messages = array_fill_keys(['', ';', ';x', ';a=b', ';..'], 'non-empty string `model`');
+        foreach (['.', '..', '.;x', '..;x', '..;', '.;a=b'] as $model) {
+            $messages[$model] = "dot segment \"{$model}\"";
+        }
+
+        foreach ($messages as $model => $message) {
+            yield "create with \"{$model}\"" => [
                 static fn (Client $client, string $model) => $client->messages->create(maxTokens: 1024, messages: [], model: $model),
                 $model,
+                $message,
             ];
 
-            yield "createStream with {$model}" => [
+            yield "createStream with \"{$model}\"" => [
                 static fn (Client $client, string $model) => $client->messages->createStream(maxTokens: 1024, messages: [], model: $model),
                 $model,
+                $message,
             ];
 
-            yield "countTokens with {$model}" => [
+            yield "countTokens with \"{$model}\"" => [
                 static fn (Client $client, string $model) => $client->messages->countTokens(messages: [], model: $model),
                 $model,
+                $message,
             ];
         }
+    }
+
+    #[DataProvider('sentModelsWithSemicolon')]
+    public function testAnyOtherModelWithSemicolonIsSentAsOnePathSegment(string $model, string $path): void
+    {
+        $client = Client::withApiKey(
+            apiKey: 'test-bedrock-api-key',
+            region: 'us-east-1',
+            requestOptions: ['transporter' => $this->transporter],
+        );
+
+        $client->messages->create(maxTokens: 1024, messages: [], model: $model);
+        $this->assertSame("{$path}/invoke", $this->getLastRequest()->getUri()->getPath());
+
+        $client->messages->countTokens(messages: [], model: $model);
+        $this->assertSame("{$path}/count-tokens", $this->getLastRequest()->getUri()->getPath());
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function sentModelsWithSemicolon(): iterable
+    {
+        yield 'a;b' => ['a;b', '/model/a;b'];
+
+        yield '...;x' => ['...;x', '/model/...;x'];
+
+        yield '..x;y' => ['..x;y', '/model/..x;y'];
+
+        yield 'x;..' => ['x;..', '/model/x;..'];
+
+        yield 'a;b/c' => ['a;b/c', '/model/a;b%2Fc'];
     }
 
     private function getLastRequest(): RequestInterface

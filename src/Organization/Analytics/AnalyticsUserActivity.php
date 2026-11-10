@@ -20,6 +20,7 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type AnalyticsScienceMetricsShape from \Anthropic\Organization\Analytics\AnalyticsScienceMetrics
  * @phpstan-import-type AnalyticsUserShape from \Anthropic\Organization\Analytics\AnalyticsUser
  * @phpstan-import-type AnalyticsChatCoworkUnifiedMetricsShape from \Anthropic\Organization\Analytics\AnalyticsChatCoworkUnifiedMetrics
+ * @phpstan-import-type AnalyticsClaudeTagMetricsShape from \Anthropic\Organization\Analytics\AnalyticsClaudeTagMetrics
  *
  * @phpstan-type AnalyticsUserActivityShape = array{
  *   chatMetrics: AnalyticsChatMetrics|AnalyticsChatMetricsShape,
@@ -32,6 +33,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   user: null|AnalyticsUser|AnalyticsUserShape,
  *   webSearchCount: int,
  *   chatCoworkUnifiedMetrics?: null|AnalyticsChatCoworkUnifiedMetrics|AnalyticsChatCoworkUnifiedMetricsShape,
+ *   claudeTagMetrics?: null|AnalyticsClaudeTagMetrics|AnalyticsClaudeTagMetricsShape,
  *   lastActivityDate?: string|null,
  *   rbacGroupID?: string|null,
  *   rbacGroupName?: string|null,
@@ -103,6 +105,12 @@ final class AnalyticsUserActivity implements BaseModel
     public ?AnalyticsChatCoworkUnifiedMetrics $chatCoworkUnifiedMetrics;
 
     /**
+     * Claude Tag activity in Slack by a user who has linked a Claude account. Activity by Slack users who have not linked an account appears only in the `/summaries` Claude Tag counts, so these rows do not add up to those counts. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     */
+    #[Optional('claude_tag_metrics', nullable: true)]
+    public ?AnalyticsClaudeTagMetrics $claudeTagMetrics;
+
+    /**
      * Most recent UTC day (YYYY-MM-DD) on which the user had any counted activity, within the requested window: equal to the requested `date` in single-day mode, and to the latest active day from `starting_date` (inclusive) to `ending_date` (exclusive) in date-range rollup mode — never a day earlier than the window start. On filtered requests (`filter[]`) only days matching the filter count: with `filter[]=rbac_group_id:{id}` it is the last day the user was active while a member of that group, consistent with the row's other metrics. On grouped (`group_by[]`) rows it is the latest day any member of the group was active (the requested `date` in single-day mode). Omitted from the response while last-activity reporting is not enabled for this organization.
      */
     #[Optional('last_activity_date', nullable: true)]
@@ -171,6 +179,7 @@ final class AnalyticsUserActivity implements BaseModel
      * @param AnalyticsScienceMetrics|AnalyticsScienceMetricsShape $scienceMetrics
      * @param AnalyticsUser|AnalyticsUserShape|null $user
      * @param AnalyticsChatCoworkUnifiedMetrics|AnalyticsChatCoworkUnifiedMetricsShape|null $chatCoworkUnifiedMetrics
+     * @param AnalyticsClaudeTagMetrics|AnalyticsClaudeTagMetricsShape|null $claudeTagMetrics
      */
     public static function with(
         AnalyticsChatMetrics|array $chatMetrics,
@@ -183,6 +192,7 @@ final class AnalyticsUserActivity implements BaseModel
         AnalyticsUser|array|null $user,
         int $webSearchCount,
         AnalyticsChatCoworkUnifiedMetrics|array|null $chatCoworkUnifiedMetrics = null,
+        AnalyticsClaudeTagMetrics|array|null $claudeTagMetrics = null,
         ?string $lastActivityDate = null,
         ?string $rbacGroupID = null,
         ?string $rbacGroupName = null,
@@ -200,6 +210,7 @@ final class AnalyticsUserActivity implements BaseModel
         $self['webSearchCount'] = $webSearchCount;
 
         null !== $chatCoworkUnifiedMetrics && $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
+        null !== $claudeTagMetrics && $self['claudeTagMetrics'] = $claudeTagMetrics;
         null !== $lastActivityDate && $self['lastActivityDate'] = $lastActivityDate;
         null !== $rbacGroupID && $self['rbacGroupID'] = $rbacGroupID;
         null !== $rbacGroupName && $self['rbacGroupName'] = $rbacGroupName;
@@ -336,6 +347,20 @@ final class AnalyticsUserActivity implements BaseModel
     ): self {
         $self = clone $this;
         $self['chatCoworkUnifiedMetrics'] = $chatCoworkUnifiedMetrics;
+
+        return $self;
+    }
+
+    /**
+     * Claude Tag activity in Slack by a user who has linked a Claude account. Activity by Slack users who have not linked an account appears only in the `/summaries` Claude Tag counts, so these rows do not add up to those counts. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     *
+     * @param AnalyticsClaudeTagMetrics|AnalyticsClaudeTagMetricsShape|null $claudeTagMetrics
+     */
+    public function withClaudeTagMetrics(
+        AnalyticsClaudeTagMetrics|array|null $claudeTagMetrics
+    ): self {
+        $self = clone $this;
+        $self['claudeTagMetrics'] = $claudeTagMetrics;
 
         return $self;
     }

@@ -29,10 +29,9 @@ use Anthropic\Core\Contracts\BaseModel;
  * cannot be read at that moment, the request fails with a retryable 503 instead.
  * When the Plugin is in the organization's
  * library marketplace, a version other than the one served is also refused with a 409
- * when one of its skills has a name that an organization skill (one an administrator
- * uploaded for the whole organization in claude.ai) has since taken: `error_code`
- * `skill_name_taken`, with that name in `details.skill_name`. A member-owned Plugin
- * cannot be updated here (403).
+ * when an organization skill that this API does not list has since taken the name of
+ * one of its skills: `error_code` `skill_name_taken`, with that name in
+ * `details.skill_name`. A member-owned Plugin cannot be updated here (403).
  *
  * This endpoint does not write installation settings; they are written at
  * `/v1/organizations/plugins/{plugin_id}/installation_settings/{target}`.

@@ -356,6 +356,12 @@ final class ClientTest extends TestCase
         yield 'slash in location' => ['proj', 'a/b', 'ws', 'projects/proj/locations/a%2Fb', 'ws'];
 
         yield 'slashes and dots in workspace id' => ['proj', 'global', 'w/../../x', 'projects/proj/locations/global', 'w%2F..%2F..%2Fx'];
+
+        yield 'semicolon in project' => ['a;b', 'global', 'ws', 'projects/a;b/locations/global', 'ws'];
+
+        yield 'semicolon in location' => ['proj', 'a;b', 'ws', 'projects/proj/locations/a;b', 'ws'];
+
+        yield 'semicolon in workspace id' => ['proj', 'global', 'a;b', 'projects/proj/locations/global', 'a;b'];
     }
 
     #[DataProvider('refusedBaseUrlValues')]
@@ -383,7 +389,15 @@ final class ClientTest extends TestCase
      */
     public static function refusedBaseUrlValues(): iterable
     {
-        foreach (['.' => 'dot segment "."', '..' => 'dot segment ".."', '' => 'empty path parameter'] as $value => $message) {
+        $refused = [
+            '.' => 'dot segment "."',
+            '..' => 'dot segment ".."',
+            '' => 'empty path parameter',
+            '.;x' => 'dot segment ".;x"',
+            '..;x' => 'dot segment "..;x"',
+            ';x' => 'empty path parameter',
+        ];
+        foreach ($refused as $value => $message) {
             yield "project \"{$value}\"" => [$value, 'global', 'ws', $message];
 
             yield "location \"{$value}\"" => ['proj', $value, 'ws', $message];

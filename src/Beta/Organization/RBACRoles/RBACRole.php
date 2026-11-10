@@ -46,7 +46,7 @@ final class RBACRole implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
-     * Name of the RBAC Role. For a role created by Anthropic, this name can differ from the label claude.ai shows, and Anthropic may change the name. To keep a lasting reference to a role, store its `id`.
+     * Name of the RBAC Role. For a role created by Anthropic, this is Anthropic's name for the access that the role grants. Anthropic may change this name, so to keep a lasting reference to a role, store its `id`.
      */
     #[Required('display_name')]
     public string $displayName;
@@ -124,7 +124,7 @@ final class RBACRole implements BaseModel
     }
 
     /**
-     * Name of the RBAC Role. For a role created by Anthropic, this name can differ from the label claude.ai shows, and Anthropic may change the name. To keep a lasting reference to a role, store its `id`.
+     * Name of the RBAC Role. For a role created by Anthropic, this is Anthropic's name for the access that the role grants. Anthropic may change this name, so to keep a lasting reference to a role, store its `id`.
      */
     public function withDisplayName(string $displayName): self
     {

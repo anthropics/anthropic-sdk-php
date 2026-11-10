@@ -60,13 +60,14 @@ final class BedrockMiddleware implements Middleware
                 ->dropQueryParam('beta');
 
             $model = $r->takeBodyParam('model');
-            if (!is_string($model) || '' === $model) {
+            // Some servers drop ";" and what follows it from a segment before routing, so ";x" can be read as "" and "..;x" as "..".
+            if (!is_string($model) || '' === $model || str_starts_with($model, ';')) {
                 throw new \InvalidArgumentException('Request body must contain a non-empty string `model`.');
             }
-            if ('.' === $model || '..' === $model) {
+            if (in_array(explode(';', $model, 2)[0], ['.', '..'], true)) {
                 throw new \InvalidArgumentException(sprintf('The path "%s" has the dot segment "%s", which would send the request to a different URL. A path parameter cannot be "." or "..".', "{$prefix}/model/{$model}", $model));
             }
-            $model = str_replace(['%40', '%3A'], ['@', ':'], rawurlencode($model));
+            $model = str_replace(['%40', '%3A', '%3B'], ['@', ':', ';'], rawurlencode($model));
 
             if ($isCountTokens) {
                 $r->setBodyParam('max_tokens', 1024);
