@@ -37,7 +37,7 @@ final class ClaudeTagSettingsUpdate implements BaseModel
     public ?bool $enabled;
 
     /**
-     * The environment Claude's sessions run in: the identifier of an active environment of the organization, starting with `env_`. Null clears it.
+     * The environment Claude's sessions run in: the identifier of an active environment of the organization, starting with `env_`, or of a self-hosted runner pool of the organization that every member may use, starting with `ccpool_`. Null clears it.
      */
     #[Optional('environment_id', nullable: true)]
     public ?string $environmentID;
@@ -119,7 +119,7 @@ final class ClaudeTagSettingsUpdate implements BaseModel
     }
 
     /**
-     * The environment Claude's sessions run in: the identifier of an active environment of the organization, starting with `env_`. Null clears it.
+     * The environment Claude's sessions run in: the identifier of an active environment of the organization, starting with `env_`, or of a self-hosted runner pool of the organization that every member may use, starting with `ccpool_`. Null clears it.
      */
     public function withEnvironmentID(?string $environmentID): self
     {
