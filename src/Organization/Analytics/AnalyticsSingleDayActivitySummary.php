@@ -38,6 +38,9 @@ use Anthropic\Core\Contracts\BaseModel;
  *   claudeDesignDailyActiveUserCount?: int|null,
  *   claudeDesignMonthlyActiveUserCount?: int|null,
  *   claudeDesignWeeklyActiveUserCount?: int|null,
+ *   claudeTagDailyActiveUserCount?: int|null,
+ *   claudeTagMonthlyActiveUserCount?: int|null,
+ *   claudeTagWeeklyActiveUserCount?: int|null,
  *   officeAgentDailyActiveUserCount?: int|null,
  *   officeAgentMonthlyActiveUserCount?: int|null,
  *   officeAgentWeeklyActiveUserCount?: int|null,
@@ -203,6 +206,24 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     public ?int $claudeDesignWeeklyActiveUserCount;
 
     /**
+     * Number of Slack users active in Claude Tag on the requested day. Counts distinct Slack users, including users who have not linked a Claude account, so it can exceed `daily_active_user_count` and `assigned_seat_count`. Null on a day with no measured value, when Claude Tag data cannot be read for the request, and when the response is scoped to an RBAC group, because an unlinked user belongs to no group. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     */
+    #[Optional('claude_tag_daily_active_user_count', nullable: true)]
+    public ?int $claudeTagDailyActiveUserCount;
+
+    /**
+     * Number of Slack users active in Claude Tag in the 28-day rolling window. Counts distinct Slack users, including users who have not linked a Claude account, so it can exceed `daily_active_user_count` and `assigned_seat_count`. Null on a day with no measured value, when Claude Tag data cannot be read for the request, and when the response is scoped to an RBAC group, because an unlinked user belongs to no group. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     */
+    #[Optional('claude_tag_monthly_active_user_count', nullable: true)]
+    public ?int $claudeTagMonthlyActiveUserCount;
+
+    /**
+     * Number of Slack users active in Claude Tag in the 7-day rolling window. Counts distinct Slack users, including users who have not linked a Claude account, so it can exceed `daily_active_user_count` and `assigned_seat_count`. Null on a day with no measured value, when Claude Tag data cannot be read for the request, and when the response is scoped to an RBAC group, because an unlinked user belongs to no group. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     */
+    #[Optional('claude_tag_weekly_active_user_count', nullable: true)]
+    public ?int $claudeTagWeeklyActiveUserCount;
+
+    /**
      * Number of users with Claude in Office activity on the requested day. Omitted from the response while the per-product breakdown is not enabled for this organization.
      */
     #[Optional('office_agent_daily_active_user_count', nullable: true)]
@@ -321,6 +342,9 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
         ?int $claudeDesignDailyActiveUserCount = null,
         ?int $claudeDesignMonthlyActiveUserCount = null,
         ?int $claudeDesignWeeklyActiveUserCount = null,
+        ?int $claudeTagDailyActiveUserCount = null,
+        ?int $claudeTagMonthlyActiveUserCount = null,
+        ?int $claudeTagWeeklyActiveUserCount = null,
         ?int $officeAgentDailyActiveUserCount = null,
         ?int $officeAgentMonthlyActiveUserCount = null,
         ?int $officeAgentWeeklyActiveUserCount = null,
@@ -357,6 +381,9 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
         null !== $claudeDesignDailyActiveUserCount && $self['claudeDesignDailyActiveUserCount'] = $claudeDesignDailyActiveUserCount;
         null !== $claudeDesignMonthlyActiveUserCount && $self['claudeDesignMonthlyActiveUserCount'] = $claudeDesignMonthlyActiveUserCount;
         null !== $claudeDesignWeeklyActiveUserCount && $self['claudeDesignWeeklyActiveUserCount'] = $claudeDesignWeeklyActiveUserCount;
+        null !== $claudeTagDailyActiveUserCount && $self['claudeTagDailyActiveUserCount'] = $claudeTagDailyActiveUserCount;
+        null !== $claudeTagMonthlyActiveUserCount && $self['claudeTagMonthlyActiveUserCount'] = $claudeTagMonthlyActiveUserCount;
+        null !== $claudeTagWeeklyActiveUserCount && $self['claudeTagWeeklyActiveUserCount'] = $claudeTagWeeklyActiveUserCount;
         null !== $officeAgentDailyActiveUserCount && $self['officeAgentDailyActiveUserCount'] = $officeAgentDailyActiveUserCount;
         null !== $officeAgentMonthlyActiveUserCount && $self['officeAgentMonthlyActiveUserCount'] = $officeAgentMonthlyActiveUserCount;
         null !== $officeAgentWeeklyActiveUserCount && $self['officeAgentWeeklyActiveUserCount'] = $officeAgentWeeklyActiveUserCount;
@@ -655,6 +682,42 @@ final class AnalyticsSingleDayActivitySummary implements BaseModel
     ): self {
         $self = clone $this;
         $self['claudeDesignWeeklyActiveUserCount'] = $claudeDesignWeeklyActiveUserCount;
+
+        return $self;
+    }
+
+    /**
+     * Number of Slack users active in Claude Tag on the requested day. Counts distinct Slack users, including users who have not linked a Claude account, so it can exceed `daily_active_user_count` and `assigned_seat_count`. Null on a day with no measured value, when Claude Tag data cannot be read for the request, and when the response is scoped to an RBAC group, because an unlinked user belongs to no group. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     */
+    public function withClaudeTagDailyActiveUserCount(
+        ?int $claudeTagDailyActiveUserCount
+    ): self {
+        $self = clone $this;
+        $self['claudeTagDailyActiveUserCount'] = $claudeTagDailyActiveUserCount;
+
+        return $self;
+    }
+
+    /**
+     * Number of Slack users active in Claude Tag in the 28-day rolling window. Counts distinct Slack users, including users who have not linked a Claude account, so it can exceed `daily_active_user_count` and `assigned_seat_count`. Null on a day with no measured value, when Claude Tag data cannot be read for the request, and when the response is scoped to an RBAC group, because an unlinked user belongs to no group. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     */
+    public function withClaudeTagMonthlyActiveUserCount(
+        ?int $claudeTagMonthlyActiveUserCount
+    ): self {
+        $self = clone $this;
+        $self['claudeTagMonthlyActiveUserCount'] = $claudeTagMonthlyActiveUserCount;
+
+        return $self;
+    }
+
+    /**
+     * Number of Slack users active in Claude Tag in the 7-day rolling window. Counts distinct Slack users, including users who have not linked a Claude account, so it can exceed `daily_active_user_count` and `assigned_seat_count`. Null on a day with no measured value, when Claude Tag data cannot be read for the request, and when the response is scoped to an RBAC group, because an unlinked user belongs to no group. Omitted from the response on deployments that do not offer Claude Tag reporting.
+     */
+    public function withClaudeTagWeeklyActiveUserCount(
+        ?int $claudeTagWeeklyActiveUserCount
+    ): self {
+        $self = clone $this;
+        $self['claudeTagWeeklyActiveUserCount'] = $claudeTagWeeklyActiveUserCount;
 
         return $self;
     }
