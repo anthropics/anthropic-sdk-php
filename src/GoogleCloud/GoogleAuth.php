@@ -99,6 +99,12 @@ final class GoogleAuth
         }
 
         $expiresAt = $token['expires_at'] ?? null;
+        $expiresIn = $token['expires_in'] ?? null;
+
+        // Service account and user credentials report a lifetime and no expiry time.
+        if (null === $expiresAt && is_numeric($expiresIn) && (int) $expiresIn > 0) {
+            $expiresAt = time() + (int) $expiresIn;
+        }
 
         return [
             'access_token' => $accessToken,

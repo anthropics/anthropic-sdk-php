@@ -255,6 +255,12 @@ final class Client extends \Anthropic\Client
 
         $accessToken = $token['access_token'] ?? null;
         $expiresAt = $token['expires_at'] ?? null;
+        $expiresIn = $token['expires_in'] ?? null;
+
+        // Service account and user credentials report a lifetime and no expiry time.
+        if (null === $expiresAt && is_numeric($expiresIn) && (int) $expiresIn > 0) {
+            $expiresAt = time() + (int) $expiresIn;
+        }
 
         if (is_string($accessToken) && '' !== $accessToken) {
             return [

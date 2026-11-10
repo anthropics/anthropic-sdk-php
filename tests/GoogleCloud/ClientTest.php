@@ -4,8 +4,12 @@ namespace Tests\GoogleCloud;
 
 use Anthropic\Core\Util;
 use Anthropic\GoogleCloud\Client;
+use Google\Auth\Credentials\ServiceAccountCredentials;
 use Google\Auth\FetchAuthTokenInterface;
+use Google\Auth\HttpHandler\HttpClientCache;
 use Google\Auth\ProjectIdProviderInterface;
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Promise\Create;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Mock\Client as MockClient;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -202,6 +206,46 @@ final class ClientTest extends TestCase
 
         $this->assertSame(2, $calls);
         $this->assertSame('Bearer tok-2', $this->getLastRequest()->getHeaderLine('Authorization'));
+    }
+
+    #[DataProvider('tokenLifetimes')]
+    public function testServiceAccountTokenIsCachedUntilNearExpiry(int $expiresIn, int $expectedFetches): void
+    {
+        $key = openssl_pkey_new();
+        assert(false !== $key);
+        openssl_pkey_export($key, $privateKey);
+        $client = $this->makeClient(googleCredentials: new ServiceAccountCredentials(
+            'https://www.googleapis.com/auth/cloud-platform',
+            ['client_email' => 'test@example.iam.gserviceaccount.com', 'private_key' => $privateKey],
+        ));
+
+        $this->transporter->addResponse($this->jsonResponse());
+        $this->transporter->addResponse($this->jsonResponse());
+
+        $fetches = 0;
+        HttpClientCache::setHttpClient(new GuzzleClient(['handler' => function () use (&$fetches, $expiresIn) {
+            ++$fetches;
+
+            return Create::promiseFor($this->jsonResponse(['access_token' => "tok-{$fetches}", 'expires_in' => $expiresIn, 'token_type' => 'Bearer']));
+        }]));
+
+        try {
+            $client->messages->create(1024, [], 'claude-haiku-4-5');
+            $client->messages->create(1024, [], 'claude-haiku-4-5');
+        } finally {
+            HttpClientCache::setHttpClient(null);
+        }
+
+        $this->assertSame($expectedFetches, $fetches);
+        $this->assertSame("Bearer tok-{$expectedFetches}", $this->getLastRequest()->getHeaderLine('Authorization'));
+    }
+
+    /** @return iterable<string, array{int, int}> */
+    public static function tokenLifetimes(): iterable
+    {
+        yield 'outlasts the refresh buffer' => [3600, 1];
+
+        yield 'ends within the refresh buffer' => [60, 2];
     }
 
     // ── Project precedence ──────────────────────────────────────────
