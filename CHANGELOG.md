@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.8.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.7.0...v1.8.0) (2026-11-10)
+
+### Features
+
+* **api:** add Claude Tag metrics to the analytics summaries and users reports
+* **api:** add reply_mode to Claude Tag Slack channel settings
+
+
+### Bug Fixes
+
+* **bedrock:** throw when the model has nothing, "." or ".." before its first ";", and send any other ";" in the model as ";" instead of "%3B"
+* **vertex:** throw when the model has nothing, "." or ".." before its first ";"
+
+
+### Chores
+
+* **docs:** clarify display_name for RBAC Roles created by Anthropic
+* **docs:** clarify plugin delete and skill name conflict descriptions
+* **docs:** clarify when to omit user_profile_id on external keys
+* **docs:** note that Claude Tag settings accept self-hosted runner pools
+* **docs:** update model descriptions
+
+
+### Documentation
+
+* **examples:** show multiagent when creating a Managed Agents agent
+
 ## [1.7.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.6.0...v1.7.0) (2026-11-09)
 
 ### Features
