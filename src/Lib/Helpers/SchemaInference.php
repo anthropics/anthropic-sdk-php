@@ -225,8 +225,11 @@ final class SchemaInference
      * Infers the array item class from PHPDoc @var annotation.
      *
      * Supports patterns like:
-     * - @var ClassName[]
-     * - @var array<ClassName>
+     * - @var ClassName[] (declaring namespace or imported class)
+     * - @var array<\Vendor\ClassName> (fully qualified)
+     *
+     * Class imports, including `use Vendor\Item as Alias`, are resolved from
+     * the declaring file so schema generation and hydration agree.
      *
      * @return class-string|null The fully qualified class name, or null if not found
      */
@@ -268,6 +271,116 @@ final class SchemaInference
     }
 
     /**
+     * Resolve a PHPDoc class name through the declaring file's top-level imports.
+     * PHP reflection exposes namespaces but does not expose `use` aliases.
+     *
+     * @param \ReflectionClass<object> $declaringClass
+     *
+     * @return class-string|null
+     */
+    private static function resolveImportedClassName(string $name, \ReflectionClass $declaringClass): ?string
+    {
+        /** @var array<string, array<string, string>> $importsByClass */
+        static $importsByClass = [];
+
+        $key = $declaringClass->getName();
+        if (!isset($importsByClass[$key])) {
+            $imports = [];
+            $filename = $declaringClass->getFileName();
+            $source = false !== $filename ? file_get_contents($filename) : false;
+            if (false !== $source) {
+                $tokens = token_get_all($source);
+                $depth = 0;
+                $namespaceDepth = 0;
+                $namespace = '';
+                $limit = $declaringClass->getStartLine();
+                $count = count($tokens);
+
+                for ($i = 0; $i < $count; ++$i) {
+                    $token = $tokens[$i];
+                    if (is_array($token) && $token[2] >= $limit) {
+                        break;
+                    }
+
+                    if (is_array($token) && T_NAMESPACE === $token[0]) {
+                        $value = '';
+                        while (++$i < $count) {
+                            $part = $tokens[$i];
+                            $text = is_array($part) ? $part[1] : $part;
+                            if (';' === $text || '{' === $text) {
+                                $namespace = trim($value);
+                                if ('{' === $text) {
+                                    ++$depth;
+                                    $namespaceDepth = $depth;
+                                } else {
+                                    $namespaceDepth = 0;
+                                }
+
+                                break;
+                            }
+                            $value .= $text;
+                        }
+
+                        continue;
+                    }
+
+                    if (is_array($token) && T_USE === $token[0] && $depth === $namespaceDepth
+                        && $namespace === $declaringClass->getNamespaceName()) {
+                        $statement = '';
+                        while (++$i < $count) {
+                            $part = $tokens[$i];
+                            $text = is_array($part) ? $part[1] : $part;
+                            if (';' === $text) {
+                                break;
+                            }
+                            $statement .= $text;
+                        }
+
+                        $statement = trim($statement);
+                        if (preg_match('/^(function|const)\s/i', $statement)) {
+                            continue;
+                        }
+                        foreach (explode(',', $statement) as $entry) {
+                            $parts = preg_split('/\s+as\s+/i', trim($entry), 2);
+                            if (false === $parts) {
+                                continue;
+                            }
+                            $target = ltrim(trim($parts[0]), '\\');
+                            if ('' === $target || str_contains($target, '{')) {
+                                continue;
+                            }
+                            $segments = explode('\\', $target);
+                            $alias = trim($parts[1] ?? end($segments));
+                            if (preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/D', $alias)) {
+                                $imports[strtolower($alias)] = $target;
+                            }
+                        }
+
+                        continue;
+                    }
+
+                    if ('{' === $token) {
+                        ++$depth;
+                    } elseif ('}' === $token) {
+                        --$depth;
+                    }
+                }
+            }
+            $importsByClass[$key] = $imports;
+        }
+
+        $segments = explode('\\', $name, 2);
+        $imported = $importsByClass[$key][strtolower($segments[0])] ?? null;
+        if (null === $imported) {
+            return null;
+        }
+
+        $candidate = $imported.(isset($segments[1]) ? '\\'.$segments[1] : '');
+
+        return class_exists($candidate) ? $candidate : null;
+    }
+
+    /**
      * Resolves a class name to its fully qualified form.
      *
      * @param string $className The class name from the doc comment
@@ -284,8 +397,14 @@ final class SchemaInference
             return class_exists($fqcn) ? $fqcn : null;
         }
 
-        // Try the declaring class's namespace
+        // PHPDoc names follow the declaring file's class imports, including aliases.
         $declaringClass = $property->getDeclaringClass();
+        $imported = self::resolveImportedClassName($className, $declaringClass);
+        if (null !== $imported) {
+            return $imported;
+        }
+
+        // Fall back to the declaring class's namespace.
         $namespace = $declaringClass->getNamespaceName();
 
         if ('' !== $namespace) {

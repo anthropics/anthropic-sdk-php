@@ -12,6 +12,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Tests\Fixtures\ExternalAliasedPhpDocModel;
+use Tests\Fixtures\ExternalPhpDocModel;
 
 // Test model classes - defined outside the test class to avoid reflection issues
 
@@ -169,15 +171,6 @@ class ModelWithPhpDocAndExplicitItemClass implements StructuredOutputModel
 
     /** @var SkillItem[] */
     #[Constrained(description: 'List of skills', itemClass: NestedAddress::class)]
-    public array $skills;
-}
-
-class ModelWithFullyQualifiedDocItems implements StructuredOutputModel
-{
-    use StructuredOutputModelTrait;
-    public string $name;
-
-    /** @var SkillItem[] */
     public array $skills;
 }
 
@@ -962,11 +955,47 @@ class StructuredOutputTest extends TestCase
 
         yield 'generic' => [ModelWithPhpDocArraySyntax::class];
 
-        yield 'qualified' => [ModelWithFullyQualifiedDocItems::class];
+        yield 'imported' => [ExternalPhpDocModel::class];
+
+        yield 'aliased' => [ExternalAliasedPhpDocModel::class];
 
         yield 'inherited' => [ModelWithInheritedDocItems::class];
 
         yield 'nullable array' => [ModelWithNullableDocItems::class];
+    }
+
+    /** @param class-string<StructuredOutputModel> $modelClass */
+    #[Test]
+    #[DataProvider('importedItemModels')]
+    public function testImportedPhpDocItemClassResolvesForHydrationAndSchema(string $modelClass): void
+    {
+        $property = new \ReflectionProperty($modelClass, 'skills');
+        $this->assertSame(SkillItem::class, SchemaInference::inferItemClassFromDocComment($property));
+
+        $item = ['name' => 'Typed', 'level' => 'expert'];
+        $model = $modelClass::fromArray(['skills' => [$item]]);
+        $items = $property->getValue($model);
+        $this->assertIsArray($items);
+        $this->assertCount(1, $items);
+        $this->assertInstanceOf(StructuredOutputModel::class, $items[0]);
+        $this->assertSame($item, $items[0]->jsonSerialize());
+
+        $schema = StructuredOutput::toJsonSchema($modelClass);
+        $properties = $schema['properties'];
+        $this->assertIsArray($properties);
+        $skillsSchema = $properties['skills'];
+        $this->assertIsArray($skillsSchema);
+        $itemSchema = $skillsSchema['items'];
+        $this->assertIsArray($itemSchema);
+        $this->assertSame('object', $itemSchema['type']);
+    }
+
+    /** @return iterable<string, array{class-string<StructuredOutputModel>}> */
+    public static function importedItemModels(): iterable
+    {
+        yield 'imported class' => [ExternalPhpDocModel::class];
+
+        yield 'imported alias' => [ExternalAliasedPhpDocModel::class];
     }
 
     #[Test]

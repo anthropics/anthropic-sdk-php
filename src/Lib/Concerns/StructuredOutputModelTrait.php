@@ -32,6 +32,9 @@ use Anthropic\Lib\Helpers\SchemaInference;
  * 1. Type hint with the model class directly: `public NestedModel $child;`
  * 2. For arrays of models, use `itemClass`: `#[Constrained(itemClass: Item::class)] public array $items;`
  *    PHPDoc `@var Item[]` and `@var array<Item>` are also used for schema generation and hydration.
+ *    Item types can be in the declaring namespace, fully qualified
+ *    (e.g. `@var \Vendor\Item[]`), or imported using `use Vendor\Item`,
+ *    including aliased class imports. An explicit `itemClass` takes precedence.
  *
  * **Note:** The schema generated from your class is subject to improvement between minor versions.
  * Pin your dependency if you need guaranteed schema stability.
