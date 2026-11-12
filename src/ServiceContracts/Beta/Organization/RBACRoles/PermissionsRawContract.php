@@ -8,7 +8,10 @@ use Anthropic\Beta\Organization\RBACRoles\Permissions\BetaRBACRolePermission;
 use Anthropic\Beta\Organization\RBACRoles\Permissions\PermissionListParams;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\RBACRoleNotFoundException;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
+use Anthropic\ParentOrganizationRequiredException;
 use Anthropic\RequestOptions;
 
 /**
@@ -25,6 +28,9 @@ interface PermissionsRawContract
      *
      * @return BaseResponse<PageCursor<BetaRBACRolePermission>>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
+     * @throws RBACRoleNotFoundException
      * @throws APIException
      */
     public function list(

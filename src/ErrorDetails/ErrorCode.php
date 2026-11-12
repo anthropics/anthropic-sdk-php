@@ -114,6 +114,10 @@ enum ErrorCode: string
 
     case ORGANIZATION_TYPE_NOT_SUPPORTED = 'organization_type_not_supported';
 
+    case PARENT_ORGANIZATION_REQUIRED = 'parent_organization_required';
+
+    case RBAC_ROLE_NOT_FOUND = 'rbac_role_not_found';
+
     case ENVIRONMENT_CREATE_DISABLED = 'environment_create_disabled';
 
     case ENVIRONMENT_ARCHIVED = 'environment_archived';

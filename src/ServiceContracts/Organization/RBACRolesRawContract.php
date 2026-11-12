@@ -6,9 +6,12 @@ namespace Anthropic\ServiceContracts\Organization;
 
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\RBACRoleNotFoundException;
 use Anthropic\Organization\RBACRoles\RBACRole;
 use Anthropic\Organization\RBACRoles\RBACRoleListParams;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
+use Anthropic\ParentOrganizationRequiredException;
 use Anthropic\RequestOptions;
 
 /**
@@ -24,6 +27,9 @@ interface RBACRolesRawContract
      *
      * @return BaseResponse<RBACRole>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
+     * @throws RBACRoleNotFoundException
      * @throws APIException
      */
     public function retrieve(
@@ -39,6 +45,8 @@ interface RBACRolesRawContract
      *
      * @return BaseResponse<PageCursor<RBACRole>>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
      * @throws APIException
      */
     public function list(

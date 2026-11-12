@@ -75,12 +75,14 @@ use Anthropic\Organization\Invites\InviteAlreadyExistsException;
 use Anthropic\Organization\OrgMemberLimitExceededException;
 use Anthropic\Organization\RBACGroups\RBACGroupGrantsOwnerAccessException;
 use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
+use Anthropic\Organization\RBACRoleNotFoundException;
 use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
 use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\OrganizationOnHoldException;
 use Anthropic\OrganizationTypeNotSupportedException;
+use Anthropic\ParentOrganizationRequiredException;
 use Anthropic\RampLimitExceededException;
 use Anthropic\RequestBodyEncodingInvalidException;
 use Anthropic\RequestBodyEncodingUnsupportedException;
@@ -149,6 +151,7 @@ class APIStatusException extends APIException
         '400 organization_not_enrolled_in_beta' => BetaOrganizationNotEnrolledInBetaException::class,
         '400 organization_on_hold' => OrganizationOnHoldException::class,
         '400 organization_type_not_supported' => OrganizationTypeNotSupportedException::class,
+        '400 parent_organization_required' => ParentOrganizationRequiredException::class,
         '400 rbac_group_grants_owner_access' => RBACGroupGrantsOwnerAccessException::class,
         '400 rbac_group_owner_access_unconfirmed' => RBACGroupOwnerAccessUnconfirmedException::class,
         '400 request_body_encoding_invalid' => RequestBodyEncodingInvalidException::class,
@@ -181,6 +184,7 @@ class APIStatusException extends APIException
         '403 spend_limits_admin_api_writes_not_enabled' => SpendLimitsAdminAPIWritesNotEnabledException::class,
         '404 environment_not_found' => BetaEnvironmentNotFoundException::class,
         '404 file_expired' => FileExpiredException::class,
+        '404 rbac_role_not_found' => RBACRoleNotFoundException::class,
         '404 slack_channel_set_up_environment_not_found' => SlackChannelSetUpEnvironmentNotFoundException::class,
         '404 thread_not_found' => ThreadNotFoundException::class,
         '409 concurrent_membership_change' => ConcurrentMembershipChangeException::class,
