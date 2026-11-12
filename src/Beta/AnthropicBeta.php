@@ -11,8 +11,6 @@ namespace Anthropic\Beta;
  */
 enum AnthropicBeta: string
 {
-    case MESSAGE_BATCHES_2024_09_24 = 'message-batches-2024-09-24';
-
     case COMPUTER_USE_2024_10_22 = 'computer-use-2024-10-22';
 
     case COMPUTER_USE_2025_01_24 = 'computer-use-2025-01-24';
@@ -104,6 +102,9 @@ enum AnthropicBeta: string
     case ANALYTICS_USAGE_COST_2026_08_24 = 'analytics-usage-cost-2026-08-24';
 
     case EXPERIMENTAL_CLAUDE_TAG_2026_10_21 = 'experimental-claude-tag-2026-10-21';
+
+    /** @deprecated This value is no longer needed. Remove it from your requests. */
+    case MESSAGE_BATCHES_2024_09_24 = 'message-batches-2024-09-24';
 
     /** @deprecated This value is no longer needed. Remove it from your requests. */
     case PROMPT_CACHING_2024_07_31 = 'prompt-caching-2024-07-31';

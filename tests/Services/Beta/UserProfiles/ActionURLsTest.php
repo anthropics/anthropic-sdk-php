@@ -47,7 +47,7 @@ final class ActionURLsTest extends TestCase
         $result = $this->client->beta->userProfiles->actionURLs->create(
             'uprof_011CZkZCu8hGbp5mYRQgUmz9',
             action: ['type' => 'enroll_end_user'],
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

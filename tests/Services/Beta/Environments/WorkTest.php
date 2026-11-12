@@ -50,7 +50,7 @@ final class WorkTest extends TestCase
         $result = $this->client->beta->environments->work->retrieve(
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -80,7 +80,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             metadata: ['foo' => 'string'],
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -125,7 +125,7 @@ final class WorkTest extends TestCase
         $result = $this->client->beta->environments->work->ack(
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -154,7 +154,7 @@ final class WorkTest extends TestCase
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             desiredTTLSeconds: 0,
             expectedLastHeartbeat: 'expected_last_heartbeat',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -206,7 +206,7 @@ final class WorkTest extends TestCase
             'work_id',
             environmentID: 'env_011CZkZ9X2dpNyB7HsEFoRfW',
             force: true,
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

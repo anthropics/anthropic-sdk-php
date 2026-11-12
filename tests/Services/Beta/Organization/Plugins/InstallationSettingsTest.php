@@ -89,7 +89,7 @@ final class InstallationSettingsTest extends TestCase
             ->remove(
                 'target',
                 pluginID: 'plugin_id',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -135,7 +135,7 @@ final class InstallationSettingsTest extends TestCase
                 'target',
                 pluginID: 'plugin_id',
                 installationPreference: 'required',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;

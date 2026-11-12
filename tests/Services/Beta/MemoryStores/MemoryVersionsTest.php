@@ -50,7 +50,7 @@ final class MemoryVersionsTest extends TestCase
             'memory_version_id',
             memoryStoreID: 'memory_store_id',
             view: ManagedAgentsMemoryView::BASIC,
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -95,7 +95,7 @@ final class MemoryVersionsTest extends TestCase
         $result = $this->client->beta->memoryStores->memoryVersions->redact(
             'memory_version_id',
             memoryStoreID: 'memory_store_id',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

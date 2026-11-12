@@ -55,7 +55,7 @@ final class WorkspacesTest extends TestCase
             externalKeyID: 'ekey_01SDCCSbTxrXDpWc1phhtcfK',
             tags: ['env' => 'prod', 'team' => 'platform'],
             userProfileID: 'uprof_01SDCCSbTxrXDpWc1phhtcfK',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

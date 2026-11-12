@@ -91,7 +91,7 @@ final class SpendLimitsTest extends TestCase
             amount: '50000',
             scope: ['type' => 'user', 'userID' => 'user_01WxYzAbCdEfGhJkMnPqRsTu'],
             period: SpendLimitPeriod::MONTHLY,
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

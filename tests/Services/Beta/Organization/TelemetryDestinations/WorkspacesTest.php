@@ -86,7 +86,7 @@ final class WorkspacesTest extends TestCase
             ->add(
                 'workspace_id',
                 destinationID: 'destination_id',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -130,7 +130,7 @@ final class WorkspacesTest extends TestCase
             ->remove(
                 'workspace_id',
                 destinationID: 'destination_id',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;

@@ -68,7 +68,7 @@ final class SlackChannelsTest extends TestCase
                     'model' => 'x',
                     'replyMode' => ['type' => 'automatic'],
                 ],
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -135,7 +135,7 @@ final class SlackChannelsTest extends TestCase
                     'model' => 'x',
                     'replyMode' => ['type' => 'automatic'],
                 ],
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -170,7 +170,7 @@ final class SlackChannelsTest extends TestCase
             limit: 0,
             page: 'page',
             slackChannelID: 'slack_channel_id',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
