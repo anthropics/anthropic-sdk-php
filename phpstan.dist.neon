@@ -6,6 +6,9 @@ parameters:
     paths:
         - src
         - tests
+    scanFiles:
+        - tests/Fixtures/ExternalGroupedAliasedPhpDocModel.php.inc
+        - tests/Fixtures/ExternalGroupedPhpDocModel.php.inc
     ignoreErrors:
         - identifier: parameter.defaultValue
         - identifier: trait.unused

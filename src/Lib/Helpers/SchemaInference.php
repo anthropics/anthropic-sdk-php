@@ -340,13 +340,28 @@ final class SchemaInference
                         if (preg_match('/^(function|const)\s/i', $statement)) {
                             continue;
                         }
+                        // Grouped imports: use Vendor\{Item, Other as Alias};
+                        $groupPrefix = '';
+                        $groupStart = strpos($statement, '{');
+                        if (false !== $groupStart && str_ends_with($statement, '}')) {
+                            $prefix = trim(substr($statement, 0, $groupStart));
+                            if (str_ends_with($prefix, '\\')) {
+                                $groupPrefix = ltrim($prefix, '\\');
+                                $statement = substr($statement, $groupStart + 1, -1);
+                            }
+                        }
+
                         foreach (explode(',', $statement) as $entry) {
-                            $parts = preg_split('/\s+as\s+/i', trim($entry), 2);
+                            $entry = trim($entry);
+                            if (preg_match('/^(function|const)\s/i', $entry)) {
+                                continue;
+                            }
+                            $parts = preg_split('/\s+as\s+/i', $entry, 2);
                             if (false === $parts) {
                                 continue;
                             }
-                            $target = ltrim(trim($parts[0]), '\\');
-                            if ('' === $target || str_contains($target, '{')) {
+                            $target = $groupPrefix.ltrim(trim($parts[0]), '\\');
+                            if ('' === $target || str_contains($target, '{') || str_contains($target, '}')) {
                                 continue;
                             }
                             $segments = explode('\\', $target);
