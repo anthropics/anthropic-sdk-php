@@ -6,12 +6,16 @@ namespace Anthropic\Services\Beta\Organization\ClaudeTag;
 
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
+use Anthropic\Beta\Organization\ClaudeTag\BundleAttachmentNotSupportedException;
+use Anthropic\Beta\Organization\ClaudeTag\BundleOnCallException;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BetaClaudeTagBundle;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleListParams;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleRetrieveParams;
+use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleUpdateParams;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
 use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
 use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsConflictException;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
@@ -78,6 +82,70 @@ final class BundlesRawService implements BundlesRawContract
                 $options,
             )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.claude_tag.bundles.retrieve',
+                route: '/v1/organizations/claude_tag/bundles/{bundle_id}',
+                attributes: [
+                    'anthropic.organization.claude_tag.bundle.id' => $bundleID,
+                ],
+            )),
+            convert: BetaClaudeTagBundle::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Change a Bundle's instructions. The update is partial: a field left out is unchanged, and `instructions` sent as null or as an empty string clears them. The later of two updates wins. Sessions that start after the change use the new instructions; sessions already running keep the ones they started with. Some Bundles are managed in claude.ai, and an update of one returns 400.
+     *
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
+     * @param array{
+     *   instructions?: string|null,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
+     * }|BundleUpdateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<BetaClaudeTagBundle>
+     *
+     * @throws BundleAttachmentNotSupportedException
+     * @throws BundleOnCallException
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
+     * @throws SlackChannelSetUpSettingsConflictException
+     * @throws APIException
+     */
+    public function update(
+        string $bundleID,
+        array|BundleUpdateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = BundleUpdateParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $header_params = ['betas' => 'anthropic-beta'];
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['v1/organizations/claude_tag/bundles/%1$s', $bundleID],
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
+            options: RequestOptions::parse(
+                [
+                    'extraHeaders' => [
+                        'anthropic-beta' => 'experimental-claude-tag-2026-10-21',
+                    ],
+                ],
+                $options,
+            )->withQualifiers(['beta' => 'true'])->withApiCall(new ApiCallInfo(
+                name: 'anthropic.organization.claude_tag.bundles.update',
                 route: '/v1/organizations/claude_tag/bundles/{bundle_id}',
                 attributes: [
                     'anthropic.organization.claude_tag.bundle.id' => $bundleID,

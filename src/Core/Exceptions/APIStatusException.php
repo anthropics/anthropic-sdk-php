@@ -12,6 +12,8 @@ use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\BetaInvalidMetadataException;
 use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
 use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
+use Anthropic\Beta\Organization\ClaudeTag\BundleAttachmentNotSupportedException;
+use Anthropic\Beta\Organization\ClaudeTag\BundleOnCallException;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
 use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
 use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
@@ -120,6 +122,8 @@ class APIStatusException extends APIException
         529 => OverloadedException::class,
         '400 already_member' => AlreadyMemberException::class,
         '400 available_tools_limit_exceeded' => AvailableToolsLimitExceededException::class,
+        '400 bundle_attachment_not_supported' => BundleAttachmentNotSupportedException::class,
+        '400 bundle_on_call' => BundleOnCallException::class,
         '400 cannot_invite_emails_with_unverified_domains' => CannotInviteEmailsWithUnverifiedDomainsException::class,
         '400 cannot_remove_last_member' => CannotRemoveLastMemberException::class,
         '400 cannot_sign_out_primary_owner' => CannotSignOutPrimaryOwnerException::class,

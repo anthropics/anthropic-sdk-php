@@ -173,4 +173,8 @@ enum ErrorCode: string
     case SLACK_CHANNEL_SET_UP_ENVIRONMENT_NOT_FOUND = 'slack_channel_set_up_environment_not_found';
 
     case SLACK_CHANNEL_SET_UP_SETTINGS_CONFLICT = 'slack_channel_set_up_settings_conflict';
+
+    case BUNDLE_ATTACHMENT_NOT_SUPPORTED = 'bundle_attachment_not_supported';
+
+    case BUNDLE_ON_CALL = 'bundle_on_call';
 }

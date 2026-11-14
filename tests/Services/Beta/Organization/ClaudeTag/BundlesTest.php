@@ -41,6 +41,18 @@ final class BundlesTest extends TestCase
     }
 
     #[Test]
+    public function testUpdate(): void
+    {
+        $result = $this->client->beta->organization->claudeTag->bundles->update(
+            'capp_011CZkZjLP1cWxj5EtMmdgbq',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BetaClaudeTagBundle::class, $result);
+    }
+
+    #[Test]
     public function testList(): void
     {
         $page = $this->client->beta->organization->claudeTag->bundles->list(

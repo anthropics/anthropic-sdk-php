@@ -10,13 +10,14 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * A named set of access that Claude can use in a Slack channel or a Slack workspace: connectors, repositories and credentials. Created and edited in claude.ai.
+ * A named set of access that Claude can use in a Slack channel or a Slack workspace: connectors, repositories and credentials. Created and edited in claude.ai; Update Bundle also changes its instructions.
  *
  * @phpstan-type BetaClaudeTagBundleShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   description: string|null,
  *   displayName: string,
+ *   instructions: string|null,
  *   type: 'bundle',
  *   updatedAt: \DateTimeInterface,
  * }
@@ -55,6 +56,12 @@ final class BetaClaudeTagBundle implements BaseModel
     public string $displayName;
 
     /**
+     * Instructions for Claude, added to the instructions of every session that can use the Bundle. Null when it has none.
+     */
+    #[Required]
+    public ?string $instructions;
+
+    /**
      * Time of the last change to the Bundle.
      */
     #[Required('updated_at')]
@@ -66,7 +73,12 @@ final class BetaClaudeTagBundle implements BaseModel
      * To enforce required parameters use
      * ```
      * BetaClaudeTagBundle::with(
-     *   id: ..., createdAt: ..., description: ..., displayName: ..., updatedAt: ...
+     *   id: ...,
+     *   createdAt: ...,
+     *   description: ...,
+     *   displayName: ...,
+     *   instructions: ...,
+     *   updatedAt: ...,
      * )
      * ```
      *
@@ -78,6 +90,7 @@ final class BetaClaudeTagBundle implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withDescription(...)
      *   ->withDisplayName(...)
+     *   ->withInstructions(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -96,6 +109,7 @@ final class BetaClaudeTagBundle implements BaseModel
         \DateTimeInterface $createdAt,
         ?string $description,
         string $displayName,
+        ?string $instructions,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -104,6 +118,7 @@ final class BetaClaudeTagBundle implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['description'] = $description;
         $self['displayName'] = $displayName;
+        $self['instructions'] = $instructions;
         $self['updatedAt'] = $updatedAt;
 
         return $self;
@@ -149,6 +164,17 @@ final class BetaClaudeTagBundle implements BaseModel
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    /**
+     * Instructions for Claude, added to the instructions of every session that can use the Bundle. Null when it has none.
+     */
+    public function withInstructions(?string $instructions): self
+    {
+        $self = clone $this;
+        $self['instructions'] = $instructions;
 
         return $self;
     }
