@@ -333,6 +333,12 @@ final class SchemaInference
                             if (';' === $text) {
                                 break;
                             }
+                            // Comments between grouped imports are not part of class names.
+                            if (is_array($part) && (T_COMMENT === $part[0] || T_DOC_COMMENT === $part[0])) {
+                                $statement .= ' ';
+
+                                continue;
+                            }
                             $statement .= $text;
                         }
 

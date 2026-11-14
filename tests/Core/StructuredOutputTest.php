@@ -13,12 +13,15 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\ExternalAliasedPhpDocModel;
+use Tests\Fixtures\ExternalCommentedGroupedAliasedPhpDocModel;
 use Tests\Fixtures\ExternalGroupedAliasedPhpDocModel;
 use Tests\Fixtures\ExternalGroupedPhpDocModel;
 use Tests\Fixtures\ExternalPhpDocModel;
 
 // Keep grouped-use fixtures outside PHP CS Fixer's import normalisation.
 require_once __DIR__.'/../Fixtures/ExternalGroupedAliasedPhpDocModel.php.inc';
+
+require_once __DIR__.'/../Fixtures/ExternalCommentedGroupedAliasedPhpDocModel.php.inc';
 
 require_once __DIR__.'/../Fixtures/ExternalGroupedPhpDocModel.php.inc';
 
@@ -970,6 +973,8 @@ class StructuredOutputTest extends TestCase
 
         yield 'grouped alias' => [ExternalGroupedAliasedPhpDocModel::class];
 
+        yield 'grouped alias with comment' => [ExternalCommentedGroupedAliasedPhpDocModel::class];
+
         yield 'inherited' => [ModelWithInheritedDocItems::class];
 
         yield 'nullable array' => [ModelWithNullableDocItems::class];
@@ -1011,6 +1016,8 @@ class StructuredOutputTest extends TestCase
         yield 'grouped class' => [ExternalGroupedPhpDocModel::class];
 
         yield 'grouped alias' => [ExternalGroupedAliasedPhpDocModel::class];
+
+        yield 'grouped alias with comment' => [ExternalCommentedGroupedAliasedPhpDocModel::class];
     }
 
     #[Test]
