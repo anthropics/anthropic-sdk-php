@@ -10,11 +10,11 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\ListOf;
 
 /**
- * @phpstan-import-type BetaWebSearchToolResultErrorShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultError
+ * @phpstan-import-type BetaWebSearchToolResultErrorObjectShape from \Anthropic\Beta\Messages\BetaWebSearchToolResultErrorObject
  * @phpstan-import-type BetaWebSearchResultBlockShape from \Anthropic\Beta\Messages\BetaWebSearchResultBlock
  *
- * @phpstan-type BetaWebSearchToolResultBlockContentVariants = BetaWebSearchToolResultError|list<BetaWebSearchResultBlock>
- * @phpstan-type BetaWebSearchToolResultBlockContentShape = BetaWebSearchToolResultBlockContentVariants|BetaWebSearchToolResultErrorShape|list<BetaWebSearchResultBlockShape>
+ * @phpstan-type BetaWebSearchToolResultBlockContentVariants = BetaWebSearchToolResultErrorObject|list<BetaWebSearchResultBlock>
+ * @phpstan-type BetaWebSearchToolResultBlockContentShape = BetaWebSearchToolResultBlockContentVariants|BetaWebSearchToolResultErrorObjectShape|list<BetaWebSearchResultBlockShape>
  */
 final class BetaWebSearchToolResultBlockContent implements ConverterSource
 {
@@ -26,7 +26,7 @@ final class BetaWebSearchToolResultBlockContent implements ConverterSource
     public static function variants(): array
     {
         return [
-            BetaWebSearchToolResultError::class,
+            BetaWebSearchToolResultErrorObject::class,
             new ListOf(BetaWebSearchResultBlock::class),
         ];
     }

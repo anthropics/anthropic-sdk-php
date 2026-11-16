@@ -4,41 +4,16 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusExhausted;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusRetrying;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusTerminal;
-use Anthropic\Core\Concerns\SdkUnion;
-use Anthropic\Core\Conversion\Contracts\Converter;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
+// Loading the class registers this name as its alias.
+class_exists(
+    \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedErrorObject\RetryStatus::class,
+);
 
-/**
- * What the client should do next.
- *
- * @phpstan-import-type ManagedAgentsRetryStatusRetryingShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusRetrying
- * @phpstan-import-type ManagedAgentsRetryStatusExhaustedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusExhausted
- * @phpstan-import-type ManagedAgentsRetryStatusTerminalShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRetryStatusTerminal
- *
- * @phpstan-type RetryStatusVariants = ManagedAgentsRetryStatusRetrying|ManagedAgentsRetryStatusExhausted|ManagedAgentsRetryStatusTerminal
- * @phpstan-type RetryStatusShape = RetryStatusVariants|ManagedAgentsRetryStatusRetryingShape|ManagedAgentsRetryStatusExhaustedShape|ManagedAgentsRetryStatusTerminalShape
- */
-final class RetryStatus implements ConverterSource
-{
-    use SdkUnion;
-
-    public static function discriminator(): string
-    {
-        return 'type';
-    }
-
+// This block never runs. It declares the name for IDEs and static analyzers.
+// @phpstan-ignore if.alwaysFalse
+if (false) {
     /**
-     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
+     * @deprecated BetaManagedAgentsMCPAuthenticationFailedError has been renamed to BetaManagedAgentsMCPAuthenticationFailedErrorObject
      */
-    public static function variants(): array
-    {
-        return [
-            'retrying' => ManagedAgentsRetryStatusRetrying::class,
-            'exhausted' => ManagedAgentsRetryStatusExhausted::class,
-            'terminal' => ManagedAgentsRetryStatusTerminal::class,
-        ];
-    }
+    class RetryStatus extends \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedErrorObject\RetryStatus {}
 }

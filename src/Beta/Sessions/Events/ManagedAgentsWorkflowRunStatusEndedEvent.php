@@ -50,7 +50,7 @@ final class ManagedAgentsWorkflowRunStatusEndedEvent implements BaseModel
      * @var ManagedAgentsWorkflowRunResultVariants $result
      */
     #[Required(union: ManagedAgentsWorkflowRunResult::class)]
-    public ManagedAgentsWorkflowRunResultCompleted|ManagedAgentsWorkflowRunResultError|ManagedAgentsWorkflowRunResultStopped $result;
+    public ManagedAgentsWorkflowRunResultCompleted|ManagedAgentsWorkflowRunResultErrorObject|ManagedAgentsWorkflowRunResultStopped $result;
 
     /**
      * Identifier of the run. The same value is on all of the run's `workflow_run.*` events.
@@ -93,7 +93,7 @@ final class ManagedAgentsWorkflowRunStatusEndedEvent implements BaseModel
     public static function with(
         string $id,
         \DateTimeInterface $processedAt,
-        ManagedAgentsWorkflowRunResultCompleted|array|ManagedAgentsWorkflowRunResultError|ManagedAgentsWorkflowRunResultStopped $result,
+        ManagedAgentsWorkflowRunResultCompleted|array|ManagedAgentsWorkflowRunResultErrorObject|ManagedAgentsWorkflowRunResultStopped $result,
         string $workflowRunID,
     ): self {
         $self = new self;
@@ -134,7 +134,7 @@ final class ManagedAgentsWorkflowRunStatusEndedEvent implements BaseModel
      * @param ManagedAgentsWorkflowRunResultShape $result
      */
     public function withResult(
-        ManagedAgentsWorkflowRunResultCompleted|array|ManagedAgentsWorkflowRunResultError|ManagedAgentsWorkflowRunResultStopped $result,
+        ManagedAgentsWorkflowRunResultCompleted|array|ManagedAgentsWorkflowRunResultErrorObject|ManagedAgentsWorkflowRunResultStopped $result,
     ): self {
         $self = clone $this;
         $self['result'] = $result;

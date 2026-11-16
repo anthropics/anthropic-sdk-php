@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages\BetaToolSearchToolResultBlock;
 
-use Anthropic\Beta\Messages\BetaToolSearchToolResultError;
+use Anthropic\Beta\Messages\BetaToolSearchToolResultErrorObject;
 use Anthropic\Beta\Messages\BetaToolSearchToolSearchResultBlock;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * @phpstan-import-type BetaToolSearchToolResultErrorShape from \Anthropic\Beta\Messages\BetaToolSearchToolResultError
+ * @phpstan-import-type BetaToolSearchToolResultErrorObjectShape from \Anthropic\Beta\Messages\BetaToolSearchToolResultErrorObject
  * @phpstan-import-type BetaToolSearchToolSearchResultBlockShape from \Anthropic\Beta\Messages\BetaToolSearchToolSearchResultBlock
  *
- * @phpstan-type ContentVariants = BetaToolSearchToolResultError|BetaToolSearchToolSearchResultBlock
- * @phpstan-type ContentShape = ContentVariants|BetaToolSearchToolResultErrorShape|BetaToolSearchToolSearchResultBlockShape
+ * @phpstan-type ContentVariants = BetaToolSearchToolResultErrorObject|BetaToolSearchToolSearchResultBlock
+ * @phpstan-type ContentShape = ContentVariants|BetaToolSearchToolResultErrorObjectShape|BetaToolSearchToolSearchResultBlockShape
  */
 final class Content implements ConverterSource
 {
@@ -27,7 +27,7 @@ final class Content implements ConverterSource
     public static function variants(): array
     {
         return [
-            BetaToolSearchToolResultError::class,
+            BetaToolSearchToolResultErrorObject::class,
             BetaToolSearchToolSearchResultBlock::class,
         ];
     }

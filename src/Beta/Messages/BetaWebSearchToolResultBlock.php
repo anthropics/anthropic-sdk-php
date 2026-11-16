@@ -35,7 +35,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
 
     /** @var BetaWebSearchToolResultBlockContentVariants $content */
     #[Required(union: BetaWebSearchToolResultBlockContent::class)]
-    public BetaWebSearchToolResultError|array $content;
+    public BetaWebSearchToolResultErrorObject|array $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -72,7 +72,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      * @param CallerShape|null $caller
      */
     public static function with(
-        BetaWebSearchToolResultError|array $content,
+        BetaWebSearchToolResultErrorObject|array $content,
         string $toolUseID,
         BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
     ): self {
@@ -90,7 +90,7 @@ final class BetaWebSearchToolResultBlock implements BaseModel
      * @param BetaWebSearchToolResultBlockContentShape $content
      */
     public function withContent(
-        BetaWebSearchToolResultError|array $content
+        BetaWebSearchToolResultErrorObject|array $content
     ): self {
         $self = clone $this;
         $self['content'] = $content;

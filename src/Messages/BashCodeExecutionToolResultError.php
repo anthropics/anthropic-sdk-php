@@ -4,86 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Messages;
 
-use Anthropic\Core\Attributes\Required;
-use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ConstantOf;
+// Loading the class registers this name as its alias.
+class_exists(BashCodeExecutionToolResultErrorObject::class);
 
-/**
- * @phpstan-type BashCodeExecutionToolResultErrorShape = array{
- *   errorCode: BashCodeExecutionToolResultErrorCode|value-of<BashCodeExecutionToolResultErrorCode>,
- *   type: 'bash_code_execution_tool_result_error',
- * }
- */
-final class BashCodeExecutionToolResultError implements BaseModel
-{
-    /** @use SdkModel<BashCodeExecutionToolResultErrorShape> */
-    use SdkModel;
-
-    /** @var 'bash_code_execution_tool_result_error' $type */
-    #[Required(type: new ConstantOf('bash_code_execution_tool_result_error'))]
-    public string $type = 'bash_code_execution_tool_result_error';
-
-    /** @var value-of<BashCodeExecutionToolResultErrorCode> $errorCode */
-    #[Required('error_code', enum: BashCodeExecutionToolResultErrorCode::class)]
-    public string $errorCode;
-
+// This block never runs. It declares the name for IDEs and static analyzers.
+// @phpstan-ignore if.alwaysFalse
+if (false) {
     /**
-     * `new BashCodeExecutionToolResultError()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BashCodeExecutionToolResultError::with(errorCode: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BashCodeExecutionToolResultError())->withErrorCode(...)
-     * ```
+     * @deprecated BashCodeExecutionToolResultError has been renamed to BashCodeExecutionToolResultErrorObject
      */
-    public function __construct()
-    {
-        $this->initialize();
-    }
-
-    /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param BashCodeExecutionToolResultErrorCode|value-of<BashCodeExecutionToolResultErrorCode> $errorCode
-     */
-    public static function with(
-        BashCodeExecutionToolResultErrorCode|string $errorCode
-    ): self {
-        $self = new self;
-
-        $self['errorCode'] = $errorCode;
-
-        return $self;
-    }
-
-    /**
-     * @param BashCodeExecutionToolResultErrorCode|value-of<BashCodeExecutionToolResultErrorCode> $errorCode
-     */
-    public function withErrorCode(
-        BashCodeExecutionToolResultErrorCode|string $errorCode
-    ): self {
-        $self = clone $this;
-        $self['errorCode'] = $errorCode;
-
-        return $self;
-    }
-
-    /**
-     * @param 'bash_code_execution_tool_result_error' $type
-     */
-    public function withType(string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
-
-        return $self;
-    }
+    class BashCodeExecutionToolResultError extends BashCodeExecutionToolResultErrorObject {}
 }

@@ -10,11 +10,11 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
- * @phpstan-import-type BetaErrorShape from \Anthropic\Beta\BetaError
- * @phpstan-import-type BetaErrorVariants from \Anthropic\Beta\BetaError
+ * @phpstan-import-type BetaErrorObjectShape from \Anthropic\Beta\BetaErrorObject
+ * @phpstan-import-type BetaErrorObjectVariants from \Anthropic\Beta\BetaErrorObject
  *
  * @phpstan-type BetaErrorResponseShape = array{
- *   error: BetaErrorShape, requestID: string|null, type: 'error'
+ *   error: BetaErrorObjectShape, requestID: string|null, type: 'error'
  * }
  */
 final class BetaErrorResponse implements BaseModel
@@ -26,9 +26,9 @@ final class BetaErrorResponse implements BaseModel
     #[Required(type: new ConstantOf('error'))]
     public string $type = 'error';
 
-    /** @var BetaErrorVariants $error */
-    #[Required(union: BetaError::class)]
-    public BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error;
+    /** @var BetaErrorObjectVariants $error */
+    #[Required(union: BetaErrorObject::class)]
+    public BetaInvalidRequestErrorObject|BetaAuthenticationErrorObject|BetaBillingErrorObject|BetaPermissionErrorObject|BetaNotFoundErrorObject|BetaRateLimitErrorObject|BetaGatewayTimeoutErrorObject|BetaAPIErrorObject|BetaOverloadedErrorObject $error;
 
     #[Required('request_id')]
     public ?string $requestID;
@@ -57,10 +57,10 @@ final class BetaErrorResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaErrorShape $error
+     * @param BetaErrorObjectShape $error
      */
     public static function with(
-        BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
+        BetaInvalidRequestErrorObject|array|BetaAuthenticationErrorObject|BetaBillingErrorObject|BetaPermissionErrorObject|BetaNotFoundErrorObject|BetaRateLimitErrorObject|BetaGatewayTimeoutErrorObject|BetaAPIErrorObject|BetaOverloadedErrorObject $error,
         ?string $requestID,
     ): self {
         $self = new self;
@@ -72,10 +72,10 @@ final class BetaErrorResponse implements BaseModel
     }
 
     /**
-     * @param BetaErrorShape $error
+     * @param BetaErrorObjectShape $error
      */
     public function withError(
-        BetaInvalidRequestError|array|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError $error,
+        BetaInvalidRequestErrorObject|array|BetaAuthenticationErrorObject|BetaBillingErrorObject|BetaPermissionErrorObject|BetaNotFoundErrorObject|BetaRateLimitErrorObject|BetaGatewayTimeoutErrorObject|BetaAPIErrorObject|BetaOverloadedErrorObject $error,
     ): self {
         $self = clone $this;
         $self['error'] = $error;

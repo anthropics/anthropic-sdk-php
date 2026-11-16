@@ -4,59 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Dreams;
 
-use Anthropic\Beta\BetaAPIError;
-use Anthropic\Beta\BetaAuthenticationError;
-use Anthropic\Beta\BetaBillingError;
-use Anthropic\Beta\BetaGatewayTimeoutError;
-use Anthropic\Beta\BetaInvalidRequestError;
-use Anthropic\Beta\BetaNotFoundError;
-use Anthropic\Beta\BetaOverloadedError;
-use Anthropic\Beta\BetaPermissionError;
-use Anthropic\Beta\BetaRateLimitError;
-use Anthropic\Core\Concerns\SdkUnion;
-use Anthropic\Core\Conversion\Contracts\Converter;
-use Anthropic\Core\Conversion\Contracts\ConverterSource;
+// Loading the class registers this name as its alias.
+class_exists(BetaDreamingErrorObject::class);
 
-/**
- * @phpstan-import-type BetaInvalidRequestErrorShape from \Anthropic\Beta\BetaInvalidRequestError
- * @phpstan-import-type BetaAuthenticationErrorShape from \Anthropic\Beta\BetaAuthenticationError
- * @phpstan-import-type BetaBillingErrorShape from \Anthropic\Beta\BetaBillingError
- * @phpstan-import-type BetaPermissionErrorShape from \Anthropic\Beta\BetaPermissionError
- * @phpstan-import-type BetaNotFoundErrorShape from \Anthropic\Beta\BetaNotFoundError
- * @phpstan-import-type BetaRateLimitErrorShape from \Anthropic\Beta\BetaRateLimitError
- * @phpstan-import-type BetaGatewayTimeoutErrorShape from \Anthropic\Beta\BetaGatewayTimeoutError
- * @phpstan-import-type BetaAPIErrorShape from \Anthropic\Beta\BetaAPIError
- * @phpstan-import-type BetaOverloadedErrorShape from \Anthropic\Beta\BetaOverloadedError
- * @phpstan-import-type BetaTargetStoreHeldErrorShape from \Anthropic\Beta\Dreams\BetaTargetStoreHeldError
- *
- * @phpstan-type BetaDreamingErrorVariants = BetaInvalidRequestError|BetaAuthenticationError|BetaBillingError|BetaPermissionError|BetaNotFoundError|BetaRateLimitError|BetaGatewayTimeoutError|BetaAPIError|BetaOverloadedError|BetaTargetStoreHeldError
- * @phpstan-type BetaDreamingErrorShape = BetaDreamingErrorVariants|BetaInvalidRequestErrorShape|BetaAuthenticationErrorShape|BetaBillingErrorShape|BetaPermissionErrorShape|BetaNotFoundErrorShape|BetaRateLimitErrorShape|BetaGatewayTimeoutErrorShape|BetaAPIErrorShape|BetaOverloadedErrorShape|BetaTargetStoreHeldErrorShape
- */
-final class BetaDreamingError implements ConverterSource
-{
-    use SdkUnion;
-
-    public static function discriminator(): string
-    {
-        return 'type';
-    }
-
+// This block never runs. It declares the name for IDEs and static analyzers.
+// @phpstan-ignore if.alwaysFalse
+if (false) {
     /**
-     * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
+     * @deprecated BetaDreamingError has been renamed to BetaDreamingErrorObject
      */
-    public static function variants(): array
-    {
-        return [
-            'invalid_request_error' => BetaInvalidRequestError::class,
-            'authentication_error' => BetaAuthenticationError::class,
-            'billing_error' => BetaBillingError::class,
-            'permission_error' => BetaPermissionError::class,
-            'not_found_error' => BetaNotFoundError::class,
-            'rate_limit_error' => BetaRateLimitError::class,
-            'timeout_error' => BetaGatewayTimeoutError::class,
-            'api_error' => BetaAPIError::class,
-            'overloaded_error' => BetaOverloadedError::class,
-            'conflict_error' => BetaTargetStoreHeldError::class,
-        ];
-    }
+    class BetaDreamingError extends BetaDreamingErrorObject {}
 }

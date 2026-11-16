@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultBlock;
 
 use Anthropic\Beta\Messages\BetaBashCodeExecutionResultBlock;
-use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultError;
+use Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultErrorObject;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * @phpstan-import-type BetaBashCodeExecutionToolResultErrorShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultError
+ * @phpstan-import-type BetaBashCodeExecutionToolResultErrorObjectShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionToolResultErrorObject
  * @phpstan-import-type BetaBashCodeExecutionResultBlockShape from \Anthropic\Beta\Messages\BetaBashCodeExecutionResultBlock
  *
- * @phpstan-type ContentVariants = BetaBashCodeExecutionToolResultError|BetaBashCodeExecutionResultBlock
- * @phpstan-type ContentShape = ContentVariants|BetaBashCodeExecutionToolResultErrorShape|BetaBashCodeExecutionResultBlockShape
+ * @phpstan-type ContentVariants = BetaBashCodeExecutionToolResultErrorObject|BetaBashCodeExecutionResultBlock
+ * @phpstan-type ContentShape = ContentVariants|BetaBashCodeExecutionToolResultErrorObjectShape|BetaBashCodeExecutionResultBlockShape
  */
 final class Content implements ConverterSource
 {
@@ -27,7 +27,7 @@ final class Content implements ConverterSource
     public static function variants(): array
     {
         return [
-            BetaBashCodeExecutionToolResultError::class,
+            BetaBashCodeExecutionToolResultErrorObject::class,
             BetaBashCodeExecutionResultBlock::class,
         ];
     }

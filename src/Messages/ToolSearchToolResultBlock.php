@@ -28,7 +28,7 @@ final class ToolSearchToolResultBlock implements BaseModel
 
     /** @var ContentVariants $content */
     #[Required]
-    public ToolSearchToolResultError|ToolSearchToolSearchResultBlock $content;
+    public ToolSearchToolResultErrorObject|ToolSearchToolSearchResultBlock $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -60,7 +60,7 @@ final class ToolSearchToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public static function with(
-        ToolSearchToolResultError|array|ToolSearchToolSearchResultBlock $content,
+        ToolSearchToolResultErrorObject|array|ToolSearchToolSearchResultBlock $content,
         string $toolUseID,
     ): self {
         $self = new self;
@@ -75,7 +75,7 @@ final class ToolSearchToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public function withContent(
-        ToolSearchToolResultError|array|ToolSearchToolSearchResultBlock $content
+        ToolSearchToolResultErrorObject|array|ToolSearchToolSearchResultBlock $content,
     ): self {
         $self = clone $this;
         $self['content'] = $content;

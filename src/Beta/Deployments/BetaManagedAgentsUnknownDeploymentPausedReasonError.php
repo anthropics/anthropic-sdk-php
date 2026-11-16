@@ -4,50 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Deployments;
 
-use Anthropic\Core\Attributes\Required;
-use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ConstantOf;
+// Loading the class registers this name as its alias.
+class_exists(BetaManagedAgentsUnknownDeploymentPausedReasonErrorObject::class);
 
-/**
- * An unrecognized error auto-paused the deployment. A fallback variant; matches a run whose `error.type` is `unknown_error`.
- *
- * @phpstan-type BetaManagedAgentsUnknownDeploymentPausedReasonErrorShape = array{
- *   type: 'unknown_error'
- * }
- */
-final class BetaManagedAgentsUnknownDeploymentPausedReasonError implements BaseModel
-{
-    /** @use SdkModel<BetaManagedAgentsUnknownDeploymentPausedReasonErrorShape> */
-    use SdkModel;
-
-    /** @var 'unknown_error' $type */
-    #[Required(type: new ConstantOf('unknown_error'))]
-    public string $type = 'unknown_error';
-
-    public function __construct()
-    {
-        $this->initialize();
-    }
-
+// This block never runs. It declares the name for IDEs and static analyzers.
+// @phpstan-ignore if.alwaysFalse
+if (false) {
     /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
+     * @deprecated BetaManagedAgentsUnknownDeploymentPausedReasonError has been renamed to BetaManagedAgentsUnknownDeploymentPausedReasonErrorObject
      */
-    public static function with(): self
-    {
-        return new self;
-    }
-
-    /**
-     * @param 'unknown_error' $type
-     */
-    public function withType(string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
-
-        return $self;
-    }
+    class BetaManagedAgentsUnknownDeploymentPausedReasonError extends BetaManagedAgentsUnknownDeploymentPausedReasonErrorObject {}
 }

@@ -18,7 +18,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *
  * See the [Dreams guide](https://platform.claude.com/docs/en/managed-agents/dreams#how-it-works) for what a dream reads and produces.
  *
- * @phpstan-import-type BetaDreamErrorShape from \Anthropic\Beta\Dreams\BetaDreamError
+ * @phpstan-import-type BetaDreamErrorObjectShape from \Anthropic\Beta\Dreams\BetaDreamErrorObject
  * @phpstan-import-type BetaDreamInputShape from \Anthropic\Beta\Dreams\BetaDreamInput
  * @phpstan-import-type BetaDreamModelConfigShape from \Anthropic\Beta\Dreams\BetaDreamModelConfig
  * @phpstan-import-type BetaOutputBehaviorShape from \Anthropic\Beta\Dreams\BetaOutputBehavior
@@ -32,7 +32,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   archivedAt: \DateTimeInterface|null,
  *   createdAt: \DateTimeInterface,
  *   endedAt: \DateTimeInterface|null,
- *   error: null|BetaDreamError|BetaDreamErrorShape,
+ *   error: null|BetaDreamErrorObject|BetaDreamErrorObjectShape,
  *   inputs: list<BetaDreamInputShape>,
  *   instructions: string|null,
  *   model: BetaDreamModelConfig|BetaDreamModelConfigShape,
@@ -83,7 +83,7 @@ final class BetaDream implements BaseModel
      * Why the dream failed, or `null` if `status` isn't `failed`.
      */
     #[Required]
-    public ?BetaDreamError $error;
+    public ?BetaDreamErrorObject $error;
 
     /**
      * The sources that the dream reads, from the request that created it.
@@ -206,7 +206,7 @@ final class BetaDream implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BetaDreamError|BetaDreamErrorShape|null $error
+     * @param BetaDreamErrorObject|BetaDreamErrorObjectShape|null $error
      * @param list<BetaDreamInputShape> $inputs
      * @param BetaDreamModelConfig|BetaDreamModelConfigShape $model
      * @param BetaOutputBehaviorShape $outputBehavior
@@ -219,7 +219,7 @@ final class BetaDream implements BaseModel
         ?\DateTimeInterface $archivedAt,
         \DateTimeInterface $createdAt,
         ?\DateTimeInterface $endedAt,
-        BetaDreamError|array|null $error,
+        BetaDreamErrorObject|array|null $error,
         array $inputs,
         ?string $instructions,
         BetaDreamModelConfig|array $model,
@@ -297,9 +297,9 @@ final class BetaDream implements BaseModel
     /**
      * Why the dream failed, or `null` if `status` isn't `failed`.
      *
-     * @param BetaDreamError|BetaDreamErrorShape|null $error
+     * @param BetaDreamErrorObject|BetaDreamErrorObjectShape|null $error
      */
-    public function withError(BetaDreamError|array|null $error): self
+    public function withError(BetaDreamErrorObject|array|null $error): self
     {
         $self = clone $this;
         $self['error'] = $error;

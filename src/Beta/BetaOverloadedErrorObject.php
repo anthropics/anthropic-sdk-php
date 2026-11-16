@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Beta;
+
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
+
+/**
+ * @phpstan-type BetaOverloadedErrorObjectShape = array{
+ *   message: string, type: 'overloaded_error'
+ * }
+ */
+class BetaOverloadedErrorObject implements BaseModel
+{
+    /** @use SdkModel<BetaOverloadedErrorObjectShape> */
+    use SdkModel;
+
+    /**
+     * The broad category of the error.
+     *
+     * @var 'overloaded_error' $type
+     */
+    #[Required(type: new ConstantOf('overloaded_error'))]
+    public string $type = 'overloaded_error';
+
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
+    #[Required]
+    public string $message;
+
+    /**
+     * `new BetaOverloadedErrorObject()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BetaOverloadedErrorObject::with(message: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BetaOverloadedErrorObject())->withMessage(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function with(string $message = 'Overloaded'): self
+    {
+        $self = new self;
+
+        $self['message'] = $message;
+
+        return $self;
+    }
+
+    /**
+     * A human-readable explanation of the error. Its wording can change, so don't match on it.
+     */
+    public function withMessage(string $message): self
+    {
+        $self = clone $this;
+        $self['message'] = $message;
+
+        return $self;
+    }
+
+    /**
+     * The broad category of the error.
+     *
+     * @param 'overloaded_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+}
+
+class_alias(
+    BetaOverloadedErrorObject::class,
+    'Anthropic\Beta\BetaOverloadedError'
+);

@@ -9,18 +9,18 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * @phpstan-import-type InvalidRequestErrorShape from \Anthropic\InvalidRequestError
- * @phpstan-import-type AuthenticationErrorShape from \Anthropic\AuthenticationError
- * @phpstan-import-type BillingErrorShape from \Anthropic\BillingError
- * @phpstan-import-type PermissionErrorShape from \Anthropic\PermissionError
- * @phpstan-import-type NotFoundErrorShape from \Anthropic\NotFoundError
- * @phpstan-import-type RateLimitErrorShape from \Anthropic\RateLimitError
- * @phpstan-import-type GatewayTimeoutErrorShape from \Anthropic\GatewayTimeoutError
+ * @phpstan-import-type InvalidRequestErrorObjectShape from \Anthropic\InvalidRequestErrorObject
+ * @phpstan-import-type AuthenticationErrorObjectShape from \Anthropic\AuthenticationErrorObject
+ * @phpstan-import-type BillingErrorObjectShape from \Anthropic\BillingErrorObject
+ * @phpstan-import-type PermissionErrorObjectShape from \Anthropic\PermissionErrorObject
+ * @phpstan-import-type NotFoundErrorObjectShape from \Anthropic\NotFoundErrorObject
+ * @phpstan-import-type RateLimitErrorObjectShape from \Anthropic\RateLimitErrorObject
+ * @phpstan-import-type GatewayTimeoutErrorObjectShape from \Anthropic\GatewayTimeoutErrorObject
  * @phpstan-import-type APIErrorObjectShape from \Anthropic\APIErrorObject
- * @phpstan-import-type OverloadedErrorShape from \Anthropic\OverloadedError
+ * @phpstan-import-type OverloadedErrorObjectShape from \Anthropic\OverloadedErrorObject
  *
- * @phpstan-type ErrorObjectVariants = InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError
- * @phpstan-type ErrorObjectShape = ErrorObjectVariants|InvalidRequestErrorShape|AuthenticationErrorShape|BillingErrorShape|PermissionErrorShape|NotFoundErrorShape|RateLimitErrorShape|GatewayTimeoutErrorShape|APIErrorObjectShape|OverloadedErrorShape
+ * @phpstan-type ErrorObjectVariants = InvalidRequestErrorObject|AuthenticationErrorObject|BillingErrorObject|PermissionErrorObject|NotFoundErrorObject|RateLimitErrorObject|GatewayTimeoutErrorObject|APIErrorObject|OverloadedErrorObject
+ * @phpstan-type ErrorObjectShape = ErrorObjectVariants|InvalidRequestErrorObjectShape|AuthenticationErrorObjectShape|BillingErrorObjectShape|PermissionErrorObjectShape|NotFoundErrorObjectShape|RateLimitErrorObjectShape|GatewayTimeoutErrorObjectShape|APIErrorObjectShape|OverloadedErrorObjectShape
  */
 final class ErrorObject implements ConverterSource
 {
@@ -37,15 +37,15 @@ final class ErrorObject implements ConverterSource
     public static function variants(): array
     {
         return [
-            'invalid_request_error' => InvalidRequestError::class,
-            'authentication_error' => AuthenticationError::class,
-            'billing_error' => BillingError::class,
-            'permission_error' => PermissionError::class,
-            'not_found_error' => NotFoundError::class,
-            'rate_limit_error' => RateLimitError::class,
-            'timeout_error' => GatewayTimeoutError::class,
+            'invalid_request_error' => InvalidRequestErrorObject::class,
+            'authentication_error' => AuthenticationErrorObject::class,
+            'billing_error' => BillingErrorObject::class,
+            'permission_error' => PermissionErrorObject::class,
+            'not_found_error' => NotFoundErrorObject::class,
+            'rate_limit_error' => RateLimitErrorObject::class,
+            'timeout_error' => GatewayTimeoutErrorObject::class,
             'api_error' => APIErrorObject::class,
-            'overloaded_error' => OverloadedError::class,
+            'overloaded_error' => OverloadedErrorObject::class,
         ];
     }
 }

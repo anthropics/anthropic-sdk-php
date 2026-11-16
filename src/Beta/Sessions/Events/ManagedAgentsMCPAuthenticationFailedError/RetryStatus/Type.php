@@ -4,11 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError\RetryStatus;
 
-enum Type: string
-{
-    case RETRYING = 'retrying';
+// Loading the class registers this name as its alias.
+class_exists(
+    \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedErrorObject\RetryStatus\Type::class,
+);
 
-    case EXHAUSTED = 'exhausted';
+// This block never runs. It declares the name for IDEs and static analyzers.
+// @phpstan-ignore if.alwaysFalse
+if (false) {
+    /**
+     * @deprecated BetaManagedAgentsMCPAuthenticationFailedError has been renamed to BetaManagedAgentsMCPAuthenticationFailedErrorObject
+     */
+    enum Type: string
+    {
+        case RETRYING = 'retrying';
 
-    case TERMINAL = 'terminal';
+        case EXHAUSTED = 'exhausted';
+
+        case TERMINAL = 'terminal';
+    }
 }

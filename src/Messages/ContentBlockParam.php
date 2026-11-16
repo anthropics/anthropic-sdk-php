@@ -107,7 +107,7 @@ final class ContentBlockParam implements ConverterSource
         ImageTransformationsParam|array|null $transformations = null,
         ?string $context = null,
         ?string $title = null,
-        string|array|WebSearchToolRequestError|WebFetchToolResultErrorBlockParam|WebFetchBlockParam|CodeExecutionToolResultErrorParam|CodeExecutionResultBlockParam|EncryptedCodeExecutionResultBlockParam|BashCodeExecutionToolResultErrorParam|BashCodeExecutionResultBlockParam|TextEditorCodeExecutionToolResultErrorParam|TextEditorCodeExecutionViewResultBlockParam|TextEditorCodeExecutionCreateResultBlockParam|TextEditorCodeExecutionStrReplaceResultBlockParam|ToolSearchToolResultErrorParam|ToolSearchToolSearchResultBlockParam|null $content = null,
+        string|array|WebSearchToolRequestErrorObject|WebFetchToolResultErrorBlockParam|WebFetchBlockParam|CodeExecutionToolResultErrorParam|CodeExecutionResultBlockParam|EncryptedCodeExecutionResultBlockParam|BashCodeExecutionToolResultErrorParam|BashCodeExecutionResultBlockParam|TextEditorCodeExecutionToolResultErrorParam|TextEditorCodeExecutionViewResultBlockParam|TextEditorCodeExecutionCreateResultBlockParam|TextEditorCodeExecutionStrReplaceResultBlockParam|ToolSearchToolResultErrorParam|ToolSearchToolSearchResultBlockParam|null $content = null,
         ?string $signature = null,
         ?string $thinking = null,
         ?string $data = null,
