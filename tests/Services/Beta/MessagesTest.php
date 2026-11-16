@@ -3,6 +3,7 @@
 namespace Tests\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\BetaBillTo;
 use Anthropic\Beta\Messages\BetaMessage;
 use Anthropic\Beta\Messages\BetaMessageTokensCount;
 use Anthropic\Beta\Messages\BetaThinkingPrefixMismatchBehavior;
@@ -52,6 +53,7 @@ final class MessagesTest extends TestCase
             maxTokens: 1024,
             messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: Model::CLAUDE_OPUS_5_5,
+            billingPolicy: ['type' => 'billing_policy', 'billTo' => BetaBillTo::SELF],
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             compaction: ['type' => 'summarize', 'instructions' => 'instructions'],
             container: [
@@ -170,6 +172,7 @@ final class MessagesTest extends TestCase
         $result = $this->client->beta->messages->countTokens(
             messages: [['content' => 'Hello, world', 'role' => 'user']],
             model: Model::CLAUDE_OPUS_5_5,
+            billingPolicy: ['type' => 'billing_policy', 'billTo' => BetaBillTo::SELF],
             cacheControl: ['type' => 'ephemeral', 'ttl' => '5m'],
             compaction: ['type' => 'summarize', 'instructions' => 'instructions'],
             contextManagement: [

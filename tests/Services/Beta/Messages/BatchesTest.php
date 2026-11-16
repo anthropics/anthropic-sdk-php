@@ -5,6 +5,7 @@ namespace Tests\Services\Beta\Messages;
 use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Messages\Batches\DeletedMessageBatch;
 use Anthropic\Beta\Messages\Batches\MessageBatch;
+use Anthropic\Beta\Messages\BetaBillTo;
 use Anthropic\Beta\Messages\BetaThinkingPrefixMismatchBehavior;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -64,6 +65,9 @@ final class BatchesTest extends TestCase
                         'maxTokens' => 1024,
                         'messages' => [['content' => 'Hello, world', 'role' => 'user']],
                         'model' => Model::CLAUDE_OPUS_5_5,
+                        'billingPolicy' => [
+                            'type' => 'billing_policy', 'billTo' => BetaBillTo::SELF,
+                        ],
                         'cacheControl' => ['type' => 'ephemeral', 'ttl' => '5m'],
                         'compaction' => [
                             'type' => 'summarize', 'instructions' => 'instructions',

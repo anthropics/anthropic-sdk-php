@@ -25,6 +25,7 @@ use Anthropic\Messages\Model;
  * @see Anthropic\Services\Beta\MessagesService::countTokens()
  *
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaBillingPolicyShape from \Anthropic\Beta\Messages\BetaBillingPolicy
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  * @phpstan-import-type BetaContextManagementConfigShape from \Anthropic\Beta\Messages\BetaContextManagementConfig
@@ -44,6 +45,7 @@ use Anthropic\Messages\Model;
  * @phpstan-type MessageCountTokensParamsShape = array{
  *   messages: list<BetaMessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   billingPolicy?: null|BetaBillingPolicy|BetaBillingPolicyShape,
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   compaction?: null|BetaCompactionConfig|BetaCompactionConfigShape,
  *   contextManagement?: null|BetaContextManagementConfig|BetaContextManagementConfigShape,
@@ -130,6 +132,12 @@ final class MessageCountTokensParams implements BaseModel
      */
     #[Required(enum: Model::class)]
     public string $model;
+
+    /**
+     * Declares which organization is billed when this body is sent to `/v1/messages`. Accepted here so that you can count the tokens of the exact body you will send, and otherwise ignored: counting tokens bills nobody, so no user profile is required.
+     */
+    #[Optional('billing_policy', nullable: true)]
+    public ?BetaBillingPolicy $billingPolicy;
 
     /**
      * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
@@ -333,6 +341,7 @@ final class MessageCountTokensParams implements BaseModel
      *
      * @param list<BetaMessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
      * @param BetaContextManagementConfig|BetaContextManagementConfigShape|null $contextManagement
@@ -349,6 +358,7 @@ final class MessageCountTokensParams implements BaseModel
     public static function with(
         array $messages,
         Model|string $model,
+        BetaBillingPolicy|array|null $billingPolicy = null,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCompactionConfig|array|null $compaction = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
@@ -369,6 +379,7 @@ final class MessageCountTokensParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $billingPolicy && $self['billingPolicy'] = $billingPolicy;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $compaction && $self['compaction'] = $compaction;
         null !== $contextManagement && $self['contextManagement'] = $contextManagement;
@@ -458,6 +469,20 @@ final class MessageCountTokensParams implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Declares which organization is billed when this body is sent to `/v1/messages`. Accepted here so that you can count the tokens of the exact body you will send, and otherwise ignored: counting tokens bills nobody, so no user profile is required.
+     *
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy
+     */
+    public function withBillingPolicy(
+        BetaBillingPolicy|array|null $billingPolicy
+    ): self {
+        $self = clone $this;
+        $self['billingPolicy'] = $billingPolicy;
 
         return $self;
     }
