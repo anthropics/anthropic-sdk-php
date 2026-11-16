@@ -11,7 +11,7 @@ class_exists(ManagedAgentsModelRequestFailedErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsModelRequestFailedError has been renamed to BetaManagedAgentsModelRequestFailedErrorObject
+     * @deprecated ManagedAgentsModelRequestFailedError has been renamed to ManagedAgentsModelRequestFailedErrorObject
      */
     class ManagedAgentsModelRequestFailedError extends ManagedAgentsModelRequestFailedErrorObject {}
 }

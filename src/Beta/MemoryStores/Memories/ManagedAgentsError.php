@@ -11,7 +11,7 @@ class_exists(ManagedAgentsErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsError has been renamed to BetaManagedAgentsErrorObject
+     * @deprecated ManagedAgentsError has been renamed to ManagedAgentsErrorObject
      */
     class ManagedAgentsError extends ManagedAgentsErrorObject {}
 }

@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsRepositoryAuthenticationError has been renamed to BetaManagedAgentsRepositoryAuthenticationErrorObject
+     * @deprecated ManagedAgentsRepositoryAuthenticationError has been renamed to ManagedAgentsRepositoryAuthenticationErrorObject
      */
     enum Type: string
     {

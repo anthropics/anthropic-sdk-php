@@ -11,7 +11,7 @@ class_exists(ManagedAgentsRepositoryForbiddenErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsRepositoryForbiddenError has been renamed to BetaManagedAgentsRepositoryForbiddenErrorObject
+     * @deprecated ManagedAgentsRepositoryForbiddenError has been renamed to ManagedAgentsRepositoryForbiddenErrorObject
      */
     class ManagedAgentsRepositoryForbiddenError extends ManagedAgentsRepositoryForbiddenErrorObject {}
 }

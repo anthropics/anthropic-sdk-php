@@ -11,7 +11,7 @@ class_exists(ManagedAgentsRepositoryAuthenticationErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsRepositoryAuthenticationError has been renamed to BetaManagedAgentsRepositoryAuthenticationErrorObject
+     * @deprecated ManagedAgentsRepositoryAuthenticationError has been renamed to ManagedAgentsRepositoryAuthenticationErrorObject
      */
     class ManagedAgentsRepositoryAuthenticationError extends ManagedAgentsRepositoryAuthenticationErrorObject {}
 }

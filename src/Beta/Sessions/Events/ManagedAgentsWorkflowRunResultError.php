@@ -11,7 +11,7 @@ class_exists(ManagedAgentsWorkflowRunResultErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsWorkflowRunResultError has been renamed to BetaManagedAgentsWorkflowRunResultErrorObject
+     * @deprecated ManagedAgentsWorkflowRunResultError has been renamed to ManagedAgentsWorkflowRunResultErrorObject
      */
     class ManagedAgentsWorkflowRunResultError extends ManagedAgentsWorkflowRunResultErrorObject {}
 }

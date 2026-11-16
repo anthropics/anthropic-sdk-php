@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsMCPAuthenticationFailedError has been renamed to BetaManagedAgentsMCPAuthenticationFailedErrorObject
+     * @deprecated ManagedAgentsMCPAuthenticationFailedError has been renamed to ManagedAgentsMCPAuthenticationFailedErrorObject
      */
     class RetryStatus extends \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedErrorObject\RetryStatus {}
 }

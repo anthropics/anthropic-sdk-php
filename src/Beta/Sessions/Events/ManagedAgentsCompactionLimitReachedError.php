@@ -11,7 +11,7 @@ class_exists(ManagedAgentsCompactionLimitReachedErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsCompactionLimitReachedError has been renamed to BetaManagedAgentsCompactionLimitReachedErrorObject
+     * @deprecated ManagedAgentsCompactionLimitReachedError has been renamed to ManagedAgentsCompactionLimitReachedErrorObject
      */
     class ManagedAgentsCompactionLimitReachedError extends ManagedAgentsCompactionLimitReachedErrorObject {}
 }

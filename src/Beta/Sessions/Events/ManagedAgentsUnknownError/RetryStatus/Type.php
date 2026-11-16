@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsUnknownError has been renamed to BetaManagedAgentsUnknownErrorObject
+     * @deprecated ManagedAgentsUnknownError has been renamed to ManagedAgentsUnknownErrorObject
      */
     enum Type: string
     {

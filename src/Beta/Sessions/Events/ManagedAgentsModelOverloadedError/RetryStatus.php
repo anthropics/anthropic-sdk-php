@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsModelOverloadedError has been renamed to BetaManagedAgentsModelOverloadedErrorObject
+     * @deprecated ManagedAgentsModelOverloadedError has been renamed to ManagedAgentsModelOverloadedErrorObject
      */
     class RetryStatus extends \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedErrorObject\RetryStatus {}
 }

@@ -11,7 +11,7 @@ class_exists(ManagedAgentsTimeoutWorkflowRunErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsTimeoutWorkflowRunError has been renamed to BetaManagedAgentsTimeoutWorkflowRunErrorObject
+     * @deprecated ManagedAgentsTimeoutWorkflowRunError has been renamed to ManagedAgentsTimeoutWorkflowRunErrorObject
      */
     class ManagedAgentsTimeoutWorkflowRunError extends ManagedAgentsTimeoutWorkflowRunErrorObject {}
 }

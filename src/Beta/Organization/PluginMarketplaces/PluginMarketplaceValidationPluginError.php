@@ -11,7 +11,7 @@ class_exists(PluginMarketplaceValidationPluginErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaPluginMarketplaceValidationPluginError has been renamed to BetaPluginMarketplaceValidationPluginErrorObject
+     * @deprecated PluginMarketplaceValidationPluginError has been renamed to PluginMarketplaceValidationPluginErrorObject
      */
     class PluginMarketplaceValidationPluginError extends PluginMarketplaceValidationPluginErrorObject {}
 }

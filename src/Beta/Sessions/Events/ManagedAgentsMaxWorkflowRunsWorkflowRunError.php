@@ -11,7 +11,7 @@ class_exists(ManagedAgentsMaxWorkflowRunsWorkflowRunErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsMaxWorkflowRunsWorkflowRunError has been renamed to BetaManagedAgentsMaxWorkflowRunsWorkflowRunErrorObject
+     * @deprecated ManagedAgentsMaxWorkflowRunsWorkflowRunError has been renamed to ManagedAgentsMaxWorkflowRunsWorkflowRunErrorObject
      */
     class ManagedAgentsMaxWorkflowRunsWorkflowRunError extends ManagedAgentsMaxWorkflowRunsWorkflowRunErrorObject {}
 }

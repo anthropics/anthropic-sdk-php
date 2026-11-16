@@ -11,7 +11,7 @@ class_exists(ManagedAgentsRepositoryCheckoutErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsRepositoryCheckoutError has been renamed to BetaManagedAgentsRepositoryCheckoutErrorObject
+     * @deprecated ManagedAgentsRepositoryCheckoutError has been renamed to ManagedAgentsRepositoryCheckoutErrorObject
      */
     class ManagedAgentsRepositoryCheckoutError extends ManagedAgentsRepositoryCheckoutErrorObject {}
 }

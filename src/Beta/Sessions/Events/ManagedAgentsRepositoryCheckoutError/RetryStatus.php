@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsRepositoryCheckoutError has been renamed to BetaManagedAgentsRepositoryCheckoutErrorObject
+     * @deprecated ManagedAgentsRepositoryCheckoutError has been renamed to ManagedAgentsRepositoryCheckoutErrorObject
      */
     class RetryStatus extends \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutErrorObject\RetryStatus {}
 }

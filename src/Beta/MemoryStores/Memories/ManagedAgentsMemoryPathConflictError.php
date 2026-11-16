@@ -11,7 +11,7 @@ class_exists(ManagedAgentsMemoryPathConflictErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsMemoryPathConflictError has been renamed to BetaManagedAgentsMemoryPathConflictErrorObject
+     * @deprecated ManagedAgentsMemoryPathConflictError has been renamed to ManagedAgentsMemoryPathConflictErrorObject
      */
     class ManagedAgentsMemoryPathConflictError extends ManagedAgentsMemoryPathConflictErrorObject {}
 }

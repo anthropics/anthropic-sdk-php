@@ -11,7 +11,7 @@ class_exists(ManagedAgentsMemoryPreconditionFailedErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsMemoryPreconditionFailedError has been renamed to BetaManagedAgentsMemoryPreconditionFailedErrorObject
+     * @deprecated ManagedAgentsMemoryPreconditionFailedError has been renamed to ManagedAgentsMemoryPreconditionFailedErrorObject
      */
     class ManagedAgentsMemoryPreconditionFailedError extends ManagedAgentsMemoryPreconditionFailedErrorObject {}
 }

@@ -11,7 +11,7 @@ class_exists(ManagedAgentsThreadLimitWorkflowRunErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsThreadLimitWorkflowRunError has been renamed to BetaManagedAgentsThreadLimitWorkflowRunErrorObject
+     * @deprecated ManagedAgentsThreadLimitWorkflowRunError has been renamed to ManagedAgentsThreadLimitWorkflowRunErrorObject
      */
     class ManagedAgentsThreadLimitWorkflowRunError extends ManagedAgentsThreadLimitWorkflowRunErrorObject {}
 }

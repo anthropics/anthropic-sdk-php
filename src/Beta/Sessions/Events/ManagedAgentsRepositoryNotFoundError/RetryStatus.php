@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsRepositoryNotFoundError has been renamed to BetaManagedAgentsRepositoryNotFoundErrorObject
+     * @deprecated ManagedAgentsRepositoryNotFoundError has been renamed to ManagedAgentsRepositoryNotFoundErrorObject
      */
     class RetryStatus extends \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundErrorObject\RetryStatus {}
 }

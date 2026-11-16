@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsCompactionLimitReachedError has been renamed to BetaManagedAgentsCompactionLimitReachedErrorObject
+     * @deprecated ManagedAgentsCompactionLimitReachedError has been renamed to ManagedAgentsCompactionLimitReachedErrorObject
      */
     enum Type: string
     {

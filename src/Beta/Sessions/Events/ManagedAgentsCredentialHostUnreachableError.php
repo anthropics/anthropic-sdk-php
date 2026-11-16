@@ -11,7 +11,7 @@ class_exists(ManagedAgentsCredentialHostUnreachableErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsCredentialHostUnreachableError has been renamed to BetaManagedAgentsCredentialHostUnreachableErrorObject
+     * @deprecated ManagedAgentsCredentialHostUnreachableError has been renamed to ManagedAgentsCredentialHostUnreachableErrorObject
      */
     class ManagedAgentsCredentialHostUnreachableError extends ManagedAgentsCredentialHostUnreachableErrorObject {}
 }

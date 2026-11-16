@@ -11,7 +11,7 @@ class_exists(ManagedAgentsMCPConnectionFailedErrorObject::class);
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsMCPConnectionFailedError has been renamed to BetaManagedAgentsMCPConnectionFailedErrorObject
+     * @deprecated ManagedAgentsMCPConnectionFailedError has been renamed to ManagedAgentsMCPConnectionFailedErrorObject
      */
     class ManagedAgentsMCPConnectionFailedError extends ManagedAgentsMCPConnectionFailedErrorObject {}
 }

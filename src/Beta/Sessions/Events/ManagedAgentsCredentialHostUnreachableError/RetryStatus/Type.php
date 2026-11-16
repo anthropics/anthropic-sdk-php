@@ -13,7 +13,7 @@ class_exists(
 // @phpstan-ignore if.alwaysFalse
 if (false) {
     /**
-     * @deprecated BetaManagedAgentsCredentialHostUnreachableError has been renamed to BetaManagedAgentsCredentialHostUnreachableErrorObject
+     * @deprecated ManagedAgentsCredentialHostUnreachableError has been renamed to ManagedAgentsCredentialHostUnreachableErrorObject
      */
     enum Type: string
     {
