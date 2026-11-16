@@ -164,7 +164,7 @@ final class WorkspacesService implements WorkspacesContract
      * key on your cloud KMS; the `external_key_id` stays the same.
      * @param string $name Name of the Workspace.
      * @param array<string,string|null>|null $tags User-defined tags as string key-value pairs. Keys may not begin with `anthropic`.
-     * @param string $userProfileID ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. Once set, it can't be replaced or removed (sending the same ID again changes nothing); only deleting the user profile clears it. The default Workspace can't have a user profile.
+     * @param string $userProfileID ID of a user profile to attach to the Workspace. Every inference request through the Workspace must then name this user profile; the API rejects a request that names none or a different one. Once set, it can't be replaced or removed (sending the same ID again changes nothing); only deleting the user profile clears it. It can't be set on a Workspace whose External Key isn't bound to this user profile. The default Workspace can't have a user profile.
      * @param RequestOpts|null $requestOptions
      *
      * @throws ExternalKeyValidationFailedException
