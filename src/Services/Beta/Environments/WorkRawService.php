@@ -43,9 +43,9 @@ final class WorkRawService implements WorkRawContract
     /**
      * @api
      *
-     * Note: these endpoints are called automatically by the pre-built environment worker provided in the SDKs and CLI, for orchestrating sessions with self-hosted sandbox environments. They are included here as a reference; you do not need to invoke them directly.
-     *
      * Retrieve detailed information about a specific work item.
+     *
+     * This endpoint accepts a Claude API key. It rejects the environment key and the work item's `secret`. On [Claude Platform on AWS](https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws) or [Claude Models on Google Cloud (Anthropic managed)](https://platform.claude.com/docs/en/build-with-claude/claude-models-on-google-cloud/anthropic-managed), use that platform's credentials instead.
      *
      * @param string $workID Path param
      * @param array{
@@ -101,9 +101,9 @@ final class WorkRawService implements WorkRawContract
     /**
      * @api
      *
-     * Note: these endpoints are called automatically by the pre-built environment worker provided in the SDKs and CLI, for orchestrating sessions with self-hosted sandbox environments. They are included here as a reference; you do not need to invoke them directly.
-     *
      * Update work item metadata with merge semantics.
+     *
+     * This endpoint accepts a Claude API key. It rejects the environment key and the work item's `secret`. On [Claude Platform on AWS](https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws) or [Claude Models on Google Cloud (Anthropic managed)](https://platform.claude.com/docs/en/build-with-claude/claude-models-on-google-cloud/anthropic-managed), use that platform's credentials instead.
      *
      * @param string $workID Path param
      * @param array{
@@ -166,9 +166,9 @@ final class WorkRawService implements WorkRawContract
     /**
      * @api
      *
-     * Note: these endpoints are called automatically by the pre-built environment worker provided in the SDKs and CLI, for orchestrating sessions with self-hosted sandbox environments. They are included here as a reference; you do not need to invoke them directly.
-     *
      * List work items in an environment.
+     *
+     * This endpoint accepts the environment key as a bearer token. It rejects a Claude API key. On [Claude Platform on AWS](https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws) or [Claude Models on Google Cloud (Anthropic managed)](https://platform.claude.com/docs/en/build-with-claude/claude-models-on-google-cloud/anthropic-managed), use that platform's credentials instead.
      *
      * @param string $environmentID Path param
      * @param array{
@@ -458,8 +458,6 @@ final class WorkRawService implements WorkRawContract
 
     /**
      * @api
-     *
-     * Note: these endpoints are called automatically by the pre-built environment worker provided in the SDKs and CLI, for orchestrating sessions with self-hosted sandbox environments. They are included here as a reference; you do not need to invoke them directly.
      *
      * Stop a work item, initiating graceful or forced shutdown.
      *
