@@ -36,8 +36,11 @@ final class WebhooksTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->organization->webhooks->create(
-            enabledEvents: ['user_profile.enforcement_action_opened'],
-            url: 'x',
+            enabledEvents: [
+                'user_profile.enforcement_action_opened',
+                'user_profile.enforcement_action_resolved',
+            ],
+            url: 'https://example.com/anthropic-webhooks',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -49,11 +52,14 @@ final class WebhooksTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->organization->webhooks->create(
-            enabledEvents: ['user_profile.enforcement_action_opened'],
-            url: 'x',
+            enabledEvents: [
+                'user_profile.enforcement_action_opened',
+                'user_profile.enforcement_action_resolved',
+            ],
+            url: 'https://example.com/anthropic-webhooks',
             description: 'description',
-            name: 'name',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            name: 'Enforcement actions',
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

@@ -63,7 +63,7 @@ final class ServiceAccountsTest extends TestCase
             ->retrieve(
                 'service_account_id',
                 workspaceID: 'workspace_id',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -106,7 +106,7 @@ final class ServiceAccountsTest extends TestCase
                 'service_account_id',
                 workspaceID: 'workspace_id',
                 workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -173,7 +173,7 @@ final class ServiceAccountsTest extends TestCase
                 'workspace_id',
                 serviceAccountID: 'service_account_id',
                 workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -214,7 +214,7 @@ final class ServiceAccountsTest extends TestCase
             ->remove(
                 'service_account_id',
                 workspaceID: 'workspace_id',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;

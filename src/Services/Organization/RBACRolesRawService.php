@@ -8,9 +8,12 @@ use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Organization\RBACRoleNotFoundException;
 use Anthropic\Organization\RBACRoles\RBACRole;
 use Anthropic\Organization\RBACRoles\RBACRoleListParams;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
+use Anthropic\ParentOrganizationRequiredException;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\RBACRolesRawContract;
 
@@ -37,6 +40,9 @@ final class RBACRolesRawService implements RBACRolesRawContract
      *
      * @return BaseResponse<RBACRole>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
+     * @throws RBACRoleNotFoundException
      * @throws APIException
      */
     public function retrieve(
@@ -68,6 +74,8 @@ final class RBACRolesRawService implements RBACRolesRawContract
      *
      * @return BaseResponse<PageCursor<RBACRole>>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
      * @throws APIException
      */
     public function list(

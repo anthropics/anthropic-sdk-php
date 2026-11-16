@@ -5,12 +5,16 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Beta\Organization\ClaudeTag;
 
 use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
+use Anthropic\Beta\Organization\ClaudeTag\BundleAttachmentNotSupportedException;
+use Anthropic\Beta\Organization\ClaudeTag\BundleOnCallException;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BetaClaudeTagBundle;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleListParams;
 use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleRetrieveParams;
+use Anthropic\Beta\Organization\ClaudeTag\Bundles\BundleUpdateParams;
 use Anthropic\Beta\Organization\ClaudeTag\ClaudeTagWritesNotEnabledException;
 use Anthropic\Beta\Organization\ClaudeTag\ComplianceConfigurationRestrictedException;
 use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredException;
+use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsConflictException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
@@ -39,6 +43,30 @@ interface BundlesRawContract
     public function retrieve(
         string $bundleID,
         array|BundleRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $bundleID Path param: The Bundle's identifier, starting with `capp_`.
+     * @param array<string,mixed>|BundleUpdateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<BetaClaudeTagBundle>
+     *
+     * @throws BundleAttachmentNotSupportedException
+     * @throws BundleOnCallException
+     * @throws APIKeyScopeMissingException
+     * @throws ClaudeTagWritesNotEnabledException
+     * @throws ComplianceConfigurationRestrictedException
+     * @throws OrganizationLevelScopedAPIKeyRequiredException
+     * @throws SlackChannelSetUpSettingsConflictException
+     * @throws APIException
+     */
+    public function update(
+        string $bundleID,
+        array|BundleUpdateParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 

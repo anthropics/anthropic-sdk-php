@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Organization\RBACRoles;
 
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\RBACRoleNotFoundException;
 use Anthropic\Organization\RBACRoles\Permissions\RBACRolePermission;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
+use Anthropic\ParentOrganizationRequiredException;
 use Anthropic\RequestOptions;
 
 /**
@@ -26,6 +29,9 @@ interface PermissionsContract
      *
      * @return PageCursor<RBACRolePermission>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
+     * @throws RBACRoleNotFoundException
      * @throws APIException
      */
     public function list(

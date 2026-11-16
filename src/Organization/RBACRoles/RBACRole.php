@@ -10,10 +10,14 @@ use Anthropic\Core\Contracts\BaseModel;
 use Anthropic\Core\Conversion\ConstantOf;
 
 /**
+ * @phpstan-import-type RBACRoleSourceShape from \Anthropic\Organization\RBACRoles\RBACRoleSource
+ * @phpstan-import-type RBACRoleSourceVariants from \Anthropic\Organization\RBACRoles\RBACRoleSource
+ *
  * @phpstan-type RBACRoleShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   displayName: string,
+ *   source: RBACRoleSourceShape,
  *   type: 'rbac_role',
  *   updatedAt: \DateTimeInterface,
  * }
@@ -46,10 +50,18 @@ final class RBACRole implements BaseModel
     public \DateTimeInterface $createdAt;
 
     /**
-     * Name of the RBAC Role. For a role created by Anthropic, this is Anthropic's name for the access that the role grants. Anthropic may change this name, so to keep a lasting reference to a role, store its `id`.
+     * Name of the RBAC Role. For a built-in role, this is Anthropic's name for the access that the role grants. Anthropic may change this name, so to keep a lasting reference to a role, store its `id`.
      */
     #[Required('display_name')]
     public string $displayName;
+
+    /**
+     * Whether the RBAC Role is built-in or custom. More values of `type` may be added, so do not treat every role that is not `built_in` as `custom`.
+     *
+     * @var RBACRoleSourceVariants $source
+     */
+    #[Required(union: RBACRoleSource::class)]
+    public RBACRoleSourceBuiltIn|RBACRoleSourceCustom $source;
 
     /**
      * RFC 3339 datetime string indicating when the RBAC Role was last updated.
@@ -62,7 +74,9 @@ final class RBACRole implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * RBACRole::with(id: ..., createdAt: ..., displayName: ..., updatedAt: ...)
+     * RBACRole::with(
+     *   id: ..., createdAt: ..., displayName: ..., source: ..., updatedAt: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -72,6 +86,7 @@ final class RBACRole implements BaseModel
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withDisplayName(...)
+     *   ->withSource(...)
      *   ->withUpdatedAt(...)
      * ```
      */
@@ -84,11 +99,14 @@ final class RBACRole implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param RBACRoleSourceShape $source
      */
     public static function with(
         string $id,
         \DateTimeInterface $createdAt,
         string $displayName,
+        RBACRoleSourceBuiltIn|array|RBACRoleSourceCustom $source,
         \DateTimeInterface $updatedAt,
     ): self {
         $self = new self;
@@ -96,6 +114,7 @@ final class RBACRole implements BaseModel
         $self['id'] = $id;
         $self['createdAt'] = $createdAt;
         $self['displayName'] = $displayName;
+        $self['source'] = $source;
         $self['updatedAt'] = $updatedAt;
 
         return $self;
@@ -124,12 +143,26 @@ final class RBACRole implements BaseModel
     }
 
     /**
-     * Name of the RBAC Role. For a role created by Anthropic, this is Anthropic's name for the access that the role grants. Anthropic may change this name, so to keep a lasting reference to a role, store its `id`.
+     * Name of the RBAC Role. For a built-in role, this is Anthropic's name for the access that the role grants. Anthropic may change this name, so to keep a lasting reference to a role, store its `id`.
      */
     public function withDisplayName(string $displayName): self
     {
         $self = clone $this;
         $self['displayName'] = $displayName;
+
+        return $self;
+    }
+
+    /**
+     * Whether the RBAC Role is built-in or custom. More values of `type` may be added, so do not treat every role that is not `built_in` as `custom`.
+     *
+     * @param RBACRoleSourceShape $source
+     */
+    public function withSource(
+        RBACRoleSourceBuiltIn|array|RBACRoleSourceCustom $source
+    ): self {
+        $self = clone $this;
+        $self['source'] = $source;
 
         return $self;
     }

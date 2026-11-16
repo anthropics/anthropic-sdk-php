@@ -53,7 +53,7 @@ final class MemoriesTest extends TestCase
             content: 'content',
             path: '/P',
             view: ManagedAgentsMemoryView::BASIC,
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -82,7 +82,7 @@ final class MemoriesTest extends TestCase
             'memory_id',
             memoryStoreID: 'memory_store_id',
             view: ManagedAgentsMemoryView::BASIC,
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -117,7 +117,7 @@ final class MemoriesTest extends TestCase
                 'type' => 'content_sha256',
                 'contentSha256' => '210b9798eb53baa4e69d31c1071cf03d212b8ad0ca30cf321e0ea82e120aac26',
             ],
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -163,7 +163,7 @@ final class MemoriesTest extends TestCase
             'memory_id',
             memoryStoreID: 'memory_store_id',
             expectedContentSha256: 'expected_content_sha256',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

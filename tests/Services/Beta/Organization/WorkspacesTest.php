@@ -33,8 +33,8 @@ final class WorkspacesTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->organization->workspaces->create(
-            name: 'x',
-            requestOptions: ['extraQueryParams' => ['beta' => 'true']]
+            name: 'Workspace Name',
+            requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -45,7 +45,7 @@ final class WorkspacesTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->organization->workspaces->create(
-            name: 'x',
+            name: 'Workspace Name',
             dataResidency: [
                 'allowedInferenceGeos' => 'unrestricted',
                 'defaultInferenceGeo' => 'global',
@@ -55,7 +55,7 @@ final class WorkspacesTest extends TestCase
             externalKeyID: 'ekey_01SDCCSbTxrXDpWc1phhtcfK',
             tags: ['env' => 'prod', 'team' => 'platform'],
             userProfileID: 'uprof_01SDCCSbTxrXDpWc1phhtcfK',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

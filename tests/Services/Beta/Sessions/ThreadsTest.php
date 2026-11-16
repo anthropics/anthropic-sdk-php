@@ -48,7 +48,7 @@ final class ThreadsTest extends TestCase
         $result = $this->client->beta->sessions->threads->retrieve(
             'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -93,7 +93,7 @@ final class ThreadsTest extends TestCase
         $result = $this->client->beta->sessions->threads->archive(
             'sthr_011CZkZVWa6oJjw1rgXZpnBt',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

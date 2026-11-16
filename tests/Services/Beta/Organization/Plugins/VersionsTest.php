@@ -54,7 +54,7 @@ final class VersionsTest extends TestCase
                 FileParam::fromString('Example data', filename: uniqid('file-upload-', true)),
             ],
             releaseNotes: 'release_notes',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -82,7 +82,7 @@ final class VersionsTest extends TestCase
             'version',
             pluginID: 'plugin_id',
             organizationID: 'organization_id',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -127,7 +127,7 @@ final class VersionsTest extends TestCase
             'version',
             pluginID: 'plugin_id',
             organizationID: 'organization_id',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

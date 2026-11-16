@@ -7,8 +7,11 @@ namespace Anthropic\Services\Organization\RBACRoles;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\Organization\RBACRoleNotFoundException;
 use Anthropic\Organization\RBACRoles\Permissions\RBACRolePermission;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
+use Anthropic\ParentOrganizationRequiredException;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Organization\RBACRoles\PermissionsContract;
 
@@ -46,6 +49,9 @@ final class PermissionsService implements PermissionsContract
      *
      * @return PageCursor<RBACRolePermission>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
+     * @throws RBACRoleNotFoundException
      * @throws APIException
      */
     public function list(

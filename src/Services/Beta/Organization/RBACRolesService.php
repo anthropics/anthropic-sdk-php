@@ -8,7 +8,10 @@ use Anthropic\Beta\Organization\RBACRoles\RBACRole;
 use Anthropic\Client;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Util;
+use Anthropic\Organization\RBACRoleNotFoundException;
+use Anthropic\OrganizationTypeNotSupportedException;
 use Anthropic\PageCursor;
+use Anthropic\ParentOrganizationRequiredException;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\Organization\RBACRolesContract;
 use Anthropic\Services\Beta\Organization\RBACRoles\PermissionsService;
@@ -47,6 +50,9 @@ final class RBACRolesService implements RBACRolesContract
      * @param string $rbacRoleID ID of the RBAC Role.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
+     * @throws RBACRoleNotFoundException
      * @throws APIException
      */
     public function retrieve(
@@ -74,6 +80,8 @@ final class RBACRolesService implements RBACRolesContract
      *
      * @return PageCursor<RBACRole>
      *
+     * @throws OrganizationTypeNotSupportedException
+     * @throws ParentOrganizationRequiredException
      * @throws APIException
      */
     public function list(

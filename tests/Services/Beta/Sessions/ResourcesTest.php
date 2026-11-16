@@ -49,7 +49,7 @@ final class ResourcesTest extends TestCase
         $result = $this->client->beta->sessions->resources->retrieve(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -79,7 +79,7 @@ final class ResourcesTest extends TestCase
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
             authorizationToken: 'ghp_exampletoken',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -124,7 +124,7 @@ final class ResourcesTest extends TestCase
         $result = $this->client->beta->sessions->resources->delete(
             'sesrsc_011CZkZBJq5dWxk9fVLNcPht',
             sessionID: 'sesn_011CZkZAtmR3yMPDzynEDxu7',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -154,7 +154,7 @@ final class ResourcesTest extends TestCase
             fileID: 'file_011CNha8iCJcU1wXNR6q4V8w',
             type: 'file',
             mountPath: '/uploads/receipt.pdf',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             workspaceID: 'wrkspc_011CZkZaBF1tNoB5wlCeusgy',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

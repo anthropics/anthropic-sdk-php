@@ -90,7 +90,7 @@ final class UsageTest extends TestCase
             timeBucketWidth: AnalyticsTimeBucketWidth::DAY,
             userProfileIDs: ['uprof_01M33NeYUQK2WV9PpYcsPHLi'],
             workspaceIDs: ['wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ'],
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

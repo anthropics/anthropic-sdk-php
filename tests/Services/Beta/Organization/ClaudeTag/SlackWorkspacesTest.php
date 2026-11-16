@@ -87,7 +87,7 @@ final class SlackWorkspacesTest extends TestCase
                     'model' => 'x',
                     'replyMode' => ['type' => 'automatic'],
                 ],
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;

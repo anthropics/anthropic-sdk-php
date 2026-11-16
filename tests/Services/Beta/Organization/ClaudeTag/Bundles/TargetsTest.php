@@ -63,7 +63,7 @@ final class TargetsTest extends TestCase
             ->create(
                 'capp_011CZkZjLP1cWxj5EtMmdgbq',
                 target: ['slackChannelID' => 'xxxxxxxx', 'type' => 'slack_channel'],
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -106,7 +106,7 @@ final class TargetsTest extends TestCase
             ->retrieve(
                 'btgt_01SvpyRQK3nN6eH9uhRA7n1qHq8TzW5mKc2YbX7vNd4RfJ',
                 bundleID: 'capp_011CZkZjLP1cWxj5EtMmdgbq',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -174,7 +174,7 @@ final class TargetsTest extends TestCase
             ->delete(
                 'btgt_01SvpyRQK3nN6eH9uhRA7n1qHq8TzW5mKc2YbX7vNd4RfJ',
                 bundleID: 'capp_011CZkZjLP1cWxj5EtMmdgbq',
-                betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+                betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;

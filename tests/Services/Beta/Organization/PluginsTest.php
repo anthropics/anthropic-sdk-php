@@ -54,7 +54,7 @@ final class PluginsTest extends TestCase
             ],
             marketplaceID: 'marketplace_id',
             releaseNotes: 'release_notes',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -93,7 +93,7 @@ final class PluginsTest extends TestCase
         $result = $this->client->beta->organization->plugins->update(
             'plugin_id',
             servedVersionID: 'pluginver_01KaZmQpRsTuVwXyZ2b4c6d8',
-            betas: [AnthropicBeta::MESSAGE_BATCHES_2024_09_24],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

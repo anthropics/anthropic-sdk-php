@@ -5,6 +5,9 @@ namespace Tests\Vertex;
 use Anthropic\Core\Util;
 use Anthropic\Vertex\Client;
 use Anthropic\Vertex\VertexMiddleware;
+use Google\Auth\Credentials\ServiceAccountCredentials;
+use Google\Auth\HttpHandler\HttpClientCache;
+use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -61,6 +64,56 @@ class ClientTest extends TestCase
         $sent = $transporter->getLastRequest();
         $this->assertInstanceOf(\Psr\Http\Message\RequestInterface::class, $sent);
         $this->assertSame('Bearer static-token', $sent->getHeaderLine('Authorization'));
+    }
+
+    /**
+     * @dataProvider tokenLifetimeProvider
+     */
+    public function testServiceAccountTokenIsCachedUntilNearExpiry(int $expiresIn, int $expectedFetches): void
+    {
+        $key = openssl_pkey_new();
+        assert(false !== $key);
+        openssl_pkey_export($key, $privateKey);
+        $credentials = new ServiceAccountCredentials(
+            'https://www.googleapis.com/auth/cloud-platform',
+            ['client_email' => 'test@example.iam.gserviceaccount.com', 'private_key' => $privateKey],
+        );
+
+        $transporter = new \Http\Mock\Client;
+        $transporter->addResponse(new Response(200, ['Content-Type' => 'application/json'], '{}'));
+        $transporter->addResponse(new Response(200, ['Content-Type' => 'application/json'], '{}'));
+
+        $client = Client::withCredentials($credentials, region: 'us-east5', projectId: 'p', requestOptions: ['transporter' => $transporter]);
+
+        $fetches = 0;
+        HttpClientCache::setHttpClient(new \GuzzleHttp\Client(['handler' => static function () use (&$fetches, $expiresIn) {
+            ++$fetches;
+
+            return Create::promiseFor(new Response(200, ['Content-Type' => 'application/json'], sprintf('{"access_token":"tok-%d","expires_in":%d,"token_type":"Bearer"}', $fetches, $expiresIn)));
+        }]));
+
+        try {
+            $client->messages->create(maxTokens: 1, messages: [], model: 'm@v');
+            $client->messages->create(maxTokens: 1, messages: [], model: 'm@v');
+        } finally {
+            HttpClientCache::setHttpClient(null);
+        }
+
+        $this->assertSame($expectedFetches, $fetches);
+        $this->assertSame(
+            ['Bearer tok-1', "Bearer tok-{$expectedFetches}"],
+            array_map(static fn ($request) => $request->getHeaderLine('Authorization'), array_values($transporter->getRequests())),
+        );
+    }
+
+    /**
+     * @return iterable<string, array{int, int}>
+     */
+    public static function tokenLifetimeProvider(): iterable
+    {
+        yield 'outlasts the refresh buffer' => [3600, 1];
+
+        yield 'ends within the refresh buffer' => [60, 2];
     }
 
     public function testAnthropicCredentialEnvDoesNotLeak(): void
