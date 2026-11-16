@@ -35,11 +35,11 @@ trait SdkUnion
 
     public static function converter(): Converter
     {
-        if (isset(static::$converter)) {
-            return static::$converter;
+        if (isset(self::$converter)) {
+            return self::$converter;
         }
 
-        return static::$converter = new UnionOf(
+        return self::$converter = new UnionOf(
             discriminator: static::discriminator(),
             discriminatorProperty: static::discriminatorProperty(),
             variants: static::variants(),

@@ -20,7 +20,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   type: 'event',
  * }
  */
-final class BetaWebhookEvent implements BaseModel
+class BetaWebhookEvent implements BaseModel
 {
     /** @use SdkModel<BetaWebhookEventShape> */
     use SdkModel;
@@ -136,3 +136,8 @@ final class BetaWebhookEvent implements BaseModel
         return $self;
     }
 }
+
+class_alias(
+    BetaWebhookEvent::class,
+    'Anthropic\Beta\Webhooks\UnwrapWebhookEvent'
+);
