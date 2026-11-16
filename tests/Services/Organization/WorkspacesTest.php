@@ -31,7 +31,9 @@ final class WorkspacesTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->organization->workspaces->create(name: 'x');
+        $result = $this->client->organization->workspaces->create(
+            name: 'Workspace Name'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Workspace::class, $result);
@@ -41,7 +43,7 @@ final class WorkspacesTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->organization->workspaces->create(
-            name: 'x',
+            name: 'Workspace Name',
             dataResidency: [
                 'allowedInferenceGeos' => 'unrestricted',
                 'defaultInferenceGeo' => 'global',
