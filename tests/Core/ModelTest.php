@@ -13,6 +13,7 @@ use Anthropic\Core\Conversion\ConstantOf;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Core\Conversion\DumpState;
 use Anthropic\Core\Conversion\ListOf;
+use Anthropic\Core\Conversion\MapOf;
 use Anthropic\Core\Conversion\UnionOf;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -178,6 +179,12 @@ class Fetch implements BaseModel
 
     #[Optional('toy_color', nullable: true)]
     public ?string $toyColor;
+
+    #[Optional('toy_collar')]
+    public ?Collar $toyCollar;
+
+    #[Optional('toy_notes')]
+    public mixed $toyNotes;
 
     public function __construct()
     {
@@ -534,6 +541,51 @@ class ModelTest extends TestCase
             ['commands' => [['type' => 'fetch', 'toy_name' => 'ball', 'toy_color' => null]]],
             Conversion::dump(Routine::class, value: ['commands' => [['type' => 'fetch', 'toyName' => 'ball', 'toyColor' => null]]])
         );
+    }
+
+    #[Test]
+    public function testNullInAnArrayIsSentWhereTheApiTakesOne(): void
+    {
+        $cases = [
+            'nullable property' => [
+                Fetch::class,
+                ['toyName' => 'ball', 'toyColor' => null],
+                ['toy_name' => 'ball', 'toy_color' => null],
+            ],
+            'nullable property under its API name' => [
+                Fetch::class,
+                ['toy_name' => 'ball', 'toy_color' => null],
+                ['toy_name' => 'ball', 'toy_color' => null],
+            ],
+            'value under its API name' => [
+                Fetch::class,
+                ['toy_name' => 'ball', 'toy_collar' => ['color' => null, 'serialNumber' => '7']],
+                ['toy_name' => 'ball', 'toy_collar' => ['serial_number' => '7']],
+            ],
+            'optional property that is not nullable under its API name' => [Collar::class, ['color' => 'red', 'serial_number' => null], ['color' => 'red']],
+            'optional property that is not nullable' => [Collar::class, ['color' => 'red', 'serialNumber' => null], ['color' => 'red']],
+            'optional untyped property' => [Fetch::class, ['toyName' => 'ball', 'toyNotes' => null], ['toy_name' => 'ball', 'toy_notes' => null]],
+            'required nullable property' => [Dog::class, ['name' => 'Rex', 'owner' => null], ['name' => 'Rex', 'owner' => null]],
+            'required property that is not nullable' => [Dog::class, ['name' => null, 'ageYears' => 3], ['age_years' => 3]],
+            'list' => [new ListOf('string'), ['a', null], ['a', null]],
+            'map of nullable values' => [new MapOf('string', nullable: true), ['a' => null, 'b' => 'x'], ['a' => null, 'b' => 'x']],
+            'map of other values' => [new MapOf('string'), ['a' => null, 'b' => 'x'], ['b' => 'x']],
+            'untyped value' => ['mixed', ['a' => ['b' => null]], ['a' => ['b' => null]]],
+            'map of untyped values' => [new MapOf('mixed'), ['a' => null, 'b' => ['c' => null]], ['a' => null, 'b' => ['c' => null]]],
+        ];
+
+        foreach ($cases as $name => [$type, $value, $sent]) {
+            $this->assertSame($sent, Conversion::dump($type, value: $value), $name);
+        }
+    }
+
+    #[Test]
+    public function testArrayLeftEmptyByANullIsSentAsAnObject(): void
+    {
+        foreach ([Collar::class => ['color' => null], Kennel::class => ['collar' => null]] as $type => $value) {
+            $this->assertSame('{}', json_encode(Conversion::dump($type, value: $value)));
+        }
+        $this->assertSame('{}', json_encode(Conversion::dump(new MapOf('string'), value: ['a' => null])));
     }
 
     #[Test]

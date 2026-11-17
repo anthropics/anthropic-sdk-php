@@ -44,6 +44,13 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testRemoveNulls(): void
+    {
+        $this->assertSame(['b' => 0, 'c' => ['d' => null]], Util::removeNulls(['a' => null, 'b' => 0, 'c' => ['d' => null]]));
+        $this->assertSame(['a' => null], Util::removeNulls(['a' => null, 'b' => null], except: ['a']));
+    }
+
+    #[Test]
     public function testJoinUri(): void
     {
         $factory = Psr17FactoryDiscovery::findUriFactory();

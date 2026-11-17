@@ -37,13 +37,14 @@ final class PropertyInfo
 
             $apiName = $attribute->apiName ?? $apiName;
             $optional = $attribute->optional;
-            $nullable |= $attribute->nullable;
+            // The PHP type of an optional property always allows null, so it doesn't say whether the API takes one.
+            $nullable = $attribute->nullable || (!$optional && $nullable);
             $type = $attribute->type ?? $type;
         }
 
         $this->apiName = $apiName;
         $this->type = self::parse($type);
-        $this->nullable = (bool) $nullable;
+        $this->nullable = $nullable || 'mixed' === $this->type;
         $this->optional = $optional;
     }
 

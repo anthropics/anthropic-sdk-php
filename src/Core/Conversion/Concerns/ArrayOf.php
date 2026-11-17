@@ -17,14 +17,17 @@ trait ArrayOf
 {
     private readonly Converter|ConverterSource|string|null $type;
 
+    private readonly bool $nullable;
+
     public function __construct(
         Converter|ConverterSource|string|null $type = null,
         Converter|ConverterSource|string|null $enum = null,
         Converter|ConverterSource|string|null $union = null,
-        private readonly bool $nullable = false,
+        bool $nullable = false,
     ) {
         $this->type = $type ?? $enum ?? $union;
         assert(!is_null($this->type));
+        $this->nullable = $nullable || 'mixed' === $this->type;
     }
 
     public function coerce(mixed $value, CoerceState $state): mixed
@@ -63,12 +66,12 @@ trait ArrayOf
             if ($this->nullable && is_null($v)) {
                 ++$state->yes;
                 $acc[$k] = null;
-            } else {
+            } elseif (!is_null($v) || array_is_list($value)) {
                 $acc[$k] = Conversion::dump($this->type, value: $v, state: $state);
             }
         }
 
-        return $acc;
+        return empty($acc) ? $this->empty() : $acc;
     }
 
     // @phpstan-ignore-next-line missingType.iterableValue

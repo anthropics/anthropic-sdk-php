@@ -190,6 +190,7 @@ final class SpendLimitsService implements SpendLimitsContract
                 'period' => $period,
                 'betas' => $betas,
             ],
+            except: ['amount'],
         );
 
         // @phpstan-ignore-next-line argument.type
