@@ -64,6 +64,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\MessagesRawContract;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
 use Anthropic\SSEStream;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
 use Anthropic\UserProfiles\UserProfileNotBillableException;
 use Anthropic\UserProfiles\UserProfileRequiredException;
 
@@ -148,6 +149,7 @@ final class MessagesRawService implements MessagesRawContract
      * @throws UserProfileRequiredException
      * @throws LinkedOrganizationBillingUnavailableException
      * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
      * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
@@ -249,6 +251,7 @@ final class MessagesRawService implements MessagesRawContract
      * @throws UserProfileRequiredException
      * @throws LinkedOrganizationBillingUnavailableException
      * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
      * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException

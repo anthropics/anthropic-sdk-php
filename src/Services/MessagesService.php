@@ -68,6 +68,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\MessagesContract;
 use Anthropic\Services\Messages\BatchesService;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
 use Anthropic\UserProfiles\UserProfileNotBillableException;
 use Anthropic\UserProfiles\UserProfileRequiredException;
 
@@ -292,6 +293,7 @@ final class MessagesService implements MessagesContract
      * @throws UserProfileRequiredException
      * @throws LinkedOrganizationBillingUnavailableException
      * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
      * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
@@ -563,6 +565,7 @@ final class MessagesService implements MessagesContract
      * @throws UserProfileRequiredException
      * @throws LinkedOrganizationBillingUnavailableException
      * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
      * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException

@@ -56,6 +56,8 @@ enum ErrorCode: string
 
     case LINKED_ORGANIZATION_SPEND_LIMIT_REACHED = 'linked_organization_spend_limit_reached';
 
+    case USER_PROFILE_BILLING_NOT_AUTHORIZED = 'user_profile_billing_not_authorized';
+
     case USER_PROFILE_NOT_BILLABLE = 'user_profile_not_billable';
 
     case THREAD_NOT_FOUND = 'thread_not_found';

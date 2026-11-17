@@ -93,6 +93,7 @@ use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
 use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
 use Anthropic\UserProfiles\UserProfileNotBillableException;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 use Anthropic\UserProfiles\UserProfileRequiredException;
@@ -194,6 +195,7 @@ class APIStatusException extends APIException
         '403 organization_level_scoped_api_key_required' => OrganizationLevelScopedAPIKeyRequiredException::class,
         '403 sandbox_egress_restricted' => SandboxEgressRestrictedException::class,
         '403 spend_limits_admin_api_writes_not_enabled' => SpendLimitsAdminAPIWritesNotEnabledException::class,
+        '403 user_profile_billing_not_authorized' => UserProfileBillingNotAuthorizedException::class,
         '403 user_profile_not_billable' => UserProfileNotBillableException::class,
         '404 environment_not_found' => BetaEnvironmentNotFoundException::class,
         '404 file_expired' => FileExpiredException::class,
