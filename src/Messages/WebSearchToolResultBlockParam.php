@@ -37,7 +37,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
 
     /** @var WebSearchToolResultBlockParamContentVariants $content */
     #[Required(union: WebSearchToolResultBlockParamContent::class)]
-    public array|WebSearchToolRequestError $content;
+    public array|WebSearchToolRequestErrorObject $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -81,7 +81,7 @@ final class WebSearchToolResultBlockParam implements BaseModel
      * @param CallerShape|null $caller
      */
     public static function with(
-        array|WebSearchToolRequestError $content,
+        array|WebSearchToolRequestErrorObject $content,
         string $toolUseID,
         CacheControlEphemeral|array|null $cacheControl = null,
         DirectCaller|array|ServerToolCaller|ServerToolCaller20260120|null $caller = null,
@@ -100,8 +100,9 @@ final class WebSearchToolResultBlockParam implements BaseModel
     /**
      * @param WebSearchToolResultBlockParamContentShape $content
      */
-    public function withContent(array|WebSearchToolRequestError $content): self
-    {
+    public function withContent(
+        array|WebSearchToolRequestErrorObject $content
+    ): self {
         $self = clone $this;
         $self['content'] = $content;
 

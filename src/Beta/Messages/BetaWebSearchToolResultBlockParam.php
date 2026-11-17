@@ -37,7 +37,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
 
     /** @var BetaWebSearchToolResultBlockParamContentVariants $content */
     #[Required(union: BetaWebSearchToolResultBlockParamContent::class)]
-    public array|BetaWebSearchToolRequestError $content;
+    public array|BetaWebSearchToolRequestErrorObject $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -81,7 +81,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      * @param CallerShape|null $caller
      */
     public static function with(
-        array|BetaWebSearchToolRequestError $content,
+        array|BetaWebSearchToolRequestErrorObject $content,
         string $toolUseID,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaDirectCaller|array|BetaServerToolCaller|BetaServerToolCaller20260120|null $caller = null,
@@ -101,7 +101,7 @@ final class BetaWebSearchToolResultBlockParam implements BaseModel
      * @param BetaWebSearchToolResultBlockParamContentShape $content
      */
     public function withContent(
-        array|BetaWebSearchToolRequestError $content
+        array|BetaWebSearchToolRequestErrorObject $content
     ): self {
         $self = clone $this;
         $self['content'] = $content;

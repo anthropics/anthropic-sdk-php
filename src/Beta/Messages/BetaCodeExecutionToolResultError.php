@@ -4,86 +4,14 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Messages;
 
-use Anthropic\Core\Attributes\Required;
-use Anthropic\Core\Concerns\SdkModel;
-use Anthropic\Core\Contracts\BaseModel;
-use Anthropic\Core\Conversion\ConstantOf;
+// Loading the class registers this name as its alias.
+class_exists(BetaCodeExecutionToolResultErrorObject::class);
 
-/**
- * @phpstan-type BetaCodeExecutionToolResultErrorShape = array{
- *   errorCode: BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode>,
- *   type: 'code_execution_tool_result_error',
- * }
- */
-final class BetaCodeExecutionToolResultError implements BaseModel
-{
-    /** @use SdkModel<BetaCodeExecutionToolResultErrorShape> */
-    use SdkModel;
-
-    /** @var 'code_execution_tool_result_error' $type */
-    #[Required(type: new ConstantOf('code_execution_tool_result_error'))]
-    public string $type = 'code_execution_tool_result_error';
-
-    /** @var value-of<BetaCodeExecutionToolResultErrorCode> $errorCode */
-    #[Required('error_code', enum: BetaCodeExecutionToolResultErrorCode::class)]
-    public string $errorCode;
-
+// This block never runs. It declares the name for IDEs and static analyzers.
+// @phpstan-ignore if.alwaysFalse
+if (false) {
     /**
-     * `new BetaCodeExecutionToolResultError()` is missing required properties by the API.
-     *
-     * To enforce required parameters use
-     * ```
-     * BetaCodeExecutionToolResultError::with(errorCode: ...)
-     * ```
-     *
-     * Otherwise ensure the following setters are called
-     *
-     * ```
-     * (new BetaCodeExecutionToolResultError())->withErrorCode(...)
-     * ```
+     * @deprecated BetaCodeExecutionToolResultError has been renamed to BetaCodeExecutionToolResultErrorObject
      */
-    public function __construct()
-    {
-        $this->initialize();
-    }
-
-    /**
-     * Construct an instance from the required parameters.
-     *
-     * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $errorCode
-     */
-    public static function with(
-        BetaCodeExecutionToolResultErrorCode|string $errorCode
-    ): self {
-        $self = new self;
-
-        $self['errorCode'] = $errorCode;
-
-        return $self;
-    }
-
-    /**
-     * @param BetaCodeExecutionToolResultErrorCode|value-of<BetaCodeExecutionToolResultErrorCode> $errorCode
-     */
-    public function withErrorCode(
-        BetaCodeExecutionToolResultErrorCode|string $errorCode
-    ): self {
-        $self = clone $this;
-        $self['errorCode'] = $errorCode;
-
-        return $self;
-    }
-
-    /**
-     * @param 'code_execution_tool_result_error' $type
-     */
-    public function withType(string $type): self
-    {
-        $self = clone $this;
-        $self['type'] = $type;
-
-        return $self;
-    }
+    class BetaCodeExecutionToolResultError extends BetaCodeExecutionToolResultErrorObject {}
 }

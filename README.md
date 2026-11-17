@@ -49,16 +49,6 @@ var_dump($message->content);
 
 PHP 8.1.0+
 
-## Autoloading note
-
-This SDK includes class aliases for backwards compatibility, but these are not available when using authoritative classmaps in Composer.
-
-If you use `composer --classmap-authoritative` and you rely on any of the following class names:
-
-- `UnwrapWebhookEvent`
-
-Then update your code to use the true class name.
-
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).

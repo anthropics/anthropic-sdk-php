@@ -135,7 +135,7 @@ final class BetaContentBlockParam implements ConverterSource
         BetaImageTransformationsParam|array|null $transformations = null,
         ?string $context = null,
         ?string $title = null,
-        string|array|BetaWebSearchToolRequestError|BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam|BetaAdvisorToolResultErrorParam|BetaAdvisorResultBlockParam|BetaAdvisorRedactedResultBlockParam|BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam|BetaEncryptedCodeExecutionResultBlockParam|BetaBashCodeExecutionToolResultErrorParam|BetaBashCodeExecutionResultBlockParam|BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam|BetaToolSearchToolResultErrorParam|BetaToolSearchToolSearchResultBlockParam|null $content = null,
+        string|array|BetaWebSearchToolRequestErrorObject|BetaWebFetchToolResultErrorBlockParam|BetaWebFetchBlockParam|BetaAdvisorToolResultErrorParam|BetaAdvisorResultBlockParam|BetaAdvisorRedactedResultBlockParam|BetaCodeExecutionToolResultErrorParam|BetaCodeExecutionResultBlockParam|BetaEncryptedCodeExecutionResultBlockParam|BetaBashCodeExecutionToolResultErrorParam|BetaBashCodeExecutionResultBlockParam|BetaTextEditorCodeExecutionToolResultErrorParam|BetaTextEditorCodeExecutionViewResultBlockParam|BetaTextEditorCodeExecutionCreateResultBlockParam|BetaTextEditorCodeExecutionStrReplaceResultBlockParam|BetaToolSearchToolResultErrorParam|BetaToolSearchToolSearchResultBlockParam|null $content = null,
         ?string $signature = null,
         ?string $thinking = null,
         ?string $data = null,

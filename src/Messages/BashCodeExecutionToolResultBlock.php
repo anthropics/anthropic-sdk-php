@@ -30,7 +30,7 @@ final class BashCodeExecutionToolResultBlock implements BaseModel
 
     /** @var ContentVariants $content */
     #[Required]
-    public BashCodeExecutionToolResultError|BashCodeExecutionResultBlock $content;
+    public BashCodeExecutionToolResultErrorObject|BashCodeExecutionResultBlock $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -62,7 +62,7 @@ final class BashCodeExecutionToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public static function with(
-        BashCodeExecutionToolResultError|array|BashCodeExecutionResultBlock $content,
+        BashCodeExecutionToolResultErrorObject|array|BashCodeExecutionResultBlock $content,
         string $toolUseID,
     ): self {
         $self = new self;
@@ -77,7 +77,7 @@ final class BashCodeExecutionToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public function withContent(
-        BashCodeExecutionToolResultError|array|BashCodeExecutionResultBlock $content
+        BashCodeExecutionToolResultErrorObject|array|BashCodeExecutionResultBlock $content,
     ): self {
         $self = clone $this;
         $self['content'] = $content;

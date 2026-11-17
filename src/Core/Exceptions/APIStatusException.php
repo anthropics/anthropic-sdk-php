@@ -38,6 +38,7 @@ use Anthropic\CMEKContextUnavailableException;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\EnforcedSpendLimitReachedException;
@@ -46,6 +47,8 @@ use Anthropic\ErrorType;
 use Anthropic\Files\FileExpiredException;
 use Anthropic\Files\FileNotDownloadableException;
 use Anthropic\Files\StorageQuotaExceededException;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
 use Anthropic\Messages\CompactionBlockMisplacedException;
@@ -91,7 +94,10 @@ use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
 use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -106,6 +112,7 @@ class APIStatusException extends APIException
     private const ERROR_CLASSES = [
         400 => BadRequestException::class,
         401 => AuthenticationException::class,
+        402 => PaymentRequiredException::class,
         403 => PermissionDeniedException::class,
         404 => NotFoundException::class,
         408 => RequestTimeoutException::class,
@@ -171,9 +178,12 @@ class APIStatusException extends APIException
         '400 tool_reference_unresolved' => ToolReferenceUnresolvedException::class,
         '400 unsupported_charset' => BetaUnsupportedCharsetException::class,
         '400 user_profile_not_found' => UserProfileNotFoundException::class,
+        '400 user_profile_required' => UserProfileRequiredException::class,
         '400 workspace_api_key_limit_exceeded' => WorkspaceAPIKeyLimitExceededException::class,
         '400 workspace_member_limit_exceeded' => WorkspaceMemberLimitExceededException::class,
         '400 workspace_policy_violation' => WorkspacePolicyViolationException::class,
+        '402 linked_organization_billing_unavailable' => LinkedOrganizationBillingUnavailableException::class,
+        '402 linked_organization_spend_limit_reached' => LinkedOrganizationSpendLimitReachedException::class,
         '403 api_key_scope_missing' => APIKeyScopeMissingException::class,
         '403 cannot_sign_out_managed_member' => CannotSignOutManagedMemberException::class,
         '403 cannot_sign_out_membership_admin' => CannotSignOutMembershipAdminException::class,
@@ -186,6 +196,8 @@ class APIStatusException extends APIException
         '403 organization_level_scoped_api_key_required' => OrganizationLevelScopedAPIKeyRequiredException::class,
         '403 sandbox_egress_restricted' => SandboxEgressRestrictedException::class,
         '403 spend_limits_admin_api_writes_not_enabled' => SpendLimitsAdminAPIWritesNotEnabledException::class,
+        '403 user_profile_billing_not_authorized' => UserProfileBillingNotAuthorizedException::class,
+        '403 user_profile_not_billable' => UserProfileNotBillableException::class,
         '404 environment_not_found' => BetaEnvironmentNotFoundException::class,
         '404 file_expired' => FileExpiredException::class,
         '404 rbac_role_not_found' => RBACRoleNotFoundException::class,
@@ -200,6 +212,7 @@ class APIStatusException extends APIException
         '409 slack_channel_set_up_settings_conflict' => SlackChannelSetUpSettingsConflictException::class,
         '412 heartbeat_precondition_failed' => HeartbeatPreconditionFailedException::class,
         '413 request_body_too_large_after_decoding' => RequestBodyTooLargeAfterDecodingException::class,
+        '429 contract_spend_limit_reached' => ContractSpendLimitReachedException::class,
         '429 enforced_spend_limit_reached' => EnforcedSpendLimitReachedException::class,
         '429 ramp_limit_exceeded' => RampLimitExceededException::class,
         '503 cmek_context_unavailable' => CMEKContextUnavailableException::class,

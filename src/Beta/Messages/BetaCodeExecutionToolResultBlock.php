@@ -30,7 +30,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
 
     /** @var BetaCodeExecutionToolResultBlockContentVariants $content */
     #[Required]
-    public BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock $content;
+    public BetaCodeExecutionToolResultErrorObject|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -62,7 +62,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      * @param BetaCodeExecutionToolResultBlockContentShape $content
      */
     public static function with(
-        BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock $content,
+        BetaCodeExecutionToolResultErrorObject|array|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock $content,
         string $toolUseID,
     ): self {
         $self = new self;
@@ -77,7 +77,7 @@ final class BetaCodeExecutionToolResultBlock implements BaseModel
      * @param BetaCodeExecutionToolResultBlockContentShape $content
      */
     public function withContent(
-        BetaCodeExecutionToolResultError|array|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock $content,
+        BetaCodeExecutionToolResultErrorObject|array|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock $content,
     ): self {
         $self = clone $this;
         $self['content'] = $content;

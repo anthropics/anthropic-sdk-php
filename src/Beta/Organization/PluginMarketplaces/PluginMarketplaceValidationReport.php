@@ -13,14 +13,14 @@ use Anthropic\Core\Conversion\ConstantOf;
  * The outcome of validating plugin marketplace content: a report, not a
  * stored object, so nothing in it can be retrieved afterwards.
  *
- * @phpstan-import-type PluginMarketplaceValidationPluginErrorShape from \Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceValidationPluginError
+ * @phpstan-import-type PluginMarketplaceValidationPluginErrorObjectShape from \Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceValidationPluginErrorObject
  * @phpstan-import-type PluginMarketplaceValidationPluginWarningsShape from \Anthropic\Beta\Organization\PluginMarketplaces\PluginMarketplaceValidationPluginWarnings
  *
  * @phpstan-type PluginMarketplaceValidationReportShape = array{
  *   commitSha: string|null,
  *   manifestError: string|null,
  *   manifestErrorCode: string|null,
- *   pluginErrors: list<PluginMarketplaceValidationPluginError|PluginMarketplaceValidationPluginErrorShape>,
+ *   pluginErrors: list<PluginMarketplaceValidationPluginErrorObject|PluginMarketplaceValidationPluginErrorObjectShape>,
  *   pluginWarnings: list<PluginMarketplaceValidationPluginWarnings|PluginMarketplaceValidationPluginWarningsShape>,
  *   ref: string|null,
  *   totalPluginCount: int,
@@ -62,11 +62,11 @@ final class PluginMarketplaceValidationReport implements BaseModel
     /**
      * One entry per plugin a synchronization would skip entirely, keyed by the plugin's name in marketplace.json.
      *
-     * @var list<PluginMarketplaceValidationPluginError> $pluginErrors
+     * @var list<PluginMarketplaceValidationPluginErrorObject> $pluginErrors
      */
     #[Required(
         'plugin_errors',
-        list: PluginMarketplaceValidationPluginError::class
+        list: PluginMarketplaceValidationPluginErrorObject::class
     )]
     public array $pluginErrors;
 
@@ -140,7 +140,7 @@ final class PluginMarketplaceValidationReport implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<PluginMarketplaceValidationPluginError|PluginMarketplaceValidationPluginErrorShape> $pluginErrors
+     * @param list<PluginMarketplaceValidationPluginErrorObject|PluginMarketplaceValidationPluginErrorObjectShape> $pluginErrors
      * @param list<PluginMarketplaceValidationPluginWarnings|PluginMarketplaceValidationPluginWarningsShape> $pluginWarnings
      */
     public static function with(
@@ -203,7 +203,7 @@ final class PluginMarketplaceValidationReport implements BaseModel
     /**
      * One entry per plugin a synchronization would skip entirely, keyed by the plugin's name in marketplace.json.
      *
-     * @param list<PluginMarketplaceValidationPluginError|PluginMarketplaceValidationPluginErrorShape> $pluginErrors
+     * @param list<PluginMarketplaceValidationPluginErrorObject|PluginMarketplaceValidationPluginErrorObjectShape> $pluginErrors
      */
     public function withPluginErrors(array $pluginErrors): self
     {

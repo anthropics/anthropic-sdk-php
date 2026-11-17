@@ -9,9 +9,12 @@ use Anthropic\ClaudeCodeVersionTooOldException;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\EnforcedSpendLimitReachedException;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
@@ -60,6 +63,9 @@ use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
 use Anthropic\RequestOptions;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
@@ -254,9 +260,15 @@ interface MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -463,9 +475,15 @@ interface MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException

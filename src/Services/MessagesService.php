@@ -10,11 +10,14 @@ use Anthropic\Client;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Lib\Helpers\StructuredOutput;
 use Anthropic\Core\Util;
 use Anthropic\EnforcedSpendLimitReachedException;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CacheControlEphemeral;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
@@ -66,6 +69,9 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\MessagesContract;
 use Anthropic\Services\Messages\BatchesService;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type MessageParamShape from \Anthropic\Messages\MessageParam
@@ -285,9 +291,15 @@ final class MessagesService implements MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -552,9 +564,15 @@ final class MessagesService implements MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException

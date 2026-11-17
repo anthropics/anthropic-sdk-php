@@ -229,7 +229,7 @@ trait SdkModel
     {
         // stdClass when no properties are set, so json_encode renders {} rather than [].
         // @phpstan-ignore-next-line argument.type
-        return Conversion::dump(self::converter(), value: $this->__serialize());
+        return Conversion::dump(self::converter(), value: $this);
     }
 
     /**

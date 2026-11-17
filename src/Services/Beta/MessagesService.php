@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\BetaBillingPolicy;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContainerParams;
@@ -42,6 +43,7 @@ use Anthropic\Client;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\AnthropicException;
 use Anthropic\Core\Exceptions\APIException;
@@ -52,6 +54,8 @@ use Anthropic\Lib\Threads\BetaMessageThread;
 use Anthropic\Lib\Threads\UnsupportedRequestBehavior;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
 use Anthropic\Messages\CompactionBlockMisplacedException;
@@ -79,9 +83,13 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\MessagesContract;
 use Anthropic\Services\Beta\Messages\BatchesService;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaBillingPolicyShape from \Anthropic\Beta\Messages\BetaBillingPolicy
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
@@ -190,6 +198,7 @@ final class MessagesService implements MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy Body param: Declares which organization is billed for this request. `{"type": "billing_policy", "bill_to": "user_profile"}` bills the customer behind the user profile named in the `anthropic-user-profile-id` header, instead of your organization. If that customer has not linked an Anthropic organization to the profile, or has not allowed your organization to bill it, the request is rejected rather than billed to you. Omit the field, or send `"bill_to": "self"` (the default), to be billed as usual.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
@@ -338,9 +347,15 @@ final class MessagesService implements MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -351,6 +366,7 @@ final class MessagesService implements MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        BetaBillingPolicy|array|null $billingPolicy = null,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCompactionConfig|array|null $compaction = null,
         string|BetaContainerParams|array|null $container = null,
@@ -384,6 +400,7 @@ final class MessagesService implements MessagesContract
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
                 'model' => $model,
+                'billingPolicy' => $billingPolicy,
                 'cacheControl' => $cacheControl,
                 'compaction' => $compaction,
                 'container' => $container,
@@ -504,6 +521,7 @@ final class MessagesService implements MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy Body param: Declares which organization is billed for this request. `{"type": "billing_policy", "bill_to": "user_profile"}` bills the customer behind the user profile named in the `anthropic-user-profile-id` header, instead of your organization. If that customer has not linked an Anthropic organization to the profile, or has not allowed your organization to bill it, the request is rejected rather than billed to you. Omit the field, or send `"bill_to": "self"` (the default), to be billed as usual.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
@@ -654,9 +672,15 @@ final class MessagesService implements MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -667,6 +691,7 @@ final class MessagesService implements MessagesContract
         int $maxTokens,
         array $messages,
         Model|string $model,
+        BetaBillingPolicy|array|null $billingPolicy = null,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCompactionConfig|array|null $compaction = null,
         string|BetaContainerParams|array|null $container = null,
@@ -700,6 +725,7 @@ final class MessagesService implements MessagesContract
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
                 'model' => $model,
+                'billingPolicy' => $billingPolicy,
                 'cacheControl' => $cacheControl,
                 'compaction' => $compaction,
                 'container' => $container,
@@ -795,6 +821,7 @@ final class MessagesService implements MessagesContract
      * @param string|Model|value-of<Model> $model Body param: The model that will complete your prompt.
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy Body param: Declares which organization is billed when this body is sent to `/v1/messages`. Accepted here so that you can count the tokens of the exact body you will send, and otherwise ignored: counting tokens bills nobody, so no user profile is required.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
@@ -908,6 +935,7 @@ final class MessagesService implements MessagesContract
     public function countTokens(
         array $messages,
         Model|string $model,
+        BetaBillingPolicy|array|null $billingPolicy = null,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCompactionConfig|array|null $compaction = null,
         BetaContextManagementConfig|array|null $contextManagement = null,
@@ -931,6 +959,7 @@ final class MessagesService implements MessagesContract
             [
                 'messages' => $messages,
                 'model' => $model,
+                'billingPolicy' => $billingPolicy,
                 'cacheControl' => $cacheControl,
                 'compaction' => $compaction,
                 'contextManagement' => $contextManagement,
@@ -965,6 +994,7 @@ final class MessagesService implements MessagesContract
      *
      * @param list<BetaMessageParamShape> $messages staged for the first turn
      * @param string|Model|value-of<Model> $model
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
      * @param ContainerShape|null $container
@@ -993,6 +1023,7 @@ final class MessagesService implements MessagesContract
         int $maxTokens,
         Model|string $model,
         ?array $messages = null,
+        BetaBillingPolicy|array|null $billingPolicy = null,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCompactionConfig|array|null $compaction = null,
         string|BetaContainerParams|array|null $container = null,
@@ -1023,6 +1054,7 @@ final class MessagesService implements MessagesContract
                 'maxTokens' => $maxTokens,
                 'messages' => $messages,
                 'model' => $model,
+                'billingPolicy' => $billingPolicy,
                 'cacheControl' => $cacheControl,
                 'compaction' => $compaction,
                 'container' => $container,

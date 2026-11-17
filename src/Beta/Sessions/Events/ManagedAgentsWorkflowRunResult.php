@@ -12,11 +12,11 @@ use Anthropic\Core\Conversion\Contracts\ConverterSource;
  * How a workflow run ended.
  *
  * @phpstan-import-type ManagedAgentsWorkflowRunResultCompletedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunResultCompleted
- * @phpstan-import-type ManagedAgentsWorkflowRunResultErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunResultError
+ * @phpstan-import-type ManagedAgentsWorkflowRunResultErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunResultErrorObject
  * @phpstan-import-type ManagedAgentsWorkflowRunResultStoppedShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunResultStopped
  *
- * @phpstan-type ManagedAgentsWorkflowRunResultVariants = ManagedAgentsWorkflowRunResultCompleted|ManagedAgentsWorkflowRunResultError|ManagedAgentsWorkflowRunResultStopped
- * @phpstan-type ManagedAgentsWorkflowRunResultShape = ManagedAgentsWorkflowRunResultVariants|ManagedAgentsWorkflowRunResultCompletedShape|ManagedAgentsWorkflowRunResultErrorShape|ManagedAgentsWorkflowRunResultStoppedShape
+ * @phpstan-type ManagedAgentsWorkflowRunResultVariants = ManagedAgentsWorkflowRunResultCompleted|ManagedAgentsWorkflowRunResultErrorObject|ManagedAgentsWorkflowRunResultStopped
+ * @phpstan-type ManagedAgentsWorkflowRunResultShape = ManagedAgentsWorkflowRunResultVariants|ManagedAgentsWorkflowRunResultCompletedShape|ManagedAgentsWorkflowRunResultErrorObjectShape|ManagedAgentsWorkflowRunResultStoppedShape
  */
 final class ManagedAgentsWorkflowRunResult implements ConverterSource
 {
@@ -34,7 +34,7 @@ final class ManagedAgentsWorkflowRunResult implements ConverterSource
     {
         return [
             'completed' => ManagedAgentsWorkflowRunResultCompleted::class,
-            'error' => ManagedAgentsWorkflowRunResultError::class,
+            'error' => ManagedAgentsWorkflowRunResultErrorObject::class,
             'stopped' => ManagedAgentsWorkflowRunResultStopped::class,
         ];
     }

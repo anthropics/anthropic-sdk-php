@@ -9,17 +9,17 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 use Anthropic\Messages\TextEditorCodeExecutionCreateResultBlock;
 use Anthropic\Messages\TextEditorCodeExecutionStrReplaceResultBlock;
-use Anthropic\Messages\TextEditorCodeExecutionToolResultError;
+use Anthropic\Messages\TextEditorCodeExecutionToolResultErrorObject;
 use Anthropic\Messages\TextEditorCodeExecutionViewResultBlock;
 
 /**
- * @phpstan-import-type TextEditorCodeExecutionToolResultErrorShape from \Anthropic\Messages\TextEditorCodeExecutionToolResultError
+ * @phpstan-import-type TextEditorCodeExecutionToolResultErrorObjectShape from \Anthropic\Messages\TextEditorCodeExecutionToolResultErrorObject
  * @phpstan-import-type TextEditorCodeExecutionViewResultBlockShape from \Anthropic\Messages\TextEditorCodeExecutionViewResultBlock
  * @phpstan-import-type TextEditorCodeExecutionCreateResultBlockShape from \Anthropic\Messages\TextEditorCodeExecutionCreateResultBlock
  * @phpstan-import-type TextEditorCodeExecutionStrReplaceResultBlockShape from \Anthropic\Messages\TextEditorCodeExecutionStrReplaceResultBlock
  *
- * @phpstan-type ContentVariants = TextEditorCodeExecutionToolResultError|TextEditorCodeExecutionViewResultBlock|TextEditorCodeExecutionCreateResultBlock|TextEditorCodeExecutionStrReplaceResultBlock
- * @phpstan-type ContentShape = ContentVariants|TextEditorCodeExecutionToolResultErrorShape|TextEditorCodeExecutionViewResultBlockShape|TextEditorCodeExecutionCreateResultBlockShape|TextEditorCodeExecutionStrReplaceResultBlockShape
+ * @phpstan-type ContentVariants = TextEditorCodeExecutionToolResultErrorObject|TextEditorCodeExecutionViewResultBlock|TextEditorCodeExecutionCreateResultBlock|TextEditorCodeExecutionStrReplaceResultBlock
+ * @phpstan-type ContentShape = ContentVariants|TextEditorCodeExecutionToolResultErrorObjectShape|TextEditorCodeExecutionViewResultBlockShape|TextEditorCodeExecutionCreateResultBlockShape|TextEditorCodeExecutionStrReplaceResultBlockShape
  */
 final class Content implements ConverterSource
 {
@@ -31,7 +31,7 @@ final class Content implements ConverterSource
     public static function variants(): array
     {
         return [
-            TextEditorCodeExecutionToolResultError::class,
+            TextEditorCodeExecutionToolResultErrorObject::class,
             TextEditorCodeExecutionViewResultBlock::class,
             TextEditorCodeExecutionCreateResultBlock::class,
             TextEditorCodeExecutionStrReplaceResultBlock::class,

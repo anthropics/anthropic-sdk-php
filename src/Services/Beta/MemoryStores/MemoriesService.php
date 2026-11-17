@@ -76,6 +76,7 @@ final class MemoriesService implements MemoriesContract
                 'betas' => $betas,
                 'workspaceID' => $workspaceID,
             ],
+            except: ['content'],
         );
 
         // @phpstan-ignore-next-line argument.type

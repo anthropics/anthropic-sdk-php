@@ -12,8 +12,6 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Note: these endpoints are called automatically by the pre-built environment worker provided in the SDKs and CLI, for orchestrating sessions with self-hosted sandbox environments. They are included here as a reference; you do not need to invoke them directly.
- *
  * Stop a work item, initiating graceful or forced shutdown.
  *
  * @see Anthropic\Services\Beta\Environments\WorkService::stop()

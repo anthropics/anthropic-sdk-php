@@ -4,44 +4,44 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsSessionErrorEvent;
 
-use Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsCompactionLimitReachedError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsModelRequestFailedError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryAuthenticationError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCloneError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryForbiddenError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsToolUseLimitReachedError;
-use Anthropic\Beta\Sessions\Events\ManagedAgentsUnknownError;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsBillingErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsCompactionLimitReachedErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsModelRequestFailedErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryAuthenticationErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCloneErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryForbiddenErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsToolUseLimitReachedErrorObject;
+use Anthropic\Beta\Sessions\Events\ManagedAgentsUnknownErrorObject;
 use Anthropic\Core\Concerns\SdkUnion;
 use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * @phpstan-import-type ManagedAgentsUnknownErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUnknownError
- * @phpstan-import-type ManagedAgentsModelOverloadedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError
- * @phpstan-import-type ManagedAgentsModelRateLimitedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedError
- * @phpstan-import-type ManagedAgentsModelRequestFailedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRequestFailedError
- * @phpstan-import-type ManagedAgentsMCPConnectionFailedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedError
- * @phpstan-import-type ManagedAgentsMCPAuthenticationFailedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedError
- * @phpstan-import-type ManagedAgentsBillingErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsBillingError
- * @phpstan-import-type ManagedAgentsCredentialHostUnreachableErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableError
- * @phpstan-import-type ManagedAgentsToolUseLimitReachedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsToolUseLimitReachedError
- * @phpstan-import-type ManagedAgentsCompactionLimitReachedErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsCompactionLimitReachedError
- * @phpstan-import-type ManagedAgentsRepositoryAuthenticationErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryAuthenticationError
- * @phpstan-import-type ManagedAgentsRepositoryForbiddenErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryForbiddenError
- * @phpstan-import-type ManagedAgentsRepositoryNotFoundErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundError
- * @phpstan-import-type ManagedAgentsRepositoryCheckoutErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutError
- * @phpstan-import-type ManagedAgentsRepositoryCloneErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCloneError
+ * @phpstan-import-type ManagedAgentsUnknownErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsUnknownErrorObject
+ * @phpstan-import-type ManagedAgentsModelOverloadedErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedErrorObject
+ * @phpstan-import-type ManagedAgentsModelRateLimitedErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRateLimitedErrorObject
+ * @phpstan-import-type ManagedAgentsModelRequestFailedErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsModelRequestFailedErrorObject
+ * @phpstan-import-type ManagedAgentsMCPConnectionFailedErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPConnectionFailedErrorObject
+ * @phpstan-import-type ManagedAgentsMCPAuthenticationFailedErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsMCPAuthenticationFailedErrorObject
+ * @phpstan-import-type ManagedAgentsBillingErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsBillingErrorObject
+ * @phpstan-import-type ManagedAgentsCredentialHostUnreachableErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsCredentialHostUnreachableErrorObject
+ * @phpstan-import-type ManagedAgentsToolUseLimitReachedErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsToolUseLimitReachedErrorObject
+ * @phpstan-import-type ManagedAgentsCompactionLimitReachedErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsCompactionLimitReachedErrorObject
+ * @phpstan-import-type ManagedAgentsRepositoryAuthenticationErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryAuthenticationErrorObject
+ * @phpstan-import-type ManagedAgentsRepositoryForbiddenErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryForbiddenErrorObject
+ * @phpstan-import-type ManagedAgentsRepositoryNotFoundErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryNotFoundErrorObject
+ * @phpstan-import-type ManagedAgentsRepositoryCheckoutErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCheckoutErrorObject
+ * @phpstan-import-type ManagedAgentsRepositoryCloneErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsRepositoryCloneErrorObject
  *
- * @phpstan-type ErrorVariants = ManagedAgentsUnknownError|ManagedAgentsModelOverloadedError|ManagedAgentsModelRateLimitedError|ManagedAgentsModelRequestFailedError|ManagedAgentsMCPConnectionFailedError|ManagedAgentsMCPAuthenticationFailedError|ManagedAgentsBillingError|ManagedAgentsCredentialHostUnreachableError|ManagedAgentsToolUseLimitReachedError|ManagedAgentsCompactionLimitReachedError|ManagedAgentsRepositoryAuthenticationError|ManagedAgentsRepositoryForbiddenError|ManagedAgentsRepositoryNotFoundError|ManagedAgentsRepositoryCheckoutError|ManagedAgentsRepositoryCloneError
- * @phpstan-type ErrorShape = ErrorVariants|ManagedAgentsUnknownErrorShape|ManagedAgentsModelOverloadedErrorShape|ManagedAgentsModelRateLimitedErrorShape|ManagedAgentsModelRequestFailedErrorShape|ManagedAgentsMCPConnectionFailedErrorShape|ManagedAgentsMCPAuthenticationFailedErrorShape|ManagedAgentsBillingErrorShape|ManagedAgentsCredentialHostUnreachableErrorShape|ManagedAgentsToolUseLimitReachedErrorShape|ManagedAgentsCompactionLimitReachedErrorShape|ManagedAgentsRepositoryAuthenticationErrorShape|ManagedAgentsRepositoryForbiddenErrorShape|ManagedAgentsRepositoryNotFoundErrorShape|ManagedAgentsRepositoryCheckoutErrorShape|ManagedAgentsRepositoryCloneErrorShape
+ * @phpstan-type ErrorVariants = ManagedAgentsUnknownErrorObject|ManagedAgentsModelOverloadedErrorObject|ManagedAgentsModelRateLimitedErrorObject|ManagedAgentsModelRequestFailedErrorObject|ManagedAgentsMCPConnectionFailedErrorObject|ManagedAgentsMCPAuthenticationFailedErrorObject|ManagedAgentsBillingErrorObject|ManagedAgentsCredentialHostUnreachableErrorObject|ManagedAgentsToolUseLimitReachedErrorObject|ManagedAgentsCompactionLimitReachedErrorObject|ManagedAgentsRepositoryAuthenticationErrorObject|ManagedAgentsRepositoryForbiddenErrorObject|ManagedAgentsRepositoryNotFoundErrorObject|ManagedAgentsRepositoryCheckoutErrorObject|ManagedAgentsRepositoryCloneErrorObject
+ * @phpstan-type ErrorShape = ErrorVariants|ManagedAgentsUnknownErrorObjectShape|ManagedAgentsModelOverloadedErrorObjectShape|ManagedAgentsModelRateLimitedErrorObjectShape|ManagedAgentsModelRequestFailedErrorObjectShape|ManagedAgentsMCPConnectionFailedErrorObjectShape|ManagedAgentsMCPAuthenticationFailedErrorObjectShape|ManagedAgentsBillingErrorObjectShape|ManagedAgentsCredentialHostUnreachableErrorObjectShape|ManagedAgentsToolUseLimitReachedErrorObjectShape|ManagedAgentsCompactionLimitReachedErrorObjectShape|ManagedAgentsRepositoryAuthenticationErrorObjectShape|ManagedAgentsRepositoryForbiddenErrorObjectShape|ManagedAgentsRepositoryNotFoundErrorObjectShape|ManagedAgentsRepositoryCheckoutErrorObjectShape|ManagedAgentsRepositoryCloneErrorObjectShape
  */
 final class Error implements ConverterSource
 {
@@ -58,21 +58,21 @@ final class Error implements ConverterSource
     public static function variants(): array
     {
         return [
-            'unknown_error' => ManagedAgentsUnknownError::class,
-            'model_overloaded_error' => ManagedAgentsModelOverloadedError::class,
-            'model_rate_limited_error' => ManagedAgentsModelRateLimitedError::class,
-            'model_request_failed_error' => ManagedAgentsModelRequestFailedError::class,
-            'mcp_connection_failed_error' => ManagedAgentsMCPConnectionFailedError::class,
-            'mcp_authentication_failed_error' => ManagedAgentsMCPAuthenticationFailedError::class,
-            'billing_error' => ManagedAgentsBillingError::class,
-            'credential_host_unreachable_error' => ManagedAgentsCredentialHostUnreachableError::class,
-            'tool_use_limit_reached_error' => ManagedAgentsToolUseLimitReachedError::class,
-            'compaction_limit_reached_error' => ManagedAgentsCompactionLimitReachedError::class,
-            'repository_authentication_error' => ManagedAgentsRepositoryAuthenticationError::class,
-            'repository_forbidden_error' => ManagedAgentsRepositoryForbiddenError::class,
-            'repository_not_found_error' => ManagedAgentsRepositoryNotFoundError::class,
-            'repository_checkout_error' => ManagedAgentsRepositoryCheckoutError::class,
-            'repository_clone_error' => ManagedAgentsRepositoryCloneError::class,
+            'unknown_error' => ManagedAgentsUnknownErrorObject::class,
+            'model_overloaded_error' => ManagedAgentsModelOverloadedErrorObject::class,
+            'model_rate_limited_error' => ManagedAgentsModelRateLimitedErrorObject::class,
+            'model_request_failed_error' => ManagedAgentsModelRequestFailedErrorObject::class,
+            'mcp_connection_failed_error' => ManagedAgentsMCPConnectionFailedErrorObject::class,
+            'mcp_authentication_failed_error' => ManagedAgentsMCPAuthenticationFailedErrorObject::class,
+            'billing_error' => ManagedAgentsBillingErrorObject::class,
+            'credential_host_unreachable_error' => ManagedAgentsCredentialHostUnreachableErrorObject::class,
+            'tool_use_limit_reached_error' => ManagedAgentsToolUseLimitReachedErrorObject::class,
+            'compaction_limit_reached_error' => ManagedAgentsCompactionLimitReachedErrorObject::class,
+            'repository_authentication_error' => ManagedAgentsRepositoryAuthenticationErrorObject::class,
+            'repository_forbidden_error' => ManagedAgentsRepositoryForbiddenErrorObject::class,
+            'repository_not_found_error' => ManagedAgentsRepositoryNotFoundErrorObject::class,
+            'repository_checkout_error' => ManagedAgentsRepositoryCheckoutErrorObject::class,
+            'repository_clone_error' => ManagedAgentsRepositoryCloneErrorObject::class,
         ];
     }
 }

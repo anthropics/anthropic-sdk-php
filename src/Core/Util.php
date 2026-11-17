@@ -139,14 +139,14 @@ final class Util
         return $callback($mapped);
     }
 
-    public static function removeNulls(mixed $value): mixed
+    /**
+     * @param list<string> $except
+     */
+    public static function removeNulls(mixed $value, array $except = []): mixed
     {
-        $mapped = self::mapRecursive(
-            static fn ($vs) => is_array($vs) && !array_is_list($vs) ? array_filter($vs, callback: static fn ($v) => !is_null($v)) : $vs,
-            value: $value
-        );
-
-        return $mapped;
+        return is_array($value)
+            ? array_filter($value, static fn ($v, $k) => !is_null($v) || in_array($k, haystack: $except, strict: true), ARRAY_FILTER_USE_BOTH)
+            : $value;
     }
 
     /**

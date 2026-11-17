@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Anthropic\Services\Beta;
 
 use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Messages\BetaBillingPolicy;
 use Anthropic\Beta\Messages\BetaCacheControlEphemeral;
 use Anthropic\Beta\Messages\BetaCompactionConfig;
 use Anthropic\Beta\Messages\BetaContextManagementConfig;
@@ -32,6 +33,7 @@ use Anthropic\Client;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
@@ -40,6 +42,8 @@ use Anthropic\Core\Implementation\RawResponse;
 use Anthropic\Core\Util;
 use Anthropic\EnforcedSpendLimitReachedException;
 use Anthropic\Lib\Tracing\Tracing;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
 use Anthropic\Messages\CompactionBlockMisplacedException;
@@ -67,9 +71,13 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\MessagesRawContract;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
 use Anthropic\SSEStream;
+use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaBillingPolicyShape from \Anthropic\Beta\Messages\BetaBillingPolicy
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
@@ -111,6 +119,7 @@ final class MessagesRawService implements MessagesRawContract
      *   maxTokens: int,
      *   messages: list<BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   billingPolicy?: BetaBillingPolicy|BetaBillingPolicyShape|null,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
      *   container?: ContainerShape|null,
@@ -161,9 +170,15 @@ final class MessagesRawService implements MessagesRawContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -219,6 +234,7 @@ final class MessagesRawService implements MessagesRawContract
      *   maxTokens: int,
      *   messages: list<BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   billingPolicy?: BetaBillingPolicy|BetaBillingPolicyShape|null,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
      *   container?: ContainerShape|null,
@@ -269,9 +285,15 @@ final class MessagesRawService implements MessagesRawContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileBillingNotAuthorizedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -337,6 +359,7 @@ final class MessagesRawService implements MessagesRawContract
      * @param array{
      *   messages: list<BetaMessageParamShape>,
      *   model: string|Model|value-of<Model>,
+     *   billingPolicy?: BetaBillingPolicy|BetaBillingPolicyShape|null,
      *   cacheControl?: BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null,
      *   compaction?: BetaCompactionConfig|BetaCompactionConfigShape|null,
      *   contextManagement?: BetaContextManagementConfig|BetaContextManagementConfigShape|null,

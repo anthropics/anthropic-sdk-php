@@ -25,6 +25,7 @@ use Anthropic\Messages\Model;
  * @see Anthropic\Services\Beta\MessagesService::create()
  *
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
+ * @phpstan-import-type BetaBillingPolicyShape from \Anthropic\Beta\Messages\BetaBillingPolicy
  * @phpstan-import-type BetaCacheControlEphemeralShape from \Anthropic\Beta\Messages\BetaCacheControlEphemeral
  * @phpstan-import-type BetaCompactionConfigShape from \Anthropic\Beta\Messages\BetaCompactionConfig
  * @phpstan-import-type ContainerShape from \Anthropic\Beta\Messages\MessageCreateParams\Container
@@ -55,6 +56,7 @@ use Anthropic\Messages\Model;
  *   maxTokens: int,
  *   messages: list<BetaMessageParamShape>,
  *   model: string|Model|value-of<Model>,
+ *   billingPolicy?: null|BetaBillingPolicy|BetaBillingPolicyShape,
  *   cacheControl?: null|BetaCacheControlEphemeral|BetaCacheControlEphemeralShape,
  *   compaction?: null|BetaCompactionConfig|BetaCompactionConfigShape,
  *   container?: ContainerShape|null,
@@ -162,6 +164,12 @@ final class MessageCreateParams implements BaseModel
      */
     #[Required(enum: Model::class)]
     public string $model;
+
+    /**
+     * Declares which organization is billed for this request. `{"type": "billing_policy", "bill_to": "user_profile"}` bills the customer behind the user profile named in the `anthropic-user-profile-id` header, instead of your organization. If that customer has not linked an Anthropic organization to the profile, or has not allowed your organization to bill it, the request is rejected rather than billed to you. Omit the field, or send `"bill_to": "self"` (the default), to be billed as usual.
+     */
+    #[Optional('billing_policy', nullable: true)]
+    public ?BetaBillingPolicy $billingPolicy;
 
     /**
      * Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
@@ -459,6 +467,7 @@ final class MessageCreateParams implements BaseModel
      *
      * @param list<BetaMessageParamShape> $messages
      * @param string|Model|value-of<Model> $model
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction
      * @param ContainerShape|null $container
@@ -484,6 +493,7 @@ final class MessageCreateParams implements BaseModel
         int $maxTokens,
         array $messages,
         Model|string $model,
+        BetaBillingPolicy|array|null $billingPolicy = null,
         BetaCacheControlEphemeral|array|null $cacheControl = null,
         BetaCompactionConfig|array|null $compaction = null,
         string|BetaContainerParams|array|null $container = null,
@@ -514,6 +524,7 @@ final class MessageCreateParams implements BaseModel
         $self['messages'] = $messages;
         $self['model'] = $model;
 
+        null !== $billingPolicy && $self['billingPolicy'] = $billingPolicy;
         null !== $cacheControl && $self['cacheControl'] = $cacheControl;
         null !== $compaction && $self['compaction'] = $compaction;
         null !== $container && $self['container'] = $container;
@@ -629,6 +640,20 @@ final class MessageCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['model'] = $model;
+
+        return $self;
+    }
+
+    /**
+     * Declares which organization is billed for this request. `{"type": "billing_policy", "bill_to": "user_profile"}` bills the customer behind the user profile named in the `anthropic-user-profile-id` header, instead of your organization. If that customer has not linked an Anthropic organization to the profile, or has not allowed your organization to bill it, the request is rejected rather than billed to you. Omit the field, or send `"bill_to": "self"` (the default), to be billed as usual.
+     *
+     * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy
+     */
+    public function withBillingPolicy(
+        BetaBillingPolicy|array|null $billingPolicy
+    ): self {
+        $self = clone $this;
+        $self['billingPolicy'] = $billingPolicy;
 
         return $self;
     }

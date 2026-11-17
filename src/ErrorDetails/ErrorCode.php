@@ -50,11 +50,23 @@ enum ErrorCode: string
 
     case TOOL_REFERENCE_UNRESOLVED = 'tool_reference_unresolved';
 
+    case USER_PROFILE_REQUIRED = 'user_profile_required';
+
+    case LINKED_ORGANIZATION_BILLING_UNAVAILABLE = 'linked_organization_billing_unavailable';
+
+    case LINKED_ORGANIZATION_SPEND_LIMIT_REACHED = 'linked_organization_spend_limit_reached';
+
+    case USER_PROFILE_BILLING_NOT_AUTHORIZED = 'user_profile_billing_not_authorized';
+
+    case USER_PROFILE_NOT_BILLABLE = 'user_profile_not_billable';
+
     case THREAD_NOT_FOUND = 'thread_not_found';
 
     case SKILL_READ_BLOCKED_UNDECRYPTABLE = 'skill_read_blocked_undecryptable';
 
     case REQUEST_BODY_TOO_LARGE_AFTER_DECODING = 'request_body_too_large_after_decoding';
+
+    case CONTRACT_SPEND_LIMIT_REACHED = 'contract_spend_limit_reached';
 
     case ENFORCED_SPEND_LIMIT_REACHED = 'enforced_spend_limit_reached';
 

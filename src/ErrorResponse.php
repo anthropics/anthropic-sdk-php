@@ -28,7 +28,7 @@ final class ErrorResponse implements BaseModel
 
     /** @var ErrorObjectVariants $error */
     #[Required(union: ErrorObject::class)]
-    public InvalidRequestError|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error;
+    public InvalidRequestErrorObject|AuthenticationErrorObject|BillingErrorObject|PermissionErrorObject|NotFoundErrorObject|RateLimitErrorObject|GatewayTimeoutErrorObject|APIErrorObject|OverloadedErrorObject $error;
 
     #[Required('request_id')]
     public ?string $requestID;
@@ -60,7 +60,7 @@ final class ErrorResponse implements BaseModel
      * @param ErrorObjectShape $error
      */
     public static function with(
-        InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
+        InvalidRequestErrorObject|array|AuthenticationErrorObject|BillingErrorObject|PermissionErrorObject|NotFoundErrorObject|RateLimitErrorObject|GatewayTimeoutErrorObject|APIErrorObject|OverloadedErrorObject $error,
         ?string $requestID,
     ): self {
         $self = new self;
@@ -75,7 +75,7 @@ final class ErrorResponse implements BaseModel
      * @param ErrorObjectShape $error
      */
     public function withError(
-        InvalidRequestError|array|AuthenticationError|BillingError|PermissionError|NotFoundError|RateLimitError|GatewayTimeoutError|APIErrorObject|OverloadedError $error,
+        InvalidRequestErrorObject|array|AuthenticationErrorObject|BillingErrorObject|PermissionErrorObject|NotFoundErrorObject|RateLimitErrorObject|GatewayTimeoutErrorObject|APIErrorObject|OverloadedErrorObject $error,
     ): self {
         $self = clone $this;
         $self['error'] = $error;

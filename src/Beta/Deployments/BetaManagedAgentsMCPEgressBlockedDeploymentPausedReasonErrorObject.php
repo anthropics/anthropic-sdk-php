@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Anthropic\Beta\Deployments;
+
+use Anthropic\Core\Attributes\Required;
+use Anthropic\Core\Concerns\SdkModel;
+use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Core\Conversion\ConstantOf;
+
+/**
+ * An MCP server host used by the deployment's agent is blocked by the environment's network policy.
+ *
+ * @phpstan-type BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonErrorObjectShape = array{
+ *   type: 'mcp_egress_blocked_error'
+ * }
+ */
+class BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonErrorObject implements BaseModel
+{
+    /**
+     * @use SdkModel<BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonErrorObjectShape>
+     */
+    use SdkModel;
+
+    /** @var 'mcp_egress_blocked_error' $type */
+    #[Required(type: new ConstantOf('mcp_egress_blocked_error'))]
+    public string $type = 'mcp_egress_blocked_error';
+
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     */
+    public static function with(): self
+    {
+        return new self;
+    }
+
+    /**
+     * @param 'mcp_egress_blocked_error' $type
+     */
+    public function withType(string $type): self
+    {
+        $self = clone $this;
+        $self['type'] = $type;
+
+        return $self;
+    }
+}
+
+class_alias(
+    BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonErrorObject::class,
+    'Anthropic\Beta\Deployments\BetaManagedAgentsMCPEgressBlockedDeploymentPausedReasonError',
+);

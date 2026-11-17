@@ -11,10 +11,10 @@ use Anthropic\Core\Conversion\ListOf;
 
 /**
  * @phpstan-import-type WebSearchResultBlockParamShape from \Anthropic\Messages\WebSearchResultBlockParam
- * @phpstan-import-type WebSearchToolRequestErrorShape from \Anthropic\Messages\WebSearchToolRequestError
+ * @phpstan-import-type WebSearchToolRequestErrorObjectShape from \Anthropic\Messages\WebSearchToolRequestErrorObject
  *
- * @phpstan-type WebSearchToolResultBlockParamContentVariants = list<WebSearchResultBlockParam>|WebSearchToolRequestError
- * @phpstan-type WebSearchToolResultBlockParamContentShape = WebSearchToolResultBlockParamContentVariants|list<WebSearchResultBlockParamShape>|WebSearchToolRequestErrorShape
+ * @phpstan-type WebSearchToolResultBlockParamContentVariants = list<WebSearchResultBlockParam>|WebSearchToolRequestErrorObject
+ * @phpstan-type WebSearchToolResultBlockParamContentShape = WebSearchToolResultBlockParamContentVariants|list<WebSearchResultBlockParamShape>|WebSearchToolRequestErrorObjectShape
  */
 final class WebSearchToolResultBlockParamContent implements ConverterSource
 {
@@ -26,7 +26,7 @@ final class WebSearchToolResultBlockParamContent implements ConverterSource
     public static function variants(): array
     {
         return [
-            WebSearchToolRequestError::class,
+            WebSearchToolRequestErrorObject::class,
             new ListOf(WebSearchResultBlockParam::class),
         ];
     }

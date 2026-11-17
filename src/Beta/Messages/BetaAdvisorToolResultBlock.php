@@ -28,7 +28,7 @@ final class BetaAdvisorToolResultBlock implements BaseModel
 
     /** @var ContentVariants $content */
     #[Required]
-    public BetaAdvisorToolResultError|BetaAdvisorResultBlock|BetaAdvisorRedactedResultBlock $content;
+    public BetaAdvisorToolResultErrorObject|BetaAdvisorResultBlock|BetaAdvisorRedactedResultBlock $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -60,7 +60,7 @@ final class BetaAdvisorToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public static function with(
-        BetaAdvisorToolResultError|array|BetaAdvisorResultBlock|BetaAdvisorRedactedResultBlock $content,
+        BetaAdvisorToolResultErrorObject|array|BetaAdvisorResultBlock|BetaAdvisorRedactedResultBlock $content,
         string $toolUseID,
     ): self {
         $self = new self;
@@ -75,7 +75,7 @@ final class BetaAdvisorToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public function withContent(
-        BetaAdvisorToolResultError|array|BetaAdvisorResultBlock|BetaAdvisorRedactedResultBlock $content,
+        BetaAdvisorToolResultErrorObject|array|BetaAdvisorResultBlock|BetaAdvisorRedactedResultBlock $content,
     ): self {
         $self = clone $this;
         $self['content'] = $content;

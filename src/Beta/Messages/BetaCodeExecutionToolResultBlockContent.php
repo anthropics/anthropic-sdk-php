@@ -9,12 +9,12 @@ use Anthropic\Core\Conversion\Contracts\Converter;
 use Anthropic\Core\Conversion\Contracts\ConverterSource;
 
 /**
- * @phpstan-import-type BetaCodeExecutionToolResultErrorShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultError
+ * @phpstan-import-type BetaCodeExecutionToolResultErrorObjectShape from \Anthropic\Beta\Messages\BetaCodeExecutionToolResultErrorObject
  * @phpstan-import-type BetaCodeExecutionResultBlockShape from \Anthropic\Beta\Messages\BetaCodeExecutionResultBlock
  * @phpstan-import-type BetaEncryptedCodeExecutionResultBlockShape from \Anthropic\Beta\Messages\BetaEncryptedCodeExecutionResultBlock
  *
- * @phpstan-type BetaCodeExecutionToolResultBlockContentVariants = BetaCodeExecutionToolResultError|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock
- * @phpstan-type BetaCodeExecutionToolResultBlockContentShape = BetaCodeExecutionToolResultBlockContentVariants|BetaCodeExecutionToolResultErrorShape|BetaCodeExecutionResultBlockShape|BetaEncryptedCodeExecutionResultBlockShape
+ * @phpstan-type BetaCodeExecutionToolResultBlockContentVariants = BetaCodeExecutionToolResultErrorObject|BetaCodeExecutionResultBlock|BetaEncryptedCodeExecutionResultBlock
+ * @phpstan-type BetaCodeExecutionToolResultBlockContentShape = BetaCodeExecutionToolResultBlockContentVariants|BetaCodeExecutionToolResultErrorObjectShape|BetaCodeExecutionResultBlockShape|BetaEncryptedCodeExecutionResultBlockShape
  */
 final class BetaCodeExecutionToolResultBlockContent implements ConverterSource
 {
@@ -26,7 +26,7 @@ final class BetaCodeExecutionToolResultBlockContent implements ConverterSource
     public static function variants(): array
     {
         return [
-            BetaCodeExecutionToolResultError::class,
+            BetaCodeExecutionToolResultErrorObject::class,
             BetaCodeExecutionResultBlock::class,
             BetaEncryptedCodeExecutionResultBlock::class,
         ];

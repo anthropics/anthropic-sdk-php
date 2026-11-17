@@ -21,6 +21,11 @@ final class ModelOf implements Converter
     public readonly array $properties;
 
     /**
+     * @var array<string, PropertyInfo>
+     */
+    private readonly array $propertiesByApiName;
+
+    /**
      * @param \ReflectionClass<BaseModel> $class
      */
     public function __construct(public readonly \ReflectionClass $class)
@@ -36,6 +41,7 @@ final class ModelOf implements Converter
             }
         }
         $this->properties = $properties;
+        $this->propertiesByApiName = array_column($properties, column_key: null, index_key: 'apiName');
     }
 
     public function coerce(mixed $value, CoerceState $state): mixed
@@ -75,11 +81,7 @@ final class ModelOf implements Converter
             unset($val[$srcName]);
 
             if (is_null($item) && ($info->nullable || $info->optional)) {
-                if ($info->nullable) {
-                    ++$state->yes;
-                } elseif ($info->optional) {
-                    ++$state->maybe;
-                }
+                ++$state->yes;
                 $acc[$name] = null;
             } else {
                 $coerced = Conversion::coerce($info->type, value: $item, state: $state);
@@ -97,7 +99,8 @@ final class ModelOf implements Converter
 
     public function dump(mixed $value, DumpState $state): mixed
     {
-        if ($value instanceof BaseModel) {
+        $isModel = $value instanceof BaseModel;
+        if ($isModel) {
             $value = $value->toProperties();
         }
 
@@ -106,10 +109,16 @@ final class ModelOf implements Converter
             $acc = [];
 
             foreach ($value as $name => $item) {
-                if (array_key_exists($name, array: $this->properties)) {
+                $info = $this->properties[$name] ?? $this->propertiesByApiName[$name] ?? null;
+                if (!is_null($info)) {
                     ++$state->yes;
-                    $info = $this->properties[$name];
-                    $acc[$info->apiName] = Conversion::dump($info->type, value: $item, state: $state);
+                    if (is_null($item) && !$isModel && !$info->nullable) {
+                        continue;
+                    }
+
+                    $acc[$info->apiName] = is_null($item)
+                        ? null
+                        : Conversion::dump($info->type, value: $item, state: $state);
                 } else {
                     $acc[$name] = Conversion::dump_unknown($item, state: $state);
                 }

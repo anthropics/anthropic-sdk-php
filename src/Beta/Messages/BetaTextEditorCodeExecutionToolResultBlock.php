@@ -30,7 +30,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
 
     /** @var ContentVariants $content */
     #[Required]
-    public BetaTextEditorCodeExecutionToolResultError|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content;
+    public BetaTextEditorCodeExecutionToolResultErrorObject|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content;
 
     #[Required('tool_use_id')]
     public string $toolUseID;
@@ -64,7 +64,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public static function with(
-        BetaTextEditorCodeExecutionToolResultError|array|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,
+        BetaTextEditorCodeExecutionToolResultErrorObject|array|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,
         string $toolUseID,
     ): self {
         $self = new self;
@@ -79,7 +79,7 @@ final class BetaTextEditorCodeExecutionToolResultBlock implements BaseModel
      * @param ContentShape $content
      */
     public function withContent(
-        BetaTextEditorCodeExecutionToolResultError|array|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,
+        BetaTextEditorCodeExecutionToolResultErrorObject|array|BetaTextEditorCodeExecutionViewResultBlock|BetaTextEditorCodeExecutionCreateResultBlock|BetaTextEditorCodeExecutionStrReplaceResultBlock $content,
     ): self {
         $self = clone $this;
         $self['content'] = $content;

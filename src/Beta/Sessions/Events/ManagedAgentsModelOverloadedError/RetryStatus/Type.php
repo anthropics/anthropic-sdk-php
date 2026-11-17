@@ -4,11 +4,23 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedError\RetryStatus;
 
-enum Type: string
-{
-    case RETRYING = 'retrying';
+// Loading the class registers this name as its alias.
+class_exists(
+    \Anthropic\Beta\Sessions\Events\ManagedAgentsModelOverloadedErrorObject\RetryStatus\Type::class,
+);
 
-    case EXHAUSTED = 'exhausted';
+// This block never runs. It declares the name for IDEs and static analyzers.
+// @phpstan-ignore if.alwaysFalse
+if (false) {
+    /**
+     * @deprecated ManagedAgentsModelOverloadedError has been renamed to ManagedAgentsModelOverloadedErrorObject
+     */
+    enum Type: string
+    {
+        case RETRYING = 'retrying';
 
-    case TERMINAL = 'terminal';
+        case EXHAUSTED = 'exhausted';
+
+        case TERMINAL = 'terminal';
+    }
 }

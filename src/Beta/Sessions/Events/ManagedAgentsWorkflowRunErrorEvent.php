@@ -12,12 +12,12 @@ use Anthropic\Core\Conversion\ConstantOf;
 /**
  * A workflow run met an error, or an error kept a run from being created. A run that ends with a `result.type` of `error` emits this event before its `workflow_run.status_ended`, with the same `error`.
  *
- * @phpstan-import-type ManagedAgentsWorkflowRunErrorShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunError
- * @phpstan-import-type ManagedAgentsWorkflowRunErrorVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunError
+ * @phpstan-import-type ManagedAgentsWorkflowRunErrorObjectShape from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunErrorObject
+ * @phpstan-import-type ManagedAgentsWorkflowRunErrorObjectVariants from \Anthropic\Beta\Sessions\Events\ManagedAgentsWorkflowRunErrorObject
  *
  * @phpstan-type ManagedAgentsWorkflowRunErrorEventShape = array{
  *   id: string,
- *   error: ManagedAgentsWorkflowRunErrorShape,
+ *   error: ManagedAgentsWorkflowRunErrorObjectShape,
  *   processedAt: \DateTimeInterface,
  *   type: 'workflow_run.error',
  *   workflowRunID: string|null,
@@ -41,10 +41,10 @@ final class ManagedAgentsWorkflowRunErrorEvent implements BaseModel
     /**
      * Why the run did not finish, or was not created.
      *
-     * @var ManagedAgentsWorkflowRunErrorVariants $error
+     * @var ManagedAgentsWorkflowRunErrorObjectVariants $error
      */
-    #[Required(union: ManagedAgentsWorkflowRunError::class)]
-    public ManagedAgentsTimeoutWorkflowRunError|ManagedAgentsProgramWorkflowRunError|ManagedAgentsUnknownWorkflowRunError|ManagedAgentsThreadLimitWorkflowRunError|ManagedAgentsMaxWorkflowRunsWorkflowRunError $error;
+    #[Required(union: ManagedAgentsWorkflowRunErrorObject::class)]
+    public ManagedAgentsTimeoutWorkflowRunErrorObject|ManagedAgentsProgramWorkflowRunErrorObject|ManagedAgentsUnknownWorkflowRunErrorObject|ManagedAgentsThreadLimitWorkflowRunErrorObject|ManagedAgentsMaxWorkflowRunsWorkflowRunErrorObject $error;
 
     /**
      * Timestamp when this event was processed.
@@ -88,11 +88,11 @@ final class ManagedAgentsWorkflowRunErrorEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ManagedAgentsWorkflowRunErrorShape $error
+     * @param ManagedAgentsWorkflowRunErrorObjectShape $error
      */
     public static function with(
         string $id,
-        ManagedAgentsTimeoutWorkflowRunError|array|ManagedAgentsProgramWorkflowRunError|ManagedAgentsUnknownWorkflowRunError|ManagedAgentsThreadLimitWorkflowRunError|ManagedAgentsMaxWorkflowRunsWorkflowRunError $error,
+        ManagedAgentsTimeoutWorkflowRunErrorObject|array|ManagedAgentsProgramWorkflowRunErrorObject|ManagedAgentsUnknownWorkflowRunErrorObject|ManagedAgentsThreadLimitWorkflowRunErrorObject|ManagedAgentsMaxWorkflowRunsWorkflowRunErrorObject $error,
         \DateTimeInterface $processedAt,
         ?string $workflowRunID,
     ): self {
@@ -120,10 +120,10 @@ final class ManagedAgentsWorkflowRunErrorEvent implements BaseModel
     /**
      * Why the run did not finish, or was not created.
      *
-     * @param ManagedAgentsWorkflowRunErrorShape $error
+     * @param ManagedAgentsWorkflowRunErrorObjectShape $error
      */
     public function withError(
-        ManagedAgentsTimeoutWorkflowRunError|array|ManagedAgentsProgramWorkflowRunError|ManagedAgentsUnknownWorkflowRunError|ManagedAgentsThreadLimitWorkflowRunError|ManagedAgentsMaxWorkflowRunsWorkflowRunError $error,
+        ManagedAgentsTimeoutWorkflowRunErrorObject|array|ManagedAgentsProgramWorkflowRunErrorObject|ManagedAgentsUnknownWorkflowRunErrorObject|ManagedAgentsThreadLimitWorkflowRunErrorObject|ManagedAgentsMaxWorkflowRunsWorkflowRunErrorObject $error,
     ): self {
         $self = clone $this;
         $self['error'] = $error;
