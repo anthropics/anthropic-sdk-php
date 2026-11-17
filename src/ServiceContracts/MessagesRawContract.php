@@ -13,6 +13,8 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\EnforcedSpendLimitReachedException;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
 use Anthropic\Messages\CompactionBlockMisplacedException;
@@ -47,6 +49,8 @@ use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
 use Anthropic\RequestOptions;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -83,6 +87,10 @@ interface MessagesRawContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
@@ -127,6 +135,10 @@ interface MessagesRawContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException

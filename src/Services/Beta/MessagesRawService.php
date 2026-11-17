@@ -41,6 +41,8 @@ use Anthropic\Core\Implementation\RawResponse;
 use Anthropic\Core\Util;
 use Anthropic\EnforcedSpendLimitReachedException;
 use Anthropic\Lib\Tracing\Tracing;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
 use Anthropic\Messages\CompactionBlockMisplacedException;
@@ -68,6 +70,8 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\MessagesRawContract;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
 use Anthropic\SSEStream;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
@@ -164,6 +168,10 @@ final class MessagesRawService implements MessagesRawContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
@@ -273,6 +281,10 @@ final class MessagesRawService implements MessagesRawContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException

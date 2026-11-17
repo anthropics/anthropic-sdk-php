@@ -49,6 +49,8 @@ use Anthropic\Lib\Threads\BetaMessageThread;
 use Anthropic\Lib\Threads\UnsupportedRequestBehavior;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
 use Anthropic\Messages\CompactionBlockMisplacedException;
@@ -74,6 +76,8 @@ use Anthropic\RequestBodyEncodingUnsupportedException;
 use Anthropic\RequestBodyTooLargeAfterDecodingException;
 use Anthropic\RequestOptions;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
@@ -310,6 +314,10 @@ interface MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
@@ -562,6 +570,10 @@ interface MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException

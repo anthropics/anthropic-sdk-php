@@ -53,6 +53,8 @@ use Anthropic\Lib\Threads\BetaMessageThread;
 use Anthropic\Lib\Threads\UnsupportedRequestBehavior;
 use Anthropic\Lib\Tools\BetaRunnableTool;
 use Anthropic\Lib\Tools\BetaToolRunner;
+use Anthropic\LinkedOrganizationBillingUnavailableException;
+use Anthropic\LinkedOrganizationSpendLimitReachedException;
 use Anthropic\Messages\AvailableToolsLimitExceededException;
 use Anthropic\Messages\CompactionBlockAmbiguousException;
 use Anthropic\Messages\CompactionBlockMisplacedException;
@@ -80,6 +82,8 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\MessagesContract;
 use Anthropic\Services\Beta\Messages\BatchesService;
 use Anthropic\Skills\SkillReadBlockedUndecryptableException;
+use Anthropic\UserProfiles\UserProfileNotBillableException;
+use Anthropic\UserProfiles\UserProfileRequiredException;
 
 /**
  * @phpstan-import-type BetaMessageParamShape from \Anthropic\Beta\Messages\BetaMessageParam
@@ -341,6 +345,10 @@ final class MessagesService implements MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
@@ -660,6 +668,10 @@ final class MessagesService implements MessagesContract
      * @throws ThreadUnsupportedRequestException
      * @throws ToolNameConflictException
      * @throws ToolReferenceUnresolvedException
+     * @throws UserProfileRequiredException
+     * @throws LinkedOrganizationBillingUnavailableException
+     * @throws LinkedOrganizationSpendLimitReachedException
+     * @throws UserProfileNotBillableException
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
