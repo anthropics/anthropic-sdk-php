@@ -19,6 +19,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\Plugins\InstallationSettingsRawContract;
 
 /**
@@ -135,6 +136,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
      *
      * @return BaseResponse<BetaDeletedPluginInstallationSetting>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function remove(
@@ -207,6 +209,7 @@ final class InstallationSettingsRawService implements InstallationSettingsRawCon
      *
      * @return BaseResponse<BetaPluginInstallationSetting>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function set(

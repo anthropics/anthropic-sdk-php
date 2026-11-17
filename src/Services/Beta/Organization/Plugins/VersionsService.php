@@ -17,6 +17,7 @@ use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\Plugins\VersionsContract;
 
 /**
@@ -73,6 +74,7 @@ final class VersionsService implements VersionsContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws SkillNameTakenException
      * @throws RegistrationPendingException
      * @throws APIException
@@ -213,6 +215,7 @@ final class VersionsService implements VersionsContract
      *
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function download(
