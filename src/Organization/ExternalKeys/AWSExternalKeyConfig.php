@@ -25,7 +25,7 @@ final class AWSExternalKeyConfig implements BaseModel
     public string $type = 'aws';
 
     /**
-     * Full ARN of the AWS KMS key. On Claude Platform on AWS, alias ARNs are rejected, and your organization's own key must be a single-Region key in your organization's AWS account.
+     * Full ARN of the AWS KMS key. On Claude Platform on AWS, alias ARNs are rejected, and your organization's own key must be a single-Region key.
      */
     #[Required('kms_arn')]
     public string $kmsARN;
@@ -72,7 +72,7 @@ final class AWSExternalKeyConfig implements BaseModel
     }
 
     /**
-     * Full ARN of the AWS KMS key. On Claude Platform on AWS, alias ARNs are rejected, and your organization's own key must be a single-Region key in your organization's AWS account.
+     * Full ARN of the AWS KMS key. On Claude Platform on AWS, alias ARNs are rejected, and your organization's own key must be a single-Region key.
      */
     public function withKMSARN(string $kmsARN): self
     {
