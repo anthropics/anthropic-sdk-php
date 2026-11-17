@@ -1,5 +1,43 @@
 # Changelog
 
+## [1.10.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.9.0...v1.10.0) (2026-11-17)
+
+### Features
+
+* **api:** add beta support for the billing_policy request parameter
+* **api:** add contract_spend_limit_reached error code to messages
+* **api:** add error codes for linked billing refusals
+* **api:** add the user_profile_billing_not_authorized error code
+* **api:** add webhook events for external key failure and recovery
+
+
+### Bug Fixes
+
+* **client:** send a null inside an array wherever the API takes one
+
+  If your code puts `null` in an array to mean "not given", leave that key out instead. Where the API takes a `null`, it is now sent, and on an update it clears the field. A required argument that takes `null`, such as `amount` of `beta->organization->spendLimits->set`, now sends it too.
+
+  Arrays keyed by the API's names, such as `input_schema`, are now converted the same way as arrays keyed by the SDK's names.
+
+* **client:** send an array's API property names when one of its values is null
+* **types:** keep deprecated model aliases and the types nested under them working
+
+
+### Chores
+
+* **api:** rename error data models, deprecating the old names
+* **docs:** clarify which AWS KMS keys a workspace can use on Claude Platform on AWS
+* **docs:** clarify which credential work get, update and list accept
+* **docs:** clarify which uploads a plugin pin holds back
+* **docs:** note that a plugin scan's reason also covers errored scans
+
+  `content_scan.reason` on an errored scan now says why there is no verdict. It is not a security finding, so code that treats any `reason` as a concern should also check `status`.
+
+
+### Documentation
+
+* name each SDK's own types in rename deprecations
+
 ## [1.9.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.8.0...v1.9.0) (2026-11-16)
 
 ### Features
