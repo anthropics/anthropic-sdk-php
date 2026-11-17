@@ -38,6 +38,7 @@ use Anthropic\CMEKContextUnavailableException;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Conversion;
 use Anthropic\Core\Util;
 use Anthropic\EnforcedSpendLimitReachedException;
@@ -211,6 +212,7 @@ class APIStatusException extends APIException
         '409 slack_channel_set_up_settings_conflict' => SlackChannelSetUpSettingsConflictException::class,
         '412 heartbeat_precondition_failed' => HeartbeatPreconditionFailedException::class,
         '413 request_body_too_large_after_decoding' => RequestBodyTooLargeAfterDecodingException::class,
+        '429 contract_spend_limit_reached' => ContractSpendLimitReachedException::class,
         '429 enforced_spend_limit_reached' => EnforcedSpendLimitReachedException::class,
         '429 ramp_limit_exceeded' => RampLimitExceededException::class,
         '503 cmek_context_unavailable' => CMEKContextUnavailableException::class,

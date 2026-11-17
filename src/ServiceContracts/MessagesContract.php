@@ -9,6 +9,7 @@ use Anthropic\ClaudeCodeVersionTooOldException;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\EnforcedSpendLimitReachedException;
@@ -267,6 +268,7 @@ interface MessagesContract
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -481,6 +483,7 @@ interface MessagesContract
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException

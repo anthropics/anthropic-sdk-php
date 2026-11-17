@@ -66,6 +66,8 @@ enum ErrorCode: string
 
     case REQUEST_BODY_TOO_LARGE_AFTER_DECODING = 'request_body_too_large_after_decoding';
 
+    case CONTRACT_SPEND_LIMIT_REACHED = 'contract_spend_limit_reached';
+
     case ENFORCED_SPEND_LIMIT_REACHED = 'enforced_spend_limit_reached';
 
     case RAMP_LIMIT_EXCEEDED = 'ramp_limit_exceeded';

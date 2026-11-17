@@ -10,6 +10,7 @@ use Anthropic\Client;
 use Anthropic\CMEKKeyDisabledException;
 use Anthropic\CMEKKeyNetworkBlockedException;
 use Anthropic\CMEKKeyUnreachableException;
+use Anthropic\ContractSpendLimitReachedException;
 use Anthropic\Core\Contracts\BaseStream;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Lib\Helpers\StructuredOutput;
@@ -298,6 +299,7 @@ final class MessagesService implements MessagesContract
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
@@ -570,6 +572,7 @@ final class MessagesService implements MessagesContract
      * @throws ThreadNotFoundException
      * @throws SkillReadBlockedUndecryptableException
      * @throws RequestBodyTooLargeAfterDecodingException
+     * @throws ContractSpendLimitReachedException
      * @throws EnforcedSpendLimitReachedException
      * @throws RampLimitExceededException
      * @throws CMEKKeyUnreachableException
