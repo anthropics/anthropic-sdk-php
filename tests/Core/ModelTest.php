@@ -176,6 +176,9 @@ class Fetch implements BaseModel
     #[Required('toy_name')]
     public string $toyName;
 
+    #[Optional('toy_color', nullable: true)]
+    public ?string $toyColor;
+
     public function __construct()
     {
         $this->initialize();
@@ -522,6 +525,15 @@ class ModelTest extends TestCase
 
         $this->assertInstanceOf(Fetch::class, $fromValue->command);
         $this->assertEquals($fromValue->command, $fromEnum->command);
+    }
+
+    #[Test]
+    public function testNullPropertyKeepsTheUnionVariantOfItsArray(): void
+    {
+        $this->assertSame(
+            ['commands' => [['type' => 'fetch', 'toy_name' => 'ball', 'toy_color' => null]]],
+            Conversion::dump(Routine::class, value: ['commands' => [['type' => 'fetch', 'toyName' => 'ball', 'toyColor' => null]]])
+        );
     }
 
     #[Test]
