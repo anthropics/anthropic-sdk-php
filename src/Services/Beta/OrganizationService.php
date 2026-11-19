@@ -11,6 +11,7 @@ use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\OrganizationContract;
 use Anthropic\Services\Beta\Organization\AnalyticsService;
 use Anthropic\Services\Beta\Organization\APIKeysService;
+use Anthropic\Services\Beta\Organization\ClaudeCodeService;
 use Anthropic\Services\Beta\Organization\ClaudeTagService;
 use Anthropic\Services\Beta\Organization\ComplianceSettingsService;
 use Anthropic\Services\Beta\Organization\ExternalKeysService;
@@ -126,6 +127,11 @@ final class OrganizationService implements OrganizationContract
     /**
      * @api
      */
+    public ClaudeCodeService $claudeCode;
+
+    /**
+     * @api
+     */
     public ClaudeTagService $claudeTag;
 
     /**
@@ -151,6 +157,7 @@ final class OrganizationService implements OrganizationContract
         $this->pluginMarketplaces = new PluginMarketplacesService($client);
         $this->telemetryDestinations = new TelemetryDestinationsService($client);
         $this->webhooks = new WebhooksService($client);
+        $this->claudeCode = new ClaudeCodeService($client);
         $this->claudeTag = new ClaudeTagService($client);
     }
 

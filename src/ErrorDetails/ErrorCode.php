@@ -170,6 +170,20 @@ enum ErrorCode: string
 
     case SCAN_PENDING = 'scan_pending';
 
+    case REQUEST_BODY_TIMEOUT = 'request_body_timeout';
+
+    case SETTINGS_DOCUMENT_LIMIT_EXCEEDED = 'settings_document_limit_exceeded';
+
+    case SETTINGS_HISTORY_LIMIT_EXCEEDED = 'settings_history_limit_exceeded';
+
+    case CMEK_FEATURE_UNSUPPORTED = 'cmek_feature_unsupported';
+
+    case RBAC_GROUP_MANAGED_SETTINGS_NOT_FOUND = 'rbac_group_managed_settings_not_found';
+
+    case RBAC_GROUP_ORDER_LIMIT_EXCEEDED = 'rbac_group_order_limit_exceeded';
+
+    case RBAC_GROUP_NOT_FOUND = 'rbac_group_not_found';
+
     case SLACK_CHANNEL_SET_UP_SETTINGS_REFUSED = 'slack_channel_set_up_settings_refused';
 
     case API_KEY_SCOPE_MISSING = 'api_key_scope_missing';
