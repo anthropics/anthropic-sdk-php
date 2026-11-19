@@ -22,6 +22,7 @@ use Anthropic\Core\FileParam;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\PluginsContract;
 use Anthropic\Services\Beta\Organization\Plugins\InstallationSettingsService;
 use Anthropic\Services\Beta\Organization\Plugins\SharesService;
@@ -106,6 +107,7 @@ final class PluginsService implements PluginsContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws PluginNameTakenException
      * @throws SkillNameTakenException
      * @throws RegistrationPendingException
@@ -207,6 +209,7 @@ final class PluginsService implements PluginsContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws ScanFailedException
+     * @throws SandboxEgressRestrictedException
      * @throws ScanPendingException
      * @throws SkillNameTakenException
      * @throws APIException
@@ -324,6 +327,7 @@ final class PluginsService implements PluginsContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws CMEKKeyDisabledException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

@@ -3,6 +3,7 @@
 namespace Anthropic\Core\Exceptions;
 
 use Anthropic\Beta\BetaOrganizationNotEnrolledInBetaException;
+use Anthropic\Beta\BetaRequestBodyTimeoutException;
 use Anthropic\Beta\BetaUnsupportedCharsetException;
 use Anthropic\Beta\Environments\BetaEnvironmentArchivedException;
 use Anthropic\Beta\Environments\BetaEnvironmentCreateDisabledException;
@@ -11,6 +12,11 @@ use Anthropic\Beta\Environments\BetaEnvironmentUpdateDisabledException;
 use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\BetaInvalidMetadataException;
 use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
+use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaCMEKFeatureUnsupportedException;
+use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaRBACGroupManagedSettingsNotFoundException;
+use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaRBACGroupOrderLimitExceededException;
+use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaSettingsDocumentLimitExceededException;
+use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaSettingsHistoryLimitExceededException;
 use Anthropic\Beta\Organization\ClaudeTag\APIKeyScopeMissingException;
 use Anthropic\Beta\Organization\ClaudeTag\BundleAttachmentNotSupportedException;
 use Anthropic\Beta\Organization\ClaudeTag\BundleOnCallException;
@@ -25,6 +31,7 @@ use Anthropic\Beta\Organization\Plugins\RegistrationPendingException;
 use Anthropic\Beta\Organization\Plugins\ScanFailedException;
 use Anthropic\Beta\Organization\Plugins\ScanPendingException;
 use Anthropic\Beta\Organization\Plugins\SkillNameTakenException;
+use Anthropic\Beta\Organization\RBACGroups\RBACGroupNotFoundException;
 use Anthropic\Beta\Organization\SpendLimits\SpendLimitsAdminAPIWritesNotEnabledException;
 use Anthropic\Beta\Organization\Users\CannotSignOutManagedMemberException;
 use Anthropic\Beta\Organization\Users\CannotSignOutMembershipAdminException;
@@ -137,6 +144,7 @@ class APIStatusException extends APIException
         '400 cannot_sign_out_self' => CannotSignOutSelfException::class,
         '400 claude_code_key_creator_not_member' => ClaudeCodeKeyCreatorNotMemberException::class,
         '400 claude_code_version_too_old' => ClaudeCodeVersionTooOldException::class,
+        '400 cmek_feature_unsupported' => BetaCMEKFeatureUnsupportedException::class,
         '400 cmek_key_disabled' => CMEKKeyDisabledException::class,
         '400 cmek_key_network_blocked' => CMEKKeyNetworkBlockedException::class,
         '400 compaction_block_ambiguous' => CompactionBlockAmbiguousException::class,
@@ -164,10 +172,14 @@ class APIStatusException extends APIException
         '400 organization_type_not_supported' => OrganizationTypeNotSupportedException::class,
         '400 parent_organization_required' => ParentOrganizationRequiredException::class,
         '400 rbac_group_grants_owner_access' => RBACGroupGrantsOwnerAccessException::class,
+        '400 rbac_group_order_limit_exceeded' => BetaRBACGroupOrderLimitExceededException::class,
         '400 rbac_group_owner_access_unconfirmed' => RBACGroupOwnerAccessUnconfirmedException::class,
         '400 request_body_encoding_invalid' => RequestBodyEncodingInvalidException::class,
         '400 request_body_encoding_unsupported' => RequestBodyEncodingUnsupportedException::class,
+        '400 request_body_timeout' => BetaRequestBodyTimeoutException::class,
         '400 scan_failed' => ScanFailedException::class,
+        '400 settings_document_limit_exceeded' => BetaSettingsDocumentLimitExceededException::class,
+        '400 settings_history_limit_exceeded' => BetaSettingsHistoryLimitExceededException::class,
         '400 slack_channel_set_up_settings_refused' => SlackChannelSetUpSettingsRefusedException::class,
         '400 storage_quota_exceeded' => StorageQuotaExceededException::class,
         '400 thread_already_continued' => ThreadAlreadyContinuedException::class,
@@ -200,6 +212,8 @@ class APIStatusException extends APIException
         '403 user_profile_not_billable' => UserProfileNotBillableException::class,
         '404 environment_not_found' => BetaEnvironmentNotFoundException::class,
         '404 file_expired' => FileExpiredException::class,
+        '404 rbac_group_managed_settings_not_found' => BetaRBACGroupManagedSettingsNotFoundException::class,
+        '404 rbac_group_not_found' => RBACGroupNotFoundException::class,
         '404 rbac_role_not_found' => RBACRoleNotFoundException::class,
         '404 slack_channel_set_up_environment_not_found' => SlackChannelSetUpEnvironmentNotFoundException::class,
         '404 thread_not_found' => ThreadNotFoundException::class,

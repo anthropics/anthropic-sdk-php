@@ -23,6 +23,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\Plugins\VersionsRawContract;
 
 /**
@@ -76,6 +77,7 @@ final class VersionsRawService implements VersionsRawContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws SkillNameTakenException
      * @throws RegistrationPendingException
      * @throws APIException
@@ -291,6 +293,7 @@ final class VersionsRawService implements VersionsRawContract
      *
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function download(
@@ -337,7 +340,7 @@ final class VersionsRawService implements VersionsRawContract
                     'anthropic.organization.plugin.version.id' => $version,
                 ],
             )),
-            convert: 'string',
+            convert: 'binary',
         );
     }
 }

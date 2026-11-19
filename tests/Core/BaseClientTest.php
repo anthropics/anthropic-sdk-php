@@ -50,6 +50,16 @@ class BaseClientTest extends TestCase
     }
 
     #[Test]
+    public function testBinaryResponseKeepsItsBytesWhateverTheContentType(): void
+    {
+        foreach (['application/json', 'application/x-ndjson', 'text/event-stream', 'application/octet-stream'] as $contentType) {
+            [$client] = $this->buildClient(contentType: $contentType);
+
+            $this->assertSame('{}', $client->request('GET', '/', convert: 'binary')->parse(), $contentType);
+        }
+    }
+
+    #[Test]
     public function testRequestOptionsOnlyOverrideWhatTheySet(): void
     {
         [$client, $transporter] = $this->buildClient(['maxRetries' => 3, 'maxRetryDelay' => 0.0], status: 500);
@@ -104,7 +114,7 @@ class BaseClientTest extends TestCase
      *
      * @return array{BaseClient, MockClient, RequestOptions}
      */
-    private function buildClient(RequestOptions|array|null $options = null, int $status = 200): array
+    private function buildClient(RequestOptions|array|null $options = null, int $status = 200, string $contentType = 'application/json'): array
     {
         $transporter = new MockClient;
         $responseFactory = Psr17FactoryDiscovery::findResponseFactory();
@@ -114,7 +124,7 @@ class BaseClientTest extends TestCase
         for ($i = 0; $i < 8; ++$i) {
             $transporter->addResponse(
                 $responseFactory->createResponse($status)
-                    ->withHeader('Content-Type', 'application/json')
+                    ->withHeader('Content-Type', $contentType)
                     ->withBody($streamFactory->createStream('{}')),
             );
         }

@@ -23,6 +23,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -40,6 +41,7 @@ interface PluginsRawContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws PluginNameTakenException
      * @throws SkillNameTakenException
      * @throws RegistrationPendingException
@@ -79,6 +81,7 @@ interface PluginsRawContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws ScanFailedException
+     * @throws SandboxEgressRestrictedException
      * @throws ScanPendingException
      * @throws SkillNameTakenException
      * @throws APIException
@@ -114,6 +117,7 @@ interface PluginsRawContract
      * @return BaseResponse<DeletedPlugin>
      *
      * @throws CMEKKeyDisabledException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

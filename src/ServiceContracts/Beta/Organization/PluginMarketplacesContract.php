@@ -15,6 +15,7 @@ use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\FileParam;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -46,6 +47,7 @@ interface PluginMarketplacesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -90,6 +92,7 @@ interface PluginMarketplacesContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validateArchive(
@@ -106,6 +109,7 @@ interface PluginMarketplacesContract
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Header param: This endpoint is in beta: requests must send `ce-plugins-2026-09-01` in this header.
      * @param RequestOpts|null $requestOptions
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validateRepository(

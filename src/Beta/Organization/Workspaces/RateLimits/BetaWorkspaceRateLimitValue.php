@@ -37,7 +37,7 @@ final class BetaWorkspaceRateLimitValue implements BaseModel
     public BetaWorkspaceRateLimitWorkspaceSource|BetaWorkspaceRateLimitOrganizationSource $source;
 
     /**
-     * The limiter type (for example, `requests_per_minute` or `input_tokens_per_minute`).
+     * The limiter type (for example, `requests_per_minute` or `input_tokens_per_minute_cache_aware`).
      */
     #[Required]
     public string $type;
@@ -122,7 +122,7 @@ final class BetaWorkspaceRateLimitValue implements BaseModel
     }
 
     /**
-     * The limiter type (for example, `requests_per_minute` or `input_tokens_per_minute`).
+     * The limiter type (for example, `requests_per_minute` or `input_tokens_per_minute_cache_aware`).
      */
     public function withType(string $type): self
     {

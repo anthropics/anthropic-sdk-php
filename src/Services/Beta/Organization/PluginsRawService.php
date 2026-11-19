@@ -29,6 +29,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\PluginsRawContract;
 
 /**
@@ -89,6 +90,7 @@ final class PluginsRawService implements PluginsRawContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws PluginNameTakenException
      * @throws SkillNameTakenException
      * @throws RegistrationPendingException
@@ -239,6 +241,7 @@ final class PluginsRawService implements PluginsRawContract
      * @throws CMEKKeyDisabledException
      * @throws CMEKKeyNetworkBlockedException
      * @throws ScanFailedException
+     * @throws SandboxEgressRestrictedException
      * @throws ScanPendingException
      * @throws SkillNameTakenException
      * @throws APIException
@@ -414,6 +417,7 @@ final class PluginsRawService implements PluginsRawContract
      * @return BaseResponse<DeletedPlugin>
      *
      * @throws CMEKKeyDisabledException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function delete(

@@ -139,6 +139,39 @@ class CredentialsFileTest extends TestCase
         $this->assertNull($result->baseUrl);
     }
 
+    public function testWindowsDefaultConfigDirIsAppDataAnthropic(): void
+    {
+        $path = $this->configDir.'\Anthropic\configs\default.json';
+        file_put_contents($path, json_encode([
+            'base_url' => 'https://windows.example.com',
+            'organization_id' => 'org_x',
+            'authentication' => [
+                'type' => 'oidc_federation',
+                'federation_rule_id' => 'fdrl_x',
+                'identity_token' => ['source' => 'literal', 'token' => 'jwt'],
+            ],
+        ], JSON_THROW_ON_ERROR));
+
+        // CredentialsFile reads DIRECTORY_SEPARATOR unqualified, so defining it in that namespace takes the Windows branch on any OS.
+        // That lasts for the whole process, hence the child. Off Windows, `\` is an ordinary character in $path's file name.
+        $script = <<<'PHP'
+            require 'vendor/autoload.php';
+            define('Anthropic\Lib\Credentials\DIRECTORY_SEPARATOR', '\\');
+            echo (new Anthropic\Lib\Credentials\CredentialsFile)->resolve()?->baseUrl;
+            PHP;
+
+        try {
+            $child = proc_open([PHP_BINARY, '-r', $script], [1 => ['pipe', 'w']], $pipes, dirname(__DIR__, 3), ['APPDATA' => $this->configDir]);
+            $this->assertIsResource($child);
+            $output = stream_get_contents($pipes[1]);
+            proc_close($child);
+        } finally {
+            unlink($path);
+        }
+
+        $this->assertSame('https://windows.example.com', $output);
+    }
+
     /**
      * @param array<string,mixed> $config
      */

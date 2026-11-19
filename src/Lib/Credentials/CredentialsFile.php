@@ -218,6 +218,13 @@ final class CredentialsFile
             return $envDir;
         }
 
+        if ('\\' === DIRECTORY_SEPARATOR) {
+            $appdata = Util::getenv('APPDATA');
+            if (null !== $appdata && '' !== $appdata) {
+                return $appdata.DIRECTORY_SEPARATOR.'Anthropic';
+            }
+        }
+
         $home = self::getHomeDir();
 
         return $home.DIRECTORY_SEPARATOR.implode(DIRECTORY_SEPARATOR, self::DEFAULT_CONFIG_DIR_PARTS);
@@ -289,13 +296,6 @@ final class CredentialsFile
 
     private static function getHomeDir(): string
     {
-        if ('\\' === DIRECTORY_SEPARATOR) {
-            $appdata = Util::getenv('APPDATA');
-            if (null !== $appdata && '' !== $appdata) {
-                return $appdata.DIRECTORY_SEPARATOR.'Anthropic';
-            }
-        }
-
         $home = Util::getenv('HOME') ?? ($_SERVER['HOME'] ?? null);
         if (is_string($home) && '' !== $home) {
             return $home;

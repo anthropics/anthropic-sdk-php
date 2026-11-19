@@ -143,7 +143,7 @@ class RawResponse implements BaseResponse
     private function getDecoded(): mixed
     {
         if (!$this->decoded) {
-            $decoded = Util::decodeContent($this->response);
+            $decoded = 'binary' === $this->convert ? Util::streamIterator($this->response->getBody()) : Util::decodeContent($this->response);
             if (!is_null($this->unwrap)) {
                 $decoded = Util::dig($decoded, key: $this->unwrap);
             }

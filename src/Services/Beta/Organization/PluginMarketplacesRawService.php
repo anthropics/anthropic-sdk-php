@@ -24,6 +24,7 @@ use Anthropic\Core\Implementation\ApiCallInfo;
 use Anthropic\Core\Util;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\PluginMarketplacesRawContract;
 
 /**
@@ -121,6 +122,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
      *
      * @return BaseResponse<PluginMarketplace>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -262,6 +264,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
      * @return BaseResponse<PluginMarketplaceValidationReport>
      *
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validateArchive(
@@ -336,6 +339,7 @@ final class PluginMarketplacesRawService implements PluginMarketplacesRawContrac
      *
      * @return BaseResponse<PluginMarketplaceValidationReport>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validateRepository(

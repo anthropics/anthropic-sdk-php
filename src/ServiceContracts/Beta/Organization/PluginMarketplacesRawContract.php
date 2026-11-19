@@ -16,6 +16,7 @@ use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
+use Anthropic\SandboxEgressRestrictedException;
 
 /**
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
@@ -48,6 +49,7 @@ interface PluginMarketplacesRawContract
      *
      * @return BaseResponse<PluginMarketplace>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function update(
@@ -80,6 +82,7 @@ interface PluginMarketplacesRawContract
      * @return BaseResponse<PluginMarketplaceValidationReport>
      *
      * @throws BetaUnsupportedCharsetException
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validateArchive(
@@ -95,6 +98,7 @@ interface PluginMarketplacesRawContract
      *
      * @return BaseResponse<PluginMarketplaceValidationReport>
      *
+     * @throws SandboxEgressRestrictedException
      * @throws APIException
      */
     public function validateRepository(
