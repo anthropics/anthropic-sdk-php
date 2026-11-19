@@ -190,6 +190,7 @@ final class Conversion
 
                 return $value;
 
+            case 'binary':
             case 'string':
                 if (is_string($value)) {
                     ++$state->yes;

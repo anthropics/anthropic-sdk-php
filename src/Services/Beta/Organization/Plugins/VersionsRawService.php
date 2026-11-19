@@ -340,7 +340,7 @@ final class VersionsRawService implements VersionsRawContract
                     'anthropic.organization.plugin.version.id' => $version,
                 ],
             )),
-            convert: 'string',
+            convert: 'binary',
         );
     }
 }

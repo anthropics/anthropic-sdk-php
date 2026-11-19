@@ -175,7 +175,7 @@ final class FilesRawService implements FilesRawContract
                 route: '/v1/files/{file_id}/content',
                 attributes: ['anthropic.file.id' => $fileID],
             )),
-            convert: 'string',
+            convert: 'binary',
         );
     }
 

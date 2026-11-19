@@ -330,7 +330,7 @@ final class VersionsRawService implements VersionsRawContract
                     'anthropic.skill.version.id' => $version,
                 ],
             )),
-            convert: 'string',
+            convert: 'binary',
         );
     }
 }
