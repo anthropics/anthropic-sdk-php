@@ -168,6 +168,8 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy Body param: Declares which organization is billed for this request. `{"type": "billing_policy", "bill_to": "user_profile"}` bills the customer behind the user profile named in the `anthropic-user-profile-id` header, instead of your organization. If that customer has not linked an Anthropic organization to the profile, or has not allowed your organization to bill it, the request is rejected rather than billed to you. Omit the field, or send `"bill_to": "self"` (the default), to be billed as usual.
+     *
+     * Message Batches does not currently support billing the customer behind a user profile. In a batch, omit the field or send `"bill_to": "self"`. A request in a batch that sets `"bill_to": "user_profile"` gets an `errored` result with an `invalid_request_error`, nobody is billed for it, and the batch's other requests run as usual.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
@@ -424,6 +426,8 @@ interface MessagesContract
      *
      * See [models](https://docs.anthropic.com/en/docs/models-overview) for additional details and options.
      * @param BetaBillingPolicy|BetaBillingPolicyShape|null $billingPolicy Body param: Declares which organization is billed for this request. `{"type": "billing_policy", "bill_to": "user_profile"}` bills the customer behind the user profile named in the `anthropic-user-profile-id` header, instead of your organization. If that customer has not linked an Anthropic organization to the profile, or has not allowed your organization to bill it, the request is rejected rather than billed to you. Omit the field, or send `"bill_to": "self"` (the default), to be billed as usual.
+     *
+     * Message Batches does not currently support billing the customer behind a user profile. In a batch, omit the field or send `"bill_to": "self"`. A request in a batch that sets `"bill_to": "user_profile"` gets an `errored` result with an `invalid_request_error`, nobody is billed for it, and the batch's other requests run as usual.
      * @param BetaCacheControlEphemeral|BetaCacheControlEphemeralShape|null $cacheControl Body param: Top-level cache control automatically applies a cache_control marker to the last cacheable block in the request.
      * @param BetaCompactionConfig|BetaCompactionConfigShape|null $compaction Body param: Compaction configuration.
      *
