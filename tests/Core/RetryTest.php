@@ -12,6 +12,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\NoSeekStream;
+use Http\Client\Exception\HttpException;
 use Http\Client\Exception\NetworkException;
 use Http\Client\Exception\RequestException;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -257,6 +258,31 @@ class RetryTest extends TestCase
 
         $this->assertCount(2, $transporter->getRequests());
         $this->assertCount(1, $client->sleeps);
+    }
+
+    #[Test]
+    public function testDroppedBodyIsRetriedUnlessToldNotTo(): void
+    {
+        $req = Psr17FactoryDiscovery::findRequestFactory()->createRequest('GET', 'http://localhost');
+
+        [$client, $transporter] = $this->buildClient();
+        $transporter->addException(new HttpException('transfer closed with outstanding read data remaining', $req, $this->response(200)));
+        $transporter->addResponse($this->response(200));
+
+        $client->request('GET', '/');
+        $this->assertCount(2, $transporter->getRequests());
+
+        [$client, $transporter] = $this->buildClient();
+        $transporter->addException(new HttpException('transfer closed with outstanding read data remaining', $req, $this->response(200)->withHeader('x-should-retry', 'false')));
+        $transporter->addResponse($this->response(200));
+
+        try {
+            $client->request('GET', '/');
+            $this->fail('a dropped body after x-should-retry: false must not be retried');
+        } catch (APIConnectionException) {
+        }
+        $this->assertCount(1, $transporter->getRequests());
+        $this->assertSame([], $client->sleeps);
     }
 
     #[Test]

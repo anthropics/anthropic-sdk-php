@@ -637,8 +637,12 @@ abstract class BaseClient
             return $this->sendRequest($opts, req: $redirect, data: $data, retryCount: $retryCount, redirectCount: ++$redirectCount, crossOrigin: $crossOrigin || $leftOrigin, span: $span, spanRequests: $spanRequests);
         }
 
+        // Some clients attach the response whose body failed to arrive; its headers still say whether to retry.
+        $interrupted = !is_null($err) && method_exists($err, 'getResponse') ? $err->getResponse() : null;
+        $toldNotToRetry = $interrupted instanceof ResponseInterface && 'false' === $interrupted->getHeaderLine('x-should-retry');
+
         // A body that cannot seek cannot be replayed, so a retry could send it empty or truncated.
-        if (($code >= 400 || is_null($rsp)) && $body->isSeekable() && $this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp, wantsRetryFromException: null !== $middlewareRetry)) {
+        if (($code >= 400 || is_null($rsp)) && $body->isSeekable() && !$toldNotToRetry && $this->shouldRetry($opts, retryCount: $retryCount, rsp: $rsp, wantsRetryFromException: null !== $middlewareRetry)) {
             $seconds = $this->retryDelay($opts, retryCount: $retryCount, rsp: $rsp);
 
             // Release the connection before sleeping so it can be reused for the retry.
