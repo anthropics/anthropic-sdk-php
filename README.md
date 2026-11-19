@@ -47,7 +47,7 @@ var_dump($message->content);
 
 ## Requirements
 
-PHP 8.1.0+
+PHP 8.2.0+
 
 ## Contributing
 

@@ -372,9 +372,9 @@ class MantleClientTest extends TestCase
         $this->addToAssertionCount(1);
 
         // models, user profiles and beta should NOT exist
-        $this->assertFalse(property_exists($client, 'models'));
-        $this->assertFalse(property_exists($client, 'userProfiles'));
-        $this->assertFalse(property_exists($client, 'beta'));
+        $this->assertObjectNotHasProperty('models', $client);
+        $this->assertObjectNotHasProperty('userProfiles', $client);
+        $this->assertObjectNotHasProperty('beta', $client);
     }
 
     // ── ANTHROPIC_API_KEY env var doesn't leak ──────────────────────
