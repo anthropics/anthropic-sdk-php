@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.11.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.10.0...v1.11.0) (2026-11-19)
+
+### Features
+
+* **api:** add Claude Code managed settings to the Admin API
+* **api:** add the sandbox_egress_restricted error to Admin API plugin methods
+
+
+### Bug Fixes
+
+* **client:** return the bytes of downloaded JSON and JSONL files
+* **credentials:** look for saved logins in %APPDATA%\Anthropic on Windows
+
+
+### Chores
+
+* **docs:** explain how the input-token rate limit types differ
+* **docs:** name Claude Security in the usage and cost report descriptions
+* **docs:** note that a Google Cloud external key's provider and key_name can't be changed
+
 ## [1.10.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.9.0...v1.10.0) (2026-11-17)
 
 ### Features
