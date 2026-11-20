@@ -52,6 +52,9 @@ final class BedrockMiddleware implements Middleware
             if ('' !== ($betas = $r->getHeader('anthropic-beta')) && null === $r->getBodyParam('anthropic_beta')) {
                 $r->setBodyParam('anthropic_beta', array_map('trim', explode(',', $betas)));
             }
+            if (!$isCountTokens && '' !== ($userProfileID = $r->getHeader('anthropic-user-profile-id')) && null === $r->getBodyParam('user_profile_id')) {
+                $r->setBodyParam('user_profile_id', $userProfileID);
+            }
             $r->setBodyParamDefault('anthropic_version', Client::ANTHROPIC_API_VERSION)
                 ->setHeader('X-Amzn-Bedrock-Accept', 'application/json')
                 ->dropHeader('anthropic-beta')

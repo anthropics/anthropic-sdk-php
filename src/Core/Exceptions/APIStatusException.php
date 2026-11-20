@@ -66,6 +66,7 @@ use Anthropic\Messages\CompactionSignatureInvalidException;
 use Anthropic\Messages\CompactionToolChangesMismatchException;
 use Anthropic\Messages\CompactionTooManyToolReferencesException;
 use Anthropic\Messages\CompactionUnavailableException;
+use Anthropic\Messages\ImageDimensionsTooLargeException;
 use Anthropic\Messages\ThreadAlreadyContinuedException;
 use Anthropic\Messages\ThreadContinueInFlightException;
 use Anthropic\Messages\ThreadFingerprintMismatchException;
@@ -161,6 +162,7 @@ class APIStatusException extends APIException
         '400 external_key_validation_failed' => ExternalKeyValidationFailedException::class,
         '400 external_key_validation_timed_out' => ExternalKeyValidationTimedOutException::class,
         '400 file_not_downloadable' => FileNotDownloadableException::class,
+        '400 image_dimensions_too_large' => ImageDimensionsTooLargeException::class,
         '400 invalid_config_type_change' => BetaInvalidConfigTypeChangeException::class,
         '400 invalid_metadata' => BetaInvalidMetadataException::class,
         '400 invite_already_exists' => InviteAlreadyExistsException::class,

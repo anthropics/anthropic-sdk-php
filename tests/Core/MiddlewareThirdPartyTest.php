@@ -580,6 +580,34 @@ final class MiddlewareThirdPartyTest extends TestCase
         }
     }
 
+    #[Test]
+    public function testBedrockSendsUserProfileIdInBody(): void
+    {
+        $transporter = $this->transporter();
+        $client = BedrockClient::withApiKey('test-key', region: 'us-east-1', requestOptions: ['transporter' => $transporter]);
+
+        $client->messages->create(maxTokens: 1, messages: [], model: 'm:0', userProfileID: 'upid-123');
+
+        $sent = $this->lastRequest($transporter);
+        $this->assertFalse($sent->hasHeader('anthropic-user-profile-id'));
+        $body = json_decode((string) $sent->getBody(), true);
+        $this->assertIsArray($body);
+        $this->assertSame('upid-123', $body['user_profile_id'] ?? null);
+    }
+
+    #[Test]
+    public function testBedrockSendsNoUserProfileIdWhenNoneIsGiven(): void
+    {
+        $transporter = $this->transporter();
+        $client = BedrockClient::withApiKey('test-key', region: 'us-east-1', requestOptions: ['transporter' => $transporter]);
+
+        $client->messages->create(maxTokens: 1, messages: [], model: 'm:0');
+
+        $body = json_decode((string) $this->lastRequest($transporter)->getBody(), true);
+        $this->assertIsArray($body);
+        $this->assertArrayNotHasKey('user_profile_id', $body);
+    }
+
     /**
      * @param \Closure(VertexClient): mixed $call
      */

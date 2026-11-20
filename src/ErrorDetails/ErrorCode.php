@@ -32,6 +32,8 @@ enum ErrorCode: string
 
     case COMPACTION_TOOL_CHANGES_MISMATCH = 'compaction_tool_changes_mismatch';
 
+    case IMAGE_DIMENSIONS_TOO_LARGE = 'image_dimensions_too_large';
+
     case ORGANIZATION_ON_HOLD = 'organization_on_hold';
 
     case REQUEST_BODY_ENCODING_INVALID = 'request_body_encoding_invalid';
