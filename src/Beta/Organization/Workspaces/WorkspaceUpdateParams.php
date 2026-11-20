@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Workspaces;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -16,14 +17,17 @@ use Anthropic\Core\Conversion\MapOf;
  * @see Anthropic\Services\Beta\Organization\WorkspacesService::update()
  *
  * @phpstan-import-type DataResidencyUpdateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyUpdateConfig
+ * @phpstan-import-type InferenceDataPrivacyUpdateParamShape from \Anthropic\Beta\Organization\Workspaces\InferenceDataPrivacyUpdateParam
  *
  * @phpstan-type WorkspaceUpdateParamsShape = array{
  *   dataResidency?: null|DataResidencyUpdateConfig|DataResidencyUpdateConfigShape,
  *   displayColor?: string|null,
  *   externalKeyID?: string|null,
+ *   inferenceDataPrivacy?: null|InferenceDataPrivacyUpdateParam|InferenceDataPrivacyUpdateParamShape,
  *   name?: string|null,
  *   tags?: array<string,string|null>|null,
  *   userProfileID?: string|null,
+ *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class WorkspaceUpdateParams implements BaseModel
@@ -62,6 +66,12 @@ final class WorkspaceUpdateParams implements BaseModel
     public ?string $externalKeyID;
 
     /**
+     * Changes to where the Workspace's retained inference data and transcript copies go, and to whether Anthropic's human review applies. Requires the `efs-2026-10-01` `anthropic-beta` value. An omitted member is unchanged. Cannot be null. An Admin API key can't set this field, because it doesn't belong to a user or a service account. Use an API key that belongs to one, or an OAuth token.
+     */
+    #[Optional('inference_data_privacy', nullable: true)]
+    public ?InferenceDataPrivacyUpdateParam $inferenceDataPrivacy;
+
+    /**
      * Name of the Workspace.
      */
     #[Optional]
@@ -81,6 +91,14 @@ final class WorkspaceUpdateParams implements BaseModel
     #[Optional('user_profile_id')]
     public ?string $userProfileID;
 
+    /**
+     * Optional. Send `efs-2026-10-01` in this header to use this endpoint's beta features: additional parameters, accepted values and response fields.
+     *
+     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     */
+    #[Optional(list: AnthropicBeta::class)]
+    public ?array $betas;
+
     public function __construct()
     {
         $this->initialize();
@@ -92,24 +110,30 @@ final class WorkspaceUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param DataResidencyUpdateConfig|DataResidencyUpdateConfigShape|null $dataResidency
+     * @param InferenceDataPrivacyUpdateParam|InferenceDataPrivacyUpdateParamShape|null $inferenceDataPrivacy
      * @param array<string,string|null>|null $tags
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         DataResidencyUpdateConfig|array|null $dataResidency = null,
         ?string $displayColor = null,
         ?string $externalKeyID = null,
+        InferenceDataPrivacyUpdateParam|array|null $inferenceDataPrivacy = null,
         ?string $name = null,
         ?array $tags = null,
         ?string $userProfileID = null,
+        ?array $betas = null,
     ): self {
         $self = new self;
 
         null !== $dataResidency && $self['dataResidency'] = $dataResidency;
         null !== $displayColor && $self['displayColor'] = $displayColor;
         null !== $externalKeyID && $self['externalKeyID'] = $externalKeyID;
+        null !== $inferenceDataPrivacy && $self['inferenceDataPrivacy'] = $inferenceDataPrivacy;
         null !== $name && $self['name'] = $name;
         null !== $tags && $self['tags'] = $tags;
         null !== $userProfileID && $self['userProfileID'] = $userProfileID;
+        null !== $betas && $self['betas'] = $betas;
 
         return $self;
     }
@@ -162,6 +186,20 @@ final class WorkspaceUpdateParams implements BaseModel
     }
 
     /**
+     * Changes to where the Workspace's retained inference data and transcript copies go, and to whether Anthropic's human review applies. Requires the `efs-2026-10-01` `anthropic-beta` value. An omitted member is unchanged. Cannot be null. An Admin API key can't set this field, because it doesn't belong to a user or a service account. Use an API key that belongs to one, or an OAuth token.
+     *
+     * @param InferenceDataPrivacyUpdateParam|InferenceDataPrivacyUpdateParamShape|null $inferenceDataPrivacy
+     */
+    public function withInferenceDataPrivacy(
+        InferenceDataPrivacyUpdateParam|array|null $inferenceDataPrivacy
+    ): self {
+        $self = clone $this;
+        $self['inferenceDataPrivacy'] = $inferenceDataPrivacy;
+
+        return $self;
+    }
+
+    /**
      * Name of the Workspace.
      */
     public function withName(string $name): self
@@ -192,6 +230,19 @@ final class WorkspaceUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['userProfileID'] = $userProfileID;
+
+        return $self;
+    }
+
+    /**
+     * Optional. Send `efs-2026-10-01` in this header to use this endpoint's beta features: additional parameters, accepted values and response fields.
+     *
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
+     */
+    public function withBetas(array $betas): self
+    {
+        $self = clone $this;
+        $self['betas'] = $betas;
 
         return $self;
     }

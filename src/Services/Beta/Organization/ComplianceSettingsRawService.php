@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Anthropic\Services\Beta\Organization;
 
+use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingRetrieveParams;
 use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettings;
 use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams;
 use Anthropic\Client;
 use Anthropic\Core\Contracts\BaseResponse;
 use Anthropic\Core\Exceptions\APIException;
 use Anthropic\Core\Implementation\ApiCallInfo;
+use Anthropic\Core\Util;
 use Anthropic\RequestOptions;
 use Anthropic\SandboxEgressRestrictedException;
 use Anthropic\ServiceContracts\Beta\Organization\ComplianceSettingsRawContract;
@@ -36,6 +39,9 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
      * whether the Compliance API is enabled. An organization with a parent
      * organization reads the state inherited from the parent's configuration.
      *
+     * @param array{
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>
+     * }|ComplianceSettingRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ComplianceSettings>
@@ -43,13 +49,23 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
      * @throws APIException
      */
     public function retrieve(
-        RequestOptions|array|null $requestOptions = null
+        array|ComplianceSettingRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = ComplianceSettingRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'v1/organizations/compliance_settings',
-            options: RequestOptions::parse($requestOptions)->withQualifiers([
+            headers: Util::array_transform_keys(
+                $parsed,
+                ['betas' => 'anthropic-beta']
+            ),
+            options: $options->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(
                 name: 'anthropic.organization.compliance_settings.retrieve',
@@ -81,7 +97,8 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
      * compliance settings.
      *
      * @param array{
-     *   state: ComplianceSettingsStateParamShape
+     *   state: ComplianceSettingsStateParamShape,
+     *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>,
      * }|ComplianceSettingUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -98,12 +115,20 @@ final class ComplianceSettingsRawService implements ComplianceSettingsRawContrac
             $params,
             $requestOptions,
         );
+        $header_params = ['betas' => 'anthropic-beta'];
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'v1/organizations/compliance_settings',
-            body: (object) $parsed,
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
             options: $options->withQualifiers([
                 'beta' => 'true',
             ])->withApiCall(new ApiCallInfo(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Workspaces;
 
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -11,6 +12,7 @@ use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type DataResidencyShape from \Anthropic\Beta\Organization\Workspaces\DataResidency
+ * @phpstan-import-type InferenceDataPrivacyShape from \Anthropic\Beta\Organization\Workspaces\InferenceDataPrivacy
  *
  * @phpstan-type WorkspaceShape = array{
  *   id: string,
@@ -24,6 +26,7 @@ use Anthropic\Core\Conversion\ConstantOf;
  *   tags: array<string,string>,
  *   type: 'workspace',
  *   userProfileID: string|null,
+ *   inferenceDataPrivacy?: null|InferenceDataPrivacy|InferenceDataPrivacyShape,
  * }
  */
 final class Workspace implements BaseModel
@@ -125,6 +128,12 @@ final class Workspace implements BaseModel
     public ?string $userProfileID;
 
     /**
+     * Where the Workspace's retained inference data and transcript copies go, and whether Anthropic's human review applies. Returned only to requests that send the `efs-2026-10-01` `anthropic-beta` value, and each member only to organizations enabled for it.
+     */
+    #[Optional('inference_data_privacy')]
+    public ?InferenceDataPrivacy $inferenceDataPrivacy;
+
+    /**
      * `new Workspace()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -171,6 +180,7 @@ final class Workspace implements BaseModel
      *
      * @param DataResidency|DataResidencyShape $dataResidency
      * @param array<string,string> $tags
+     * @param InferenceDataPrivacy|InferenceDataPrivacyShape|null $inferenceDataPrivacy
      */
     public static function with(
         string $id,
@@ -183,6 +193,7 @@ final class Workspace implements BaseModel
         string $name,
         array $tags,
         ?string $userProfileID,
+        InferenceDataPrivacy|array|null $inferenceDataPrivacy = null,
     ): self {
         $self = new self;
 
@@ -196,6 +207,8 @@ final class Workspace implements BaseModel
         $self['name'] = $name;
         $self['tags'] = $tags;
         $self['userProfileID'] = $userProfileID;
+
+        null !== $inferenceDataPrivacy && $self['inferenceDataPrivacy'] = $inferenceDataPrivacy;
 
         return $self;
     }
@@ -346,6 +359,20 @@ final class Workspace implements BaseModel
     {
         $self = clone $this;
         $self['userProfileID'] = $userProfileID;
+
+        return $self;
+    }
+
+    /**
+     * Where the Workspace's retained inference data and transcript copies go, and whether Anthropic's human review applies. Returned only to requests that send the `efs-2026-10-01` `anthropic-beta` value, and each member only to organizations enabled for it.
+     *
+     * @param InferenceDataPrivacy|InferenceDataPrivacyShape $inferenceDataPrivacy
+     */
+    public function withInferenceDataPrivacy(
+        InferenceDataPrivacy|array $inferenceDataPrivacy
+    ): self {
+        $self = clone $this;
+        $self['inferenceDataPrivacy'] = $inferenceDataPrivacy;
 
         return $self;
     }
