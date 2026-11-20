@@ -12,7 +12,9 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Create Action URL
+ * Create a link that sends the profile's end customer to the Verification Portal.
+ *
+ * See [Send an end customer a link to the Verification Portal](https://platform.claude.com/docs/en/manage-claude/user-profiles-verification-portal) for when to create the link and what the end customer sees.
  *
  * @see Anthropic\Services\Beta\UserProfiles\ActionURLsService::create()
  *

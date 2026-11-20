@@ -34,7 +34,9 @@ final class ActionURLsService implements ActionURLsContract
     /**
      * @api
      *
-     * Create Action URL
+     * Create a link that sends the profile's end customer to the Verification Portal.
+     *
+     * See [Send an end customer a link to the Verification Portal](https://platform.claude.com/docs/en/manage-claude/user-profiles-verification-portal) for when to create the link and what the end customer sees.
      *
      * @param string $userProfileID Path param: The ID of the user profile the action is for (`uprof_...`).
      * @param UserProfileEnrollEndUserAction|UserProfileEnrollEndUserActionShape $action Body param: The action that the person who opens the URL takes.

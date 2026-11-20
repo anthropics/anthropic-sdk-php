@@ -21,6 +21,8 @@ use Anthropic\ServiceContracts\Beta\UserProfilesContract;
 use Anthropic\Services\Beta\UserProfiles\ActionURLsService;
 
 /**
+ * Register the end customers that your platform serves, so each request can name who it's for. To get started, see the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles).
+ *
  * @phpstan-import-type BetaUserProfileExternalUserDetailsParamsShape from \Anthropic\Beta\UserProfiles\BetaUserProfileExternalUserDetailsParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
@@ -48,7 +50,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Create User Profile
+     * Register one of your end customers and get the ID to send on the requests you make for them.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#create-a-profile-for-each-end-customer) for what to send.
      *
      * @param AccessType|value-of<AccessType> $accessType Body param: How the platform uses the API for this entity. `application` (default): the profile represents an individual end-user of the platform's product. `passthrough`: the profile identifies a company the platform resells Claude access to.
      * @param string|null $externalID Body param: Platform's own identifier for this user. Not enforced unique. Maximum 255 characters. Legacy field, accepted only under the `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers; without one of them, send `external_user_details.reference_id`.
@@ -97,7 +101,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Get User Profile
+     * Get a user profile by ID to check the details stored for it.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles) for how to set up and manage profiles.
      *
      * @param string $userProfileID The ID of the user profile to get (`uprof_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.
@@ -127,7 +133,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Update User Profile
+     * Change the details of a user profile, leaving the fields that you don't send as they are.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#update-a-profile) for how each field is updated.
      *
      * @param string $userProfileID Path param: The ID of the user profile to update (`uprof_...`).
      * @param \Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType|value-of<\Anthropic\Beta\UserProfiles\UserProfileUpdateParams\AccessType>|null $accessType Body param: If present, replaces the stored access type. Omit to leave unchanged.
@@ -178,7 +186,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * List User Profiles
+     * List the user profiles in your organization, newest first by default.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles) for how to set up and manage profiles.
      *
      * @param int $limit Query param: The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
      * @param Order|value-of<Order> $order Query param: The sort direction, applied to the field that `order_by` selects. Defaults to `desc`.
@@ -225,7 +235,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Delete User Profile
+     * Delete a user profile, for example when the end customer closes their account.
+     *
+     * Stop sending the profile's ID first. See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#delete-a-profile) for what happens after a delete.
      *
      * @param string $userProfileID The ID of the user profile to delete (`uprof_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.
@@ -255,7 +267,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Create Enrollment URL
+     * Create a link that sends the profile's end customer to the Verification Portal from Claude Platform on AWS.
+     *
+     * On the Claude API, create an action URL instead. See [Send an end customer a link to the Verification Portal](https://platform.claude.com/docs/en/manage-claude/user-profiles-verification-portal) for when to create the link and what the end customer sees.
      *
      * @param string $userProfileID The ID of the user profile to create an enrollment URL for (`uprof_...`).
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas Optional header to specify the beta version(s) you want to use.

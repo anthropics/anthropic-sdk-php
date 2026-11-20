@@ -13,7 +13,9 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * List User Profiles
+ * List the user profiles in your organization, newest first by default.
+ *
+ * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles) for how to set up and manage profiles.
  *
  * @see Anthropic\Services\Beta\UserProfilesService::list()
  *
