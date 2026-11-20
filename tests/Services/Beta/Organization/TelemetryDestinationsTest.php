@@ -36,7 +36,7 @@ final class TelemetryDestinationsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->organization->telemetryDestinations->create(
-            endpointURL: 'x',
+            endpointURL: 'https://gateway.example.com',
             workspaces: ['type' => 'all'],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
@@ -49,7 +49,7 @@ final class TelemetryDestinationsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->organization->telemetryDestinations->create(
-            endpointURL: 'x',
+            endpointURL: 'https://gateway.example.com',
             workspaces: ['type' => 'all'],
             displayName: 'display_name',
             headers: ['foo' => 'string'],

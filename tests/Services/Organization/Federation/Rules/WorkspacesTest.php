@@ -50,7 +50,7 @@ final class WorkspacesTest extends TestCase
     {
         $result = $this->client->organization->federation->rules->workspaces->add(
             'federation_rule_id',
-            workspaceID: 'workspace_id'
+            workspaceID: 'wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -62,7 +62,7 @@ final class WorkspacesTest extends TestCase
     {
         $result = $this->client->organization->federation->rules->workspaces->add(
             'federation_rule_id',
-            workspaceID: 'workspace_id'
+            workspaceID: 'wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

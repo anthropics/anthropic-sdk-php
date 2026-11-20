@@ -150,7 +150,7 @@ final class ServiceAccountsTest extends TestCase
             ->serviceAccounts
             ->add(
                 'workspace_id',
-                serviceAccountID: 'service_account_id',
+                serviceAccountID: 'svac_01SDCCSbTxrXDpWc1phhtcfK',
                 workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
@@ -171,7 +171,7 @@ final class ServiceAccountsTest extends TestCase
             ->serviceAccounts
             ->add(
                 'workspace_id',
-                serviceAccountID: 'service_account_id',
+                serviceAccountID: 'svac_01SDCCSbTxrXDpWc1phhtcfK',
                 workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
                 betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],

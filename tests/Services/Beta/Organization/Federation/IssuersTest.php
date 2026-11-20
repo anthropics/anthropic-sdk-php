@@ -33,8 +33,8 @@ final class IssuersTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->organization->federation->issuers->create(
-            issuerURL: 'x',
-            name: 'x',
+            issuerURL: 'https://token.actions.githubusercontent.com',
+            name: 'github-actions',
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 
@@ -46,8 +46,8 @@ final class IssuersTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->organization->federation->issuers->create(
-            issuerURL: 'x',
-            name: 'x',
+            issuerURL: 'https://token.actions.githubusercontent.com',
+            name: 'github-actions',
             checkJTI: true,
             jwks: [
                 'type' => 'discovery',

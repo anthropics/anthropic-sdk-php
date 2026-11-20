@@ -32,8 +32,8 @@ final class IssuersTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->organization->federation->issuers->create(
-            issuerURL: 'x',
-            name: 'x'
+            issuerURL: 'https://token.actions.githubusercontent.com',
+            name: 'github-actions',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -44,8 +44,8 @@ final class IssuersTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->organization->federation->issuers->create(
-            issuerURL: 'x',
-            name: 'x',
+            issuerURL: 'https://token.actions.githubusercontent.com',
+            name: 'github-actions',
             checkJTI: true,
             jwks: [
                 'type' => 'discovery',
