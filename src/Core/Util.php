@@ -382,9 +382,10 @@ final class Util
             return;
         }
 
-        // PHP's HTTP wrapper (http:// and https://) holds a read of N bytes from a chunked response until all N arrive,
-        // so take one byte and then only what is already buffered.
-        $http = 'http' === $stream->getMetadata('wrapper_type');
+        // PHP's HTTP wrapper (http:// and https://) holds a read of N bytes from a chunked response until all N arrive, so take
+        // one byte and then only what is already buffered. Guzzle 8.3+ reports that wrapper but never holds such a read.
+        $http = 'http' === $stream->getMetadata('wrapper_type')
+            && !is_a($stream, '\GuzzleHttp\Handler\ChunkedBodyStream');
 
         // Closes the stream once this generator ends or is destroyed. Not a `finally`: PHP 8.3.30+, 8.4.17+ and 8.5.2+
         // can crash when they destroy a suspended generator that has one while an exception is in flight.
@@ -492,10 +493,13 @@ final class Util
     {
         $buf = '';
         foreach ($stream as $chunk) {
+            // What was buffered before holds no newline.
+            $from = strlen($buf);
             $buf .= $chunk;
-            while (($pos = strpos($buf, "\n")) !== false) {
+            while (($pos = strpos($buf, "\n", $from)) !== false) {
                 yield substr($buf, 0, $pos);
                 $buf = substr($buf, $pos + 1);
+                $from = 0;
             }
         }
         if ('' !== $buf) {

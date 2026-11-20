@@ -222,6 +222,19 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testDecodeLinesGivesTheSameLinesHoweverTheTextIsSplit(): void
+    {
+        $text = "one\n\ntwo\r\nlast";
+
+        foreach ([1, 2, 3, 100] as $size) {
+            $chunks = new \ArrayIterator(str_split($text, $size));
+            $lines = iterator_to_array(Util::decodeLines($chunks), preserve_keys: false);
+
+            $this->assertSame(['one', '', "two\r", 'last'], $lines, "chunks of {$size}");
+        }
+    }
+
+    #[Test]
     public function testGetenvFromGlobalEnv(): void
     {
         $_ENV[__FUNCTION__] = __FUNCTION__;
