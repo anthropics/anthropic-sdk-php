@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.12.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.11.0...v1.12.0) (2026-11-20)
+
+### Features
+
+* **api:** add the image_dimensions_too_large error code
+
+
+### Bug Fixes
+
+* **bedrock:** send the user profile ID in the request body
+
+  Amazon Bedrock reads `user_profile_id` from the request body and ignores the `anthropic-user-profile-id` header. `Anthropic\Bedrock\Client` dropped the header, so a profile ID given to it was not applied. `Anthropic\Bedrock\Client` now sends it in the body of Messages requests. Token counting requests still leave it out. A `user_profile_id` already in the body takes priority over the header.
+
+  Some models on Bedrock do not support user profiles. A request to one of them with a profile ID now fails with a 400 error; before, the ID was ignored. Leave the ID off requests to those models.
+
+* **client:** do not retry a dropped response body when x-should-retry is false
+
+
+### Chores
+
+* **docs:** clarify billing_policy in batches and two billing errors
+
 ## [1.11.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.10.0...v1.11.0) (2026-11-19)
 
 ### Features
