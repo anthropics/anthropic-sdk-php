@@ -66,6 +66,7 @@ use Anthropic\Messages\CompactionSignatureInvalidException;
 use Anthropic\Messages\CompactionToolChangesMismatchException;
 use Anthropic\Messages\CompactionTooManyToolReferencesException;
 use Anthropic\Messages\CompactionUnavailableException;
+use Anthropic\Messages\ImageDimensionsTooLargeException;
 use Anthropic\Messages\Model;
 use Anthropic\Messages\ThreadAlreadyContinuedException;
 use Anthropic\Messages\ThreadContinueInFlightException;
@@ -340,6 +341,7 @@ final class MessagesService implements MessagesContract
      * @throws CompactionSignatureInvalidException
      * @throws CompactionTooManyToolReferencesException
      * @throws CompactionToolChangesMismatchException
+     * @throws ImageDimensionsTooLargeException
      * @throws OrganizationOnHoldException
      * @throws RequestBodyEncodingInvalidException
      * @throws RequestBodyEncodingUnsupportedException
@@ -667,6 +669,7 @@ final class MessagesService implements MessagesContract
      * @throws CompactionSignatureInvalidException
      * @throws CompactionTooManyToolReferencesException
      * @throws CompactionToolChangesMismatchException
+     * @throws ImageDimensionsTooLargeException
      * @throws OrganizationOnHoldException
      * @throws RequestBodyEncodingInvalidException
      * @throws RequestBodyEncodingUnsupportedException

@@ -33,6 +33,7 @@ use Anthropic\Messages\CompactionToolChangesMismatchException;
 use Anthropic\Messages\CompactionTooManyToolReferencesException;
 use Anthropic\Messages\CompactionUnavailableException;
 use Anthropic\Messages\DiagnosticsParam;
+use Anthropic\Messages\ImageDimensionsTooLargeException;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCountTokensParams;
 use Anthropic\Messages\MessageCreateParams;
@@ -138,6 +139,7 @@ final class MessagesRawService implements MessagesRawContract
      * @throws CompactionSignatureInvalidException
      * @throws CompactionTooManyToolReferencesException
      * @throws CompactionToolChangesMismatchException
+     * @throws ImageDimensionsTooLargeException
      * @throws OrganizationOnHoldException
      * @throws RequestBodyEncodingInvalidException
      * @throws RequestBodyEncodingUnsupportedException
@@ -241,6 +243,7 @@ final class MessagesRawService implements MessagesRawContract
      * @throws CompactionSignatureInvalidException
      * @throws CompactionTooManyToolReferencesException
      * @throws CompactionToolChangesMismatchException
+     * @throws ImageDimensionsTooLargeException
      * @throws OrganizationOnHoldException
      * @throws RequestBodyEncodingInvalidException
      * @throws RequestBodyEncodingUnsupportedException

@@ -28,6 +28,7 @@ use Anthropic\Messages\CompactionTooManyToolReferencesException;
 use Anthropic\Messages\CompactionUnavailableException;
 use Anthropic\Messages\ContainerParams;
 use Anthropic\Messages\DiagnosticsParam;
+use Anthropic\Messages\ImageDimensionsTooLargeException;
 use Anthropic\Messages\Message;
 use Anthropic\Messages\MessageCreateParams\ServiceTier;
 use Anthropic\Messages\MessageCreateParams\Speed;
@@ -251,6 +252,7 @@ interface MessagesContract
      * @throws CompactionSignatureInvalidException
      * @throws CompactionTooManyToolReferencesException
      * @throws CompactionToolChangesMismatchException
+     * @throws ImageDimensionsTooLargeException
      * @throws OrganizationOnHoldException
      * @throws RequestBodyEncodingInvalidException
      * @throws RequestBodyEncodingUnsupportedException
@@ -466,6 +468,7 @@ interface MessagesContract
      * @throws CompactionSignatureInvalidException
      * @throws CompactionTooManyToolReferencesException
      * @throws CompactionToolChangesMismatchException
+     * @throws ImageDimensionsTooLargeException
      * @throws OrganizationOnHoldException
      * @throws RequestBodyEncodingInvalidException
      * @throws RequestBodyEncodingUnsupportedException
