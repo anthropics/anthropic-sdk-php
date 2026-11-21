@@ -16,6 +16,7 @@ use Anthropic\Messages\Batches\MessageBatchIndividualResponse;
 use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
+use Anthropic\WorkspaceHumanReviewDisabledException;
 
 /**
  * @phpstan-import-type RequestShape from \Anthropic\Messages\Batches\BatchCreateParams\Request
@@ -36,6 +37,7 @@ interface BatchesContract
      * @throws ClaudeCodeKeyCreatorNotMemberException
      * @throws CMEKKeyDisabledException
      * @throws OrganizationOnHoldException
+     * @throws WorkspaceHumanReviewDisabledException
      * @throws EnforcedSpendLimitReachedException
      * @throws APIException
      */

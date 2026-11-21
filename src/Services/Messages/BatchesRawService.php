@@ -28,6 +28,7 @@ use Anthropic\OrganizationOnHoldException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Messages\BatchesRawContract;
+use Anthropic\WorkspaceHumanReviewDisabledException;
 
 /**
  * @phpstan-import-type RequestShape from \Anthropic\Messages\Batches\BatchCreateParams\Request
@@ -62,6 +63,7 @@ final class BatchesRawService implements BatchesRawContract
      * @throws ClaudeCodeKeyCreatorNotMemberException
      * @throws CMEKKeyDisabledException
      * @throws OrganizationOnHoldException
+     * @throws WorkspaceHumanReviewDisabledException
      * @throws EnforcedSpendLimitReachedException
      * @throws APIException
      */

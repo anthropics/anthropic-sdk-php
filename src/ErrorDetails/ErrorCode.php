@@ -78,6 +78,8 @@ enum ErrorCode: string
 
     case COMPACTION_UNAVAILABLE = 'compaction_unavailable';
 
+    case WORKSPACE_HUMAN_REVIEW_DISABLED = 'workspace_human_review_disabled';
+
     case STORAGE_QUOTA_EXCEEDED = 'storage_quota_exceeded';
 
     case FILE_NOT_DOWNLOADABLE = 'file_not_downloadable';

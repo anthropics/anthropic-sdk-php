@@ -130,6 +130,7 @@ use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
 use Anthropic\UserProfiles\UserProfileNotBillableException;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 use Anthropic\UserProfiles\UserProfileRequiredException;
+use Anthropic\WorkspaceHumanReviewDisabledException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -235,6 +236,7 @@ class APIStatusException extends APIException
         '400 user_profile_not_found' => UserProfileNotFoundException::class,
         '400 user_profile_required' => UserProfileRequiredException::class,
         '400 workspace_api_key_limit_exceeded' => WorkspaceAPIKeyLimitExceededException::class,
+        '400 workspace_human_review_disabled' => WorkspaceHumanReviewDisabledException::class,
         '400 workspace_member_limit_exceeded' => WorkspaceMemberLimitExceededException::class,
         '400 workspace_policy_violation' => WorkspacePolicyViolationException::class,
         '402 linked_organization_billing_unavailable' => LinkedOrganizationBillingUnavailableException::class,
