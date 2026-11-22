@@ -25,7 +25,7 @@ final class InferenceDataPrivacy implements BaseModel
     use SdkModel;
 
     /**
-     * The Workspace's human review setting. Human review is off only while this is `disabled` and Anthropic's approval stands. If Anthropic withdraws approval, review is back on, though this field still reads `disabled`.
+     * The Workspace's human review setting. Human review is off only while this is `disabled` and Anthropic's approval stands.
      */
     #[Optional('human_review')]
     public ?AnthropicHumanReview $humanReview;
@@ -75,7 +75,7 @@ final class InferenceDataPrivacy implements BaseModel
     }
 
     /**
-     * The Workspace's human review setting. Human review is off only while this is `disabled` and Anthropic's approval stands. If Anthropic withdraws approval, review is back on, though this field still reads `disabled`.
+     * The Workspace's human review setting. Human review is off only while this is `disabled` and Anthropic's approval stands.
      *
      * @param AnthropicHumanReview|AnthropicHumanReviewShape $humanReview
      */
