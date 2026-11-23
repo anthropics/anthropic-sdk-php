@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\ComplianceSettings;
 
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
@@ -11,10 +12,13 @@ use Anthropic\Core\Conversion\ConstantOf;
 
 /**
  * @phpstan-import-type ComplianceSettingsStateShape from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsState
+ * @phpstan-import-type AccessTransparencyShape from \Anthropic\Beta\Organization\ComplianceSettings\AccessTransparency
  * @phpstan-import-type ComplianceSettingsStateVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsState
  *
  * @phpstan-type ComplianceSettingsShape = array{
- *   state: ComplianceSettingsStateShape, type: 'compliance_settings'
+ *   state: ComplianceSettingsStateShape,
+ *   type: 'compliance_settings',
+ *   accessTransparency?: null|AccessTransparency|AccessTransparencyShape,
  * }
  */
 final class ComplianceSettings implements BaseModel
@@ -33,6 +37,12 @@ final class ComplianceSettings implements BaseModel
      */
     #[Required(union: ComplianceSettingsState::class)]
     public ComplianceSettingsStateEnabled|ComplianceSettingsStateDisabled $state;
+
+    /**
+     * Read-only. Whether Access Transparency is on for the organization. Returned only when the request sends the `anthropic-beta: efs-2026-10-01` header and Access Transparency is available to the organization; otherwise omitted. If the status can't be read, getting Compliance Settings returns an error; an update still saves, but then reports `disabled` whatever the real status, so get the settings again to check it.
+     */
+    #[Optional('access_transparency')]
+    public ?AccessTransparency $accessTransparency;
 
     /**
      * `new ComplianceSettings()` is missing required properties by the API.
@@ -59,13 +69,17 @@ final class ComplianceSettings implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ComplianceSettingsStateShape $state
+     * @param AccessTransparency|AccessTransparencyShape|null $accessTransparency
      */
     public static function with(
-        ComplianceSettingsStateEnabled|array|ComplianceSettingsStateDisabled $state
+        ComplianceSettingsStateEnabled|array|ComplianceSettingsStateDisabled $state,
+        AccessTransparency|array|null $accessTransparency = null,
     ): self {
         $self = new self;
 
         $self['state'] = $state;
+
+        null !== $accessTransparency && $self['accessTransparency'] = $accessTransparency;
 
         return $self;
     }
@@ -91,6 +105,20 @@ final class ComplianceSettings implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Read-only. Whether Access Transparency is on for the organization. Returned only when the request sends the `anthropic-beta: efs-2026-10-01` header and Access Transparency is available to the organization; otherwise omitted. If the status can't be read, getting Compliance Settings returns an error; an update still saves, but then reports `disabled` whatever the real status, so get the settings again to check it.
+     *
+     * @param AccessTransparency|AccessTransparencyShape $accessTransparency
+     */
+    public function withAccessTransparency(
+        AccessTransparency|array $accessTransparency
+    ): self {
+        $self = clone $this;
+        $self['accessTransparency'] = $accessTransparency;
 
         return $self;
     }

@@ -26,6 +26,8 @@ use Anthropic\UserProfiles\UserProfileRetrieveParams;
 use Anthropic\UserProfiles\UserProfileUpdateParams;
 
 /**
+ * Register the end customers that your platform serves, so each request can name who it's for. To get started, see the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles).
+ *
  * @phpstan-import-type UserProfileExternalUserDetailsParamsShape from \Anthropic\UserProfiles\UserProfileExternalUserDetailsParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
@@ -40,7 +42,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
     /**
      * @api
      *
-     * Create User Profile
+     * Register one of your end customers and get the ID to send on the requests you make for them.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#create-a-profile-for-each-end-customer) for what to send.
      *
      * @param array{
      *   accessType?: UserProfileAccessType|value-of<UserProfileAccessType>,
@@ -89,7 +93,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
     /**
      * @api
      *
-     * Get User Profile
+     * Get a user profile by ID to check the details stored for it.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles) for how to set up and manage profiles.
      *
      * @param string $userProfileID The ID of the user profile to get (`uprof_...`).
      * @param array{workspaceID?: string}|UserProfileRetrieveParams $params
@@ -129,7 +135,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
     /**
      * @api
      *
-     * Update User Profile
+     * Change the details of a user profile, leaving the fields that you don't send as they are.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#update-a-profile) for how each field is updated.
      *
      * @param string $userProfileID Path param: The ID of the user profile to update (`uprof_...`).
      * @param array{
@@ -180,7 +188,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
     /**
      * @api
      *
-     * List User Profiles
+     * List the user profiles in your organization, newest first by default.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles) for how to set up and manage profiles.
      *
      * @param array{
      *   enforcementStatus?: list<UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>>,
@@ -236,7 +246,9 @@ final class UserProfilesRawService implements UserProfilesRawContract
     /**
      * @api
      *
-     * Delete User Profile
+     * Delete a user profile, for example when the end customer closes their account.
+     *
+     * Stop sending the profile's ID first. See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#delete-a-profile) for what happens after a delete.
      *
      * @param string $userProfileID The ID of the user profile to delete (`uprof_...`).
      * @param array{workspaceID?: string}|UserProfileDeleteParams $params

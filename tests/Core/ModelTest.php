@@ -606,4 +606,21 @@ class ModelTest extends TestCase
         );
         $this->assertSame(0, $state->branched);
     }
+
+    #[Test]
+    public function testListIsSentAsAListWhenAUnionAlsoHasAModel(): void
+    {
+        $union = new UnionOf([Dog::class, new ListOf(Fetch::class)]);
+
+        $this->assertSame([['type' => 'fetch', 'toy_name' => 'ball']], Conversion::dump($union, value: [['type' => 'fetch', 'toyName' => 'ball']]));
+        $this->assertSame([], Conversion::dump($union, value: []));
+    }
+
+    #[Test]
+    public function testEmptyArrayIsSentAsAnObjectWhenAUnionHasOnlyModels(): void
+    {
+        foreach ([new UnionOf([Dog::class, Cat::class]), new UnionOf([Collar::class, Dog::class]), Collar::class] as $type) {
+            $this->assertSame('{}', json_encode(Conversion::dump($type, value: [])));
+        }
+    }
 }

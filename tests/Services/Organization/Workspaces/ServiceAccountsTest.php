@@ -107,7 +107,7 @@ final class ServiceAccountsTest extends TestCase
     {
         $result = $this->client->organization->workspaces->serviceAccounts->add(
             'workspace_id',
-            serviceAccountID: 'service_account_id',
+            serviceAccountID: 'svac_01SDCCSbTxrXDpWc1phhtcfK',
             workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
         );
 
@@ -120,7 +120,7 @@ final class ServiceAccountsTest extends TestCase
     {
         $result = $this->client->organization->workspaces->serviceAccounts->add(
             'workspace_id',
-            serviceAccountID: 'service_account_id',
+            serviceAccountID: 'svac_01SDCCSbTxrXDpWc1phhtcfK',
             workspaceRole: NoBillingWorkspaceRole::WORKSPACE_ADMIN,
         );
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\Workspaces;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -21,6 +22,7 @@ use Anthropic\Core\Contracts\BaseModel;
  *   includeArchived?: bool|null,
  *   includeDefault?: bool|null,
  *   limit?: int|null,
+ *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class WorkspaceListParams implements BaseModel
@@ -69,6 +71,14 @@ final class WorkspaceListParams implements BaseModel
     #[Optional]
     public ?int $limit;
 
+    /**
+     * Optional. Send `efs-2026-10-01` in this header to use this endpoint's beta features: additional parameters, accepted values and response fields.
+     *
+     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     */
+    #[Optional(list: AnthropicBeta::class)]
+    public ?array $betas;
+
     public function __construct()
     {
         $this->initialize();
@@ -80,6 +90,7 @@ final class WorkspaceListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $ids
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ?string $afterID = null,
@@ -88,6 +99,7 @@ final class WorkspaceListParams implements BaseModel
         ?bool $includeArchived = null,
         ?bool $includeDefault = null,
         ?int $limit = null,
+        ?array $betas = null,
     ): self {
         $self = new self;
 
@@ -97,6 +109,7 @@ final class WorkspaceListParams implements BaseModel
         null !== $includeArchived && $self['includeArchived'] = $includeArchived;
         null !== $includeDefault && $self['includeDefault'] = $includeDefault;
         null !== $limit && $self['limit'] = $limit;
+        null !== $betas && $self['betas'] = $betas;
 
         return $self;
     }
@@ -167,6 +180,19 @@ final class WorkspaceListParams implements BaseModel
     {
         $self = clone $this;
         $self['limit'] = $limit;
+
+        return $self;
+    }
+
+    /**
+     * Optional. Send `efs-2026-10-01` in this header to use this endpoint's beta features: additional parameters, accepted values and response fields.
+     *
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
+     */
+    public function withBetas(array $betas): self
+    {
+        $self = clone $this;
+        $self['betas'] = $betas;
 
         return $self;
     }

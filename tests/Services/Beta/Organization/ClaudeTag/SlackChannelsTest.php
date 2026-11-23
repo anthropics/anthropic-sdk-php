@@ -40,7 +40,7 @@ final class SlackChannelsTest extends TestCase
             ->claudeTag
             ->slackChannels
             ->create(
-                slack: ['channelID' => 'xx', 'workspaceID' => 'xx'],
+                slack: ['channelID' => 'C0456EFGH', 'workspaceID' => 'T0123ABCD'],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -59,7 +59,7 @@ final class SlackChannelsTest extends TestCase
             ->claudeTag
             ->slackChannels
             ->create(
-                slack: ['channelID' => 'xx', 'workspaceID' => 'xx'],
+                slack: ['channelID' => 'C0456EFGH', 'workspaceID' => 'T0123ABCD'],
                 settings: [
                     'enabled' => true,
                     'environmentID' => 'x',

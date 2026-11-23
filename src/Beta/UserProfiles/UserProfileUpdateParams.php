@@ -12,7 +12,9 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Update User Profile
+ * Change the details of a user profile, leaving the fields that you don't send as they are.
+ *
+ * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#update-a-profile) for how each field is updated.
  *
  * @see Anthropic\Services\Beta\UserProfilesService::update()
  *

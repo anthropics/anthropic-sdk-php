@@ -27,7 +27,7 @@ final class WorkspacePolicyViolationErrorDetails implements BaseModel
     public string $errorCode = 'workspace_policy_violation';
 
     /**
-     * The request field the broken rule applies to.
+     * The request field the broken rule applies to. Other values may be returned.
      *
      * @var value-of<WorkspacePolicyField> $field
      */
@@ -81,7 +81,7 @@ final class WorkspacePolicyViolationErrorDetails implements BaseModel
     }
 
     /**
-     * The request field the broken rule applies to.
+     * The request field the broken rule applies to. Other values may be returned.
      *
      * @param WorkspacePolicyField|value-of<WorkspacePolicyField> $field
      */

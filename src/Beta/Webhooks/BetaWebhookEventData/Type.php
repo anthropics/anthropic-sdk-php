@@ -103,4 +103,8 @@ enum Type: string
     case EXTERNAL_KEY_FAILED = 'external_key.failed';
 
     case EXTERNAL_KEY_RECOVERED = 'external_key.recovered';
+
+    case EXTERNAL_STORAGE_FAILED = 'external_storage.failed';
+
+    case EXTERNAL_STORAGE_RECOVERED = 'external_storage.recovered';
 }

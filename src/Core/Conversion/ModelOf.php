@@ -104,8 +104,13 @@ final class ModelOf implements Converter
             $value = $value->toProperties();
         }
 
-        if (is_array($value)) {
-            ++$state->yes;
+        if (is_array($value) && (empty($value) || !array_is_list($value))) {
+            // A union should send an empty array as a list if one of its variants is a list.
+            if (empty($value) && !empty(array_filter($this->properties, static fn ($info) => !$info->optional))) {
+                ++$state->maybe;
+            } else {
+                ++$state->yes;
+            }
             $acc = [];
 
             foreach ($value as $name => $item) {

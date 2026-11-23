@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Anthropic\ServiceContracts\Beta\Organization;
 
+use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingRetrieveParams;
 use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettings;
 use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingUpdateParams;
 use Anthropic\Core\Contracts\BaseResponse;
@@ -19,6 +20,7 @@ interface ComplianceSettingsRawContract
     /**
      * @api
      *
+     * @param array<string,mixed>|ComplianceSettingRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ComplianceSettings>
@@ -26,7 +28,8 @@ interface ComplianceSettingsRawContract
      * @throws APIException
      */
     public function retrieve(
-        RequestOptions|array|null $requestOptions = null
+        array|ComplianceSettingRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

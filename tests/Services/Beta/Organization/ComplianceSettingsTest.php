@@ -2,6 +2,7 @@
 
 namespace Tests\Services\Beta\Organization;
 
+use Anthropic\Beta\AnthropicBeta;
 use Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettings;
 use Anthropic\Client;
 use Anthropic\Core\Util;
@@ -55,6 +56,7 @@ final class ComplianceSettingsTest extends TestCase
     {
         $result = $this->client->beta->organization->complianceSettings->update(
             state: ['type' => 'enabled'],
+            betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );
 

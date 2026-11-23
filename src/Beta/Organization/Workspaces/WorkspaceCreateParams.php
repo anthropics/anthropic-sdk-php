@@ -17,12 +17,14 @@ use Anthropic\Core\Contracts\BaseModel;
  * @see Anthropic\Services\Beta\Organization\WorkspacesService::create()
  *
  * @phpstan-import-type DataResidencyCreateConfigShape from \Anthropic\Beta\Organization\Workspaces\DataResidencyCreateConfig
+ * @phpstan-import-type InferenceDataPrivacyCreateParamShape from \Anthropic\Beta\Organization\Workspaces\InferenceDataPrivacyCreateParam
  *
  * @phpstan-type WorkspaceCreateParamsShape = array{
  *   name: string,
  *   dataResidency?: null|DataResidencyCreateConfig|DataResidencyCreateConfigShape,
  *   displayColor?: string|null,
  *   externalKeyID?: string|null,
+ *   inferenceDataPrivacy?: null|InferenceDataPrivacyCreateParam|InferenceDataPrivacyCreateParamShape,
  *   tags?: array<string,string>|null,
  *   userProfileID?: string|null,
  *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
@@ -68,6 +70,12 @@ final class WorkspaceCreateParams implements BaseModel
      */
     #[Optional('external_key_id', nullable: true)]
     public ?string $externalKeyID;
+
+    /**
+     * Where the Workspace's retained inference data and transcript copies go, and whether Anthropic's human review applies. Requires the `efs-2026-10-01` `anthropic-beta` value. When omitted, `safeguards_storage` and `transcripts_storage` are `internal` and `human_review` is `enabled`. Cannot be null. An Admin API key can't set this field, because it doesn't belong to a user or a service account. Use an API key that belongs to one, or an OAuth token.
+     */
+    #[Optional('inference_data_privacy', nullable: true)]
+    public ?InferenceDataPrivacyCreateParam $inferenceDataPrivacy;
 
     /**
      * User-defined tags as string key-value pairs. Keys may not begin with `anthropic`.
@@ -116,6 +124,7 @@ final class WorkspaceCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param DataResidencyCreateConfig|DataResidencyCreateConfigShape|null $dataResidency
+     * @param InferenceDataPrivacyCreateParam|InferenceDataPrivacyCreateParamShape|null $inferenceDataPrivacy
      * @param array<string,string>|null $tags
      * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
@@ -124,6 +133,7 @@ final class WorkspaceCreateParams implements BaseModel
         DataResidencyCreateConfig|array|null $dataResidency = null,
         ?string $displayColor = null,
         ?string $externalKeyID = null,
+        InferenceDataPrivacyCreateParam|array|null $inferenceDataPrivacy = null,
         ?array $tags = null,
         ?string $userProfileID = null,
         ?array $betas = null,
@@ -135,6 +145,7 @@ final class WorkspaceCreateParams implements BaseModel
         null !== $dataResidency && $self['dataResidency'] = $dataResidency;
         null !== $displayColor && $self['displayColor'] = $displayColor;
         null !== $externalKeyID && $self['externalKeyID'] = $externalKeyID;
+        null !== $inferenceDataPrivacy && $self['inferenceDataPrivacy'] = $inferenceDataPrivacy;
         null !== $tags && $self['tags'] = $tags;
         null !== $userProfileID && $self['userProfileID'] = $userProfileID;
         null !== $betas && $self['betas'] = $betas;
@@ -196,6 +207,20 @@ final class WorkspaceCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['externalKeyID'] = $externalKeyID;
+
+        return $self;
+    }
+
+    /**
+     * Where the Workspace's retained inference data and transcript copies go, and whether Anthropic's human review applies. Requires the `efs-2026-10-01` `anthropic-beta` value. When omitted, `safeguards_storage` and `transcripts_storage` are `internal` and `human_review` is `enabled`. Cannot be null. An Admin API key can't set this field, because it doesn't belong to a user or a service account. Use an API key that belongs to one, or an OAuth token.
+     *
+     * @param InferenceDataPrivacyCreateParam|InferenceDataPrivacyCreateParamShape|null $inferenceDataPrivacy
+     */
+    public function withInferenceDataPrivacy(
+        InferenceDataPrivacyCreateParam|array|null $inferenceDataPrivacy
+    ): self {
+        $self = clone $this;
+        $self['inferenceDataPrivacy'] = $inferenceDataPrivacy;
 
         return $self;
     }

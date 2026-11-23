@@ -53,6 +53,11 @@ final class WorkspacesTest extends TestCase
             ],
             displayColor: '#6C5BB9',
             externalKeyID: 'ekey_01SDCCSbTxrXDpWc1phhtcfK',
+            inferenceDataPrivacy: [
+                'humanReview' => ['type' => 'disabled'],
+                'safeguardsStorage' => ['type' => 'internal'],
+                'transcriptsStorage' => ['type' => 'internal'],
+            ],
             tags: ['env' => 'prod', 'team' => 'platform'],
             userProfileID: 'uprof_01SDCCSbTxrXDpWc1phhtcfK',
             betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],

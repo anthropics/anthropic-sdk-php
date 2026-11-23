@@ -20,6 +20,8 @@ use Anthropic\UserProfiles\UserProfileListOrder;
 use Anthropic\UserProfiles\UserProfileListOrderBy;
 
 /**
+ * Register the end customers that your platform serves, so each request can name who it's for. To get started, see the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles).
+ *
  * @phpstan-import-type UserProfileExternalUserDetailsParamsShape from \Anthropic\UserProfiles\UserProfileExternalUserDetailsParams
  * @phpstan-import-type RequestOpts from \Anthropic\RequestOptions
  */
@@ -47,7 +49,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Create User Profile
+     * Register one of your end customers and get the ID to send on the requests you make for them.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#create-a-profile-for-each-end-customer) for what to send.
      *
      * @param UserProfileAccessType|value-of<UserProfileAccessType> $accessType Body param: How the platform uses the API for this entity. `application` (default): the profile represents an individual end-user of the platform's product. `passthrough`: the profile identifies a company the platform resells Claude access to.
      * @param UserProfileExternalUserDetailsParams|UserProfileExternalUserDetailsParamsShape $externalUserDetails Body param: Details about the entity this profile represents, as the platform states them. Every field is optional. Not accepted under the legacy `user-profiles-2026-03-24` and `user-profiles-2026-08-18` beta headers, which take the top-level `external_id` (and, under `user-profiles-2026-08-18`, `external_user_onboarded_at`) instead.
@@ -87,7 +91,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Get User Profile
+     * Get a user profile by ID to check the details stored for it.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles) for how to set up and manage profiles.
      *
      * @param string $userProfileID The ID of the user profile to get (`uprof_...`).
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).
@@ -113,7 +119,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Update User Profile
+     * Change the details of a user profile, leaving the fields that you don't send as they are.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#update-a-profile) for how each field is updated.
      *
      * @param string $userProfileID Path param: The ID of the user profile to update (`uprof_...`).
      * @param UserProfileAccessType|value-of<UserProfileAccessType>|null $accessType Body param: If present, replaces the stored access type. Omit to leave unchanged.
@@ -155,7 +163,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * List User Profiles
+     * List the user profiles in your organization, newest first by default.
+     *
+     * See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles) for how to set up and manage profiles.
      *
      * @param list<UserProfileEnforcementStatus|value-of<UserProfileEnforcementStatus>> $enforcementStatus Query param: Return only the user profiles whose `enforcement_status` is one of these values: `unrestricted`, `pending`, `restricted` or `banned`. Repeat the parameter to match any of several. With it set, a page may hold fewer than `limit` profiles, or none, and still carry a `next_page`: the service examines a bounded number of profiles per request, and only a null `next_page` means the listing is complete. Rejected with `invalid_request_error` under the `user-profiles-2026-09-04` and earlier beta headers. Fails with `overloaded_error` when a profile's enforcement actions cannot be read for the moment.
      * @param int $limit Query param: The maximum number of user profiles to return, from 1 to 100. Defaults to 20.
@@ -202,7 +212,9 @@ final class UserProfilesService implements UserProfilesContract
     /**
      * @api
      *
-     * Delete User Profile
+     * Delete a user profile, for example when the end customer closes their account.
+     *
+     * Stop sending the profile's ID first. See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#delete-a-profile) for what happens after a delete.
      *
      * @param string $userProfileID The ID of the user profile to delete (`uprof_...`).
      * @param string $workspaceID Optional header to select the Workspace for this request. The value is a Workspace ID (for example, `wrkspc_011CZkZaBF1tNoB5wlCeusgy`).

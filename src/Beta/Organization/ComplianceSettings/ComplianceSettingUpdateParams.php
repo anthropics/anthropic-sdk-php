@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Anthropic\Beta\Organization\ComplianceSettings;
 
+use Anthropic\Beta\AnthropicBeta;
+use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Concerns\SdkParams;
@@ -34,7 +36,8 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-import-type ComplianceSettingsStateParamVariants from \Anthropic\Beta\Organization\ComplianceSettings\ComplianceSettingsStateParam
  *
  * @phpstan-type ComplianceSettingUpdateParamsShape = array{
- *   state: ComplianceSettingsStateParamShape
+ *   state: ComplianceSettingsStateParamShape,
+ *   betas?: list<string|AnthropicBeta|value-of<AnthropicBeta>>|null,
  * }
  */
 final class ComplianceSettingUpdateParams implements BaseModel
@@ -50,6 +53,14 @@ final class ComplianceSettingUpdateParams implements BaseModel
      */
     #[Required(union: ComplianceSettingsStateParam::class)]
     public ComplianceSettingsStateEnabledParam|ComplianceSettingsStateDisabledParam $state;
+
+    /**
+     * Optional. Send `efs-2026-10-01` in this header to use this endpoint's beta features: additional parameters, accepted values and response fields.
+     *
+     * @var list<string|value-of<AnthropicBeta>>|null $betas
+     */
+    #[Optional(list: AnthropicBeta::class)]
+    public ?array $betas;
 
     /**
      * `new ComplianceSettingUpdateParams()` is missing required properties by the API.
@@ -76,13 +87,17 @@ final class ComplianceSettingUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ComplianceSettingsStateParamShape $state
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>>|null $betas
      */
     public static function with(
         ComplianceSettingsStateEnabledParam|array|ComplianceSettingsStateDisabledParam $state,
+        ?array $betas = null,
     ): self {
         $self = new self;
 
         $self['state'] = $state;
+
+        null !== $betas && $self['betas'] = $betas;
 
         return $self;
     }
@@ -97,6 +112,19 @@ final class ComplianceSettingUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['state'] = $state;
+
+        return $self;
+    }
+
+    /**
+     * Optional. Send `efs-2026-10-01` in this header to use this endpoint's beta features: additional parameters, accepted values and response fields.
+     *
+     * @param list<string|AnthropicBeta|value-of<AnthropicBeta>> $betas
+     */
+    public function withBetas(array $betas): self
+    {
+        $self = clone $this;
+        $self['betas'] = $betas;
 
         return $self;
     }

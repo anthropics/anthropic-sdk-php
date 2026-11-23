@@ -12,6 +12,10 @@ use Anthropic\Beta\Environments\BetaEnvironmentUpdateDisabledException;
 use Anthropic\Beta\Environments\BetaInvalidConfigTypeChangeException;
 use Anthropic\Beta\Environments\BetaInvalidMetadataException;
 use Anthropic\Beta\Environments\Work\HeartbeatPreconditionFailedException;
+use Anthropic\Beta\Organization\BetaApprovalRequiredException;
+use Anthropic\Beta\Organization\BetaAuthorizationCheckUnavailableException;
+use Anthropic\Beta\Organization\BetaHumanReviewNotAvailableException;
+use Anthropic\Beta\Organization\BetaOrganizationNotEligibleException;
 use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaCMEKFeatureUnsupportedException;
 use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaRBACGroupManagedSettingsNotFoundException;
 use Anthropic\Beta\Organization\ClaudeCode\ManagedSettings\BetaRBACGroupOrderLimitExceededException;
@@ -26,6 +30,19 @@ use Anthropic\Beta\Organization\ClaudeTag\OrganizationLevelScopedAPIKeyRequiredE
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpEnvironmentNotFoundException;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsConflictException;
 use Anthropic\Beta\Organization\ClaudeTag\SlackChannelSetUpSettingsRefusedException;
+use Anthropic\Beta\Organization\ExternalStorage\ExternalStorageInUseException;
+use Anthropic\Beta\Organization\ExternalStorage\ExternalStorageInWorkspacePolicyException;
+use Anthropic\Beta\Organization\ExternalStorage\ExternalStorageNotAvailableException;
+use Anthropic\Beta\Organization\ExternalStorage\GrantRequiredException;
+use Anthropic\Beta\Organization\ExternalStorage\InvalidStorageARNException;
+use Anthropic\Beta\Organization\ExternalStorage\ProviderNotAllowedException;
+use Anthropic\Beta\Organization\ExternalStorage\StorageAlreadyRegisteredException;
+use Anthropic\Beta\Organization\ExternalStorage\StorageAttachLimitReachedException;
+use Anthropic\Beta\Organization\ExternalStorage\StorageChangedConcurrentlyException;
+use Anthropic\Beta\Organization\ExternalStorage\StorageNotAttachableException;
+use Anthropic\Beta\Organization\ExternalStorage\StorageProfileStillRequiredException;
+use Anthropic\Beta\Organization\ExternalStorage\StorageVerificationFailedException;
+use Anthropic\Beta\Organization\ExternalStorage\UnsupportedRegionException;
 use Anthropic\Beta\Organization\Plugins\PluginNameTakenException;
 use Anthropic\Beta\Organization\Plugins\RegistrationPendingException;
 use Anthropic\Beta\Organization\Plugins\ScanFailedException;
@@ -39,6 +56,9 @@ use Anthropic\Beta\Organization\Users\CannotSignOutOwnerException;
 use Anthropic\Beta\Organization\Users\CannotSignOutPrimaryOwnerException;
 use Anthropic\Beta\Organization\Users\CannotSignOutPrivilegedMemberException;
 use Anthropic\Beta\Organization\Users\CannotSignOutSelfException;
+use Anthropic\Beta\Organization\Workspaces\HumanReviewOnWithExternalStorageException;
+use Anthropic\Beta\Organization\Workspaces\TranscriptsStorageRequiredException;
+use Anthropic\Beta\Organization\Workspaces\WorkspaceChangedConcurrentlyException;
 use Anthropic\ClaudeCodeKeyCreatorNotMemberException;
 use Anthropic\ClaudeCodeVersionTooOldException;
 use Anthropic\CMEKContextUnavailableException;
@@ -76,6 +96,7 @@ use Anthropic\Messages\ToolNameConflictException;
 use Anthropic\Messages\ToolReferenceUnresolvedException;
 use Anthropic\Organization\APIKeys\OrgAPIKeyLimitExceededException;
 use Anthropic\Organization\APIKeys\WorkspaceAPIKeyLimitExceededException;
+use Anthropic\Organization\ChangeOutcomeUnknownException;
 use Anthropic\Organization\ConcurrentMembershipChangeException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyInWorkspacePolicyException;
@@ -91,6 +112,9 @@ use Anthropic\Organization\RBACGroups\RBACGroupOwnerAccessUnconfirmedException;
 use Anthropic\Organization\RBACRoleNotFoundException;
 use Anthropic\Organization\Users\CannotRemoveLastMemberException;
 use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
+use Anthropic\Organization\Workspaces\StorageAttachedDuringArchiveException;
+use Anthropic\Organization\Workspaces\StorageProfileMismatchException;
+use Anthropic\Organization\Workspaces\WorkspaceCreatedIncompleteException;
 use Anthropic\Organization\Workspaces\WorkspaceMemberLimitExceededException;
 use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\OrganizationOnHoldException;
@@ -106,6 +130,7 @@ use Anthropic\UserProfiles\UserProfileBillingNotAuthorizedException;
 use Anthropic\UserProfiles\UserProfileNotBillableException;
 use Anthropic\UserProfiles\UserProfileNotFoundException;
 use Anthropic\UserProfiles\UserProfileRequiredException;
+use Anthropic\WorkspaceHumanReviewDisabledException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -136,6 +161,7 @@ class APIStatusException extends APIException
         504 => GatewayTimeoutException::class,
         529 => OverloadedException::class,
         '400 already_member' => AlreadyMemberException::class,
+        '400 approval_required' => BetaApprovalRequiredException::class,
         '400 available_tools_limit_exceeded' => AvailableToolsLimitExceededException::class,
         '400 bundle_attachment_not_supported' => BundleAttachmentNotSupportedException::class,
         '400 bundle_on_call' => BundleOnCallException::class,
@@ -161,18 +187,27 @@ class APIStatusException extends APIException
         '400 external_key_in_workspace_policy' => ExternalKeyInWorkspacePolicyException::class,
         '400 external_key_validation_failed' => ExternalKeyValidationFailedException::class,
         '400 external_key_validation_timed_out' => ExternalKeyValidationTimedOutException::class,
+        '400 external_storage_in_use' => ExternalStorageInUseException::class,
+        '400 external_storage_in_workspace_policy' => ExternalStorageInWorkspacePolicyException::class,
+        '400 external_storage_not_available' => ExternalStorageNotAvailableException::class,
         '400 file_not_downloadable' => FileNotDownloadableException::class,
+        '400 grant_required' => GrantRequiredException::class,
+        '400 human_review_not_available' => BetaHumanReviewNotAvailableException::class,
+        '400 human_review_on_with_external_storage' => HumanReviewOnWithExternalStorageException::class,
         '400 image_dimensions_too_large' => ImageDimensionsTooLargeException::class,
         '400 invalid_config_type_change' => BetaInvalidConfigTypeChangeException::class,
         '400 invalid_metadata' => BetaInvalidMetadataException::class,
+        '400 invalid_storage_arn' => InvalidStorageARNException::class,
         '400 invite_already_exists' => InviteAlreadyExistsException::class,
         '400 key_profile_mismatch' => KeyProfileMismatchException::class,
         '400 org_api_key_limit_exceeded' => OrgAPIKeyLimitExceededException::class,
         '400 org_member_limit_exceeded' => OrgMemberLimitExceededException::class,
+        '400 organization_not_eligible' => BetaOrganizationNotEligibleException::class,
         '400 organization_not_enrolled_in_beta' => BetaOrganizationNotEnrolledInBetaException::class,
         '400 organization_on_hold' => OrganizationOnHoldException::class,
         '400 organization_type_not_supported' => OrganizationTypeNotSupportedException::class,
         '400 parent_organization_required' => ParentOrganizationRequiredException::class,
+        '400 provider_not_allowed' => ProviderNotAllowedException::class,
         '400 rbac_group_grants_owner_access' => RBACGroupGrantsOwnerAccessException::class,
         '400 rbac_group_order_limit_exceeded' => BetaRBACGroupOrderLimitExceededException::class,
         '400 rbac_group_owner_access_unconfirmed' => RBACGroupOwnerAccessUnconfirmedException::class,
@@ -183,17 +218,25 @@ class APIStatusException extends APIException
         '400 settings_document_limit_exceeded' => BetaSettingsDocumentLimitExceededException::class,
         '400 settings_history_limit_exceeded' => BetaSettingsHistoryLimitExceededException::class,
         '400 slack_channel_set_up_settings_refused' => SlackChannelSetUpSettingsRefusedException::class,
+        '400 storage_attach_limit_reached' => StorageAttachLimitReachedException::class,
+        '400 storage_not_attachable' => StorageNotAttachableException::class,
+        '400 storage_profile_mismatch' => StorageProfileMismatchException::class,
+        '400 storage_profile_still_required' => StorageProfileStillRequiredException::class,
         '400 storage_quota_exceeded' => StorageQuotaExceededException::class,
+        '400 storage_verification_failed' => StorageVerificationFailedException::class,
         '400 thread_already_continued' => ThreadAlreadyContinuedException::class,
         '400 thread_continue_in_flight' => ThreadContinueInFlightException::class,
         '400 thread_fingerprint_mismatch' => ThreadFingerprintMismatchException::class,
         '400 thread_unsupported_request' => ThreadUnsupportedRequestException::class,
         '400 tool_name_conflict' => ToolNameConflictException::class,
         '400 tool_reference_unresolved' => ToolReferenceUnresolvedException::class,
+        '400 transcripts_storage_required' => TranscriptsStorageRequiredException::class,
         '400 unsupported_charset' => BetaUnsupportedCharsetException::class,
+        '400 unsupported_region' => UnsupportedRegionException::class,
         '400 user_profile_not_found' => UserProfileNotFoundException::class,
         '400 user_profile_required' => UserProfileRequiredException::class,
         '400 workspace_api_key_limit_exceeded' => WorkspaceAPIKeyLimitExceededException::class,
+        '400 workspace_human_review_disabled' => WorkspaceHumanReviewDisabledException::class,
         '400 workspace_member_limit_exceeded' => WorkspaceMemberLimitExceededException::class,
         '400 workspace_policy_violation' => WorkspacePolicyViolationException::class,
         '402 linked_organization_billing_unavailable' => LinkedOrganizationBillingUnavailableException::class,
@@ -226,14 +269,21 @@ class APIStatusException extends APIException
         '409 skill_name_taken' => SkillNameTakenException::class,
         '409 skill_read_blocked_undecryptable' => SkillReadBlockedUndecryptableException::class,
         '409 slack_channel_set_up_settings_conflict' => SlackChannelSetUpSettingsConflictException::class,
+        '409 storage_already_registered' => StorageAlreadyRegisteredException::class,
+        '409 storage_attached_during_archive' => StorageAttachedDuringArchiveException::class,
+        '409 storage_changed_concurrently' => StorageChangedConcurrentlyException::class,
+        '409 workspace_changed_concurrently' => WorkspaceChangedConcurrentlyException::class,
         '412 heartbeat_precondition_failed' => HeartbeatPreconditionFailedException::class,
         '413 request_body_too_large_after_decoding' => RequestBodyTooLargeAfterDecodingException::class,
         '429 contract_spend_limit_reached' => ContractSpendLimitReachedException::class,
         '429 enforced_spend_limit_reached' => EnforcedSpendLimitReachedException::class,
         '429 ramp_limit_exceeded' => RampLimitExceededException::class,
+        '503 authorization_check_unavailable' => BetaAuthorizationCheckUnavailableException::class,
+        '503 change_outcome_unknown' => ChangeOutcomeUnknownException::class,
         '503 cmek_context_unavailable' => CMEKContextUnavailableException::class,
         '503 cmek_key_unreachable' => CMEKKeyUnreachableException::class,
         '503 registration_pending' => RegistrationPendingException::class,
+        '503 workspace_created_incomplete' => WorkspaceCreatedIncompleteException::class,
         '529 compaction_unavailable' => CompactionUnavailableException::class,
     ];
 

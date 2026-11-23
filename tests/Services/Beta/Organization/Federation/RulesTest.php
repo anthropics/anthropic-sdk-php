@@ -33,10 +33,10 @@ final class RulesTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->beta->organization->federation->rules->create(
-            issuerID: 'issuer_id',
+            issuerID: 'fdis_01SDCCSbTxrXDpWc1phhtcfK',
             match: [],
-            name: 'x',
-            oauthScope: 'x',
+            name: 'prod-deploy-pipeline',
+            oauthScope: 'workspace:developer',
             target: [
                 'serviceAccountID' => 'svac_01SDCCSbTxrXDpWc1phhtcfK',
                 'type' => 'service_account',
@@ -52,15 +52,20 @@ final class RulesTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->beta->organization->federation->rules->create(
-            issuerID: 'issuer_id',
+            issuerID: 'fdis_01SDCCSbTxrXDpWc1phhtcfK',
             match: [
                 'audience' => 'audience',
-                'claims' => ['foo' => 'string'],
+                'claims' => [
+                    'event_name' => 'push',
+                    'ref' => 'refs/heads/main',
+                    'repository_id' => '123456789',
+                    'repository_owner_id' => '987654321',
+                ],
                 'condition' => 'condition',
                 'subjectPrefix' => 'subject_prefix',
             ],
-            name: 'x',
-            oauthScope: 'x',
+            name: 'prod-deploy-pipeline',
+            oauthScope: 'workspace:developer',
             target: [
                 'serviceAccountID' => 'svac_01SDCCSbTxrXDpWc1phhtcfK',
                 'type' => 'service_account',
@@ -70,7 +75,7 @@ final class RulesTest extends TestCase
             attributes: ['foo' => 'string'],
             description: 'description',
             tokenLifetimeSeconds: 60,
-            workspaceID: 'workspace_id',
+            workspaceID: 'wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ',
             betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

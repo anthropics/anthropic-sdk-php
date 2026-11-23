@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Anthropic\ServiceContracts\Organization;
 
 use Anthropic\Core\Exceptions\APIException;
+use Anthropic\Organization\ChangeOutcomeUnknownException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyChangedException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyValidationFailedException;
 use Anthropic\Organization\ExternalKeys\ExternalKeyValidationTimedOutException;
 use Anthropic\Organization\Workspaces\DataResidencyCreateConfig;
 use Anthropic\Organization\Workspaces\DataResidencyUpdateConfig;
 use Anthropic\Organization\Workspaces\KeyProfileMismatchException;
+use Anthropic\Organization\Workspaces\StorageAttachedDuringArchiveException;
+use Anthropic\Organization\Workspaces\StorageProfileMismatchException;
 use Anthropic\Organization\Workspaces\Workspace;
+use Anthropic\Organization\Workspaces\WorkspaceCreatedIncompleteException;
 use Anthropic\Organization\Workspaces\WorkspacePolicyViolationException;
 use Anthropic\Page;
 use Anthropic\RequestOptions;
@@ -54,6 +58,7 @@ interface WorkspacesContract
      * @throws WorkspacePolicyViolationException
      * @throws SandboxEgressRestrictedException
      * @throws ExternalKeyChangedException
+     * @throws WorkspaceCreatedIncompleteException
      * @throws APIException
      */
     public function create(
@@ -104,10 +109,12 @@ interface WorkspacesContract
      * @throws ExternalKeyValidationFailedException
      * @throws ExternalKeyValidationTimedOutException
      * @throws KeyProfileMismatchException
+     * @throws StorageProfileMismatchException
      * @throws UserProfileNotFoundException
      * @throws WorkspacePolicyViolationException
      * @throws SandboxEgressRestrictedException
      * @throws ExternalKeyChangedException
+     * @throws ChangeOutcomeUnknownException
      * @throws APIException
      */
     public function update(
@@ -154,6 +161,7 @@ interface WorkspacesContract
      * @param RequestOpts|null $requestOptions
      *
      * @throws SandboxEgressRestrictedException
+     * @throws StorageAttachedDuringArchiveException
      * @throws APIException
      */
     public function archive(

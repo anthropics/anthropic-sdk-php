@@ -10,7 +10,9 @@ use Anthropic\Core\Concerns\SdkParams;
 use Anthropic\Core\Contracts\BaseModel;
 
 /**
- * Delete User Profile
+ * Delete a user profile, for example when the end customer closes their account.
+ *
+ * Stop sending the profile's ID first. See the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles#delete-a-profile) for what happens after a delete.
  *
  * @see Anthropic\Services\UserProfilesService::delete()
  *

@@ -78,6 +78,8 @@ enum ErrorCode: string
 
     case COMPACTION_UNAVAILABLE = 'compaction_unavailable';
 
+    case WORKSPACE_HUMAN_REVIEW_DISABLED = 'workspace_human_review_disabled';
+
     case STORAGE_QUOTA_EXCEEDED = 'storage_quota_exceeded';
 
     case FILE_NOT_DOWNLOADABLE = 'file_not_downloadable';
@@ -124,6 +126,14 @@ enum ErrorCode: string
 
     case EXTERNAL_KEY_CHANGED = 'external_key_changed';
 
+    case WORKSPACE_CREATED_INCOMPLETE = 'workspace_created_incomplete';
+
+    case STORAGE_PROFILE_MISMATCH = 'storage_profile_mismatch';
+
+    case CHANGE_OUTCOME_UNKNOWN = 'change_outcome_unknown';
+
+    case STORAGE_ATTACHED_DURING_ARCHIVE = 'storage_attached_during_archive';
+
     case WORKSPACE_MEMBER_LIMIT_EXCEEDED = 'workspace_member_limit_exceeded';
 
     case ORGANIZATION_TYPE_NOT_SUPPORTED = 'organization_type_not_supported';
@@ -144,6 +154,26 @@ enum ErrorCode: string
 
     case INVALID_METADATA = 'invalid_metadata';
 
+    case GRANT_REQUIRED = 'grant_required';
+
+    case ORGANIZATION_NOT_ELIGIBLE = 'organization_not_eligible';
+
+    case PROVIDER_NOT_ALLOWED = 'provider_not_allowed';
+
+    case UNSUPPORTED_REGION = 'unsupported_region';
+
+    case STORAGE_ALREADY_REGISTERED = 'storage_already_registered';
+
+    case AUTHORIZATION_CHECK_UNAVAILABLE = 'authorization_check_unavailable';
+
+    case INVALID_STORAGE_ARN = 'invalid_storage_arn';
+
+    case EXTERNAL_STORAGE_IN_USE = 'external_storage_in_use';
+
+    case EXTERNAL_STORAGE_IN_WORKSPACE_POLICY = 'external_storage_in_workspace_policy';
+
+    case STORAGE_VERIFICATION_FAILED = 'storage_verification_failed';
+
     case CANNOT_SIGN_OUT_PRIMARY_OWNER = 'cannot_sign_out_primary_owner';
 
     case CANNOT_SIGN_OUT_SELF = 'cannot_sign_out_self';
@@ -157,6 +187,26 @@ enum ErrorCode: string
     case CANNOT_SIGN_OUT_OWNER = 'cannot_sign_out_owner';
 
     case CANNOT_SIGN_OUT_PRIVILEGED_MEMBER = 'cannot_sign_out_privileged_member';
+
+    case APPROVAL_REQUIRED = 'approval_required';
+
+    case EXTERNAL_STORAGE_NOT_AVAILABLE = 'external_storage_not_available';
+
+    case HUMAN_REVIEW_NOT_AVAILABLE = 'human_review_not_available';
+
+    case HUMAN_REVIEW_ON_WITH_EXTERNAL_STORAGE = 'human_review_on_with_external_storage';
+
+    case STORAGE_NOT_ATTACHABLE = 'storage_not_attachable';
+
+    case TRANSCRIPTS_STORAGE_REQUIRED = 'transcripts_storage_required';
+
+    case STORAGE_ATTACH_LIMIT_REACHED = 'storage_attach_limit_reached';
+
+    case STORAGE_PROFILE_STILL_REQUIRED = 'storage_profile_still_required';
+
+    case STORAGE_CHANGED_CONCURRENTLY = 'storage_changed_concurrently';
+
+    case WORKSPACE_CHANGED_CONCURRENTLY = 'workspace_changed_concurrently';
 
     case SPEND_LIMITS_ADMIN_API_WRITES_NOT_ENABLED = 'spend_limits_admin_api_writes_not_enabled';
 

@@ -29,7 +29,13 @@ use Anthropic\Core\Contracts\BaseModel;
  * combination is returned across pages. With no `group_by[]` and no
  * `time_bucket_width`, a single row aggregates the whole range. Includes
  * all cost, whether or not it is attributable to a seat user. Requires an
- * API key with the `read:analytics` scope, or an Admin API key.
+ * API key with the `read:analytics` scope, or an Admin API key. This
+ * endpoint is in beta and is not available to organizations with HIPAA
+ * readiness enabled: their API requests return a 400 error. A parent
+ * organization's report across its child organizations leaves out the child
+ * organizations that have HIPAA readiness enabled. If the parent has child
+ * organizations and all of them have HIPAA readiness enabled, the request
+ * returns a 400 error.
  *
  * @see Anthropic\Services\Beta\Organization\Analytics\CostService::list()
  *
@@ -95,7 +101,7 @@ final class CostListParams implements BaseModel
     public ?array $actorTypes;
 
     /**
-     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values. Claude Platform organizations only.
+     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values.
      *
      * @var list<string>|null $agentIDs
      */
@@ -103,7 +109,7 @@ final class CostListParams implements BaseModel
     public ?array $agentIDs;
 
     /**
-     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`. Claude Platform organizations only.
+     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`.
      *
      * @var list<string>|null $apiKeyIDs
      */
@@ -135,7 +141,7 @@ final class CostListParams implements BaseModel
     public ?array $contextWindows;
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values. Claude Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values.
      *
      * @var list<string>|null $deploymentIDs
      */
@@ -149,7 +155,7 @@ final class CostListParams implements BaseModel
     public ?\DateTimeInterface $endingAt;
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values. Claude Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values.
      *
      * @var list<string>|null $environmentIDs
      */
@@ -209,7 +215,7 @@ final class CostListParams implements BaseModel
     public ?string $orderBy;
 
     /**
-     * Filter a parent organization's report to specific child organizations, by organization UUID or `org_` ID; an ID that is not one of its child organizations matches nothing. Requires an API key created at the parent organization level. Use `group_by[]=organization_id` to break out per-organization values.
+     * Filter a parent organization's report to specific child organizations, by organization UUID or `org_` ID; an ID that is not one of its child organizations matches nothing. The report leaves out child organizations with HIPAA readiness enabled, and naming one returns a 400 error. Requires an API key created at the parent organization level. Use `group_by[]=organization_id` to break out per-organization values.
      *
      * @var list<string>|null $organizationIDs
      */
@@ -239,7 +245,7 @@ final class CostListParams implements BaseModel
     public ?array $rbacGroupIDs;
 
     /**
-     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values.
      *
      * @var list<value-of<AnalyticsServiceTier>>|null $serviceTiers
      */
@@ -247,7 +253,7 @@ final class CostListParams implements BaseModel
     public ?array $serviceTiers;
 
     /**
-     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values. Claude Platform organizations only.
+     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values.
      *
      * @var list<string>|null $sessionIDs
      */
@@ -279,7 +285,7 @@ final class CostListParams implements BaseModel
     public ?string $timeBucketWidth;
 
     /**
-     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values. Claude Platform organizations only.
+     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values.
      *
      * @var list<string>|null $userProfileIDs
      */
@@ -287,7 +293,7 @@ final class CostListParams implements BaseModel
     public ?array $userProfileIDs;
 
     /**
-     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values.
      *
      * @var list<string>|null $workspaceIDs
      */
@@ -459,7 +465,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values. Claude Platform organizations only.
+     * Filter to usage incurred by sessions of specific Claude Managed Agents agents. Use `group_by[]=agent_id` to break out per-agent values.
      *
      * @param list<string>|null $agentIDs
      */
@@ -472,7 +478,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`. Claude Platform organizations only.
+     * Filter to usage authenticated by specific API keys, by tagged API key ID (`apikey_...`), whichever identity the usage is attributed to. Include an empty entry (`api_key_ids[]=`) to also match usage that no API key authenticated. Use `group_by[]=api_key_id` to break out per-key values; usage without a key has a null `api_key_id`.
      *
      * @param list<string>|null $apiKeyIDs
      */
@@ -524,7 +530,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values. Claude Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that specific deployments started. Use `group_by[]=deployment_id` to break out per-deployment values.
      *
      * @param list<string>|null $deploymentIDs
      */
@@ -548,7 +554,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values. Claude Platform organizations only.
+     * Filter to usage incurred by Claude Managed Agents sessions that ran in specific environments. Use `group_by[]=environment_id` to break out per-environment values.
      *
      * @param list<string>|null $environmentIDs
      */
@@ -648,7 +654,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter a parent organization's report to specific child organizations, by organization UUID or `org_` ID; an ID that is not one of its child organizations matches nothing. Requires an API key created at the parent organization level. Use `group_by[]=organization_id` to break out per-organization values.
+     * Filter a parent organization's report to specific child organizations, by organization UUID or `org_` ID; an ID that is not one of its child organizations matches nothing. The report leaves out child organizations with HIPAA readiness enabled, and naming one returns a 400 error. Requires an API key created at the parent organization level. Use `group_by[]=organization_id` to break out per-organization values.
      *
      * @param list<string>|null $organizationIDs
      */
@@ -698,7 +704,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to specific service tiers. Use `group_by[]=service_tier` to break out per-tier values.
      *
      * @param list<AnalyticsServiceTier|value-of<AnalyticsServiceTier>>|null $serviceTiers
      */
@@ -711,7 +717,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values. Claude Platform organizations only.
+     * Filter to usage incurred by specific Claude Managed Agents sessions, by tagged session ID (`sesn_...`). Use `group_by[]=session_id` to break out per-session values.
      *
      * @param list<string>|null $sessionIDs
      */
@@ -764,7 +770,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values. Claude Platform organizations only.
+     * Filter to usage attributed to specific user profiles, by tagged user profile ID (`uprof_...`). Use `group_by[]=user_profile_id` to break out per-profile values.
      *
      * @param list<string>|null $userProfileIDs
      */
@@ -777,7 +783,7 @@ final class CostListParams implements BaseModel
     }
 
     /**
-     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values. Claude Platform organizations only; matches nothing for a Claude Enterprise organization.
+     * Filter to usage in specific workspaces, by tagged workspace ID (`wrkspc_...`). Use `group_by[]=workspace_id` to break out per-workspace values.
      *
      * @param list<string>|null $workspaceIDs
      */

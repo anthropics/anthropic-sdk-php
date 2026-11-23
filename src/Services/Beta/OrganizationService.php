@@ -15,6 +15,7 @@ use Anthropic\Services\Beta\Organization\ClaudeCodeService;
 use Anthropic\Services\Beta\Organization\ClaudeTagService;
 use Anthropic\Services\Beta\Organization\ComplianceSettingsService;
 use Anthropic\Services\Beta\Organization\ExternalKeysService;
+use Anthropic\Services\Beta\Organization\ExternalStorageService;
 use Anthropic\Services\Beta\Organization\FederationService;
 use Anthropic\Services\Beta\Organization\InvitesService;
 use Anthropic\Services\Beta\Organization\PluginMarketplacesService;
@@ -63,6 +64,11 @@ final class OrganizationService implements OrganizationContract
      * @api
      */
     public ServiceAccountsService $serviceAccounts;
+
+    /**
+     * @api
+     */
+    public ExternalStorageService $externalStorage;
 
     /**
      * @api
@@ -145,6 +151,7 @@ final class OrganizationService implements OrganizationContract
         $this->federation = new FederationService($client);
         $this->invites = new InvitesService($client);
         $this->serviceAccounts = new ServiceAccountsService($client);
+        $this->externalStorage = new ExternalStorageService($client);
         $this->users = new UsersService($client);
         $this->workspaces = new WorkspacesService($client);
         $this->rateLimits = new RateLimitsService($client);
