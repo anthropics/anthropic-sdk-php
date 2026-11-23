@@ -123,6 +123,9 @@ enum Model: string
      */
     case BEDROCK_CLAUDE_3_7_SONNET_20250219 = 'anthropic.claude-3-7-sonnet-20250219-v1:0';
 
+    /**
+     * @deprecated Will reach end-of-life on Bedrock by May 23, 2027. Please migrate to a newer model. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
+     */
     case BEDROCK_CLAUDE_OPUS_4_5_20251101 = 'anthropic.claude-opus-4-5-20251101-v1:0';
 
     case BEDROCK_CLAUDE_OPUS_4_1_20250805 = 'anthropic.claude-opus-4-1-20250805-v1:0';
@@ -137,6 +140,9 @@ enum Model: string
     case BEDROCK_CLAUDE_3_HAIKU_20240307 = 'anthropic.claude-3-haiku-20240307-v1:0';
     // Vertex AI model identifiers
 
+    /**
+     * @deprecated Will reach end-of-life on Vertex AI on January 22, 2027. Please migrate to a newer model. Visit https://docs.anthropic.com/en/docs/resources/model-deprecations for more information.
+     */
     case VERTEX_CLAUDE_OPUS_4_5_20251101 = 'claude-opus-4-5@20251101';
 
     case VERTEX_CLAUDE_OPUS_4_1_20250805 = 'claude-opus-4-1@20250805';
