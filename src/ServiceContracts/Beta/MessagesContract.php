@@ -94,7 +94,7 @@ use Anthropic\UserProfiles\UserProfileRequiredException;
  * @phpstan-import-type BetaFallbacksParamShape from \Anthropic\Beta\Messages\BetaFallbacksParam
  * @phpstan-import-type BetaRequestMCPServerURLDefinitionShape from \Anthropic\Beta\Messages\BetaRequestMCPServerURLDefinition
  * @phpstan-import-type BetaMetadataShape from \Anthropic\Beta\Messages\BetaMetadata
- * @phpstan-import-type BetaOutputConfigShape from \Anthropic\Beta\Messages\BetaOutputConfig
+ * @phpstan-import-type BetaOutputConfigInputShape from \Anthropic\Beta\Messages\BetaOutputConfig
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
  * @phpstan-import-type SystemShape from \Anthropic\Beta\Messages\MessageCreateParams\System
  * @phpstan-import-type BetaThinkingConfigParamShape from \Anthropic\Beta\Messages\BetaThinkingConfigParam
@@ -204,7 +204,7 @@ interface MessagesContract
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata Body param: An object describing metadata about the request.
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
+     * @param BetaOutputConfig|BetaOutputConfigInputShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -463,7 +463,7 @@ interface MessagesContract
      * @param string|null $inferenceGeo Body param: Specifies the geographic region for inference processing. If not specified, the workspace's `default_inference_geo` is used.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
      * @param BetaMetadata|BetaMetadataShape $metadata Body param: An object describing metadata about the request.
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
+     * @param BetaOutputConfig|BetaOutputConfigInputShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -690,7 +690,7 @@ interface MessagesContract
      *
      * This allows you to control how Claude manages context across multiple requests, such as whether to clear function results or not.
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers Body param: MCP servers to be utilized in this request
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
+     * @param BetaOutputConfig|BetaOutputConfigInputShape $outputConfig Body param: Configuration options for the model's output, such as the output format.
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat Body param: Deprecated: Use `output_config.format` instead. See [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
      *
      * A schema to specify Claude's output format in responses. This parameter will be removed in a future release.
@@ -831,7 +831,7 @@ interface MessagesContract
      * @param BetaFallbacksParamShape|null $fallbacks
      * @param list<BetaRequestMCPServerURLDefinition|BetaRequestMCPServerURLDefinitionShape> $mcpServers
      * @param BetaMetadata|BetaMetadataShape $metadata
-     * @param BetaOutputConfig|BetaOutputConfigShape $outputConfig
+     * @param BetaOutputConfig|BetaOutputConfigInputShape $outputConfig
      * @param BetaJSONOutputFormat|BetaJSONOutputFormatShape|null $outputFormat
      * @param ServiceTier|value-of<ServiceTier> $serviceTier
      * @param Speed|value-of<Speed>|null $speed

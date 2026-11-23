@@ -7,6 +7,7 @@ namespace Anthropic\Messages;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
 use Anthropic\Messages\OutputConfig\Effort;
 
 /**
@@ -15,6 +16,10 @@ use Anthropic\Messages\OutputConfig\Effort;
  * @phpstan-type OutputConfigShape = array{
  *   effort?: null|Effort|value-of<Effort>,
  *   format?: null|JSONOutputFormat|JSONOutputFormatShape,
+ * }
+ * @phpstan-type OutputConfigInputShape = OutputConfigShape|array{
+ *   effort?: null|Effort|value-of<Effort>,
+ *   format: class-string<StructuredOutputModel>,
  * }
  */
 final class OutputConfig implements BaseModel

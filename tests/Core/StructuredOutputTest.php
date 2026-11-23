@@ -2,14 +2,18 @@
 
 namespace Tests\Core;
 
+use Anthropic\Client;
 use Anthropic\Core\Attributes\Required;
 use Anthropic\Lib\Attributes\Constrained;
 use Anthropic\Lib\Concerns\StructuredOutputModelTrait;
 use Anthropic\Lib\Contracts\StructuredOutputModel;
 use Anthropic\Lib\Helpers\SchemaInference;
 use Anthropic\Lib\Helpers\StructuredOutput;
+use Http\Mock\Client as MockClient;
+use Nyholm\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 
 // Test model classes - defined outside the test class to avoid reflection issues
@@ -204,6 +208,35 @@ class ModelWithUntypedProperty implements StructuredOutputModel
 #[CoversClass(Constrained::class)]
 class StructuredOutputTest extends TestCase
 {
+    #[Test]
+    #[TestWith([false], 'stable')]
+    #[TestWith([true], 'beta')]
+    public function testMessagesAcceptModelClassAsOutputFormat(bool $beta): void
+    {
+        $transporter = new MockClient;
+        $transporter->addResponse(new Response(
+            200,
+            ['Content-Type' => 'application/json'],
+            '{"content":[{"type":"text","text":"{\"content\":\"hello\"}"}]}',
+        ));
+        $client = new Client(
+            apiKey: 'test-key',
+            requestOptions: ['transporter' => $transporter],
+        );
+
+        $params = [
+            'maxTokens' => 16,
+            'messages' => [['role' => 'user', 'content' => 'Hello']],
+            'model' => 'claude-haiku-4-5',
+            'outputConfig' => ['format' => ModelWithDescription::class],
+        ];
+        $message = $beta ? $client->beta->messages->create(...$params) : $client->messages->create(...$params);
+
+        $output = $message->parsedOutput();
+        $this->assertInstanceOf(ModelWithDescription::class, $output);
+        $this->assertSame('hello', $output->content);
+    }
+
     // =========================================================================
     // Schema Generation Tests
     // =========================================================================
