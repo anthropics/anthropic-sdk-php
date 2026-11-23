@@ -44,6 +44,20 @@ class UtilTest extends TestCase
     }
 
     #[Test]
+    public function testStrValKeepsTheFractionOfASecondOfADateTime(): void
+    {
+        $cases = [
+            ['2026-11-01T12:00:00Z', '2026-11-01T12:00:00+00:00'],
+            ['2026-11-01T12:00:00.123456Z', '2026-11-01T12:00:00.123456+00:00'],
+            ['2026-11-01T00:00:00.5+02:00', '2026-11-01T00:00:00.500000+02:00'],
+        ];
+
+        foreach ($cases as [$dateTime, $expected]) {
+            $this->assertSame($expected, Util::strVal(new \DateTimeImmutable($dateTime)));
+        }
+    }
+
+    #[Test]
     public function testRemoveNulls(): void
     {
         $this->assertSame(['b' => 0, 'c' => ['d' => null]], Util::removeNulls(['a' => null, 'b' => 0, 'c' => ['d' => null]]));
