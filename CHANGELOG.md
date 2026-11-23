@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.13.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.12.0...v1.13.0) (2026-11-23)
+
+### Features
+
+* **api:** add an error code to Message Batches creation
+* **api:** add External Storage to the Admin API beta
+* **api:** add webhook events for external storage failure and recovery
+
+
+### Bug Fixes
+
+* **client:** read streamed responses in whole chunks on Guzzle 8.3 and later
+* **client:** send a web search result's content as a list
+
+  A web search with no results was sent back as `{}`, and results given as an array kept the SDK's property names.
+
+
+### Chores
+
+* **api:** mark Claude Opus 4.5 as deprecated (end-of-life January 22, 2027)
+* **client:** deprecate the Bedrock and Vertex Claude Opus 4.5 model ids
+* **docs:** clarify when plugin archive downloads are recorded and who gave a share
+* **docs:** correct organization-type notes in usage and cost reports
+* **docs:** describe the user profile endpoints and link to the guide
+* **docs:** use realistic example values in more request bodies
+
+
+### Documentation
+
+* **api:** shorten the human_review description
+
 ## [1.12.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.11.0...v1.12.0) (2026-11-20)
 
 ### Features
