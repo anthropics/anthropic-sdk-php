@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.14.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.13.0...v1.14.0) (2026-11-24)
+
+### Features
+
+* **api:** add Google-managed data controls for Google Cloud projects
+* **api:** add Google-managed data controls for user profiles
+* **api:** add support for compliance review cases, notices, and items
+
+
+### Bug Fixes
+
+* **client:** keep fractional seconds when serializing date-times
+
+
+### Chores
+
+* **docs:** name both causes of the tool use limit error
+* **docs:** update example workspace and API key IDs
+
 ## [1.13.0](https://github.com/anthropics/anthropic-sdk-php/compare/v1.12.0...v1.13.0) (2026-11-23)
 
 ### Features
