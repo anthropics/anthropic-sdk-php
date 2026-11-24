@@ -67,7 +67,7 @@ final class WorkspacesTest extends TestCase
             ->workspaces
             ->add(
                 'federation_rule_id',
-                workspaceID: 'wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ',
+                workspaceID: 'wrkspc_01AbCdEfGhJkLmNpQrStUvWx',
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
         ;
@@ -88,7 +88,7 @@ final class WorkspacesTest extends TestCase
             ->workspaces
             ->add(
                 'federation_rule_id',
-                workspaceID: 'wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ',
+                workspaceID: 'wrkspc_01AbCdEfGhJkLmNpQrStUvWx',
                 betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
                 requestOptions: ['extraQueryParams' => ['beta' => 'true']],
             )
