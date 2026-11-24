@@ -2,8 +2,16 @@
 
 namespace Anthropic\Core\Exceptions;
 
+use Anthropic\Beta\BetaCMEKNotApprovedException;
+use Anthropic\Beta\BetaExternalKeyNotFoundException;
+use Anthropic\Beta\BetaExternalKeyProviderMismatchException;
+use Anthropic\Beta\BetaGCPProjectControlledByAnotherOrganizationException;
+use Anthropic\Beta\BetaGCPProjectNotVerifiedException;
 use Anthropic\Beta\BetaOrganizationNotEnrolledInBetaException;
+use Anthropic\Beta\BetaRegionNotSupportedException;
 use Anthropic\Beta\BetaRequestBodyTimeoutException;
+use Anthropic\Beta\BetaStorageInUseException;
+use Anthropic\Beta\BetaStorageNotApprovedException;
 use Anthropic\Beta\BetaUnsupportedCharsetException;
 use Anthropic\Beta\Environments\BetaEnvironmentArchivedException;
 use Anthropic\Beta\Environments\BetaEnvironmentCreateDisabledException;
@@ -174,6 +182,7 @@ class APIStatusException extends APIException
         '400 cmek_feature_unsupported' => BetaCMEKFeatureUnsupportedException::class,
         '400 cmek_key_disabled' => CMEKKeyDisabledException::class,
         '400 cmek_key_network_blocked' => CMEKKeyNetworkBlockedException::class,
+        '400 cmek_not_approved' => BetaCMEKNotApprovedException::class,
         '400 compaction_block_ambiguous' => CompactionBlockAmbiguousException::class,
         '400 compaction_block_misplaced' => CompactionBlockMisplacedException::class,
         '400 compaction_content_mismatch' => CompactionContentMismatchException::class,
@@ -185,12 +194,15 @@ class APIStatusException extends APIException
         '400 email_domain_not_allowed' => EmailDomainNotAllowedException::class,
         '400 environment_archived' => BetaEnvironmentArchivedException::class,
         '400 external_key_in_workspace_policy' => ExternalKeyInWorkspacePolicyException::class,
+        '400 external_key_not_found' => BetaExternalKeyNotFoundException::class,
+        '400 external_key_provider_mismatch' => BetaExternalKeyProviderMismatchException::class,
         '400 external_key_validation_failed' => ExternalKeyValidationFailedException::class,
         '400 external_key_validation_timed_out' => ExternalKeyValidationTimedOutException::class,
         '400 external_storage_in_use' => ExternalStorageInUseException::class,
         '400 external_storage_in_workspace_policy' => ExternalStorageInWorkspacePolicyException::class,
         '400 external_storage_not_available' => ExternalStorageNotAvailableException::class,
         '400 file_not_downloadable' => FileNotDownloadableException::class,
+        '400 gcp_project_not_verified' => BetaGCPProjectNotVerifiedException::class,
         '400 grant_required' => GrantRequiredException::class,
         '400 human_review_not_available' => BetaHumanReviewNotAvailableException::class,
         '400 human_review_on_with_external_storage' => HumanReviewOnWithExternalStorageException::class,
@@ -211,6 +223,7 @@ class APIStatusException extends APIException
         '400 rbac_group_grants_owner_access' => RBACGroupGrantsOwnerAccessException::class,
         '400 rbac_group_order_limit_exceeded' => BetaRBACGroupOrderLimitExceededException::class,
         '400 rbac_group_owner_access_unconfirmed' => RBACGroupOwnerAccessUnconfirmedException::class,
+        '400 region_not_supported' => BetaRegionNotSupportedException::class,
         '400 request_body_encoding_invalid' => RequestBodyEncodingInvalidException::class,
         '400 request_body_encoding_unsupported' => RequestBodyEncodingUnsupportedException::class,
         '400 request_body_timeout' => BetaRequestBodyTimeoutException::class,
@@ -219,6 +232,7 @@ class APIStatusException extends APIException
         '400 settings_history_limit_exceeded' => BetaSettingsHistoryLimitExceededException::class,
         '400 slack_channel_set_up_settings_refused' => SlackChannelSetUpSettingsRefusedException::class,
         '400 storage_attach_limit_reached' => StorageAttachLimitReachedException::class,
+        '400 storage_not_approved' => BetaStorageNotApprovedException::class,
         '400 storage_not_attachable' => StorageNotAttachableException::class,
         '400 storage_profile_mismatch' => StorageProfileMismatchException::class,
         '400 storage_profile_still_required' => StorageProfileStillRequiredException::class,
@@ -264,6 +278,7 @@ class APIStatusException extends APIException
         '404 thread_not_found' => ThreadNotFoundException::class,
         '409 concurrent_membership_change' => ConcurrentMembershipChangeException::class,
         '409 external_key_changed' => ExternalKeyChangedException::class,
+        '409 gcp_project_controlled_by_another_organization' => BetaGCPProjectControlledByAnotherOrganizationException::class,
         '409 plugin_name_taken' => PluginNameTakenException::class,
         '409 scan_pending' => ScanPendingException::class,
         '409 skill_name_taken' => SkillNameTakenException::class,
@@ -272,6 +287,7 @@ class APIStatusException extends APIException
         '409 storage_already_registered' => StorageAlreadyRegisteredException::class,
         '409 storage_attached_during_archive' => StorageAttachedDuringArchiveException::class,
         '409 storage_changed_concurrently' => StorageChangedConcurrentlyException::class,
+        '409 storage_in_use' => BetaStorageInUseException::class,
         '409 workspace_changed_concurrently' => WorkspaceChangedConcurrentlyException::class,
         '412 heartbeat_precondition_failed' => HeartbeatPreconditionFailedException::class,
         '413 request_body_too_large_after_decoding' => RequestBodyTooLargeAfterDecodingException::class,

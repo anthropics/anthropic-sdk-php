@@ -20,6 +20,7 @@ use Anthropic\Services\Beta\Organization\FederationService;
 use Anthropic\Services\Beta\Organization\InvitesService;
 use Anthropic\Services\Beta\Organization\PluginMarketplacesService;
 use Anthropic\Services\Beta\Organization\PluginsService;
+use Anthropic\Services\Beta\Organization\ProvidersService;
 use Anthropic\Services\Beta\Organization\RateLimitsService;
 use Anthropic\Services\Beta\Organization\RBACGroupsService;
 use Anthropic\Services\Beta\Organization\RBACRolesService;
@@ -69,6 +70,11 @@ final class OrganizationService implements OrganizationContract
      * @api
      */
     public ExternalStorageService $externalStorage;
+
+    /**
+     * @api
+     */
+    public ProvidersService $providers;
 
     /**
      * @api
@@ -152,6 +158,7 @@ final class OrganizationService implements OrganizationContract
         $this->invites = new InvitesService($client);
         $this->serviceAccounts = new ServiceAccountsService($client);
         $this->externalStorage = new ExternalStorageService($client);
+        $this->providers = new ProvidersService($client);
         $this->users = new UsersService($client);
         $this->workspaces = new WorkspacesService($client);
         $this->rateLimits = new RateLimitsService($client);

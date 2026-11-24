@@ -174,6 +174,22 @@ enum ErrorCode: string
 
     case STORAGE_VERIFICATION_FAILED = 'storage_verification_failed';
 
+    case CMEK_NOT_APPROVED = 'cmek_not_approved';
+
+    case EXTERNAL_KEY_NOT_FOUND = 'external_key_not_found';
+
+    case EXTERNAL_KEY_PROVIDER_MISMATCH = 'external_key_provider_mismatch';
+
+    case GCP_PROJECT_NOT_VERIFIED = 'gcp_project_not_verified';
+
+    case REGION_NOT_SUPPORTED = 'region_not_supported';
+
+    case STORAGE_NOT_APPROVED = 'storage_not_approved';
+
+    case GCP_PROJECT_CONTROLLED_BY_ANOTHER_ORGANIZATION = 'gcp_project_controlled_by_another_organization';
+
+    case STORAGE_IN_USE = 'storage_in_use';
+
     case CANNOT_SIGN_OUT_PRIMARY_OWNER = 'cannot_sign_out_primary_owner';
 
     case CANNOT_SIGN_OUT_SELF = 'cannot_sign_out_self';
