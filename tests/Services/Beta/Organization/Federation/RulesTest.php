@@ -75,7 +75,7 @@ final class RulesTest extends TestCase
             attributes: ['foo' => 'string'],
             description: 'description',
             tokenLifetimeSeconds: 60,
-            workspaceID: 'wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ',
+            workspaceID: 'wrkspc_01AbCdEfGhJkLmNpQrStUvWx',
             betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

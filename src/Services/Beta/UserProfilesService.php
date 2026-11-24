@@ -19,6 +19,7 @@ use Anthropic\PageCursor;
 use Anthropic\RequestOptions;
 use Anthropic\ServiceContracts\Beta\UserProfilesContract;
 use Anthropic\Services\Beta\UserProfiles\ActionURLsService;
+use Anthropic\Services\Beta\UserProfiles\ProvidersService;
 
 /**
  * Register the end customers that your platform serves, so each request can name who it's for. To get started, see the [User profiles guide](https://platform.claude.com/docs/en/manage-claude/user-profiles).
@@ -39,12 +40,18 @@ final class UserProfilesService implements UserProfilesContract
     public ActionURLsService $actionURLs;
 
     /**
+     * @api
+     */
+    public ProvidersService $providers;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
     {
         $this->raw = new UserProfilesRawService($client);
         $this->actionURLs = new ActionURLsService($client);
+        $this->providers = new ProvidersService($client);
     }
 
     /**

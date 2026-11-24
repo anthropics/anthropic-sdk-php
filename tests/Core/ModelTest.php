@@ -67,6 +67,9 @@ class Collar implements BaseModel
     #[Optional('serial_number')]
     public ?string $serialNumber;
 
+    #[Optional('fitted_at')]
+    public ?\DateTimeInterface $fittedAt;
+
     public function __construct()
     {
         $this->initialize();
@@ -415,6 +418,22 @@ class ModelTest extends TestCase
     {
         $this->assertEquals('{}', json_encode(new Collar));
         $this->assertEquals('{"name":"north","collar":{}}', json_encode(new Kennel(name: 'north', collar: new Collar)));
+    }
+
+    #[Test]
+    public function testSerializeDateTimeKeepsItsFractionOfASecond(): void
+    {
+        $cases = [
+            ['2026-11-01T12:00:00Z', '{"fitted_at":"2026-11-01T12:00:00+00:00"}'],
+            ['2026-11-01T12:00:00.123456Z', '{"fitted_at":"2026-11-01T12:00:00.123456+00:00"}'],
+        ];
+
+        foreach ($cases as [$fittedAt, $expected]) {
+            $collar = new Collar;
+            $collar->fittedAt = new \DateTimeImmutable($fittedAt);
+
+            $this->assertSame($expected, json_encode($collar));
+        }
     }
 
     #[Test]

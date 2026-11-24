@@ -65,7 +65,7 @@ final class UsageTest extends TestCase
             actorIDs: ['user_01WxYzAbCdEfGhJkMnPqRsTu'],
             actorTypes: [AnalyticsActorType::SERVICE_ACCOUNT_ACTOR],
             agentIDs: ['agent_01VHd3EAGJ6PLkP9LM7DDu3f'],
-            apiKeyIDs: ['apikey_01Rj2N8SVvo6BePZj99NhmiT'],
+            apiKeyIDs: ['apikey_01BcDeFgHjKmNpQrStUvWxYz'],
             claudeTagCategories: [AnalyticsClaudeTagCategory::ENGAGED],
             claudeTagUserIDs: ['U0123ABCDEF'],
             contextWindows: [AnalyticsContextWindow::FROM_0_TO_200K],
@@ -89,7 +89,7 @@ final class UsageTest extends TestCase
             speeds: [AnalyticsSpeed::FAST],
             timeBucketWidth: AnalyticsTimeBucketWidth::DAY,
             userProfileIDs: ['uprof_01M33NeYUQK2WV9PpYcsPHLi'],
-            workspaceIDs: ['wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ'],
+            workspaceIDs: ['wrkspc_01AbCdEfGhJkLmNpQrStUvWx'],
             betas: [AnthropicBeta::COMPUTER_USE_2024_10_22],
             requestOptions: ['extraQueryParams' => ['beta' => 'true']],
         );

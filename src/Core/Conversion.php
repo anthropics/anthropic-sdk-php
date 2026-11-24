@@ -35,7 +35,7 @@ final class Conversion
             }
 
             if (is_a($value, class: \DateTimeInterface::class)) {
-                return date_format($value, format: \DateTimeInterface::RFC3339);
+                return Util::strVal($value);
             }
 
             if (is_a($value, class: \JsonSerializable::class)) {

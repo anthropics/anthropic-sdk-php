@@ -119,7 +119,7 @@ final class Util
         }
 
         if (is_object($value) && is_a($value, class: \DateTimeInterface::class)) {
-            return date_format($value, format: \DateTimeInterface::RFC3339);
+            return date_format($value, format: '000000' === date_format($value, format: 'u') ? \DateTimeInterface::RFC3339 : 'Y-m-d\TH:i:s.uP');
         }
 
         // @phpstan-ignore-next-line argument.type

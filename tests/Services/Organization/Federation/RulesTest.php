@@ -72,7 +72,7 @@ final class RulesTest extends TestCase
             appliesToAllWorkspaces: true,
             description: 'description',
             tokenLifetimeSeconds: 60,
-            workspaceID: 'wrkspc_01JwQvzr7rXLA5AGx3HKfFUJ',
+            workspaceID: 'wrkspc_01AbCdEfGhJkLmNpQrStUvWx',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
