@@ -7,6 +7,7 @@ namespace Anthropic\Services;
 use Anthropic\Client;
 use Anthropic\ServiceContracts\BetaContract;
 use Anthropic\Services\Beta\AgentsService;
+use Anthropic\Services\Beta\ComplianceService;
 use Anthropic\Services\Beta\DeploymentRunsService;
 use Anthropic\Services\Beta\DeploymentsService;
 use Anthropic\Services\Beta\DreamsService;
@@ -108,6 +109,11 @@ final class BetaService implements BetaContract
     /**
      * @api
      */
+    public ComplianceService $compliance;
+
+    /**
+     * @api
+     */
     public OrganizationService $organization;
 
     /**
@@ -131,6 +137,7 @@ final class BetaService implements BetaContract
         $this->userProfiles = new UserProfilesService($client);
         $this->dreams = new DreamsService($client);
         $this->tunnels = new TunnelsService($client);
+        $this->compliance = new ComplianceService($client);
         $this->organization = new OrganizationService($client);
     }
 }
