@@ -8,6 +8,7 @@ use Anthropic\Beta\Messages\BetaOutputConfig\Effort;
 use Anthropic\Core\Attributes\Optional;
 use Anthropic\Core\Concerns\SdkModel;
 use Anthropic\Core\Contracts\BaseModel;
+use Anthropic\Lib\Contracts\StructuredOutputModel;
 
 /**
  * @phpstan-import-type BetaJSONOutputFormatShape from \Anthropic\Beta\Messages\BetaJSONOutputFormat
@@ -16,6 +17,11 @@ use Anthropic\Core\Contracts\BaseModel;
  * @phpstan-type BetaOutputConfigShape = array{
  *   effort?: null|Effort|value-of<Effort>,
  *   format?: null|BetaJSONOutputFormat|BetaJSONOutputFormatShape,
+ *   taskBudget?: null|BetaTokenTaskBudget|BetaTokenTaskBudgetShape,
+ * }
+ * @phpstan-type BetaOutputConfigInputShape = BetaOutputConfigShape|array{
+ *   effort?: null|Effort|value-of<Effort>,
+ *   format: class-string<StructuredOutputModel>,
  *   taskBudget?: null|BetaTokenTaskBudget|BetaTokenTaskBudgetShape,
  * }
  */
